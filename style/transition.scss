@@ -1,0 +1,508 @@
+$windowTransTime: 0.2s;
+$fadeTransTime: 0.2s;
+$scaleTransTime: 0.2s;
+$loginTransTime: 0.2s;
+$toggleTransTime: 0.2s;
+$bannerTransTime: 2s;
+$blurTransTime: 0.5s;
+
+.top-game-layout-normal {
+  .windows-enter {
+    position: absolute;
+    opacity: 0.01;
+  }
+
+  .windows-enter.windows-enter-active {
+    // position: absolute;
+    opacity: 1;
+    transition: opacity $windowTransTime ease;
+  }
+
+  .windows-exit {
+    position: absolute;
+    opacity: 1;
+  }
+
+  .windows-exit.windows-exit-active {
+    // position: absolute;
+    opacity: 0.01;
+    transition: opacity $windowTransTime ease;
+  }
+}
+
+.top-game-layout-window {
+  .windows-enter {
+    transform: scale(1.02);
+    // transform: translateY(50px);
+    opacity: 0.01;
+  }
+
+  .windows-enter.windows-enter-active {
+    transform: scale(1);
+    // transform: translateY(0);
+    opacity: 1;
+    transition: transform $windowTransTime ease, opacity $windowTransTime ease;
+  }
+
+  .windows-exit {
+    transform: scale(1);
+    // transform: translateY(0);
+    opacity: 1;
+  }
+
+  .windows-exit.windows-exit-active {
+    transform: scale(0.98);
+    // transform: translateY(50px);
+    opacity: 0.01;
+    transition: transform $windowTransTime ease, opacity $windowTransTime ease;
+  }
+}
+
+// 登录用
+.login-enter {
+  opacity: 0.01;
+}
+
+.login-enter.login-enter-active {
+  opacity: 1;
+  transition: transform $loginTransTime ease;
+}
+
+.login-exit {
+  opacity: 1;
+}
+
+.login-exit.login-exit-active {
+  opacity: 0.01;
+  transition: opacity $loginTransTime ease;
+}
+
+// 渐变
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity $fadeTransTime ease;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity $fadeTransTime ease;
+}
+
+// 大小缩放
+.scaleT-enter {
+  opacity: 0.01;
+  transform: translateY(-20px);
+}
+
+.scaleT-enter.scaleT-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform $scaleTransTime ease, opacity $scaleTransTime ease;
+}
+
+.scaleT-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scaleT-exit.scaleT-exit-active {
+  opacity: 0.01;
+  transform: translateY(-45px);
+  transition: transform $scaleTransTime ease, opacity $scaleTransTime ease;
+}
+
+// banner
+.banner-enter {
+  opacity: 0.01;
+  transform: scale(1.1);
+}
+
+.banner-enter.banner-enter-active {
+  opacity: 1;
+  transition: opacity $bannerTransTime ease, transform $bannerTransTime ease;
+  transform: scale(1);
+}
+
+.banner-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.banner-exit.banner-exit-active {
+  opacity: 0.01;
+  transition: opacity $bannerTransTime ease, transform $bannerTransTime ease;
+  transform: scale(1.1);
+}
+
+// blur
+// .blur-enter {
+//   // opacity: 0.01;
+//   filter: blur(10px);
+// }
+//
+// .blur-enter.blur-enter-active {
+//   filter: blur(0);
+//   // opacity: 1;
+//   transition: filter $blurTransTime ease;
+// }
+//
+// .blur-exit {
+//   // opacity: 1;
+//   filter: blur(0);
+// }
+//
+// .blur-exit.blur-exit-active {
+//   filter: blur(10px);
+//   // opacity: 0.01;
+//   transition: filter $blurTransTime ease;
+// }
+
+.mobile {
+  .windows-enter {
+    transform: none;
+  }
+
+  .windows-enter.windows-enter-active {
+    transform: none;
+    transition: none;
+  }
+
+  .windows-exit {
+    transform: none;
+  }
+
+  .windows-exit.windows-exit-active {
+    transform: none;
+    transition: none;
+  }
+}
+
+// 每个项目可以自定义各自的动画效果，参考以下实现方式
+
+/**
+ * 动画名称解析
+ * windows   ： container 组件做的页面切换
+ * login     ： 登录
+ * fade      ： 渐变
+ * banner    ： 轮播图
+ * notify    ： 全局提示
+ * tip-award ： 中奖后的全局提示
+ * loading   ： 加载中
+ * modal     ： modal 框
+ * popover   ： popover
+ * toast     ： toast
+ * manager   ： 全局弹出层的 manager
+ */
+
+$windowTransDuration: 0.2s;
+$fadeTransDuration: 0.2s;
+$toastransDuration: 0.2s;
+$loginTransDuration: 0.2s;
+$toggleTransDuration: 0.2s;
+$bannerTransDuration: 2s;
+$popoverTransDuration: 0.2s;
+$notifyTransDuration: 0.2s;
+$loadingTransDuration: 0.2s;
+$blurTransDuration: 0.5s;
+$modalTSDuration: 0.3s;
+
+// manager
+.manager-enter {
+  .manager-container {
+    transform: scale(1);
+    opacity: 0;
+  }
+  .section-mark {
+    opacity: 0.01;
+  }
+}
+
+.manager-enter.manager-enter-active {
+  .manager-container {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .section-mark {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+}
+
+.manager-exit {
+  .manager-container {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .section-mark {
+    opacity: 1;
+  }
+}
+
+.manager-exit.manager-exit-active {
+  .manager-container {
+    transform: scale(0.9);
+    opacity: 0.01;
+  }
+  .section-mark {
+    opacity: 0.01;
+  }
+}
+
+// modal
+.modal-enter {
+  .v-modal-layout {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  .section-mark {
+    opacity: 0.01;
+  }
+}
+
+.modal-enter.modal-enter-active {
+  .v-modal-layout {
+    transform: scale(1);
+    opacity: 1;
+    transition: all $modalTSDuration ease;
+  }
+  .section-mark {
+    opacity: 1;
+    transition: opacity $modalTSDuration ease;
+  }
+}
+
+.modal-exit {
+  .v-modal-layout {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .section-mark {
+    opacity: 1;
+  }
+}
+
+.modal-exit.modal-exit-active {
+  .v-modal-layout {
+    transform: scale(0.4);
+    opacity: 0.01;
+    transition: all $modalTSDuration ease;
+  }
+  .section-mark {
+    opacity: 0.01;
+    transition: opacity $modalTSDuration ease;
+  }
+}
+
+//windows
+.top-game-layout-normal {
+  .windows-enter {
+    position: absolute;
+    opacity: 0.01;
+  }
+
+  .windows-enter.windows-enter-active {
+    // position: absolute;
+    opacity: 1;
+    transition: opacity $windowTransDuration ease;
+  }
+
+  .windows-exit {
+    position: absolute;
+    opacity: 1;
+  }
+
+  .windows-exit.windows-exit-active {
+    // position: absolute;
+    opacity: 0.01;
+    transition: opacity $windowTransDuration ease;
+  }
+}
+
+.top-game-layout-window {
+  .windows-enter {
+    transform: scale(1.02);
+    // transform: translateY(50px);
+    opacity: 0.01;
+  }
+
+  .windows-enter.windows-enter-active {
+    transform: scale(1);
+    // transform: translateY(0);
+    opacity: 1;
+    transition: transform $windowTransDuration ease,
+      opacity $windowTransDuration ease;
+  }
+
+  .windows-exit {
+    transform: scale(1);
+    // transform: translateY(0);
+    opacity: 1;
+  }
+
+  .windows-exit.windows-exit-active {
+    transform: scale(0.98);
+    // transform: translateY(50px);
+    opacity: 0.01;
+    transition: transform $windowTransDuration ease,
+      opacity $windowTransDuration ease;
+  }
+}
+
+// login
+.login-enter {
+  opacity: 0.01;
+}
+
+.login-enter.login-enter-active {
+  opacity: 1;
+  transition: transform $loginTransDuration ease;
+}
+
+.login-exit {
+  opacity: 1;
+}
+
+.login-exit.login-exit-active {
+  opacity: 0.01;
+  transition: opacity $loginTransDuration ease;
+}
+
+// fade
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity $fadeTransDuration ease;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity $fadeTransDuration ease;
+}
+
+// popover
+.popover-enter {
+  opacity: 0.01;
+  transform: translateX(20px);
+}
+
+.popover-enter.popover-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all $popoverTransDuration ease;
+}
+
+.popover-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.popover-exit.popover-exit-active {
+  opacity: 0.01;
+  transform: translateX(20px);
+  transition: all $popoverTransDuration ease;
+}
+
+// notify
+.notify-enter {
+  // opacity: 0.01;
+  transform: translateX(200px);
+}
+
+.notify-enter.notify-enter-active {
+  transform: translateX(0);
+  // opacity: 1;
+  transition: transform $notifyTransDuration ease;
+}
+
+.notify-exit {
+  // opacity: 1;
+  transform: translateX(0);
+}
+
+.notify-exit.notify-exit-active {
+  opacity: 0.01;
+  transform: translateX(200px);
+  transition: transform $notifyTransDuration ease;
+}
+
+// loading
+.loading-enter {
+  opacity: 0.01;
+}
+
+.loading-enter.loading-enter-active {
+  opacity: 1;
+  transition: opacity $loadingTransDuration ease;
+}
+
+.loading-exit {
+  opacity: 1;
+}
+
+.loading-exit.loading-exit-active {
+  opacity: 0.01;
+  transition: opacity $loadingTransDuration ease;
+}
+
+// toast
+.toast-enter {
+  opacity: 0.01;
+  transform: translateY(-20px);
+}
+
+.toast-enter.toast-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform $toastransDuration ease, opacity $toastransDuration ease;
+}
+
+.toast-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-exit.toast-exit-active {
+  opacity: 0.01;
+  transform: translateY(-45px);
+  transition: transform $toastransDuration ease, opacity $toastransDuration ease;
+}
+
+// banner
+.banner-enter {
+  opacity: 0.01;
+  transform: scale(1.1);
+}
+
+.banner-enter.banner-enter-active {
+  opacity: 1;
+  transition: opacity $bannerTransDuration ease,
+    transform $bannerTransDuration ease;
+  transform: scale(1);
+}
+
+.banner-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.banner-exit.banner-exit-active {
+  opacity: 0.01;
+  transition: opacity $bannerTransDuration ease,
+    transform $bannerTransDuration ease;
+  transform: scale(1.1);
+}

@@ -1,0 +1,100 @@
+
+
+#auto-logging-tip {
+  width: 400px;
+  text-align: center;
+  padding: 20px;
+  margin: 20% auto;
+}
+.login-panel {
+  @include fill();
+  position: fixed;
+  background-color: #1d2939;
+  .form-layout {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 10px 50px 30px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: all ease 2s;
+    .icon-input {
+      width: 100%;
+    }
+    &:hover {
+      box-shadow: 0 40px 48px rgba(0, 0, 0, 0.4);
+    }
+    .horizontal-form {
+      padding: 10px 0;
+      background-color: transparent;
+      .icon-input.has-icon .form-control {
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+    .title {
+      // color: #FFF;
+      // margin-bottom: 10px;
+    }
+    .form-group {
+      position: relative;
+      margin-bottom: 5px;
+      .control-label {
+        display: none;
+      }
+      .form-control {
+        width: 100%;
+        // background-color: rgba(255,255,255,0);
+        // color: #FFF;
+      }
+      .form-tip {
+        position: absolute;
+        right: 4px;
+      }
+    }
+    .login-btn {
+      $btnColor: #f16a6a;
+      color: #FFF;
+      margin-top: 10px;
+      width: 100%;
+      background-color: $btnColor;
+      border-color: $btnColor;
+      background: linear-gradient(45deg, $colorCyan, $colorBlue);
+      border: none;
+      &:hover {
+        background-color: darken($btnColor, 5%);
+      }
+    }
+  }
+}
+
+.login-panel:after {
+  // background: url(./login-pattern.svg);
+  background-size: 501px 990px;
+  background-position: 0 0;
+  animation-direction: reverse;
+  animation-duration: 60s;
+  animation-iteration-count: infinite;
+  animation-name: bg-scroll;
+  animation-timing-function: linear;
+  bottom: 0;
+  content: '';
+  left: 0;
+  opacity: 0.2;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+@keyframes bg-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 990px;
+  }
+}

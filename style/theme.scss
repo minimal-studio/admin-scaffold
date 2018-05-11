@@ -1,0 +1,32 @@
+
+
+$themeMapper: (
+  red: $containerBgColorRed,
+  green: $containerBgColorGreen,
+  black: $containerBgColorBlack,
+  cyan: $containerBgColorCyan,
+  orange: $containerBgColorOrange,
+  blue: $containerBgColorBlue
+);
+
+.theme- {
+  &btn {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    @each $name, $value in $themeMapper {
+      &.#{$name} {
+        background-color: $value;
+      }
+    }
+  }
+  @each $name, $value in $themeMapper {
+    &#{$name} {
+      @include mixinTheme($value, lighten($value, 40%));
+    }
+    &while {
+      @include mixinTheme($containerBgColorWhile, #777);
+    }
+  }
+}

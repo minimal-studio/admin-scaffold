@@ -1,0 +1,75 @@
+.menu-tree {
+  height: 80vh;
+  width: 500px;
+  overflow-y: auto;
+  background-color: #f3f3f3;
+  padding: 10px 20px;
+  border-radius: 4px;
+  .fold {
+    padding: 5px 0 5px 10px;
+    color: #aaa;
+    cursor: pointer;
+    .caret {
+      margin-right: 10px;
+    }
+    &.hide-fold {
+      .caret {
+        transform: rotate(-90deg);
+      }
+      > .fold,
+      .menu {
+        display: none;
+      }
+    }
+    .fold-menu {
+      .fold-title {
+        &.item {
+          width: 200px;
+          padding: 5px 0;
+          // color: #000;
+          cursor: pointer;
+          text-decoration: none;
+          flex: 1;
+          &:hover {
+            color: $themeColor;
+            background-color: #f3f3f3;
+          }
+        }
+      }
+      .hide-btn {
+        opacity: 0;
+        // transition: opacity ease 0.2s;
+      }
+      &:hover {
+        .hide-btn {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .menu {
+    .hide-btn {
+      opacity: 0;
+      // transition: opacity ease 0.2s;
+    }
+    &:hover {
+      .item {
+        color: $themeColor;
+      }
+      .hide-btn {
+        opacity: 1;
+      }
+    }
+    .item {
+      width: 200px;
+      padding: 5px 25px;
+      color: #000;
+      cursor: pointer;
+      text-decoration: none;
+      flex: 1;
+      &:hover {
+        background-color: #f3f3f3;
+      }
+    }
+  }
+}
