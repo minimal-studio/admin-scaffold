@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.9th.go/matrix-front-end/matrix-lott-game.git"
+    "url": "https://github.com/SANGET/orion-admin-web-scaffold.git"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
