@@ -77,10 +77,12 @@ $userInfoItemOverBgColor: #f7f7f7;
   // height: 100%;
   overflow-y: auto;
   @include fill();
+  bottom: 40px;
   left: $leftmenuWidth;
   transition: all 0.2s ease;
   z-index: 101;
   background-color: #e4e7ea;
+  border-radius: 0 0 0 4px;
 
   // padding: 10px;
   // background-color: $containerBgColor;

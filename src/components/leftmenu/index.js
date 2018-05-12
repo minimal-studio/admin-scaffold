@@ -150,10 +150,11 @@ export default class Leftmenu extends Component {
     function recursive(dataList) {
       let currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
-        let { Child, MenuName, Code } = item;
+        let _item = self.getMenuItem(item);
+        let { child, title, code } = _item;
 
-        let hasChildren = Child.length > 0;
-        let isFold = !Code;
+        let hasChildren = child.length > 0;
+        let isFold = !code;
 
         let currFoldIdx = foldIdx;
 
@@ -163,7 +164,7 @@ export default class Leftmenu extends Component {
         if (isFold) {
           let childDOM = null;
           if (hasChildren) {
-            childDOM = recursive(Child);
+            childDOM = recursive(child);
           }
           dom = (
             <div
@@ -179,19 +180,19 @@ export default class Leftmenu extends Component {
                   !flowMode && self.toggleFold(e, currFoldIdx);
                 }}>
                 <span className="caret" />
-                {MenuName}
+                {title}
               </div>
               <div className="children">{childDOM}</div>
             </div>
           );
         } else {
           dom = self.getMenuLinkerDOM({
-            key: Code,
-            onClick: () => $GH.CallFunc(onChangeMenu)(Code),
-            menuText: MenuName
+            key: code,
+            onClick: () => $GH.CallFunc(onChangeMenu)(code),
+            menuText: title
           });
         }
-        if (window.MENU_MAPPER) window.MENU_MAPPER[Id] = MenuName;
+        if (window.MENU_MAPPER) window.MENU_MAPPER[Id] = title;
         currDOMSets.push(dom);
       });
       return currDOMSets;
@@ -298,13 +299,14 @@ export default class Leftmenu extends Component {
             flowMenuContainer.style.top = (finalOffsetTop - flowMenuOffsetTopPx) + 'px';
           }
         }}>
-        {this.getNormalMenuChildren(activeItem.Child)}
+        {this.getNormalMenuChildren(activeItem.child)}
       </div>
     );
 
     const allSet = initDataList.map((item, idx) => {
-      let { Child, MenuName, Code } = item;
-      let isFold = Child.length > 0;
+      let _item = self.getMenuItem(item);
+      let { child, title, code } = _item;
+      let isFold = child.length > 0;
       let isHovering = activeIdx == idx;
       return isFold ? (
         <div
@@ -313,7 +315,7 @@ export default class Leftmenu extends Component {
             delayExec.cancel();
             this.setFlowMenu({
               targetElem: e.target,
-              activeItem: item,
+              activeItem: _item,
               idx
             });
           }}
@@ -322,13 +324,13 @@ export default class Leftmenu extends Component {
           }}
           className={'fold' + (isHovering ? ' hover' : '')}>
           <span className="caret" />
-          {MenuName}
+          {title}
         </div>
       ) : (
         self.getMenuLinkerDOM({
-          key: Code,
-          onClick: () => $GH.CallFunc(onChangeMenu)(Code),
-          menuText: MenuName
+          key: code,
+          onClick: () => $GH.CallFunc(onChangeMenu)(code),
+          menuText: title
         })
       );
     });
@@ -340,9 +342,18 @@ export default class Leftmenu extends Component {
       </div>
     );
   };
+  getMenuItem = (item) => {
+    const { menuMappers } = this.props;
+    const { child, code, title } = menuMappers;
+    return {
+      child: item[child],
+      code: item[code],
+      title: item[title],
+    }
+  }
   render() {
     const {
-      leftmenuData,
+      menuData,
       onChangeMenu,
       onToggleNav,
       showLeftMenu
@@ -351,10 +362,10 @@ export default class Leftmenu extends Component {
     const { searchMap, flowMode } = this.state;
 
     const container = flowMode ? (
-      this.getFlowModeDOM(leftmenuData)
+      this.getFlowModeDOM(menuData)
     ) : (
       <div className="leftmenu-tree">
-        {this.getNormalMenuChildren(leftmenuData)}
+        {this.getNormalMenuChildren(menuData)}
       </div>
     );
 
@@ -369,7 +380,7 @@ export default class Leftmenu extends Component {
         }>
         <div className="menu-header">
           <h5 className="title">
-            系统版本{' '}
+            <span className="mr5">系统版本</span>
             <VersionComponent numberVersion={VersionInfo.numberVersion} />
           </h5>
           <SearchBox
@@ -395,10 +406,14 @@ Leftmenu.propTypes = {
   // userInfo: PropTypes.object,
   onDidMount: PropTypes.func,
   activeMenu: PropTypes.string,
+  menuMappers: PropTypes.shape({
+    child: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
 
   /* 是否悬浮模式的菜单模式 */
   flowMode: PropTypes.bool,
-  leftmenuData: PropTypes.any.isRequired,
+  menuData: PropTypes.any.isRequired,
   onChangeMenu: PropTypes.func
-  // leftmenuData: PropTypes.array.isRequired
 };

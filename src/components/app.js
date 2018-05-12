@@ -51,5 +51,5 @@ export default class ManagerApp extends Component {
 ManagerApp.propTypes = {
   pageComponents: PropTypes.object.isRequired,
   LoginActions: PropTypes.func.isRequired,
-  headerPlugin: PropTypes.object
+  HeaderPlugin: PropTypes.func
 };

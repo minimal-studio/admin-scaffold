@@ -17,12 +17,14 @@ export default class LoginSelector extends Component {
       networkStatus: 'NO_LOGIN_TOKEN',
       loading: false,
       userInfo: {},
+      menuData: {},
       hasErr: false,
       resDesc: ''
     };
     if(prevSess) {
       defaultState.networkStatus = 'LOGIN_SUCCESS';
       defaultState.userInfo = prevSess.userInfo;
+      defaultState.menuData = prevSess.menuData;
       onRequest.setPostHeader(prevSess.requestHeader);
     }
 
@@ -44,11 +46,11 @@ export default class LoginSelector extends Component {
     } catch (e) {}
     return sessionObj;
   }
-  onLoginSuccess = ({requestHeader, userInfo, networkStatus, hasErr, resDesc}) => {
-    this.setLoginSess({requestHeader, userInfo});
+  onLoginSuccess = ({requestHeader, userInfo, menuData, networkStatus, hasErr, resDesc}) => {
+    this.setLoginSess({requestHeader, userInfo, menuData});
     this.setState({
       networkStatus, userInfo,
-      hasErr, resDesc
+      hasErr, resDesc, menuData
     });
   }
   logout() {
@@ -62,18 +64,21 @@ export default class LoginSelector extends Component {
   }
   render() {
     const { children, LoginActions } = this.props;
-    const { networkStatus, userInfo, loading } = this.state;
+    const { networkStatus, userInfo, menuData, loading } = this.state;
 
     let container;
     switch (networkStatus) {
       case 'LOGIN_SUCCESS':
         container = (
           <CSSTransition key="LOGIN_SUCCESS" classNames="fade" timeout={200}>
-            {React.cloneElement(children, {
-              userInfo: userInfo,
-              onLogout: this.logout.bind(this),
-              key: 'CONTAINER'
-            })}
+            {
+              React.cloneElement(children, {
+                userInfo: userInfo,
+                menuData: menuData,
+                onLogout: this.logout.bind(this),
+                key: 'CONTAINER'
+              })
+            }
           </CSSTransition>
         );
         break;

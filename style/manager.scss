@@ -1,11 +1,15 @@
-
-
 #managerApp {
   display: flex;
   @include fill();
   overflow: hidden;
   overflow-x: auto;
   min-width: 1300px;
+  background: linear-gradient(
+    45deg,
+    $leftmenuBgColor,
+    lighten($leftmenuBgColor, 5%),
+    lighten($leftmenuBgColor, 15%)
+  );
 }
 
 .CQKMX,

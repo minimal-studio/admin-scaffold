@@ -133,7 +133,7 @@ export default class ManagerLayout extends Component {
       showLeftMenu: true,
       activeMenu: '',
       displayFloat: true,
-      menuData: props.userInfo.Menus.Child || []
+      menuData: props.menuData || []
     };
     let self = this;
     const { pageComponents } = props;
@@ -204,13 +204,11 @@ export default class ManagerLayout extends Component {
   }
   render() {
     const {
-      children,
       userInfo = {},
-      changeTheme,
       onLogout,
-      history,
       pageComponents,
-      headerPlugin
+      HeaderPlugin,
+      menuMappers
     } = this.props;
     const {
       menuCodeMapper,
@@ -219,17 +217,16 @@ export default class ManagerLayout extends Component {
       activeMenu,
       displayFloat
     } = this.state;
-    const { AdminName, GroupName, LastLoginTime, LoginTime } = userInfo;
 
     return (
       <div id="managerApp">
         <LeftmenuLayout
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
-          leftmenuData={menuData}
+          menuData={menuData}
           onChangeMenu={code => {
             // this.pushRoute(code)
           }}
-          userInfo={userInfo}
+          menuMappers={menuMappers}
           flowMode={true}
           showLeftMenu={showLeftMenu}
           onToggleNav={toggle => {
@@ -240,55 +237,16 @@ export default class ManagerLayout extends Component {
         <div
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
+          }>
+          {
+            HeaderPlugin ? (
+              <HeaderPlugin
+                onLogout={onLogout}
+                displayFloat={displayFloat}
+                userInfo={userInfo}
+                toggleFloat={this.toggleFloat.bind(this)}/>
+            ) : null
           }
-        >
-          <div className="status-bar">
-            {headerPlugin}
-            <span className="flex" />
-            <div className="user-info-group hide-container">
-              <div className="layout a-i-c user-info-item">
-                <Avatar
-                  size="sm"
-                  changeAvatarable={false}
-                  text={AdminName[0]}
-                />
-                <span className="ml10">{AdminName}</span>
-              </div>
-              <div className="hide-content">
-                <div className="sub-menu">
-                  <span
-                    className="item-btn"
-                    onClick={() => this.showShortcut()}
-                    title="快捷键"
-                  >
-                    <i
-                      className="fa fa-question-circle font-awesome"
-                      aria-hidden="true"
-                    />{' '}
-                    快捷键
-                  </span>
-                  <span className="item-btn" onClick={e => this.toggleFloat()}>
-                    {displayFloat ? '隐藏小数点' : '显示小数点'}
-                  </span>
-                  <a
-                    className="item-btn hide-tip update-config-btn"
-                    href={window.UPDATE_CLIENT_CONFIG_URL}
-                    target="_blank"
-                  >
-                    更新客户端配置
-                  </a>
-                  <span className="item-btn">{GroupName}</span>
-                  <span className="item-btn">
-                    上次登录时间: <br />
-                    {LastLoginTime}
-                  </span>
-                  <span className="item-btn" onClick={e => onLogout()}>
-                    退出
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
           {this.pageRoutes.map((item, index) => {
             return (
               <Route
@@ -306,7 +264,6 @@ export default class ManagerLayout extends Component {
 }
 ManagerLayout.propTypes = {
   userInfo: PropTypes.object,
-  changeTheme: PropTypes.func,
   onLogout: PropTypes.func,
   headerPlugin: PropTypes.object,
   pageComponents: PropTypes.object.isRequired
