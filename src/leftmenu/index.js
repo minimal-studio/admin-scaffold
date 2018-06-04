@@ -11,6 +11,10 @@ let delayExec = new $GH.Debounce();
 const MENU_ACTIVE_STORAGE = 'MENU_ACTIVE_STORAGE';
 const ESC_KEY = 27;
 
+function getScreenHeight() {
+  return document.documentElement.clientHeight;
+}
+
 let menuCodeMapper = {};
 class SearchBox extends Component {
   constructor(props) {
@@ -310,7 +314,7 @@ export default class Leftmenu extends Component {
             let parentHeight = offset.height;
             let offsetBottom = expectedOffsetTop + flowContainerHeight;
 
-            let overBottom = window.screenX - offsetBottom;
+            let overBottom = getScreenHeight() - offsetBottom;
             let finalOffsetTop = expectedOffsetTop;
             let flowMenuOffsetTopPx = parentHeight == flowContainerHeight ? 0 : parentHeight;
 
