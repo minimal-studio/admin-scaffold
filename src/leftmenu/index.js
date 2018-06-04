@@ -63,7 +63,7 @@ class SearchBox extends Component {
   render() {
     const { searchMap, isShow } = this.state;
     const { menuCodeMapper, onChangeMenu } = this.props;
-    const allCode = Object.keys(menuCodeMapper);
+    const allCode = Object.keys(menuCodeMapper) || [];
     return (
       <div className={'search-container' + (isShow ? ' show-content' : '')}>
         <input
@@ -82,23 +82,25 @@ class SearchBox extends Component {
           onKeyUp={this.handleEsc}
         />
         <div className="hide-content">
-          {allCode
-            .filter(
-              code =>
-                menuCodeMapper[code].indexOf(searchMap) != -1 ||
-                code.indexOf(searchMap.toUpperCase()) != -1
-            )
-            .map((code, idx) => {
-              return (
-                <Link
-                  className="result-item"
-                  key={idx}
-                  to={`${code}`}
-                  onClick={e => $GH.CallFunc(onChangeMenu)(code)}>
-                  {menuCodeMapper[code]}
-                </Link>
-              );
-            })}
+          {
+            allCode
+              .filter(
+                code =>
+                  menuCodeMapper[code].indexOf(searchMap) != -1 ||
+                  code.indexOf(searchMap.toUpperCase()) != -1
+              )
+              .map((code, idx) => {
+                return (
+                  <Link
+                    className="result-item"
+                    key={idx}
+                    to={`${code}`}
+                    onClick={e => $GH.CallFunc(onChangeMenu)(code)}>
+                    {menuCodeMapper[code]}
+                  </Link>
+                );
+              })
+            }
         </div>
       </div>
     );
@@ -334,7 +336,7 @@ export default class Leftmenu extends Component {
     const allSet = initDataList.map((item, idx) => {
       let _item = self.getMenuItem(item);
       let { child, title, code } = _item;
-      let isFold = child.length > 0;
+      let isFold = child && child.length > 0;
       let isHovering = activeIdx == idx;
       return isFold ? (
         <div
@@ -372,11 +374,12 @@ export default class Leftmenu extends Component {
   };
   getMenuItem = (item) => {
     const { menuMappers } = this.props;
-    const { child, code, title } = menuMappers;
+    const { child, code, title, icon } = menuMappers;
     return {
       child: item[child],
       code: item[code],
       title: item[title],
+      icon: item[icon],
     }
   }
   render() {
