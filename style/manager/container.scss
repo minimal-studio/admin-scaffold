@@ -123,17 +123,16 @@ $userInfoItemOverBgColor: #f7f7f7;
   }
   .page-router {
     padding: 0 10px;
-    // height: 31px;
     .tab {
       position: relative;
       display: inline-block;
+      // border-top: 1px solid #ddd;
+      background-color: #f3f3f3;
+      box-shadow: inset 0 -3px 3px rgba(#000, 0.1);
+      padding: 5px 15px;
+      margin-right: 5px;
       .text {
         display: inline-block;
-        background-color: #f3f3f3;
-        // border-radius: 4px 4px 0 0;
-        padding: 5px 10px;
-        margin-right: 5px;
-        border-top: 1px solid #ddd;
         cursor: pointer;
       }
       .close-btn {
@@ -148,14 +147,9 @@ $userInfoItemOverBgColor: #f7f7f7;
         }
       }
       &.active {
-        .text {
-          // background-color: $accountBgColor;
-          background-color: #fff;
-          border-color: $themeColor;
-        }
-        // .close-btn {
-        //   display: none !important;
-        // }
+        background-color: #fff;
+        // border-color: $themeColor;
+        box-shadow: 0 -1px 1px rgba(#555, 0.1);
       }
       &:hover {
         .close-btn {

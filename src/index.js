@@ -1,2 +1,7 @@
-export * from './components';
-export * from './config/config';
+import ManagerAPP from './app';
+
+export * from './config';
+
+export {
+  ManagerAPP,
+}

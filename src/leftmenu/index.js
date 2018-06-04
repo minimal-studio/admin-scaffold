@@ -105,6 +105,29 @@ SearchBox.propTypes = {
   onChangeMenu: PropTypes.func
 };
 
+
+function getElementLeft(element) {
+  if(!element) return;
+  var actualLeft = element.offsetLeft;
+  var current = element.offsetParent;
+  while (current !== null) {
+    actualLeft += (current.offsetLeft + current.clientLeft);
+    current = current.offsetParent;
+  }
+  return actualLeft;
+}
+
+function getElementTop(element) {
+  if(!element) return;
+  var actualTop = element.offsetTop;
+  var current = element.offsetParent;
+  while (current !== null) {
+    actualTop += (current.offsetTop + current.clientTop);
+    current = current.offsetParent;
+  }
+  return actualTop;
+}
+
 export default class Leftmenu extends Component {
   constructor(props) {
     super(props);
@@ -142,7 +165,7 @@ export default class Leftmenu extends Component {
   getNormalMenuChildren = initDataList => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
-    const { activeMenu, onChangeMenu } = this.props;
+    const { onChangeMenu } = this.props;
     const { showMenuMapper, flowMode } = this.state;
     const self = this;
     let allSet = [];
@@ -153,7 +176,7 @@ export default class Leftmenu extends Component {
         let _item = self.getMenuItem(item);
         let { child, title, code } = _item;
 
-        let hasChildren = child.length > 0;
+        let hasChildren = child && child.length > 0;
         let isFold = !code;
 
         let currFoldIdx = foldIdx;
@@ -225,11 +248,12 @@ export default class Leftmenu extends Component {
     const { flowMenuConfig } = this.state;
     const { targetElem, activeItem, isShow = true, idx } = options;
     let nextOffset = flowMenuConfig.offset;
+
     if (targetElem) {
-      let { offsetWidth, offsetTop, offsetHeight } = targetElem;
+      let { offsetWidth, offsetTop, offsetHeight, offsetLeft } = targetElem;
       nextOffset = {
-        top: offsetTop,
-        left: offsetWidth,
+        top: getElementTop(targetElem),
+        left: getElementLeft(targetElem) + offsetWidth,
         height: offsetHeight
       };
     }
@@ -405,11 +429,11 @@ Leftmenu.propTypes = {
   // onNavigate: PropTypes.func.isRequired,
   // userInfo: PropTypes.object,
   onDidMount: PropTypes.func,
-  activeMenu: PropTypes.string,
   menuMappers: PropTypes.shape({
     child: PropTypes.string.isRequired,
     code: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    icon: PropTypes.string,
   }),
 
   /* 是否悬浮模式的菜单模式 */

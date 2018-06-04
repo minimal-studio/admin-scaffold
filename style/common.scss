@@ -108,84 +108,6 @@ a {
   max-width: 100%;
 }
 
-.horizontal-form {
-  padding-top: 10px;
-  @include managerCard();
-  margin-top: 0;
-
-  &.inline {
-    .form-group {
-      .control-label {
-        width: auto;
-        padding: 0 10px;
-        margin: 0;
-      }
-
-      .form-control {
-        min-width: 120px;
-      }
-    }
-  }
-
-  &.sm {
-    .form-group {
-      .control-label {
-        width: 80px;
-        padding-right: 10px;
-        margin: 0;
-      }
-
-      .form-control {
-        min-width: 120px;
-      }
-    }
-  }
-
-  .form-group {
-    display: flex;
-    align-items: center;
-
-    &.ranger {
-      .ranger-container {
-        width: 50%;
-        min-width: auto;
-      }
-    }
-
-    &.start {
-      align-items: flex-start;
-    }
-
-    .header,
-    header {
-      padding-top: 10px;
-    }
-
-    .control-label {
-      color: #666;
-      width: 140px;
-      text-align: right;
-      margin-right: 20px;
-    }
-
-    textarea {
-      width: 400px;
-      min-height: 200px;
-    }
-
-    .form-control,
-    .radio-group {
-      // width: 75%;
-      min-width: 240px;
-      max-width: 350px;
-
-      &:focus {
-        background-color: #fff;
-      }
-    }
-  }
-}
-
 .CZGL,
 .YHKGL,
 .ZHCX {
@@ -851,4 +773,10 @@ $lotHelperOffsetTop: 112px;
 
 .font-awesome {
   font-family: FontAwesome !important;
+}
+
+
+.icon-input.has-icon input.form-control {
+  padding-left: 10px !important;
+  margin-left: 30px;
 }

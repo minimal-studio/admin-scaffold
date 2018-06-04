@@ -28,25 +28,13 @@
   position: relative;
   top: 0;
   padding-top: 0.1px;
-  // height: 90vh;
-  // overflow: auto;
-  // .fix-group {
-  //   position: absolute;
-  //   width: 100%;
-  //   top: 0;
-  // }
   .table-container {
     overflow: auto;
   }
-  // .table-container {
-  //   flex: 1;
-  //   flex-grow: 1;
-  //   // margin-bottom: 100px;
-  // }
 }
 .card-content {
-  padding-top: 10px;
-  @include managerCard();
+  background-color: #FFF;
+  padding-top: 0.1px;
 }
 .help-editor {
   .helper-list {
@@ -100,29 +88,11 @@
   .table-scroll {
     height: 45vh;
   }
-  // table tbody {
-  //   height: 45vh;
-  // }
-  // .condition-group .item.select .dropdown-menu {
-  //   .active-item {
-  //     background-color: transparent !important;
-  //   }
-  // }
   .form-group,
   .item {
     &.whole-display {
       display: block !important;
       width: 100% !important;
-      // .items-group {
-      //   // width: 300px;
-      //   height: 200px;
-      // }
-      // .group {
-      //   display: flex;
-      //   flex-direction: column;
-      //   flex-wrap: wrap;
-      //   width: 300px;
-      // }
       & > .show {
         z-index: 0 !important;
         .menu-list {
@@ -244,28 +214,6 @@
   margin-left: 5px;
 }
 
-.datepicker-ranger-content {
-  @include layout();
-  // display: block;
-  align-items: center;
-  // margin-bottom: 5px;
-
-  // flex: 1;
-  // width: 100%;
-
-  .flatpickr {
-    position: relative;
-    width: 180px;
-    .form-control {
-      width: 100% !important;
-    }
-    .icon {
-      position: absolute;
-      right: 16px;
-      top: 6px;
-    }
-  }
-}
 .detail-container {
   background-color: #fafafa;
   position: relative;

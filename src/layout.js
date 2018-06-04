@@ -77,14 +77,12 @@ class TabContent extends Component {
       tabs.push(
         <span
           key={k}
-          className={'tab' + (window.PATHNAME == k ? ' active' : '')}
-        >
+          className={'tab' + (window.PATHNAME == k ? ' active' : '')}>
           <span
             className="text"
             onClick={e => {
               history.replace(k);
-            }}
-          >
+            }}>
             {this.props.menuCodeMapper[item] || item}
           </span>
           <span
@@ -97,17 +95,12 @@ class TabContent extends Component {
                   ? window.PATHNAME
                   : routes[routes.length - 1] || '/'
               );
-            }}
-          >
-            x
-          </span>
+            }}>x</span>
         </span>
       );
       tab_contents.push(
-        <div
-          key={k}
-          className={'content ' + (window.PATHNAME == k ? ' ' : 'hide ') + item}
-        >
+        <div key={k}
+          className={'content ' + (window.PATHNAME == k ? ' ' : 'hide ') + item}>
           {window.CACHE_PAGES[k]}
         </div>
       );
@@ -133,15 +126,15 @@ export default class ManagerLayout extends Component {
       showLeftMenu: true,
       activeMenu: '',
       displayFloat: true,
-      menuData: props.menuData || []
+      menuData: props.menuStore || []
     };
     let self = this;
     const { pageComponents } = props;
 
     this.pageRoutes = Object.keys(pageComponents);
 
-    document.addEventListener('QUERY_MENU', e => {
-      self.changeMenuData(e.detail.res);
+    $GH.EventEmitter.subscribe('QUERY_MENU', ({detail}) => {
+      self.changeMenuData(detail.res);
     });
   }
 
@@ -205,7 +198,7 @@ export default class ManagerLayout extends Component {
   render() {
     const {
       userInfo = {},
-      onLogout,
+      logout,
       pageComponents,
       HeaderPlugin,
       menuMappers
@@ -232,8 +225,7 @@ export default class ManagerLayout extends Component {
           onToggleNav={toggle => {
             this.toggleLeftMenu(toggle);
           }}
-          activeMenu={activeMenu}
-        />
+          activeMenu={activeMenu}/>
         <div
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
@@ -241,7 +233,7 @@ export default class ManagerLayout extends Component {
           {
             HeaderPlugin ? (
               <HeaderPlugin
-                onLogout={onLogout}
+                onLogout={logout}
                 displayFloat={displayFloat}
                 userInfo={userInfo}
                 toggleFloat={this.toggleFloat.bind(this)}/>

@@ -10,19 +10,23 @@
   @include fill();
   position: fixed;
   background-color: #1d2939;
+  .panel-tip {
+    margin: 0;
+  }
   .form-layout {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    padding: 10px 50px 30px;
-    background-color: rgba(255, 255, 255, 0.8);
+    width: 440px;
+    padding: 10px 30px 30px;
+    background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     transition: all ease 2s;
-    .icon-input {
+    .input-control {
       width: 100%;
+      background-color: transparent;
     }
     &:hover {
       box-shadow: 0 40px 48px rgba(0, 0, 0, 0.4);
@@ -30,10 +34,6 @@
     .horizontal-form {
       padding: 10px 0;
       background-color: transparent;
-      .icon-input.has-icon .form-control {
-        height: 40px;
-        line-height: 40px;
-      }
     }
     .title {
       // color: #FFF;
@@ -41,7 +41,8 @@
     }
     .form-group {
       position: relative;
-      margin-bottom: 5px;
+      margin-top: 25px;
+      margin-bottom: 0;
       .control-label {
         display: none;
       }
