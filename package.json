@@ -18,7 +18,7 @@
   "description": "",
   "peerDependencies": {
     "ukelli-ui": "^2.1.8",
-    "cross-env": "^5.1.6",
+    "cross-env": "^5.1.6"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
