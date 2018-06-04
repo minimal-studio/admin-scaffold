@@ -310,7 +310,7 @@ export default class Leftmenu extends Component {
             let parentHeight = offset.height;
             let offsetBottom = expectedOffsetTop + flowContainerHeight;
 
-            let overBottom = SCREEN_HEIGHT - offsetBottom;
+            let overBottom = window.screenX - offsetBottom;
             let finalOffsetTop = expectedOffsetTop;
             let flowMenuOffsetTopPx = parentHeight == flowContainerHeight ? 0 : parentHeight;
 
@@ -380,6 +380,7 @@ export default class Leftmenu extends Component {
       menuData,
       onChangeMenu,
       onToggleNav,
+      versionInfo,
       showLeftMenu
     } = this.props;
 
@@ -405,7 +406,11 @@ export default class Leftmenu extends Component {
         <div className="menu-header">
           <h5 className="title">
             <span className="mr5">系统版本</span>
-            <VersionComponent numberVersion={VersionInfo.numberVersion} />
+            {
+              versionInfo ? (
+                <VersionComponent numberVersion={versionInfo.numberVersion} />
+              ) : null
+            }
           </h5>
           <SearchBox
             onChangeMenu={onChangeMenu}
