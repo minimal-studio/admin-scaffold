@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SANGET/orion-admin-web-scaffold.git"
+    "url": "http://github.9th.go/frontend-orion/orion-admin-web-template.git"
   },
   "description": "",
   "peerDependencies": {
