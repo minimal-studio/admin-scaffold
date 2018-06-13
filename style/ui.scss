@@ -43,7 +43,7 @@ $avatarMiniScale: 24px;
   flex-wrap: wrap;
   padding: 0 10px;
   .card-form {
-    width: 32%;
+    width: 49%;
     padding: 10px;
     border: 2px dashed #eee;
     margin: 0 10px 5px 0;
@@ -75,8 +75,8 @@ $avatarMiniScale: 24px;
           margin-right: 10px;
         }
         .form-control {
-          width: 100px;
-          min-width: 100px;
+          width: 160px !important;
+          min-width: 160px !important;
         }
       }
     }

@@ -1,14 +1,14 @@
 {
   "name": "orion-admin-web-template",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
     "release": "npm run build; npm run publish",
     "build": "rm -rf ./build/; npm run build:babel; npm run build:copy-files; npm run copy-style",
     "copy-style": "cp -R ./style ./build/",
-    "build:babel": "cross-env NODE_ENV=production babel ./src --out-dir ./build --ignore spec.js",
-    "build:copy-files": "cross-env NODE_ENV=production babel-node ./scripts/copy-files.js",
+    "build:babel": "NODE_ENV=production babel ./src --out-dir ./build --ignore spec.js",
+    "build:copy-files": "NODE_ENV=production babel-node ./scripts/copy-files.js",
     "push": "npm publish; git add -A; git commit -m 'update'; git push origin master"
   },
   "repository": {
@@ -17,10 +17,8 @@
   },
   "description": "",
   "peerDependencies": {
-    "ukelli-ui": "^2.2.0",
-    "cross-env": "^5.1.6"
-  },
-  "dependencies": {
+    "ukelli-ui": "^2.2.4",
+    "cross-env": "^5.1.6",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

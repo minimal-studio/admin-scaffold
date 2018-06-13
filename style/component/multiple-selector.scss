@@ -1,0 +1,43 @@
+.multiple-selector {
+  display: flex;
+  border: 1px solid #EEE;
+  position: relative;
+  z-index: 111;
+  .item-group {
+    margin-right: 10px;
+    position: relative;
+    padding: 10px;
+    &:hover {
+      .items {
+        display: block;
+      }
+    }
+    &.active {
+      // color: $themeColor;
+      >.title {
+        color: $themeColor;
+      }
+    }
+    .title {
+
+    }
+    .items {
+      width: 300px;
+      display: none;
+      position: absolute;
+      background-color: #FFF;
+      box-shadow: 0 12px 24px rgba(#000, 0.2);
+      padding: 10px 0;
+      .item {
+        padding: 5px 10px;
+        cursor: pointer;
+        &:hover {
+          background-color: #EEE;
+        }
+        &.active {
+          color: $themeColor;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import {defineGlobalObj} from 'basic-helper';
+import {defineGlobalScope} from 'basic-helper';
 
 let adminWebTemplate = {
   versionUrl: '/js/version.txt',
@@ -16,4 +16,4 @@ export function getAdminWebTemplateConfig(name) {
 }
 
 // $3THG third game
-defineGlobalObj('$AWT', adminWebTemplate);
+defineGlobalScope('$AWT', adminWebTemplate);
