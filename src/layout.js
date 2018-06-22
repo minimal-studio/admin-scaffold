@@ -220,7 +220,7 @@ export default class ManagerLayout extends Component {
             // this.pushRoute(code)
           }}
           menuMappers={menuMappers}
-          flowMode={true}
+          defaultFlowMode={false}
           showLeftMenu={showLeftMenu}
           onToggleNav={toggle => {
             this.toggleLeftMenu(toggle);

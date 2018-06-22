@@ -1,6 +1,6 @@
 {
   "name": "orion-admin-web-template",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -22,8 +22,10 @@
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "mousetrap": "^1.6.1",
     "react-transition-group": "^2.2.0"
+  },
+  "dependencies": {
+    "mousetrap": "^1.6.1"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",

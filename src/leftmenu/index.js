@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import Mousetrap from 'mousetrap';
+import {DebounceClass} from 'basic-helper';
+import {storageHelper} from '../config';
 
 import Link from './link.js';
 import VersionComponent from './version-com';
 
-let delayExec = new $GH.Debounce();
+let delayExec = new DebounceClass();
 
 const MENU_ACTIVE_STORAGE = 'MENU_ACTIVE_STORAGE';
 const ESC_KEY = 27;
@@ -15,7 +17,6 @@ function getScreenHeight() {
   return document.documentElement.clientHeight;
 }
 
-let menuCodeMapper = {};
 class SearchBox extends Component {
   constructor(props) {
     super(props);
@@ -62,8 +63,8 @@ class SearchBox extends Component {
   };
   render() {
     const { searchMap, isShow } = this.state;
-    const { menuCodeMapper, onChangeMenu } = this.props;
-    const allCode = Object.keys(menuCodeMapper) || [];
+    const { codeMapper, onChangeMenu } = this.props;
+    const allCode = Object.keys(codeMapper) || [];
     return (
       <div className={'search-container' + (isShow ? ' show-content' : '')}>
         <input
@@ -86,7 +87,7 @@ class SearchBox extends Component {
             allCode
               .filter(
                 code =>
-                  menuCodeMapper[code].indexOf(searchMap) != -1 ||
+                  codeMapper[code].indexOf(searchMap) != -1 ||
                   code.indexOf(searchMap.toUpperCase()) != -1
               )
               .map((code, idx) => {
@@ -96,7 +97,7 @@ class SearchBox extends Component {
                     key={idx}
                     to={`${code}`}
                     onClick={e => $GH.CallFunc(onChangeMenu)(code)}>
-                    {menuCodeMapper[code]}
+                    {codeMapper[code]}
                   </Link>
                 );
               })
@@ -110,7 +111,6 @@ class SearchBox extends Component {
 SearchBox.propTypes = {
   onChangeMenu: PropTypes.func
 };
-
 
 function getElementLeft(element) {
   if(!element) return;
@@ -134,7 +134,13 @@ function getElementTop(element) {
   return actualTop;
 }
 
+
+const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
+
+let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
+
 export default class Leftmenu extends Component {
+  flowModeKey = 'IS_FLOW_MODA';
   constructor(props) {
     super(props);
     let showMenuMapper = window.Storage.getItem(MENU_ACTIVE_STORAGE) || '';
@@ -143,7 +149,9 @@ export default class Leftmenu extends Component {
     } catch (e) {
       showMenuMapper = {};
     }
-    const { flowMode = false } = props;
+    const storageMode = storageHelper.get(this.flowModeKey);
+    const { defaultFlowMode = false } = props;
+
     this.state = {
       showMenuMapper,
       flowMenuConfig: {
@@ -155,7 +163,7 @@ export default class Leftmenu extends Component {
           left: 0
         }
       },
-      flowMode
+      flowMode: storageMode ? (!!+storageMode) : defaultFlowMode
     };
   }
   componentDidMount() {
@@ -166,6 +174,7 @@ export default class Leftmenu extends Component {
     this.setState({
       flowMode: isFlowMode
     });
+    storageHelper.set(this.flowModeKey, isFlowMode ? '1' : '0')
   }
 
   getNormalMenuChildren = initDataList => {
@@ -282,6 +291,7 @@ export default class Leftmenu extends Component {
   }
   getMenuLinkerDOM = ({ key, onClick, menuText }) => {
     menuCodeMapper[key] = menuText;
+    storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true)
     return (
       <Link
         key={key}
@@ -422,7 +432,7 @@ export default class Leftmenu extends Component {
           <SearchBox
             onChangeMenu={onChangeMenu}
             onToggleNav={onToggleNav}
-            menuCodeMapper={menuCodeMapper}
+            codeMapper={menuCodeMapper}
             showLeftMenu={showLeftMenu}
           />
         </div>
