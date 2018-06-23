@@ -50,12 +50,12 @@ $hoverBgColor: rgb(140, 190, 234);
 
 .leftmenu-response {
   // background-color: $leftmenuBgColor;
-  // background: linear-gradient(
-  //   45deg,
-  //   $leftmenuBgColor,
-  //   lighten($leftmenuBgColor, 5%),
-  //   lighten($leftmenuBgColor, 15%)
-  // );
+  background: linear-gradient(
+    45deg,
+    $leftmenuBgColor,
+    lighten($leftmenuBgColor, 5%),
+    lighten($leftmenuBgColor, 15%)
+  );
   color: #c5c5c7;
   @include fill();
   width: $leftmenuWidth;

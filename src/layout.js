@@ -14,8 +14,41 @@ import LeftmenuLayout from './leftmenu';
 
 const SAVE_TABS = 'save_tabs';
 
+const selector = (name) => {
+  return document.querySelector(name) || {};
+}
+
 class TabContent extends Component {
+  state = {
+    pageCententHeight: 200
+  }
+  constructor(props) {
+    super(props);
+
+    window.GetOutSideHeight = this.getOutSideHeight;
+  }
+  getOutSideHeight = () => {
+    let statusBarHeight = selector('#statusBar').offsetHeight;
+    let pageRouterHeight = selector('#pageRouter').offsetHeight;
+
+    return statusBarHeight + pageRouterHeight + 20;
+  }
+  setMainPageContentHeight() {
+    let resultHeight = this.genPageContentHeight(this.getOutSideHeight());
+    
+    this.setState({
+      pageCententHeight: resultHeight
+    });
+
+    window.GenPageCententHeight = (targetHeight) => {
+      return this.genPageContentHeight(minuHeight + targetHeight);
+    };
+  }
+  genPageContentHeight(targetHeight) {
+    return `calc(100vh - ${targetHeight}px)`
+  }
   componentDidMount() {
+    this.setMainPageContentHeight();
     const { history } = this.props;
     // 绑定快捷键关闭标签页
     Mousetrap.bind(['alt+w'], e => {
@@ -68,8 +101,9 @@ class TabContent extends Component {
 
   render() {
     const { history } = this.props;
-    const tabs = [],
-      tab_contents = [];
+    const { pageCententHeight } = this.state;
+    let tabs = [];
+    let tab_contents = [];
     let routes = [];
     for (let k in window.CACHE_PAGES) {
       routes.push(k);
@@ -108,10 +142,14 @@ class TabContent extends Component {
     this.routes = routes;
 
     return (
-      <div>
-        <div className="page-router">{tabs}</div>
-        <div className="page-content">{tab_contents}</div>
-      </div>
+      <React.Fragment>
+        <div className="page-router" id="pageRouter">{tabs}</div>
+        <div className="page-content" 
+          style={{
+            height: pageCententHeight
+          }}
+          id="pageCententContainer">{tab_contents}</div>
+      </React.Fragment>
     );
   }
 }
@@ -232,22 +270,26 @@ export default class ManagerLayout extends Component {
           }>
           {
             HeaderPlugin ? (
-              <HeaderPlugin
-                onLogout={logout}
-                displayFloat={displayFloat}
-                userInfo={userInfo}
-                toggleFloat={this.toggleFloat.bind(this)}/>
+              <div className="status-bar" id="statusBar">
+                <HeaderPlugin
+                  onLogout={logout}
+                  displayFloat={displayFloat}
+                  userInfo={userInfo}
+                  toggleFloat={this.toggleFloat.bind(this)}/>
+              </div>
             ) : null
           }
-          {this.pageRoutes.map((item, index) => {
-            return (
-              <Route
-                key={index}
-                path={'/' + item}
-                component={pageComponents[item]}
-              />
-            );
-          })}
+          {
+            this.pageRoutes.map((item, index) => {
+              return (
+                <Route
+                  key={index}
+                  path={'/' + item}
+                  component={pageComponents[item]}
+                />
+              );
+            })
+          }
           <TabContentWithRouter menuCodeMapper={menuCodeMapper} />
         </div>
       </div>

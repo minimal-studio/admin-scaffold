@@ -27,14 +27,14 @@ export default class ManagerApp extends Component {
     const { theme } = this.state;
 
     return (
-      <HashRouter>
-        <div className={'top-lv-layout theme-' + theme}>
+      <div className={'top-lv-layout theme-' + theme}>
+        <HashRouter>
           <ManagerLayoutWithRouter
             {...this.props}
             changeTheme={this.changeTheme.bind(this)}
           />
-        </div>
-      </HashRouter>
+        </HashRouter>
+      </div>
     );
   }
 }

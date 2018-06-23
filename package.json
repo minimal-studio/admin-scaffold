@@ -1,6 +1,6 @@
 {
   "name": "orion-admin-web-template",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -17,7 +17,7 @@
   },
   "description": "",
   "peerDependencies": {
-    "ukelli-ui": "^2.2.4",
+    "ukelli-ui": "^2.4.4",
     "cross-env": "^5.1.6",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",

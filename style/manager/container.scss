@@ -95,7 +95,8 @@ $userInfoItemOverBgColor: #f7f7f7;
   .page-content {
     padding: 0.1px 10px;
     // padding: 0.01px;
-    min-height: 90vh;
+    // min-height: 90vh;
+    overflow-y: auto;
     border-radius: 0 5px 5px;
     // background-color: #FFF;
     .content {
