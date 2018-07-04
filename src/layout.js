@@ -28,7 +28,7 @@ class TabContent extends Component {
     window.GetOutSideHeight = this.getOutSideHeight;
   }
   getOutSideHeight = () => {
-    let statusBarHeight = selector('#statusBar').offsetHeight;
+    let statusBarHeight = selector('#statusBar').offsetHeight || 0;
     let pageRouterHeight = selector('#pageRouter').offsetHeight;
 
     return statusBarHeight + pageRouterHeight + 20;
