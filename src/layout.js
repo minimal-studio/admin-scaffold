@@ -171,8 +171,8 @@ export default class ManagerLayout extends Component {
 
     this.pageRoutes = Object.keys(pageComponents);
 
-    $GH.EventEmitter.subscribe('QUERY_MENU', ({detail}) => {
-      self.changeMenuData(detail.res);
+    $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
+      self.changeMenuData(resMenuData);
     });
   }
 
@@ -248,6 +248,7 @@ export default class ManagerLayout extends Component {
       activeMenu,
       displayFloat
     } = this.state;
+    // console.log(menuData)
 
     return (
       <div id="managerApp">

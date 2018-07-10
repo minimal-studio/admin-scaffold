@@ -150,7 +150,9 @@ export default class Leftmenu extends Component {
       showMenuMapper = {};
     }
     const storageMode = storageHelper.get(this.flowModeKey);
-    const { defaultFlowMode = false } = props;
+    const { defaultFlowMode = false, menuData } = props;
+
+    window.MENU_DATA = menuData;
 
     this.state = {
       showMenuMapper,
