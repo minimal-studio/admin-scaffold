@@ -18,6 +18,9 @@ function getScreenHeight() {
 }
 
 class SearchBox extends Component {
+  static propTypes = {
+    onChangeMenu: PropTypes.func
+  };
   constructor(props) {
     super(props);
 
@@ -108,10 +111,6 @@ class SearchBox extends Component {
   }
 }
 
-SearchBox.propTypes = {
-  onChangeMenu: PropTypes.func
-};
-
 function getElementLeft(element) {
   if(!element) return;
   var actualLeft = element.offsetLeft;
@@ -140,6 +139,19 @@ const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
 export default class Leftmenu extends Component {
+  static propTypes = {
+    onDidMount: PropTypes.func,
+    menuMappers: PropTypes.shape({
+      child: PropTypes.string.isRequired,
+      code: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      icon: PropTypes.string,
+    }),
+    /* 是否悬浮模式的菜单模式 */
+    flowMode: PropTypes.bool,
+    menuData: PropTypes.any.isRequired,
+    onChangeMenu: PropTypes.func
+  };
   flowModeKey = 'IS_FLOW_MODA';
   constructor(props) {
     super(props);
@@ -448,20 +460,3 @@ export default class Leftmenu extends Component {
     );
   }
 }
-
-Leftmenu.propTypes = {
-  // onNavigate: PropTypes.func.isRequired,
-  // userInfo: PropTypes.object,
-  onDidMount: PropTypes.func,
-  menuMappers: PropTypes.shape({
-    child: PropTypes.string.isRequired,
-    code: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-  }),
-
-  /* 是否悬浮模式的菜单模式 */
-  flowMode: PropTypes.bool,
-  menuData: PropTypes.any.isRequired,
-  onChangeMenu: PropTypes.func
-};

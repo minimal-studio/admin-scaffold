@@ -10,6 +10,10 @@ export const ManagerLayoutWithRouter = withRouter(ManagerLayout);
 const themeStrong = 'THEME_STORAGE';
 
 export default class ManagerApp extends Component {
+  static propTypes = {
+    pageComponents: PropTypes.object.isRequired,
+    HeaderPlugin: PropTypes.func
+  };
   constructor() {
     super();
     this.state = {
@@ -23,7 +27,6 @@ export default class ManagerApp extends Component {
     window.Storage.setItem(themeStrong, theme);
   }
   render() {
-    const { location, routes, pageComponents } = this.props;
     const { theme } = this.state;
 
     return (
@@ -38,7 +41,3 @@ export default class ManagerApp extends Component {
     );
   }
 }
-ManagerApp.propTypes = {
-  pageComponents: PropTypes.object.isRequired,
-  HeaderPlugin: PropTypes.func
-};
