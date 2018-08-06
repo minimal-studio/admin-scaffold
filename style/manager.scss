@@ -56,17 +56,6 @@
     }
   }
 }
-@keyframes warning {
-  from {
-    background-color: #fff;
-    color: #333;
-  }
-
-  to {
-    background-color: $colorRed;
-    color: #fff;
-  }
-}
 
 .CPYKBJ {
   // padding: 10px;
@@ -262,7 +251,7 @@
   font-family: sans-serif;
   font-size: 12px;
   display: inline-block;
-  color: #f35626;
+  color: #FFF;
   animation: jackInTheBox 3s infinite ease;
   cursor: pointer;
 }

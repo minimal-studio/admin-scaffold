@@ -157,6 +157,12 @@ class TabContent extends Component {
 const TabContentWithRouter = withRouter(TabContent);
 
 export default class ManagerLayout extends Component {
+  static propTypes = {
+    userInfo: PropTypes.object,
+    onLogout: PropTypes.func,
+    headerPlugin: PropTypes.object,
+    pageComponents: PropTypes.object.isRequired
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -196,7 +202,7 @@ export default class ManagerLayout extends Component {
     Mousetrap.unbind(['alt+k', 'ctrl ctrl', 'alt alt']);
   }
 
-  toggleFloat() {
+  toggleFloat = () => {
     let isDisplay = $GH.ToggleBasicFloatLen();
     this.setState({
       displayFloat: !this.state.displayFloat
@@ -226,7 +232,7 @@ export default class ManagerLayout extends Component {
     });
     this.triggerResize();
   }
-  showShortcut() {
+  showShortcut = () => {
     ShowGlobalModal({
       children: <ShortcutHelp />,
       title: '键盘快捷键说明',
@@ -239,7 +245,8 @@ export default class ManagerLayout extends Component {
       logout,
       pageComponents,
       HeaderPlugin,
-      menuMappers
+      menuMappers,
+      versionInfo
     } = this.props;
     const {
       menuCodeMapper,
@@ -260,6 +267,7 @@ export default class ManagerLayout extends Component {
           }}
           menuMappers={menuMappers}
           defaultFlowMode={false}
+          versionInfo={versionInfo}
           showLeftMenu={showLeftMenu}
           onToggleNav={toggle => {
             this.toggleLeftMenu(toggle);
@@ -274,9 +282,10 @@ export default class ManagerLayout extends Component {
               <div className="status-bar" id="statusBar">
                 <HeaderPlugin
                   onLogout={logout}
+                  showShortcut={this.showShortcut}
                   displayFloat={displayFloat}
                   userInfo={userInfo}
-                  toggleFloat={this.toggleFloat.bind(this)}/>
+                  toggleFloat={this.toggleFloat}/>
               </div>
             ) : null
           }
@@ -297,9 +306,3 @@ export default class ManagerLayout extends Component {
     );
   }
 }
-ManagerLayout.propTypes = {
-  userInfo: PropTypes.object,
-  onLogout: PropTypes.func,
-  headerPlugin: PropTypes.object,
-  pageComponents: PropTypes.object.isRequired
-};

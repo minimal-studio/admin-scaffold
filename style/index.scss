@@ -1,7 +1,6 @@
 /**
  * 基础通用样式, 包含布局 UI 和一些动画过度样式
  */
-@import './layout.scss';
 @import './common.scss';
 @import './ui.scss';
 
@@ -14,4 +13,4 @@
 @import './menu.tree.scss';
 @import './checkbox.scss';
 @import './react-checkbox-tree.scss';
-@import './component/multiple-selector.scss'
+@import './component/multiple-selector.scss';

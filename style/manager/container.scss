@@ -8,6 +8,7 @@ $userInfoItemOverBgColor: #f7f7f7;
   background-color: #fff;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   .user-info-group {
     // display: flex;
     color: #666;
@@ -30,30 +31,38 @@ $userInfoItemOverBgColor: #f7f7f7;
     .item-btn {
       padding: 8px 10px;
       border-bottom: 1px dashed #ddd;
+      margin: 5px 10px;
       &:hover {
-        background-color: $themeColor;
-        border-color: darken($themeColor, 10%);
-        color: #fff;
+        background-color: $userInfoItemOverBgColor;
+        // border-color: darken($themeColor, 10%);
       }
     }
   }
+  .user-sub-detail {
+    background-color: $themeColor;
+    color: #FFF;
+    .avatar {
+      background-color: #FFF;
+      color: $themeColor;
+    }
+  }
   .user-info-item {
-    padding: 8px 20px;
+    padding: 6px 20px;
     cursor: pointer;
   }
   .hide-container {
     &:hover {
       .user-info-item {
-        background-color: $userInfoItemOverBgColor;
+        background-color: #FFF;
       }
-      .hide-content {
-        background-color: $userInfoItemOverBgColor;
-      }
+      // .hide-content {
+      //   // background-color: $userInfoItemOverBgColor;
+      // }
     }
     .hide-content {
       position: absolute;
       right: 0;
-      width: 200px;
+      width: 280px;
       top: 100%;
       box-shadow: 0 6px 24px rgba(#000, 0.3);
       background-color: #fff;
@@ -73,20 +82,12 @@ $userInfoItemOverBgColor: #f7f7f7;
 }
 
 .pages-container {
-  // width: 100%;
-  // height: 100%;
   overflow-y: auto;
   @include fill();
-  // bottom: 0;
   left: $leftmenuWidth;
   transition: all 0.2s ease;
-  z-index: 101;
   background-color: #e4e7ea;
   border-radius: 0 0 0 4px;
-
-  // padding: 10px;
-  // background-color: $containerBgColor;
-  // background-color: #e6e6e6;
 
   &.hide-menu {
     left: 0;
@@ -94,11 +95,8 @@ $userInfoItemOverBgColor: #f7f7f7;
 
   .page-content {
     padding: 0.1px 10px;
-    // padding: 0.01px;
-    // min-height: 90vh;
     overflow-y: auto;
     border-radius: 0 5px 5px;
-    // background-color: #FFF;
     .content {
       padding: 0.01px;
     }
@@ -130,24 +128,30 @@ $userInfoItemOverBgColor: #f7f7f7;
     .tab {
       position: relative;
       display: inline-block;
-      // border-top: 1px solid #ddd;
       background-color: #f3f3f3;
       box-shadow: inset 0 -3px 3px rgba(#000, 0.1);
-      padding: 5px 15px;
+      padding: 5px 20px;
       margin-right: 5px;
       .text {
         display: inline-block;
         cursor: pointer;
+        transition: all ease 0.2s;
       }
       .close-btn {
         position: absolute;
-        right: -10px;
-        top: -10px;
+        right: -2px;
+        top: 3px;
         z-index: 4;
-        display: none;
+        background-color: transparent;
+        color: #333;
+        // display: none;
+        opacity: 0;
+        transition: all ease 0.2s;
+        transform: translateX(3px);
 
         &:hover {
-          background-color: $dangerColor;
+          color: $dangerColor;
+          transform: rotate(18deg);
         }
       }
       &.active {
@@ -156,8 +160,12 @@ $userInfoItemOverBgColor: #f7f7f7;
         box-shadow: 0 -1px 1px rgba(#555, 0.1);
       }
       &:hover {
+        .text {
+          transform: translateX(-3px);
+        }
         .close-btn {
-          display: block;
+          opacity: 1;
+          transform: translateX(-2px);
         }
       }
     }
@@ -173,72 +181,10 @@ $userInfoItemOverBgColor: #f7f7f7;
     }
   }
 
-  .poll-container {
-    $height: 400px;
-    $headH: 40px;
-    width: 680px;
-    position: absolute;
-    // right: 0;
-    left: 0;
-    top: 0;
-    // top: - $height + $headH;
-    // width: 600px;
-    // width: 800px;
-    height: 40px;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    background-color: #fff;
-    z-index: 999;
-
-    .action-header {
-      line-height: 40px;
-      background-color: #fff;
-      color: #444;
-      text-align: center;
-      animation-duration: 0.5s;
-      animation-iteration-count: infinite;
-
-      &.tiping {
-        background-color: $colorRed;
-        color: #fff;
-      }
-    }
-    .CPYKBJ {
-    }
-
-    &.show {
-      width: 840px;
-      height: $height;
-    }
-    &.show,
-    &.warn {
-      // bottom: 0;
-      box-shadow: 0 0 24px rgba(0, 0, 0, 0.3);
-    }
-
-    &.warn {
-      .action-header {
-        animation-name: warning;
-      }
-    }
-  }
   .pagin-con,
   .table-container,
   .condition-group {
     border-bottom: none;
-  }
-
-  .TKDSHS {
-    border-bottom: 1px solid #eee;
-    padding: 0 0 0 20px;
-
-    .item-tip {
-      margin-right: 10px;
-
-      strong {
-        color: $colorOrange;
-      }
-    }
   }
 
   .FEDEPLOY .icon-input {
