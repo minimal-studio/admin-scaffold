@@ -10,7 +10,28 @@ const isEmptyChildren = children => React.Children.count(children) === 0;
  * The public API for matching a single path and rendering.
  */
 
-window.CACHE_PAGES = {};
+let CACHE_PAGES = {};
+let currPathname = '';
+
+function getCurrPathname() {
+  return currPathname;
+}
+
+function getPageCache() {
+  return CACHE_PAGES;
+}
+function setPageCache(nextState) {
+  CACHE_PAGES = nextState;
+  return CACHE_PAGES;
+}
+function delPageCacheItem(id) {
+  delete CACHE_PAGES[id];
+  return CACHE_PAGES;
+}
+
+export {
+  getPageCache, setPageCache, delPageCacheItem, getCurrPathname
+}
 
 class Route extends React.Component {
   static propTypes = {
@@ -120,13 +141,13 @@ class Route extends React.Component {
     const location = this.props.location || route.location;
     const props = { match, location, history, staticContext };
 
-    if (component)
+    if (component) {
       if (match) {
-        window.PATHNAME = location.pathname;
-        if (window.CACHE_PAGES[location.pathname]) {
+        currPathname = location.pathname;
+        if (CACHE_PAGES[location.pathname]) {
           return null;
         }
-        window.CACHE_PAGES[location.pathname] = React.createElement(
+        CACHE_PAGES[location.pathname] = React.createElement(
           component,
           props
         );
@@ -134,6 +155,7 @@ class Route extends React.Component {
       } else {
         return null;
       }
+    }
 
     if (render) return match ? render(props) : null;
 

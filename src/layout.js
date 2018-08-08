@@ -8,9 +8,10 @@ import withRouter from 'react-router/withRouter';
 import { ShowGlobalModal, Avatar } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
 
-import Route from './cache-router';
+import CacheRoute, {getPageCache, delPageCacheItem, getCurrPathname} from './cache-router';
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
+import Posts from './posts';
 
 const SAVE_TABS = 'save_tabs';
 
@@ -50,12 +51,13 @@ class TabContent extends Component {
   componentDidMount() {
     this.setMainPageContentHeight();
     const { history } = this.props;
+    let currPathname = getCurrPathname();
     // 绑定快捷键关闭标签页
     Mousetrap.bind(['alt+w'], e => {
       let routes = this.routes;
-      const k = window.PATHNAME;
+      const k = currPathname;
       routes = routes.filter(item => item != k);
-      delete window.CACHE_PAGES[k];
+      delete delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       return false;
     });
@@ -63,9 +65,9 @@ class TabContent extends Component {
     // 重新挂载当前tab页
     Mousetrap.bind(['alt+r'], e => {
       let routes = this.routes;
-      const k = window.PATHNAME;
+      const k = currPathname;
       routes = routes.filter(item => item != k);
-      delete window.CACHE_PAGES[k];
+      delete delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       history.replace(k);
       return false;
@@ -76,7 +78,7 @@ class TabContent extends Component {
       if (this.routes.length < 1) return;
       const json = {
         routes: this.routes,
-        pathname: window.PATHNAME
+        pathname: currPathname
       };
       localStorage.setItem(SAVE_TABS, JSON.stringify(json));
       return false;
@@ -100,18 +102,22 @@ class TabContent extends Component {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, postMode } = this.props;
     const { pageCententHeight } = this.state;
+
     let tabs = [];
     let tab_contents = [];
     let routes = [];
-    for (let k in window.CACHE_PAGES) {
+    let CACHE_PAGES = getPageCache();
+    let currPathname = getCurrPathname();
+
+    for (let k in CACHE_PAGES) {
       routes.push(k);
       let item = k.replace('/', '');
       tabs.push(
         <span
           key={k}
-          className={'tab' + (window.PATHNAME == k ? ' active' : '')}>
+          className={'tab' + (currPathname == k ? ' active' : '')}>
           <span
             className="text"
             onClick={e => {
@@ -123,19 +129,17 @@ class TabContent extends Component {
             className="close-btn"
             onClick={e => {
               routes = routes.filter(item => item != k);
-              delete window.CACHE_PAGES[k];
+              delPageCacheItem(k);
               history.replace(
-                window.PATHNAME != k
-                  ? window.PATHNAME
-                  : routes[routes.length - 1] || '/'
+                currPathname != k ? currPathname : routes[routes.length - 1] || '/'
               );
             }}>x</span>
         </span>
       );
       tab_contents.push(
         <div key={k}
-          className={'content ' + (window.PATHNAME == k ? ' ' : 'hide ') + item}>
-          {window.CACHE_PAGES[k]}
+          className={'content ' + (currPathname == k ? ' ' : 'hide ') + item}>
+          {CACHE_PAGES[k]}
         </div>
       );
     }
@@ -161,7 +165,8 @@ export default class ManagerLayout extends Component {
     userInfo: PropTypes.object,
     onLogout: PropTypes.func,
     headerPlugin: PropTypes.object,
-    pageComponents: PropTypes.object.isRequired
+    postMode: PropTypes.bool,
+    pageComponents: PropTypes.object
   };
   constructor(props) {
     super(props);
@@ -173,9 +178,9 @@ export default class ManagerLayout extends Component {
       menuData: props.menuStore || []
     };
     let self = this;
-    const { pageComponents } = props;
+    const { pageComponents, postMode } = props;
 
-    this.pageRoutes = Object.keys(pageComponents);
+    this.pageRoutes = postMode ? ['Posts'] : Object.keys(pageComponents);
 
     $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
       self.changeMenuData(resMenuData);
@@ -246,7 +251,9 @@ export default class ManagerLayout extends Component {
       pageComponents,
       HeaderPlugin,
       menuMappers,
-      versionInfo
+      versionInfo,
+      postMode,
+      title
     } = this.props;
     const {
       menuCodeMapper,
@@ -255,13 +262,13 @@ export default class ManagerLayout extends Component {
       activeMenu,
       displayFloat
     } = this.state;
-    // console.log(menuData)
 
     return (
       <div id="managerApp">
         <LeftmenuLayout
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
           menuData={menuData}
+          title={title}
           onChangeMenu={code => {
             // this.pushRoute(code)
           }}
@@ -290,17 +297,26 @@ export default class ManagerLayout extends Component {
             ) : null
           }
           {
-            this.pageRoutes.map((item, index) => {
+            !postMode ? this.pageRoutes.map((item, index) => {
               return (
-                <Route
+                <CacheRoute
                   key={index}
                   path={'/' + item}
                   component={pageComponents[item]}
                 />
               );
-            })
+            }) : (
+              // <Posts/>
+              <span></span>
+            )
           }
-          <TabContentWithRouter menuCodeMapper={menuCodeMapper} />
+          {
+            !postMode ? (
+              <TabContentWithRouter menuCodeMapper={menuCodeMapper} />
+            ) : (
+              <Posts {...this.props}/>
+            )
+          }
         </div>
       </div>
     );
