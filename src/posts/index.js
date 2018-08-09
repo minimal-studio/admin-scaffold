@@ -24,7 +24,7 @@ let delayExec = new DebounceClass();
 // };
 const wrapUrl = (str) => {
   let strArr = str.replace('?', '');
-  return '/posts/' + strArr + '.html';
+  return './posts/' + strArr + '.html';
 };
 
 export default class Posts extends Component {
