@@ -57,7 +57,7 @@ class TabContent extends Component {
       let routes = this.routes;
       const k = currPathname;
       routes = routes.filter(item => item != k);
-      delete delPageCacheItem(k);
+      delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       return false;
     });
@@ -67,7 +67,7 @@ class TabContent extends Component {
       let routes = this.routes;
       const k = currPathname;
       routes = routes.filter(item => item != k);
-      delete delPageCacheItem(k);
+      delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       history.replace(k);
       return false;
