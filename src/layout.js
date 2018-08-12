@@ -8,7 +8,7 @@ import withRouter from 'react-router/withRouter';
 import { ShowGlobalModal, Avatar } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
 
-import Route from './cache-router';
+import CacheRoute, {getPageCache, delPageCacheItem, getCurrPathname} from './cache-router';
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
 
@@ -55,7 +55,7 @@ class TabContent extends Component {
       let routes = this.routes;
       const k = window.PATHNAME;
       routes = routes.filter(item => item != k);
-      delete window.CACHE_PAGES[k];
+      delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       return false;
     });
@@ -65,7 +65,7 @@ class TabContent extends Component {
       let routes = this.routes;
       const k = window.PATHNAME;
       routes = routes.filter(item => item != k);
-      delete window.CACHE_PAGES[k];
+      delPageCacheItem(k);
       history.replace(routes[routes.length - 1] || '/');
       history.replace(k);
       return false;
@@ -105,13 +105,16 @@ class TabContent extends Component {
     let tabs = [];
     let tab_contents = [];
     let routes = [];
-    for (let k in window.CACHE_PAGES) {
+    let CACHE_PAGES = getPageCache();
+    let currPathname = getCurrPathname();
+
+    for (let k in CACHE_PAGES) {
       routes.push(k);
       let item = k.replace('/', '');
       tabs.push(
         <span
           key={k}
-          className={'tab' + (window.PATHNAME == k ? ' active' : '')}>
+          className={'tab' + (currPathname == k ? ' active' : '')}>
           <span
             className="text"
             onClick={e => {
@@ -123,10 +126,10 @@ class TabContent extends Component {
             className="close-btn"
             onClick={e => {
               routes = routes.filter(item => item != k);
-              delete window.CACHE_PAGES[k];
+              delPageCacheItem(k);
               history.replace(
-                window.PATHNAME != k
-                  ? window.PATHNAME
+                currPathname != k
+                  ? currPathname
                   : routes[routes.length - 1] || '/'
               );
             }}>x</span>
@@ -134,8 +137,8 @@ class TabContent extends Component {
       );
       tab_contents.push(
         <div key={k}
-          className={'content ' + (window.PATHNAME == k ? ' ' : 'hide ') + item}>
-          {window.CACHE_PAGES[k]}
+          className={'content ' + (currPathname == k ? ' ' : 'hide ') + item}>
+          {CACHE_PAGES[k]}
         </div>
       );
     }
@@ -292,7 +295,7 @@ export default class ManagerLayout extends Component {
           {
             this.pageRoutes.map((item, index) => {
               return (
-                <Route
+                <CacheRoute
                   key={index}
                   path={'/' + item}
                   component={pageComponents[item]}
