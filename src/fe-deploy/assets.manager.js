@@ -42,12 +42,12 @@ class AssetsManager extends Component {
       filter: (str, item, keyMap, idx) => {
         const record = this.props.getRecord();
         const {notify} = this.props;
-        const {last_version} = record;
+        const {current} = record;
         const {records} = this.state;
         let hadRollback = item.rollback_note;
         let canRollback = item.version < records[0].version;
-        let isReleased = last_version == item.version;
-        let releasText = canRollback ? '回滚' : isReleased ? '已发布' : '发布';
+        let isReleased = current == item.id;
+        let releasText = (!isReleased && canRollback) ? '回滚' : isReleased ? '已发布' : '发布';
         return (
           <React.Fragment>
             {
