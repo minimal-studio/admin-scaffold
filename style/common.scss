@@ -41,6 +41,13 @@ textarea {
   }
 }
 
+.form-container {
+  textarea {
+    width: 500px !important;
+    height: 200px !important;
+  }
+}
+
 input:-webkit-autofill,
 select:-webkit-autofill,
 textarea:-webkit-autofill {
