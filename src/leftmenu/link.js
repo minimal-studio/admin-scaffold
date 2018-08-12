@@ -5,15 +5,15 @@ import Link from 'react-router-dom/Link';
 import Route from '../cache-router';
 
 const CustomLink = ({ to, activeOnlyWhenExact, className, children }) => {
-  to = '/' + to;
+  let _to = '/' + to;
   return (
     <Route
-      path={to}
+      path={_to}
       exact={activeOnlyWhenExact}
       children={({ match }) => {
         return (
           <Link
-            to={to}
+            to={_to}
             className={className + (match ? ' active' : '')}
             style={{ color: 'inherit' }}
           >

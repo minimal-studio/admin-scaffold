@@ -17,7 +17,7 @@ export const storageHelper = {
 }
 
 let adminWebTemplate = {
-  versionUrl: '/js/version.txt',
+  versionUrl: './js/version.txt',
   $request: {},
   storageHelper
 }

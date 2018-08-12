@@ -12,7 +12,8 @@ const themeStrong = 'THEME_STORAGE';
 export default class ManagerApp extends Component {
   static propTypes = {
     pageComponents: PropTypes.object.isRequired,
-    HeaderPlugin: PropTypes.func
+    HeaderPlugin: PropTypes.func,
+    postMode: PropTypes.bool,
   };
   constructor() {
     super();

@@ -105,11 +105,13 @@ export default class Leftmenu extends Component {
     const self = this;
     let allSet = [];
     let foldIdx = 0;
-    function recursive(dataList) {
+    const recursive = (dataList) => {
       let currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
         let _item = self.getMenuItem(item);
-        let { child, title, code } = _item;
+        let { child, title, code, path } = _item;
+        let key = code + title;
+        let to = this.wrapLink(_item);
 
         let hasChildren = child && child.length > 0;
         let isFold = hasChildren;
@@ -145,7 +147,8 @@ export default class Leftmenu extends Component {
           );
         } else {
           dom = self.getMenuLinkerDOM({
-            key: code,
+            key: key,
+            to: to,
             onClick: () => $GH.CallFunc(onChangeMenu)(code),
             menuText: title
           });
@@ -208,20 +211,23 @@ export default class Leftmenu extends Component {
       });
     }, 200);
   }
-  getMenuLinkerDOM = ({ key, onClick, menuText }) => {
+  getMenuLinkerDOM = ({ key, to, onClick, menuText }) => {
     menuCodeMapper[key] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true)
     return (
       <Link
         key={key}
         className="menu"
-        to={key}
+        to={to}
         onClick={e => $GH.CallFunc(onClick)(key)}>
         <span className="menu-tip">-</span>
         {menuText}
       </Link>
     );
   };
+  wrapLink({path, code}) {
+    return path ? code + '?' + path : code;
+  }
   getFlowModeDOM = initDataList => {
     const self = this;
     const { flowMenuConfig } = this.state;
@@ -265,7 +271,9 @@ export default class Leftmenu extends Component {
     const allSet = initDataList.map((item, idx) => {
       let _item = self.getMenuItem(item);
       let { child, title, code } = _item;
+      let to = this.wrapLink(_item);
       let isFold = child && child.length > 0;
+      let key = code + title;
       let isHovering = activeIdx == idx;
       return isFold ? (
         <div
@@ -287,7 +295,8 @@ export default class Leftmenu extends Component {
         </div>
       ) : (
         self.getMenuLinkerDOM({
-          key: code,
+          key: key,
+          to: to,
           onClick: () => $GH.CallFunc(onChangeMenu)(code),
           menuText: title
         })
@@ -305,6 +314,7 @@ export default class Leftmenu extends Component {
     const { menuMappers } = this.props;
     const { child, code, title, icon } = menuMappers;
     return {
+      ...item,
       child: item[child],
       code: item[code],
       title: item[title],
@@ -317,6 +327,7 @@ export default class Leftmenu extends Component {
       onChangeMenu,
       onToggleNav,
       versionInfo,
+      title = '系统版本',
       showLeftMenu
     } = this.props;
 
@@ -341,7 +352,7 @@ export default class Leftmenu extends Component {
         }>
         <div className="menu-header">
           <h5 className="title">
-            <span className="mr5">系统版本</span>
+            <span className="mr5">{title}</span>
             {
               versionInfo ? (
                 <VersionComponent numberVersion={versionInfo.numberVersion} />

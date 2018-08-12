@@ -78,9 +78,10 @@ export default class SearchBox extends Component {
           {
             allCode
               .filter(
-                code =>
-                  codeMapper[code].indexOf(searchMap) != -1 ||
-                  code.indexOf(searchMap.toUpperCase()) != -1
+                code => {
+                  let item = codeMapper[code] || '';
+                  return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1
+                }
               )
               .map((code, idx) => {
                 return (
