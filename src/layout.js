@@ -168,22 +168,20 @@ export default class ManagerLayout extends Component {
     postMode: PropTypes.bool,
     pageComponents: PropTypes.object
   };
+  state = {
+    menuCodeMapper: {},
+    showLeftMenu: true,
+    activeMenu: '',
+    displayFloat: true,
+    menuData: this.props.menuStore || []
+  };
   constructor(props) {
     super(props);
-    this.state = {
-      menuCodeMapper: {},
-      showLeftMenu: true,
-      activeMenu: '',
-      displayFloat: true,
-      menuData: props.menuStore || []
-    };
-    let self = this;
+
     const { pageComponents, postMode } = props;
-
     this.pageRoutes = postMode ? ['Posts'] : Object.keys(pageComponents);
-
     $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
-      self.changeMenuData(resMenuData);
+      this.changeMenuData(resMenuData);
     });
   }
 
@@ -280,6 +278,11 @@ export default class ManagerLayout extends Component {
             this.toggleLeftMenu(toggle);
           }}
           activeMenu={activeMenu}/>
+        {
+          showLeftMenu ? null : (
+            <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>展开</span>
+          )
+        }
         <div
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')

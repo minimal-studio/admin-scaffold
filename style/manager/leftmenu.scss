@@ -63,6 +63,17 @@ $hoverBgColor: rgb(140, 190, 234);
   }
 }
 
+.show-nav-btn {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  z-index: 701;
+  padding: 10px 10px;
+  background-color: $themeColor;
+  color: #FFF;
+  border-radius: 0 4px 4px 0;
+}
+
 .leftmenu-response {
   // background-color: $leftmenuBgColor;
   background: linear-gradient(
@@ -74,6 +85,10 @@ $hoverBgColor: rgb(140, 190, 234);
   color: #c5c5c7;
   @include fill();
   width: $leftmenuWidth;
+  .action-btn-group {
+    margin: 10px;
+    display: flex;
+  }
   .menu-header {
     position: relative;
     padding: 2px 10px;
@@ -85,11 +100,12 @@ $hoverBgColor: rgb(140, 190, 234);
     }
   }
   .menulist-title {
-    padding: 10px 0;
+    padding: 10px 10px;
     color: #fff;
-    margin: 10px;
+    // margin: 10px;
     text-align: center;
     cursor: pointer;
+    border-radius: 3px;
     &.flow {
       background: linear-gradient(45deg, $colorCyan, darken($themeColor, 5%));
     }

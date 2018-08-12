@@ -360,10 +360,17 @@ export default class Leftmenu extends Component {
             }
           </h5>
         </div>
-        <div
-          className={"menulist-title " + (flowMode ? 'flow' : 'tree')}
-          onClick={e => this.changeMenuUIMode(!flowMode)}>
-          {flowMode ? '悬浮' : '传统'}导航模式
+        <div className="action-btn-group">
+          <span
+            className={"menulist-title flex mr10 " + (flowMode ? 'flow' : 'tree')}
+            onClick={e => this.changeMenuUIMode(!flowMode)}>
+            {flowMode ? '悬浮' : '传统'}导航模式
+          </span>
+          <span
+            className="menulist-title tree"
+            onClick={e => onToggleNav(!showLeftMenu)}>
+            {showLeftMenu ? '收起' : '显示'}
+          </span>
         </div>
         <SearchBox
           onChangeMenu={onChangeMenu}
