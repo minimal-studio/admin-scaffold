@@ -9,7 +9,7 @@
 .login-panel {
   @include fill();
   position: fixed;
-  background-color: #1d2939;
+  background-image: url(/images/bg/001.jpg);
   .panel-tip {
     margin: 0;
   }

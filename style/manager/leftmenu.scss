@@ -82,6 +82,7 @@ $hoverBgColor: rgb(140, 190, 234);
     lighten($leftmenuBgColor, 5%),
     lighten($leftmenuBgColor, 15%)
   );
+  // background-image: url(/images/bg/001.jpg);
   color: #c5c5c7;
   @include fill();
   width: $leftmenuWidth;
