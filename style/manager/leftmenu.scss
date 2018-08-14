@@ -144,7 +144,7 @@ $hoverBgColor: rgb(140, 190, 234);
     .children {
       background-color: rgba($themeColor, 0.05);
       display: none;
-      border-left: 1px dashed transparent;
+      border-left: 1px solid transparent;
       padding-left: 5px;
     }
     // &:hover {
@@ -153,14 +153,14 @@ $hoverBgColor: rgb(140, 190, 234);
     &.active {
       color: $activeColor;
       // border-left-color: $activeBorderColor;
-      > .fold-title {
-        // margin-bottom: $activePadding;
-        // background-color: rgba(#000, 0.3);
-        // padding: 5px 5px;
-      }
+      // > .fold-title {
+      //   margin-bottom: $activePadding;
+      //   background-color: rgba(#000, 0.3);
+      //   padding: 5px 5px;
+      // }
       > .children {
         display: block;
-        border-left-color: #BBB;
+        border-left-color: rgba(#BBB, 0.5);
       }
     }
     &.hide-fold {
@@ -192,10 +192,12 @@ $hoverBgColor: rgb(140, 190, 234);
     &.active {
       padding-left: 20px;
     }
+    &:hover,&.active {
+      margin-left: -6px;
+    }
     &.active {
       border-left-color: $activeBorderColor;
       background-color: rgba(#fff, 0.2);
-      margin-left: -2px;
       // background-color: $activeBorderColor;
       // color: #FFF;
     }

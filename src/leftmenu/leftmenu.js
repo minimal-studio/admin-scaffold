@@ -213,7 +213,7 @@ export default class Leftmenu extends Component {
   }
   getMenuLinkerDOM = ({ key, to, onClick, menuText }) => {
     menuCodeMapper[key] = menuText;
-    storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true)
+    storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
       <Link
         key={key}
@@ -341,7 +341,7 @@ export default class Leftmenu extends Component {
       </div>
     );
 
-    return (
+    const renderRes = (
       <div
         ref={leftmenuDOM => {
           if(leftmenuDOM) this.leftmenuDOM = leftmenuDOM;
@@ -381,5 +381,7 @@ export default class Leftmenu extends Component {
         {container}
       </div>
     );
+
+    return renderRes;
   }
 }
