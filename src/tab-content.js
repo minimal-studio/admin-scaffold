@@ -91,7 +91,7 @@ class TabContent extends Component {
   }
 
   render() {
-    const { history, iframeMode, multiple } = this.props;
+    const { history, iframeMode, multiple, menuCodeMapper } = this.props;
     const { pageCententHeight } = this.state;
 
     let tabs = [];
@@ -112,7 +112,7 @@ class TabContent extends Component {
             onClick={e => {
               history.replace(k);
             }}>
-            {this.props.menuCodeMapper[item] || item}
+            {menuCodeMapper[item] || item}
           </span>
           <span
             className="close-btn"

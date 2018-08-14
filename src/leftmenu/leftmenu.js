@@ -149,6 +149,7 @@ export default class Leftmenu extends Component {
           dom = self.getMenuLinkerDOM({
             key: key,
             to: to,
+            code,
             onClick: () => $GH.CallFunc(onChangeMenu)(code),
             menuText: title
           });
@@ -211,8 +212,8 @@ export default class Leftmenu extends Component {
       });
     }, 200);
   }
-  getMenuLinkerDOM = ({ key, to, onClick, menuText }) => {
-    menuCodeMapper[key] = menuText;
+  getMenuLinkerDOM = ({ code, key, to, onClick, menuText }) => {
+    menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
       <Link

@@ -14,7 +14,7 @@ const CustomLink = ({ to, activeOnlyWhenExact, className, children }) => {
       exact={activeOnlyWhenExact}
       children={({location}) => {
         // const { match, location } = props;
-        const isActive = _to.indexOf(location.pathname) !== -1;
+        const isActive = location.pathname != '/' && _to.indexOf(location.pathname) !== -1;
         // console.log(count++)
         // const isActive = match || _to.indexOf(location.pathname) !== -1;
         // const isActive = !!match;
