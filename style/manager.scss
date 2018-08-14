@@ -12,6 +12,32 @@
   // );
 }
 
+.form-layout {
+  .form-group {
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #EEE;
+    &:nth-child(odd) {
+      background-color: #f7f7f7;
+    }
+    .input-control {
+      border: 1px solid #DDD;
+      padding-left: 10px;
+      border-radius: 3px;
+      background-color: #fafafa;
+      &.forcing {
+        border-color: $themeColor;
+        background-color: #FFF;
+      }
+    }
+    .input-group {
+      .title {
+        display: none;
+      }
+    }
+  }
+}
+
 .CQKMX,
 .YHKGL {
   .icon-input {

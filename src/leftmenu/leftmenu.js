@@ -367,9 +367,9 @@ export default class Leftmenu extends Component {
             {flowMode ? '悬浮' : '传统'}导航模式
           </span>
           <span
-            className="menulist-title tree"
+            className="action-btn"
             onClick={e => onToggleNav(!showLeftMenu)}>
-            {showLeftMenu ? '收起' : '显示'}
+            {showLeftMenu ? '<' : '>'}
           </span>
         </div>
         <SearchBox

@@ -65,13 +65,17 @@ $hoverBgColor: rgb(140, 190, 234);
 
 .show-nav-btn {
   position: absolute;
-  top: 10px;
+  top: 30px;
   left: 0;
-  z-index: 701;
+  z-index: 1000;
   padding: 10px 10px;
   background-color: $themeColor;
   color: #FFF;
   border-radius: 0 4px 4px 0;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .leftmenu-response {
@@ -113,6 +117,11 @@ $hoverBgColor: rgb(140, 190, 234);
     &.tree {
       background: linear-gradient(45deg, $colorOrange, $colorRed);
     }
+  }
+  .action-btn {
+    padding: 10px 10px;
+    background-color: $colorCyan;
+    color: #FFF;
   }
   &.hide-menu {
     width: 0;
