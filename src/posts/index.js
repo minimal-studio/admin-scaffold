@@ -1,59 +1,49 @@
 import React, {Component} from 'react';
-import {DebounceClass} from 'basic-helper';
-// import showdown from 'showdown';
+// import {DebounceClass} from 'basic-helper';
+// let delayExec = new DebounceClass();
 
-// let converter = new showdown.Converter();
-let delayExec = new DebounceClass();
-
-// converter.setOption('tables', true);
-
-// function decodeStr(str) {
-//   let res = '';
-//   try {
-//     res = decodeURIComponent(escape(atob(str)));
-//   } catch(e) {
-//     // console.log(e)
-//   }
-//   return res;
-// }
-
-// const decode = (str) => {
-//   let strArr = str.replace('?', '').split('&&');
-//   strArr = strArr.map(s => s && decodeStr(s)).join('/');
-//   return '/posts/' + strArr;
-// };
 const wrapUrl = (str) => {
+  if(!str) return null;
   let strArr = str.replace('?', '');
   return './posts/' + strArr + '.html';
 };
 
 export default class Posts extends Component {
   state = {
-    markdownHTML: ''
+    markdownHTML: '',
+    iframeSrc: ''
   }
-  async fetchPostData(fileHashName) {
-    let res = await (await fetch(fileHashName)).text();
-    this.setState({
-      markdownHTML: res
-    });
-  }
+  // async fetchPostData(fileHashName) {
+  //   let res = await (await fetch(fileHashName)).text();
+  //   this.setState({
+  //     markdownHTML: res
+  //   });
+  // }
   componentWillReceiveProps(nextProps) {
     // console.log(this.props.location.search)
-    delayExec.exec(() => {
-      this.fetchPostData(wrapUrl(nextProps.location.search));
-    }, 20);
+    // delayExec.exec(() => {
+    //   this.fetchPostData(wrapUrl(nextProps.location.search));
+    // }, 20);
+    this.setState({
+      iframeSrc: nextProps.location.search
+    });
   }
   componentDidMount() {
-    this.fetchPostData(wrapUrl(this.props.location.search));
+    // this.fetchPostData(wrapUrl(this.props.location.search));
+    this.setState({
+      iframeSrc: this.props.location.search
+    });
   }
-  createMarkup() {
-    return {
-      __html: this.state.markdownHTML
-    }
-  }
+  // createMarkup() {
+  //   return {
+  //     __html: this.state.markdownHTML
+  //   }
+  // }
   render() {
-    return (
-      <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()}></div>
-    )
+    const {iframeSrc} = this.state;
+    return iframeSrc ? (
+      <iframe src={wrapUrl(iframeSrc)} frameBorder="0" width="100%" height="100%"></iframe>
+      // <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()}></div>
+    ) : null
   }
 }

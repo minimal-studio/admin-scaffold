@@ -102,7 +102,7 @@ class TabContent extends Component {
   }
 
   render() {
-    const { history, postMode } = this.props;
+    const { history, iframeMode } = this.props;
     const { pageCententHeight } = this.state;
 
     let tabs = [];
@@ -165,7 +165,7 @@ export default class ManagerLayout extends Component {
     userInfo: PropTypes.object,
     onLogout: PropTypes.func,
     headerPlugin: PropTypes.object,
-    postMode: PropTypes.bool,
+    iframeMode: PropTypes.bool,
     pageComponents: PropTypes.object
   };
   state = {
@@ -178,8 +178,8 @@ export default class ManagerLayout extends Component {
   constructor(props) {
     super(props);
 
-    const { pageComponents, postMode } = props;
-    this.pageRoutes = postMode ? ['Posts'] : Object.keys(pageComponents);
+    const { pageComponents, iframeMode } = props;
+    this.pageRoutes = iframeMode ? ['Posts'] : Object.keys(pageComponents);
     $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
       this.changeMenuData(resMenuData);
     });
@@ -250,7 +250,7 @@ export default class ManagerLayout extends Component {
       HeaderPlugin,
       menuMappers,
       versionInfo,
-      postMode,
+      iframeMode,
       title
     } = this.props;
     const {
@@ -300,7 +300,7 @@ export default class ManagerLayout extends Component {
             ) : null
           }
           {
-            !postMode ? this.pageRoutes.map((item, index) => {
+            !iframeMode ? this.pageRoutes.map((item, index) => {
               return (
                 <CacheRoute
                   key={index}
@@ -314,7 +314,7 @@ export default class ManagerLayout extends Component {
             )
           }
           {
-            !postMode ? (
+            !iframeMode ? (
               <TabContentWithRouter menuCodeMapper={menuCodeMapper} />
             ) : (
               <Posts {...this.props}/>
