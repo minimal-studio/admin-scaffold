@@ -44,9 +44,9 @@ class TabContent extends Component {
     // 绑定快捷键关闭标签页
     Mousetrap.bind(['alt+w'], e => {
       let routes = this.routes;
-      const k = currPathname;
-      routes = routes.filter(item => item != k);
-      delPageCacheItem(k);
+      let currPathname = getCurrPathname();
+      routes = routes.filter(item => item != currPathname);
+      delPageCacheItem(currPathname);
       history.replace(routes[routes.length - 1] || '/');
       return false;
     });
@@ -54,11 +54,11 @@ class TabContent extends Component {
     // 重新挂载当前tab页
     Mousetrap.bind(['alt+r'], e => {
       let routes = this.routes;
-      const k = currPathname;
-      routes = routes.filter(item => item != k);
-      delPageCacheItem(k);
+      let currPathname = getCurrPathname();
+      routes = routes.filter(item => item != currPathname);
+      delPageCacheItem(currPathname);
       history.replace(routes[routes.length - 1] || '/');
-      history.replace(k);
+      history.replace(currPathname);
       return false;
     });
 
