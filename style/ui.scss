@@ -259,66 +259,6 @@ img {
     }
   }
 }
-.form-control {
-  &select {
-    padding: 0;
-  }
-  display: inline-block;
-  width: auto;
-  background-color: #fff;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-color: #e7e7e7;
-  background-color: #fefefe;
-  transition: border-color 0.1s, background-color 0.1s;
-  &.none-input {
-    position: relative;
-    z-index: -1;
-    // margin-left: -50px;
-    left: 0;
-    // opacity: 0;
-    width: 20px;
-    min-width: 0 !important;
-    // visibility: hidden;
-    padding: 0;
-    // overflow: hidden;
-  }
-  &.lg {
-    min-width: 240px;
-  }
-  &:focus {
-    box-shadow: none;
-    background-color: #fff;
-    border-color: #6ebdcc;
-  }
-  &[type='range'] {
-    width: auto;
-  }
-}
-.hide-container {
-  position: relative;
-  display: block;
-  padding: 0;
-  .hide-content {
-    width: 100%;
-    background-color: #fff;
-    overflow: auto;
-    display: none;
-    z-index: 20;
-  }
-  &:hover,
-  &.active {
-    .hide-content {
-      // transform: translateY(0);
-      // visibility: visible;
-      // opacity: 1;
-      display: block;
-      // box-shadow: 0 12px 12px rgba(0,0,0,0.3);
-    }
-  }
-}
 
 .flip-container {
   perspective: 1000px;

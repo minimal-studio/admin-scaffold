@@ -131,10 +131,8 @@ $hoverBgColor: rgb(140, 190, 234);
 .leftmenu-tree {
   .fold {
     padding: 10px 0 10px 10px;
-    // color: lighten($mainColor, 10%);
     cursor: pointer;
-    // border-left: 2px solid transparent;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid rgba(#000, 0.2);
     .fold-title {
       transition: all 0.2s ease;
     }
@@ -152,6 +150,7 @@ $hoverBgColor: rgb(140, 190, 234);
     // }
     &.active {
       color: $activeColor;
+      background-color: rgba(#000, 0.2);
       // border-left-color: $activeBorderColor;
       // > .fold-title {
       //   margin-bottom: $activePadding;
@@ -197,7 +196,7 @@ $hoverBgColor: rgb(140, 190, 234);
     }
     &.active {
       border-left-color: $activeBorderColor;
-      background-color: rgba(#fff, 0.2);
+      background-color: rgba(#fff, 0.1);
       // background-color: $activeBorderColor;
       // color: #FFF;
     }
