@@ -6,29 +6,29 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ShowGlobalModal, Avatar, Tabs, Tab } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
-import CacheRoute from './cache-router';
 
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
 import Posts from './posts';
 
-import TabContentWithRouter from './tab-content';
+import {RouterHelper} from './router-multiple';
 
-export default class ManagerLayout extends Component {
+class ManagerLayout extends RouterHelper {
   static propTypes = {
     userInfo: PropTypes.object,
     onLogout: PropTypes.func,
     headerPlugin: PropTypes.object,
     iframeMode: PropTypes.bool,
-    pageComponents: PropTypes.object
+    pageComponents: PropTypes.object,
   };
 
   state = {
+    ...this.state,
     menuCodeMapper: {},
     showLeftMenu: true,
     activeMenu: '',
     displayFloat: true,
-    menuData: this.props.menuStore || []
+    menuData: this.props.menuStore || [],
   };
 
   constructor(props) {
@@ -55,6 +55,7 @@ export default class ManagerLayout extends Component {
       return false;
     });
     Mousetrap.bind(['alt+k'], e => this.showShortcut());
+    this.initRoute();
   }
 
   componentWillUnmount() {
@@ -65,12 +66,6 @@ export default class ManagerLayout extends Component {
     let isDisplay = $GH.ToggleBasicFloatLen();
     this.setState({
       displayFloat: !this.state.displayFloat
-    });
-  }
-
-  changeRoute(route) {
-    this.setState({
-      activeMenu: route
     });
   }
 
@@ -98,6 +93,14 @@ export default class ManagerLayout extends Component {
       width: 640
     });
   }
+  getRouteProps() {
+    const {userInfo} = this.props;
+    return {
+      userInfo,
+      onNavigate: this.onNavigate,
+      history: this.history,
+    }
+  }
   render() {
     const {
       userInfo = {},
@@ -115,10 +118,13 @@ export default class ManagerLayout extends Component {
       showLeftMenu,
       menuData,
       activeMenu,
-      displayFloat
+      displayFloat,
+      activeRouteIdx,
+      routerInfo,
+      routers
     } = this.state;
 
-    return (
+    const container = (
       <div id="managerApp">
         <LeftmenuLayout
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
@@ -156,29 +162,32 @@ export default class ManagerLayout extends Component {
               </div>
             ) : null
           }
-          {
-            !iframeMode ? this.pageRoutes.map((item, index) => {
-              return (
-                <CacheRoute
-                  key={index}
-                  path={'/' + item}
-                  component={pageComponents[item]}
-                />
-              );
-            }) : (
-              // <Posts/>
-              <span></span>
-            )
-          }
-          {
-            !iframeMode ? (
-              <TabContentWithRouter multiple={multiplePage} menuCodeMapper={menuCodeMapper} />
-            ) : (
-              <Posts {...this.props}/>
-            )
-          }
+          <Tabs 
+            withContent={true} 
+            activeTabIdx={activeRouteIdx} 
+            closeabled={true}
+            onClose={idx => this.closeTab(idx)}>
+            {
+              routers.map((route, idx) => {
+                let C = pageComponents[route];
+                let currInfo = routerInfo[route];
+                let {params} = currInfo;
+                return C ? (
+                  <Tab 
+                    label={menuCodeMapper[route] || route} 
+                    key={route + JSON.stringify(params)} 
+                    onChange={e => this.changeRoute(route, params)}>
+                    <C {...this.getRouteProps()}/>
+                  </Tab>
+                ) : null
+              })
+            }
+          </Tabs>
         </div>
       </div>
     );
+
+    return container;
   }
 }
+export default ManagerLayout;

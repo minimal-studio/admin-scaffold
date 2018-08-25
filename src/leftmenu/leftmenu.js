@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Mousetrap from 'mousetrap';
 import {DebounceClass} from 'basic-helper';
 import {storageHelper} from '../config';
 
-import Link from './link.js';
+import {Link} from '../router-multiple';
 import SearchBox from './search';
 import VersionComponent from './version-com';
 

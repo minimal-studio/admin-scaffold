@@ -1,5 +1,5 @@
 import ManagerAPP from './app';
-import Link from './leftmenu/link';
+import {Link} from './router-multiple';
 
 export * from './config';
 

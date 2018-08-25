@@ -144,13 +144,18 @@ class Route extends React.Component {
     if (component) {
       if (match) {
         currPathname = location.pathname;
-        if (CACHE_PAGES[location.pathname]) {
+        if (CACHE_PAGES[currPathname]) {
           return null;
         }
-        CACHE_PAGES[location.pathname] = React.createElement(
+        // component._key = currPathname + location.search;
+        // CACHE_PAGES[currPathname] = React.createElement(
+        //   component,
+        //   props
+        // );
+        CACHE_PAGES[currPathname] = {
           component,
           props
-        );
+        };
         return null;
       } else {
         return null;

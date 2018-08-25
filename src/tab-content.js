@@ -91,44 +91,48 @@ class TabContent extends Component {
   }
 
   render() {
-    const { history, iframeMode, multiple, menuCodeMapper } = this.props;
+    const { history, iframeMode, multiple, menuCodeMapper, location } = this.props;
     const { pageCententHeight } = this.state;
 
     let tabs = [];
     let tab_contents = [];
     let routes = [];
     let CACHE_PAGES = getPageCache();
-    let currPathname = getCurrPathname();
+    let activePathname = getCurrPathname();
 
-    for (let k in CACHE_PAGES) {
-      routes.push(k);
-      let item = k.replace('/', '');
+    for (let currPath in CACHE_PAGES) {
+      let currRoute = CACHE_PAGES[currPath];
+      routes.push(currRoute);
+      let componentName = currPath.replace('/', '');
+      let contentKey = componentName;
+      console.log(currRoute)
+      // console.log(componentName + location.search, typeof contentKey)
       tabs.push(
         <span
-          key={k}
-          className={'tab' + (currPathname == k ? ' active' : '')}>
+          key={currPath}
+          className={'tab' + (activePathname == currPath ? ' active' : '')}>
           <span
             className="text"
             onClick={e => {
-              history.replace(k);
+              history.replace(currPath);
             }}>
-            {menuCodeMapper[item] || item}
+            {menuCodeMapper[componentName] || componentName}
           </span>
           <span
             className="close-btn"
             onClick={e => {
-              routes = routes.filter(item => item != k);
-              delPageCacheItem(k);
+              routes = routes.filter(item => item != currPath);
+              delPageCacheItem(currPath);
               history.replace(
-                currPathname != k ? currPathname : routes[routes.length - 1] || '/'
+                activePathname != currPath ? activePathname : routes[routes.length - 1] || '/'
               );
             }}>x</span>
         </span>
       );
       tab_contents.push(
-        <div key={k}
-          className={'content ' + (currPathname == k ? ' ' : 'hide ') + item}>
-          {CACHE_PAGES[k]}
+        <div key={contentKey}
+          className={'content ' + (activePathname == currPath ? ' ' : 'hide ') + componentName}>
+          <currRoute.component {...this.props}/>
         </div>
       );
     }
