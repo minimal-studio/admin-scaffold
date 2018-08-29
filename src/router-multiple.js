@@ -136,7 +136,7 @@ class RouterHelper extends Component {
 
 const Link = ({ to, className = 'link-btn', children, params }) => {
   const {location} = history;
-  const isActive = location.pathname != '/' && _to.indexOf(location.pathname) !== -1;
+  const isActive = location.hash != '/' && location.hash.indexOf(to) !== -1;
   return (
     <span 
       className={className + (isActive ? ' active' : '')}
