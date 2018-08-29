@@ -54,6 +54,7 @@ export default class Leftmenu extends Component {
     }),
     /* 是否悬浮模式的菜单模式 */
     flowMode: PropTypes.bool,
+    gm: PropTypes.func,
     menuData: PropTypes.any.isRequired,
     onChangeMenu: PropTypes.func
   };
@@ -212,6 +213,7 @@ export default class Leftmenu extends Component {
     }, 200);
   }
   getMenuLinkerDOM = ({ code, key, to, onClick, menuText }) => {
+    const {gm} = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
@@ -221,7 +223,7 @@ export default class Leftmenu extends Component {
         to={to}
         onClick={e => $GH.CallFunc(onClick)(key)}>
         <span className="menu-tip">-</span>
-        {menuText}
+        {gm(menuText)}
       </Link>
     );
   };
@@ -364,7 +366,7 @@ export default class Leftmenu extends Component {
           <span
             className={"menulist-title flex mr10 " + (flowMode ? 'flow' : 'tree')}
             onClick={e => this.changeMenuUIMode(!flowMode)}>
-            {flowMode ? '悬浮' : '传统'}导航模式
+            {flowMode ? '悬浮' : '传统'}模式
           </span>
           <span
             className="action-btn"

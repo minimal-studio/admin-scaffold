@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ShowGlobalModal, Avatar, Tabs, Tab } from 'ukelli-ui';
+import { ShowGlobalModal, Avatar, Tabs, Tab, DropdownMenu, Loading, setUkelliConfig } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
 
 import ShortcutHelp from './shortcut';
@@ -12,14 +12,19 @@ import LeftmenuLayout from './leftmenu';
 import Posts from './posts';
 
 import {RouterHelper} from './router-multiple';
+let i18nMapperUrl = '/i18n/';
 
 class ManagerLayout extends RouterHelper {
+  static setI18nUrl = (nextUrl) => {
+    i18nMapperUrl = nextUrl;
+  }
   static propTypes = {
     userInfo: PropTypes.object,
     onLogout: PropTypes.func,
     headerPlugin: PropTypes.object,
     iframeMode: PropTypes.bool,
     pageComponents: PropTypes.object,
+    i18nConfig: PropTypes.object,
   };
 
   state = {
@@ -29,6 +34,8 @@ class ManagerLayout extends RouterHelper {
     activeMenu: '',
     displayFloat: true,
     menuData: this.props.menuStore || [],
+    lang: navigator.language,
+    langMapper: {}
   };
 
   constructor(props) {
@@ -39,6 +46,41 @@ class ManagerLayout extends RouterHelper {
     $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
       this.changeMenuData(resMenuData);
     });
+    this.fetchLangMapper(this.state.lang);
+  }
+
+  geti18nUrl(lang) {
+    return i18nMapperUrl + lang + '.json';
+  }
+
+  changeLang = (lang) => {
+    if(!lang) return;
+    this.setState({
+      lang
+    });
+    this.fetchLangMapper(lang);
+  }
+
+  fetchLangMapper = async (lang) => {
+    let url = this.geti18nUrl(lang);
+    let mapper = await (await fetch(url)).text();
+    try {
+      mapper = JSON.parse(mapper);
+    } catch(e) {
+      console.log(e)
+    }
+    this.setState({
+      langMapper: mapper
+    });
+    // 设置 UI 库的 keyMapper
+    setUkelliConfig({
+      getKeyMap: this.gm
+    });
+  }
+
+  gm = (key) => {
+    let keyMapper = this.state.langMapper;
+    return key === 'all' ? keyMapper : keyMapper[key] || key || '';
   }
 
   triggerResize() {
@@ -97,6 +139,7 @@ class ManagerLayout extends RouterHelper {
     const {userInfo} = this.props;
     return {
       userInfo,
+      gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,
     }
@@ -111,6 +154,7 @@ class ManagerLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       multiplePage = true,
+      i18nConfig = true,
       title
     } = this.props;
     const {
@@ -121,6 +165,7 @@ class ManagerLayout extends RouterHelper {
       displayFloat,
       activeRouteIdx,
       routerInfo,
+      lang,
       routers
     } = this.state;
 
@@ -137,6 +182,7 @@ class ManagerLayout extends RouterHelper {
           defaultFlowMode={false}
           versionInfo={versionInfo}
           showLeftMenu={showLeftMenu}
+          gm={this.gm}
           onToggleNav={toggle => {
             this.toggleLeftMenu(toggle);
           }}
@@ -150,18 +196,25 @@ class ManagerLayout extends RouterHelper {
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
           }>
-          {
-            HeaderPlugin ? (
-              <div className="status-bar" id="statusBar">
+          <div className="status-bar" id="statusBar">
+            {
+              HeaderPlugin ? (
                 <HeaderPlugin
                   onLogout={logout}
                   showShortcut={this.showShortcut}
                   displayFloat={displayFloat}
+                  gm={this.gm}
                   userInfo={userInfo}
                   toggleFloat={this.toggleFloat}/>
-              </div>
-            ) : null
-          }
+              ) : null
+            }
+            <div className="lang-selector">
+              <DropdownMenu 
+                onChange={val => this.changeLang(val)}
+                value={lang}
+                values={i18nConfig}/>
+            </div>
+          </div>
           <Tabs 
             withContent={true} 
             activeTabIdx={activeRouteIdx} 
