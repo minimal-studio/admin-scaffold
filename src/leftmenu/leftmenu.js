@@ -100,7 +100,7 @@ export default class Leftmenu extends Component {
   getNormalMenuChildren = initDataList => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
-    const { onChangeMenu } = this.props;
+    const { onChangeMenu, gm } = this.props;
     const { showMenuMapper, flowMode } = this.state;
     const self = this;
     let allSet = [];
@@ -140,7 +140,7 @@ export default class Leftmenu extends Component {
                   !flowMode && self.toggleFold(e, currFoldIdx);
                 }}>
                 <span className="caret" />
-                {title}
+                {gm(title)}
               </div>
               <div className="children">{childDOM}</div>
             </div>
@@ -233,6 +233,7 @@ export default class Leftmenu extends Component {
   getFlowModeDOM = initDataList => {
     const self = this;
     const { flowMenuConfig } = this.state;
+    const { gm } = this.props;
     const { offset, activeItem = {}, activeIdx } = flowMenuConfig;
 
     const flowMenuDOM = (
@@ -293,7 +294,7 @@ export default class Leftmenu extends Component {
           }}
           className={'fold' + (isHovering ? ' hover' : '')}>
           <span className="caret" />
-          {title}
+          {gm(title)}
         </div>
       ) : (
         self.getMenuLinkerDOM({

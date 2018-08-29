@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ShowGlobalModal, Avatar, Tabs, Tab, DropdownMenu, Loading, setUkelliConfig } from 'ukelli-ui';
+import { ShowGlobalModal, Avatar, Tabs, Tab, DropdownMenu, Loading, setUkelliConfig, setUkeLang } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
 
 import ShortcutHelp from './shortcut';
@@ -35,6 +35,7 @@ class ManagerLayout extends RouterHelper {
     displayFloat: true,
     menuData: this.props.menuStore || [],
     lang: navigator.language,
+    ready: false,
     langMapper: {}
   };
 
@@ -46,19 +47,28 @@ class ManagerLayout extends RouterHelper {
     $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
       this.changeMenuData(resMenuData);
     });
-    this.fetchLangMapper(this.state.lang);
+    this.initApp();
+  }
+
+  async initApp() {
+    let langMapper = await this.fetchLangMapper(this.state.lang);
+    this.setState({
+      langMapper,
+      ready: true
+    });
   }
 
   geti18nUrl(lang) {
     return i18nMapperUrl + lang + '.json';
   }
 
-  changeLang = (lang) => {
+  changeLang = async (lang) => {
     if(!lang) return;
+    let langMapper = await this.fetchLangMapper(lang);
     this.setState({
-      lang
+      lang,
+      langMapper
     });
-    this.fetchLangMapper(lang);
   }
 
   fetchLangMapper = async (lang) => {
@@ -69,13 +79,15 @@ class ManagerLayout extends RouterHelper {
     } catch(e) {
       console.log(e)
     }
-    this.setState({
-      langMapper: mapper
-    });
+    // setState && this.setState({
+    //   langMapper: mapper
+    // });
     // 设置 UI 库的 keyMapper
     setUkelliConfig({
-      getKeyMap: this.gm
+      getKeyMap: this.gm,
     });
+    setUkeLang(lang);
+    return mapper;
   }
 
   gm = (key) => {
@@ -166,11 +178,12 @@ class ManagerLayout extends RouterHelper {
       activeRouteIdx,
       routerInfo,
       lang,
+      ready,
       routers
     } = this.state;
 
     const container = (
-      <div id="managerApp">
+      <div>
         <LeftmenuLayout
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
           menuData={menuData}
@@ -225,9 +238,10 @@ class ManagerLayout extends RouterHelper {
                 let C = pageComponents[route];
                 let currInfo = routerInfo[route];
                 let {params} = currInfo;
+                console.log()
                 return C ? (
                   <Tab 
-                    label={menuCodeMapper[route] || route} 
+                    label={this.gm(menuCodeMapper[route] || route)} 
                     key={route + JSON.stringify(params)} 
                     onChange={e => this.changeRoute(route, params)}>
                     <C {...this.getRouteProps()}/>
@@ -240,7 +254,13 @@ class ManagerLayout extends RouterHelper {
       </div>
     );
 
-    return container;
+    return (
+      <div id="managerApp" className="fill">
+        <Loading loading={!ready}>
+          { ready ? container : null }
+        </Loading>
+      </div>
+    );
   }
 }
 export default ManagerLayout;
