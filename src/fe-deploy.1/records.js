@@ -168,61 +168,6 @@ export default class Records extends Component {
     });
   };
 
-  render() {
-    const {
-      error_msg,
-      del_error_msg,
-      records,
-      searchValue
-    } = this.state;
-
-    if (records == 'error') return (<div>{error_msg}</div>);
-
-    return (
-      <Loading loading={!records} inrow={true}>
-        <div className="m10">
-          <div className="text-left" style={{marginBottom: 10 }}>
-            <button
-              className="btn theme flat mr10"
-              onClick={() => {
-                let ModalId = ShowGlobalModal({
-                  title: '新增项目',
-                  width: '40%',
-                  showFuncBtn: false,
-                  children: (
-                    <AddProject
-                      handleClose={() => {}}
-                      notify={this.notify}
-                      handleSuccess={() => {
-                        CloseGlobalModal(ModalId);
-                        this.syncData();
-                      }}
-                    />
-                  )
-                })
-              }}>
-              新增项目
-            </button>
-            <input
-              type="text"
-              className="form-control input-sm"
-              placeholder="搜索项目名称"
-              onChange={this.handleSearch}
-            />
-          </div>
-          <TableBody
-            keyMapper={this.keyMapper}
-            records={searchValue.length > 0 ? records.filter(item => item[0].projName.indexOf(searchValue) > -1) : records}
-            needCount={false}
-          />
-          <div className="text-center" style={{ color: 'red' }}>
-            {del_error_msg}
-          </div>
-        </div>
-      </Loading>
-    );
-  }
-
   returnBtns = id => {
     return [
       <span
@@ -313,4 +258,59 @@ export default class Records extends Component {
         );
       });
   };
+
+  render() {
+    const {
+      error_msg,
+      del_error_msg,
+      records,
+      searchValue
+    } = this.state;
+
+    if (records == 'error') return (<div>{error_msg}</div>);
+
+    return (
+      <Loading loading={!records} inrow={true}>
+        <div className="m10">
+          <div className="text-left" style={{marginBottom: 10 }}>
+            <button
+              className="btn theme flat mr10"
+              onClick={() => {
+                let ModalId = ShowGlobalModal({
+                  title: '新增项目',
+                  width: '40%',
+                  showFuncBtn: false,
+                  children: (
+                    <AddProject
+                      handleClose={() => {}}
+                      notify={this.notify}
+                      handleSuccess={() => {
+                        CloseGlobalModal(ModalId);
+                        this.syncData();
+                      }}
+                    />
+                  )
+                })
+              }}>
+              新增项目
+            </button>
+            <input
+              type="text"
+              className="form-control input-sm"
+              placeholder="搜索项目名称"
+              onChange={this.handleSearch}
+            />
+          </div>
+          <TableBody
+            keyMapper={this.keyMapper}
+            records={searchValue.length > 0 ? records.filter(item => item[0].projName.indexOf(searchValue) > -1) : records}
+            needCount={false}
+          />
+          <div className="text-center" style={{ color: 'red' }}>
+            {del_error_msg}
+          </div>
+        </div>
+      </Loading>
+    );
+  }
 }

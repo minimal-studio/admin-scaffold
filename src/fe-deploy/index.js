@@ -7,14 +7,16 @@
  */
 
 import React, { Component, PropTypes } from 'react';
-import Records from './records';
+import ProjectList from './project-list';
+import {setApiUrl} from './apis';
 
-export default class FEDEPLOY extends Component {
-  render() {
-    return (
-      <div className="card-content">
-        <Records />
-      </div>
-    );
-  }
+const FEDEPLOY = (props) => (
+  <div className="card-content">
+    <ProjectList {...props}/>
+  </div>
+)
+
+export default FEDEPLOY;
+export {
+  setApiUrl
 }

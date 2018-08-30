@@ -4,7 +4,7 @@ import {
 } from 'ukelli-ui';
 import AddAsset from './add.project';
 import PublishLog from './publish.log';
-import { toVersion, publish, formatTime, deleteAsset, scp } from './fetchData';
+import { publish, deleteAsset, scp } from './fetchData';
 
 const versionFilter = (version) => {
   return `v${(version + '').split('').join('.')}`;
