@@ -76,6 +76,10 @@ class ManagerLayout extends RouterHelper {
     let mapper = await (await fetch(url)).text();
     try {
       mapper = JSON.parse(mapper);
+      setUkelliConfig({
+        getKeyMap: this.gm,
+      });
+      setUkeLang(lang);
     } catch(e) {
       console.log(e)
     }
@@ -83,10 +87,6 @@ class ManagerLayout extends RouterHelper {
     //   langMapper: mapper
     // });
     // 设置 UI 库的 keyMapper
-    setUkelliConfig({
-      getKeyMap: this.gm,
-    });
-    setUkeLang(lang);
     return mapper;
   }
 

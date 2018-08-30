@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
 
-import Link from './link.js';
+import {Link} from '../router-multiple';
 
 const ESC_KEY = 27;
 
