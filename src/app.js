@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import HashRouter from 'react-router-dom/HashRouter';
-import withRouter from 'react-router/withRouter';
-
 import ManagerLayout from './layout';
-export const ManagerLayoutWithRouter = withRouter(ManagerLayout);
 
 const themeStrong = 'THEME_STORAGE';
 
@@ -32,12 +28,7 @@ export default class ManagerApp extends Component {
 
     return (
       <div className={'top-lv-layout theme-' + theme}>
-        <HashRouter>
-          <ManagerLayoutWithRouter
-            {...this.props}
-            changeTheme={this.changeTheme.bind(this)}
-          />
-        </HashRouter>
+        <ManagerLayout {...this.props} changeTheme={this.changeTheme.bind(this)}/>
       </div>
     );
   }

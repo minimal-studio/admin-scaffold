@@ -81,6 +81,17 @@ $userInfoItemOverBgColor: #f7f7f7;
   }
 }
 
+.fix-group {
+  background-color: #FFF;
+  padding: 10px;
+}
+
+.pages-container {
+  >.common-mode {
+    padding: 10px;
+  }
+}
+
 .pages-container {
   overflow-y: auto;
   @include fill();

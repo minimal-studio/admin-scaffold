@@ -166,7 +166,7 @@ class ManagerLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       multiplePage = true,
-      i18nConfig = true,
+      i18nConfig,
       title
     } = this.props;
     const {
@@ -221,12 +221,16 @@ class ManagerLayout extends RouterHelper {
                   toggleFloat={this.toggleFloat}/>
               ) : null
             }
-            <div className="lang-selector">
-              <DropdownMenu 
-                onChange={val => this.changeLang(val)}
-                value={lang}
-                values={i18nConfig}/>
-            </div>
+            {
+              i18nConfig ? (
+                <div className="lang-selector">
+                  <DropdownMenu 
+                    onChange={val => this.changeLang(val)}
+                    value={lang}
+                    values={i18nConfig}/>
+                </div>
+              ) : null
+            }
           </div>
           <Tabs 
             withContent={true} 
