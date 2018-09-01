@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { FormGenerator, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
+
+import CreateAsset from './create-asset';
+import AssetsManager from './assets-manager';
 import { createProject } from './apis';
 
 export default class AddFEProject extends Component {
@@ -13,22 +16,22 @@ export default class AddFEProject extends Component {
     },
     {
       type: 'input',
-      ref: 'hook',
-      title: 'web hook'
+      required: true,
+      ref: 'projCode',
+      defaultValue: 'Project1',
+      title: '项目代号'
     },
     {
-      type: 'customForm',
-      getCustomFormControl: () => {
-        return (
-          <input
-            type="file"
-            accept="application/zip"
-            name="zip"
-            ref={e => (this._zip = e)}
-          />
-        )
-      }
-    }
+      type: 'input',
+      ref: 'projDesc',
+      title: '项目介绍'
+    },
+    {
+      type: 'input',
+      ref: 'webhook',
+      title: 'web hook',
+      desc: '开发人员填写'
+    },
   ];
 
   state = {
@@ -53,13 +56,20 @@ export default class AddFEProject extends Component {
     // console.log(formValue)
     createProject(formValue).then((res) => {
       // console.log(res)
-      const { err } = res;
+      const { err, projId } = res;
       if(!err) {
         // 创建项目成功后，跳转到第二步，上传资源
         this.setState({
           activeIdx: 1,
+          prevProjId: projId
         });
       }
+    });
+  }
+  onCreatedAsset(assetData) {
+    this.setState({
+      activeIdx: 2,
+      prevAssetData: assetData
     });
   }
 
@@ -76,24 +86,14 @@ export default class AddFEProject extends Component {
   ]
 
   render() {
-    const {
-      isAddAsset,
-      list,
-      name,
-      savePath,
-      unzipPath,
-      scpHost,
-      scpTargetDir,
-      scpDir
-    } = this.props;
-    const {activeIdx} = this.state;
+    const { activeIdx, prevProjId } = this.state;
     return (
       <div style={{ position: 'relative' }}>
         <TipPanel
           title="使用说明"
           texts={[
             '新建项目，只需要填写项目名称',
-            'web hook 是项目资源发布成功后触发的，与 github 的 web hook 类似，用于回调通知',
+            'web hook 是项目资源发布成功后触发的，与 GitHub 的 web hook 类似，用于回调通知',
           ]}
         />
         <Tabs activeTabIdx={activeIdx} stepMode={true}>
@@ -104,7 +104,12 @@ export default class AddFEProject extends Component {
               ref="formHelper"/>
           </Tab>
           <Tab label="2. 上传资源文件">
-            <span>上传资源文件</span>
+            <CreateAsset {...this.props} 
+              projId={prevProjId} 
+              onSuccess={assetData => this.onCreatedAsset(assetData)}/>
+          </Tab>
+          <Tab label="3. 资源管理">
+            <AssetsManager {...this.props} projId={prevProjId}/>
           </Tab>
         </Tabs>
         <form

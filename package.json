@@ -1,6 +1,6 @@
 {
   "name": "orion-admin-web-scaffold",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",

@@ -7,11 +7,12 @@
  */
 
 import React, { Component, PropTypes } from 'react';
+import { Notify } from 'ukelli-ui';
 import ProjectList from './project-list';
 import {setApiUrl} from './apis';
 
 const FEDEPLOY = (props) => (
-  <div className="card-content">
+  <div className="card-content" style={{minHeight: 400}}>
     <ProjectList {...props}/>
   </div>
 )

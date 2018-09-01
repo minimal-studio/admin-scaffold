@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import {
   TableBody, ShowGlobalModal, CloseGlobalModal
 } from 'ukelli-ui';
-import AddAsset from './create-project';
-import PublishLog from './release-log';
-import { publish, deleteAsset, scp } from './apis';
+import { getAssets, getProjects, release } from './apis';
 
 const versionFilter = (version) => {
   return `v${(version + '').split('').join('.')}`;
 }
 
-/* 版本记录管理 */
 class AssetsManager extends Component {
   keyMapper = [
     {
@@ -21,16 +18,16 @@ class AssetsManager extends Component {
       }
     },
     {
-      key: 'update_comment',
+      key: 'desc',
       title: ' 更新日志'
     },
     {
-      key: 'ts',
+      key: 'createdDate',
       title: '日期',
       datetime: true
     },
     {
-      key: 'rollback_note',
+      key: 'rollbackMark',
       title: '回滚原因',
       filter: (str) => {
         return str ? str : '-';
@@ -40,70 +37,57 @@ class AssetsManager extends Component {
       key: 'action',
       title: '操作',
       filter: (str, item, keyMap, idx) => {
-        const record = this.props.getRecord();
-        const {notify} = this.props;
-        const {current} = record;
-        const {records} = this.state;
-        let hadRollback = item.rollback_note;
-        let canRollback = item.version < records[0].version;
-        let isReleased = current == item.id;
-        let releasText = (!isReleased && canRollback) ? '回滚' : isReleased ? '已发布' : '发布';
+        let { id, belongto, isRollback } = item;
+        let { currProject } = this.state;
+        let { releaseRef } = currProject;
+        let { notify, userInfo } = this.props;
+        let { username } = userInfo;
+        let isReleased = releaseRef == id;
+        let canRollback = isReleased;
+        let releasText = canRollback ? '回滚' : '发布';
         return (
           <React.Fragment>
-            {
-              !hadRollback ? (
-                <span
-                  className="btn theme flat"
-                  onClick={() => {
-                    let ModalId = ShowGlobalModal({
-                      title: releasText,
-                      confirmText: !canRollback ? (
-                        <h3 className="text-center">确定发布 {versionFilter(item.version)} ?</h3>
-                      ) : (
-                        <textarea 
-                          style={{
-                            height: 200,
-                            width: '100%'
-                          }}
-                          className="form-control" placeholder="回滚原因" ref={e => this._note = e}></textarea>
-                      ),
-                      type: 'confirm',
-                      width: 340,
-                      onConfirm: async (isRelease) => {
-                        if(!isRelease) return;
-                        let isSuccess;
-                        try {
-                          let publishRes = await publish(
-                            record.id,
-                            item.id,
-                            this._note ? this._note.value.trim() : '',
-                            item.name
-                          );
-                          if (item.scp_dir && item.scp_host) {
-                            notify('正在 scp 同步');
-                            try {
-                              let scpRes = await scp(record.id, item.id);
-                              notify('scp 同步', true);
-                            } catch (e) {
-                              notify('scp 同步不成功，服务器出问题了:（' + e.toString());
-                            }
-                          }
-                          CloseGlobalModal(ModalId);
-                          isSuccess = true;
-                          this.handleSuccess();
-                        } catch(e) {
-                          isSuccess = false;
-                        }
-                        notify(releasText, isSuccess);
-                      }
-                    });
-                  }}>
-                  {releasText}
-                </span>
-              ) : (
-                <span className="btn red" disabled>已回滚</span>
-              )
-            }
+            <span
+              className="btn theme flat"
+              onClick={() => {
+                let ModalId = ShowGlobalModal({
+                  title: releasText,
+                  confirmText: !canRollback ? (
+                    <div className="text-center">
+                      <h3>确定发布 {versionFilter(item.version)} ?</h3>
+                      <span>日志: {item.desc}</span>
+                    </div>
+                  ) : (
+                    <textarea 
+                      style={{
+                        height: 200,
+                        width: '100%'
+                      }}
+                      className="form-control" placeholder="回滚原因" ref={e => this._note = e}></textarea>
+                  ),
+                  type: 'confirm',
+                  width: 340,
+                  onConfirm: async (isRelease) => {
+                    if(!isRelease) return;
+                    let isSuccess;
+                    try {
+                      let releaseRes = await release({
+                        assetId: id,
+                        projId: belongto,
+                        username,
+                      });
+                      isSuccess = !releaseRes.err;
+                      CloseGlobalModal(ModalId);
+                      this.onReleased();
+                    } catch(e) {
+                      isSuccess = false;
+                    }
+                    notify(releasText, isSuccess);
+                  }
+                });
+              }}>
+              {releasText}
+            </span>
             <span
               className="link-btn theme warn ml10"
               onClick={() => {
@@ -120,7 +104,7 @@ class AssetsManager extends Component {
                     let isSuccess = delRes.status == 'ok';
                     if(isSuccess) {
                       CloseGlobalModal(ModalId);
-                      this.handleSuccess();
+                      this.onReleased();
                     }
                     notify('删除', isSuccess);
                   }
@@ -136,18 +120,34 @@ class AssetsManager extends Component {
   
   constructor(props) {
     super(props);
-    const record = props.getRecord();
     this.state = {
-      records: this.objToArr(record.assets)
+      records: [],
+      loading: true,
+      currProject: {}
     }
   }
 
-  handleSuccess = async () => {
-    const {getData, getRecord} = this.props;
-    await getData();
+  componentDidMount() {
+    this.queryData();
+  }
+
+  async queryData() {
+    const {userInfo, projId} = this.props;
+    const {username} = userInfo;
+    const assetRecord = await getAssets(username);
+    const projectData = (await getProjects({username, projId})).data || {};
     this.setState({
-      records: this.objToArr(getRecord().assets)
+      records: assetRecord,
+      currProject: projectData,
+      loading: false
     });
+  }
+
+  onReleased = () => {
+    this.setState({
+      loading: true
+    });
+    this.queryData();
   }
 
   objToArr(obj) {
@@ -158,60 +158,9 @@ class AssetsManager extends Component {
   }
 
   render() {
-    const record = this.props.getRecord();
-    const {notify} = this.props;
     const {records} = this.state;
     return (
-      <div>
-        <div className="p10">
-          <button
-            className="btn theme flat"
-            onClick={() => {
-              let ModalId = ShowGlobalModal({
-                title: '上传新版',
-                width: 600,
-                showFuncBtn: false,
-                children: (
-                  <AddAsset
-                    isAddAsset={true}
-                    list={[]}
-                    notify={notify}
-                    handleSuccess={this.handleSuccess}
-                    handleClose={() => {
-                      // this.setState({ addModal: false });
-                      CloseGlobalModal(ModalId);
-                    }}
-                    id={record.id}
-                    name={record.name || '-'}
-                    savePath={record.save_path}
-                    unzipPath={record.unzip_path}
-                    scpHost={record.scp_host}
-                    scpDir={record.scp_dir}
-                    scpTargetDir={record.scp_target_dir}
-                  />
-                )
-              })
-            }}>
-            上传新版
-          </button>
-          {
-            record.publish_history && record.publish_history.length > 0 ? (
-              <button
-                className="btn-link theme flat"
-                onClick={() => ShowGlobalModal({
-                  title: '发布日志',
-                  width: 600,
-                  children: (
-                    <PublishLog publishLog={record.publish_history} name={record.name} />
-                  )
-                })}>
-                查看日志
-              </button>
-            ) : null
-          }
-        </div>
-        <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
-      </div>
+      <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
     );
   }
 }

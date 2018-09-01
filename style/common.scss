@@ -43,8 +43,8 @@ textarea {
 
 .form-container {
   textarea {
-    width: 500px !important;
-    height: 200px !important;
+    min-width: 400px !important;
+    height: 120px !important;
   }
 }
 

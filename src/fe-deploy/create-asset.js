@@ -1,84 +1,75 @@
 import React, { Component } from 'react';
-import { FormGenerator, Popover, TipPanel } from 'ukelli-ui';
-import { getData } from './fetchData';
+import PropTypes from 'prop-types';
 
-export default class AddAsset extends Component {
-  constructor(props) {
-    super(props);
+import { FormGenerator, FormLayout, Popover, TipPanel } from 'ukelli-ui';
+import { uploadFile } from './apis';
 
-    this.state = {
-      error: ''
-    };
-  }
+let testProjId = 'b24a4a53-3429-3637-9efc-456b73c752d1';
 
-  componentDidMount() {
-    this.refs.formHelper.refs.file_path.focus();
-  }
+export default class CreateAsset extends Component {
+  static propTypes = {
+    projId: PropTypes.string,
+    onSuccess: PropTypes.func.isRequired,
+  };
+  formOptions = [
+    {
+      ref: 'projId',
+      type: 'hidden',
+      defaultValue: this.props.projId || testProjId
+    },
+    {
+      ref: 'desc',
+      type: 'textarea',
+      title: '版本说明',
+      required: true
+    }
+  ];
 
-  add = e => {
-    e.preventDefault();
-    const { name, path, html_path, desc } = this.refs.formHelper.value;
+  state = {
   };
 
-  refetch() {
-    // return fetch()
+  constructor(props) {
+    super(props);
   }
 
+  btnConfig = [
+    {
+      action: async (formRef) => {
+        const {userInfo, onSuccess} = this.props;
+        const {username} = userInfo;
+        const payload = {
+          founder: username,
+          ...formRef.value,
+        };
+        const formData = new FormData();
+        formData.append('assetZip', this._zip.files[0]);
+        Object.keys(payload).forEach(e => formData.append(e, payload[e]));
+        let res = await uploadFile(formData);
+        // console.log(res)
+        if(!res.err) {
+          onSuccess(res.data);
+        }
+      },
+      text: '新增',
+    }
+  ];
+
   render() {
-    const { error } = this.state;
-    const formOptions = [
-      {
-        ref: 'file_path',
-        type: 'input',
-        title: '资源路径',
-        required: true
-      },
-      {
-        ref: 'html_path',
-        type: 'file',
-        title: '上传资源',
-        required: true
-      },
-      {
-        ref: 'desc',
-        type: 'textarea',
-        title: '更新记录',
-        required: true
-      }
-    ];
     return (
-      <div>
-        <form
-          className="horizontal-form"
-          style={{ marginLeft: 10, marginRight: 10 }}
-          onSubmit={this.add}
-          ref={c => (this._form = c)}
-        >
-          <FormGenerator formOptions={formOptions} ref="formHelper">
-            <div className="form-group" style={{ position: 'relative' }}>
-              <label className="control-label" />
-              <button type="submit" className="btn flat theme">
-                保存
-              </button>
-              <Popover
-                relativeElem={{ offsetTop: 0, offsetLeft: 230 }}
-                open={error.length > 0}
-                className="item-popover"
-                onRequestClose={() => {
-                  this.setState({ error: '' });
-                }}
-                position={'right'}
-              >
-                <span
-                  style={{ display: 'inline-block', color: 'red', padding: 6 }}
-                >
-                  {error}
-                </span>
-              </Popover>
-            </div>
-          </FormGenerator>
-        </form>
-      </div>
+      <FormLayout formOptions={this.formOptions} 
+        btnConfig={this.btnConfig}
+        childrenBeforeBtn={(
+          <div className="form-group" style={{ position: 'relative' }}>
+            <label className="control-label"/>
+            <input
+              type="file"
+              accept="application/zip"
+              name="zip"
+              ref={c => (this._zip = c)}
+            />
+          </div>
+        )}
+        ref="formHelper"/>
     );
   }
 }
