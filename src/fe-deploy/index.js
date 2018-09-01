@@ -6,8 +6,7 @@
  * 预定完成日期  2017-10-10
  */
 
-import React, { Component, PropTypes } from 'react';
-import { Notify } from 'ukelli-ui';
+import React from 'react';
 import ProjectList from './project-list';
 import {setApiUrl} from './apis';
 

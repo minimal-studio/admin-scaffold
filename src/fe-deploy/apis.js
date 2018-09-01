@@ -21,6 +21,16 @@ let uploadHeader = {
   // "Content-Type": "multipart/form-data;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL"
 };
 
+async function parseToJson(fetchRes) {
+  let res = null;
+  try {
+    res = await fetchRes.json();
+  } catch(e) {
+    console.log(e)
+  }
+  return res;
+}
+
 export function setApiUrl(url) {
   apiUrl = url;
   apiUrl = apiUrl.replace(/\/$/, '');
@@ -41,19 +51,20 @@ export async function getAssets(username, projId) {
     },
     toBase64: false,
   });
-  return await (await fetch(url)).json();
+  return await parseToJson(await fetch(url));
 }
 
 export async function release({assetId, projId, username}) {
   let postData = {assetId, projId, username};
-  return await (await fetch(releaseUrl, {
+  return await parseToJson(await fetch(releaseUrl, {
     method: 'POST',
     headers: jsonHeader,
     body: JSON.stringify(postData)
-  })).json();
+  }));
 }
 
-export async function getProjects({username, projId, range}) {
+export async function getProjects(options) {
+  let {username, projId, range} = options;
   let url = wrapReqHashUrl({
     url: projectUrl,
     params: {
@@ -63,39 +74,39 @@ export async function getProjects({username, projId, range}) {
     },
     toBase64: false,
   });
-  return await (await fetch(url)).json();
+  return await parseToJson(await fetch(url));
 }
 
 export async function createProject(projConfig) {
-  return (await fetch(projectUrl, {
+  return parseToJson(await fetch(projectUrl, {
     method: 'POST',
     body: JSON.stringify(projConfig),
     headers: jsonHeader,
-  })).json();
+  }));
 }
 
 export async function updatePropject(projConfig) {
-  return (await fetch(projectUrl, {
+  return parseToJson(await fetch(projectUrl, {
     method: 'PUT',
     body: JSON.stringify(projConfig),
     headers: jsonHeader,
-  })).json();
+  }));
 }
 
 export async function delPropject({projId, username}) {
-  return (await fetch(delProjectUrl, {
+  return parseToJson(await fetch(delProjectUrl, {
     method: 'POST',
     body: JSON.stringify({projId, username}),
     headers: jsonHeader,
-  })).json();
+  }));
 }
 
 export async function uploadFile(assetData) {
-  return (await fetch(uploadUrl, {
+  return parseToJson(await fetch(uploadUrl, {
     method: 'POST',
     body: assetData,
     // headers: uploadHeader,
-  })).json();
+  }));
 }
 
 export async function getAudit(projId) {
@@ -106,5 +117,5 @@ export async function getAudit(projId) {
     },
     toBase64: false,
   });
-  return (await fetch(url)).json();
+  return await parseToJson(await fetch(url));
 }

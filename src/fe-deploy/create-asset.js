@@ -45,10 +45,12 @@ export default class CreateAsset extends Component {
         formData.append('assetZip', this._zip.files[0]);
         Object.keys(payload).forEach(e => formData.append(e, payload[e]));
         let res = await uploadFile(formData);
-        // console.log(res)
-        if(!res.err) {
+        let isSuccess = false;
+        if(!res.err && !!res.data) {
           onSuccess(res.data);
+          isSuccess = true;
         }
+        this.props.notify('上传', isSuccess)
       },
       text: '新增',
     }

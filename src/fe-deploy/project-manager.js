@@ -4,14 +4,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  TableBody, ShowGlobalModal, CloseGlobalModal, Tabs, Tab
-} from 'ukelli-ui';
+import { Tabs, Tab } from 'ukelli-ui';
 import CreateAsset from './create-asset';
 import AssetManager from './assets-manager';
 import EditProject from './edit-project';
 import AuditLog from './audit-log';
-import { getAssets, release } from './apis';
 
 const versionFilter = (version) => {
   return `v${(version + '').split('').join('.')}`;

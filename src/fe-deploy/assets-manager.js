@@ -19,7 +19,7 @@ class AssetsManager extends Component {
     },
     {
       key: 'desc',
-      title: ' 更新日志'
+      title: '更新日志'
     },
     {
       key: 'createdDate',
@@ -132,10 +132,10 @@ class AssetsManager extends Component {
   }
 
   async queryData() {
-    const {userInfo, projId} = this.props;
-    const {username} = userInfo;
-    const assetRecord = await getAssets(username);
-    const projectData = (await getProjects({username, projId})).data || {};
+    const { userInfo, projId } = this.props;
+    const { username } = userInfo;
+    const assetRecord = (await getAssets(username, projId)).data || [];
+    const projectData = (await getProjects({username, projId})).data || [];
     this.setState({
       records: assetRecord,
       currProject: projectData,
