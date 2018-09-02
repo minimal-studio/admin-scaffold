@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
+import { Icon } from 'ukelli-ui';
 
-import {Link} from '../router-multiple';
+import { Link } from '../router-multiple';
 
 const ESC_KEY = 27;
 
@@ -15,7 +16,8 @@ export default class SearchBox extends Component {
 
     this.state = {
       searchMap: '',
-      isShow: false
+      isShowCon: false,
+      isShow: false,
     };
   }
 
@@ -41,7 +43,8 @@ export default class SearchBox extends Component {
   }
   setSearchCon(isShow) {
     this.setState({
-      isShow
+      isShow,
+      isShowCon: isShow
     });
   }
   handleEsc = e => {
@@ -53,12 +56,20 @@ export default class SearchBox extends Component {
       }
     }
   };
+  show = () => {
+    this.setState({
+      isShowCon: true,
+    });
+    this._input.focus();
+  }
   render() {
-    const { searchMap, isShow } = this.state;
+    const { searchMap, isShow, isShowCon } = this.state;
     const { codeMapper, onChangeMenu } = this.props;
     const allCode = Object.keys(codeMapper) || [];
     return (
-      <div className={'search-container' + (isShow ? ' show-content' : '')}>
+      <div 
+        className={'search-container' + (isShow ? ' show-content' : '')}
+        style={{zIndex: isShowCon ? '1' : '-1'}}>
         <input
           ref={c => (this._input = c)}
           type="text"

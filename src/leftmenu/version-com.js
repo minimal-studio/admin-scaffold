@@ -4,16 +4,20 @@ export default class VersionDisplayer extends Component {
   constructor(props) {
     super(props);
 
-    this.current_version = props.numberVersion.trim();
+    let { numberVersion } = props.versionInfo;
+
+    numberVersion = numberVersion.trim();
     this.errorCount = 0;
+
     this.state = {
-      last_version: this.current_version
+      currVersion: numberVersion,
+      lastVersion: numberVersion,
     };
   }
 
   componentDidMount() {
     this.getVersion();
-    this.timer = setInterval(this.getVersion, 1000000);
+    this.timer = setInterval(this.getVersion, 100 * 1000);
   }
 
   componentWillUnmount() {
@@ -31,17 +35,17 @@ export default class VersionDisplayer extends Component {
 
   getVersion = () => {
     if (this.errorCount === 5) return this._clear();
-    fetch($AWT.versionUrl + '?t=' + Date.now()) // 加时间戳是为了防止缓存
-      .then(res => res.text())
-      .then(res => {
-        let got_version = res.trim();
-        if (got_version[0] !== 'v') return; // 预防txt不存在
-        if (got_version != this.state.last_version) {
+    fetch($AWT.versionUrl + '?t=' + Date.now())
+      .then(res => res.json())
+      .then(remoteVersion => {
+        let { numberVersion, updateLog } = remoteVersion;
+        numberVersion = numberVersion.trim();
+        if (numberVersion != this.state.lastVersion) {
           this._clear();
-          !this.__unmount &&
-            this.setState({
-              last_version: got_version
-            });
+          !this.__unmount && this.setState({
+            lastVersion: numberVersion,
+            updateLog
+          });
         }
       })
       .catch(e => {
@@ -50,20 +54,23 @@ export default class VersionDisplayer extends Component {
   };
 
   render() {
-    const { last_version } = this.state;
+    const { currVersion, lastVersion, updateLog } = this.state;
+    const { gm } = this.props;
     return (
-      <span>
-        {this.current_version}{' '}
+      <span className="version-container">
         {
-          last_version != this.current_version ? (
-            <sup
-              className={'new-app-version'}
-              onClick={this.reload}
-              title="有新版本，点击重新加载">
-              New
-            </sup>
+          lastVersion != currVersion ? (
+            <div>
+              <sup
+                className="new-app-version"
+                onClick={this.reload}
+                title={gm("有新版本，点击重新加载，新版本说明: ") + updateLog}>
+                {gm('新版本')}{lastVersion}
+              </sup>
+            </div>
           ) : null
         }
+        <span>{gm('当前版本')} {currVersion} </span>
       </span>
     );
   }

@@ -4,7 +4,10 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ShowGlobalModal, Avatar, Tabs, Tab, DropdownMenu, Loading, setUkelliConfig, setUkeLang } from 'ukelli-ui';
+import {
+  ShowGlobalModal, Icon, Tabs, Tab, DropdownMenu,
+  Loading, setUkelliConfig, setUkeLang
+} from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
 
 import ShortcutHelp from './shortcut';
@@ -134,7 +137,7 @@ class ManagerLayout extends RouterHelper {
     });
     window.MenuCodeMapper = menuCodeMapper;
   }
-  toggleLeftMenu(showLeftMenu) {
+  toggleLeftMenu = (showLeftMenu) => {
     this.setState({
       showLeftMenu
     });
@@ -142,7 +145,7 @@ class ManagerLayout extends RouterHelper {
   }
   showShortcut = () => {
     ShowGlobalModal({
-      children: <ShortcutHelp />,
+      children: <ShortcutHelp/>,
       title: '键盘快捷键说明',
       width: 640
     });
@@ -191,25 +194,35 @@ class ManagerLayout extends RouterHelper {
           onChangeMenu={code => {
             // this.pushRoute(code)
           }}
+          i18nConfig={i18nConfig}
           menuMappers={menuMappers}
+          lang={lang}
           defaultFlowMode={false}
           versionInfo={versionInfo}
+          changeLang={this.changeLang}
           showLeftMenu={showLeftMenu}
           gm={this.gm}
-          onToggleNav={toggle => {
-            this.toggleLeftMenu(toggle);
-          }}
+          onToggleNav={this.toggleLeftMenu}
           activeMenu={activeMenu}/>
-        {
+        {/* {
           showLeftMenu ? null : (
-            <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>{'>'}</span>
+            <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>
+              <Icon type="angle-right"/>
+            </span>
           )
-        }
+        } */}
         <div
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
           }>
           <div className="status-bar" id="statusBar">
+          <div className="menu-actions">
+            <span
+              className="_action-btn mr10"
+              onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
+              <Icon title={this.gm(showLeftMenu ? "收起" : "展开")} type={showLeftMenu ? "chevron-left" : "chevron-right"}/>
+            </span>
+          </div>
             {
               HeaderPlugin ? (
                 <HeaderPlugin
@@ -223,7 +236,7 @@ class ManagerLayout extends RouterHelper {
             }
             {
               i18nConfig ? (
-                <div className="lang-selector">
+                <div className="lang-selector mr10">
                   <DropdownMenu 
                     onChange={val => this.changeLang(val)}
                     value={lang}
@@ -242,7 +255,6 @@ class ManagerLayout extends RouterHelper {
                 let C = pageComponents[route];
                 let currInfo = routerInfo[route];
                 let {params} = currInfo;
-                console.log()
                 return C ? (
                   <Tab 
                     label={this.gm(menuCodeMapper[route] || route)} 

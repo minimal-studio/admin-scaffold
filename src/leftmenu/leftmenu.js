@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {DebounceClass} from 'basic-helper';
-import {storageHelper} from '../config';
+import { DebounceClass } from 'basic-helper';
+import { Icon, DropdownMenu } from 'ukelli-ui';
 
-import {Link} from '../router-multiple';
+import { storageHelper } from '../config';
+
+import { Link } from '../router-multiple';
 import SearchBox from './search';
 import VersionComponent from './version-com';
 
@@ -43,6 +45,34 @@ const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
+const MenuItem = ({ icon = 'bars', title, gm }) => {
+  return (
+    <div className="layout a-i-c">
+      <Icon type={icon} classNames={['mr10']}/>
+      <span>{gm(title)}</span>
+    </div>
+  )
+}
+
+/**
+ * 左菜单控件
+ * 支持无限嵌套结构，支持“树”模式，支持“悬浮”模式
+ * menuData 结构
+ * {
+ *   title: '',
+ *   code: '',
+ *   icon: '',
+ *   child: [
+ *     // 递归此结构, 避免和 react 的 children 冲突，故为 child
+ *     {
+ *       title: '',
+ *       code: '',
+ *       icon: '',
+ *       child: []
+ *     }
+ *   ]
+ * }
+ */
 export default class Leftmenu extends Component {
   static propTypes = {
     onDidMount: PropTypes.func,
@@ -55,7 +85,10 @@ export default class Leftmenu extends Component {
     /* 是否悬浮模式的菜单模式 */
     flowMode: PropTypes.bool,
     gm: PropTypes.func,
+    changeLang: PropTypes.func,
+    lang: PropTypes.any,
     menuData: PropTypes.any.isRequired,
+    i18nConfig: PropTypes.object,
     onChangeMenu: PropTypes.func
   };
   flowModeKey = 'IS_FLOW_MODA';
@@ -102,19 +135,18 @@ export default class Leftmenu extends Component {
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
     const { onChangeMenu, gm } = this.props;
     const { showMenuMapper, flowMode } = this.state;
-    const self = this;
     let allSet = [];
     let foldIdx = 0;
     const recursive = (dataList) => {
       let currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
-        let _item = self.getMenuItem(item);
-        let { child, title, code, path } = _item;
+        let _item = this.getMenuItem(item);
+        let { child, title, code, icon, path } = _item;
         let key = code + title;
         let to = this.wrapLink(_item);
 
         let hasChildren = child && child.length > 0;
-        let isFold = hasChildren;
+        let isFold = !code || hasChildren;
 
         let currFoldIdx = foldIdx;
 
@@ -124,7 +156,7 @@ export default class Leftmenu extends Component {
         if (isFold) {
           let childDOM = null;
           if (hasChildren) {
-            childDOM = recursive(child);
+            childDOM = recursive.call(this, child);
           }
           dom = (
             <div
@@ -137,19 +169,21 @@ export default class Leftmenu extends Component {
               <div
                 className="fold-title"
                 onClick={e => {
-                  !flowMode && self.toggleFold(e, currFoldIdx);
+                  !flowMode && this.toggleFold(e, currFoldIdx);
                 }}>
-                <span className="caret" />
-                {gm(title)}
+                <MenuItem {..._item} gm={gm}/>
+                {/* <span className="caret" />
+                {gm(title)} */}
               </div>
               <div className="children">{childDOM}</div>
             </div>
           );
         } else {
-          dom = self.getMenuLinkerDOM({
+          dom = this.getMenuLinkerDOM({
             key: key,
             to: to,
             code,
+            icon,
             onClick: () => $GH.CallFunc(onChangeMenu)(code),
             menuText: title
           });
@@ -159,7 +193,7 @@ export default class Leftmenu extends Component {
       });
       return currDOMSets;
     }
-    allSet = recursive(initDataList);
+    allSet = recursive.call(this, initDataList);
     return allSet;
   };
   toggleFold(e, idx, isShow) {
@@ -204,15 +238,14 @@ export default class Leftmenu extends Component {
       }
     });
   }
-  hideFlowMenu() {
-    const self = this;
+  hideFlowMenu = () => {
     delayExec.exec(() => {
-      self.setFlowMenu({
+      this.setFlowMenu({
         isShow: false
       });
     }, 200);
   }
-  getMenuLinkerDOM = ({ code, key, to, onClick, menuText }) => {
+  getMenuLinkerDOM = ({ code, key, to, onClick, menuText, icon }) => {
     const {gm} = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
@@ -222,7 +255,13 @@ export default class Leftmenu extends Component {
         className="menu"
         to={to}
         onClick={e => $GH.CallFunc(onClick)(key)}>
-        <span className="menu-tip">-</span>
+        {
+          !icon ? (
+            <span className="menu-tip">-</span>
+          ) : (
+            <Icon type={icon} classNames={['mr10']}/>
+          )
+        }
         {gm(menuText)}
       </Link>
     );
@@ -231,7 +270,6 @@ export default class Leftmenu extends Component {
     return path ? code + '?' + path : code;
   }
   getFlowModeDOM = initDataList => {
-    const self = this;
     const { flowMenuConfig } = this.state;
     const { gm } = this.props;
     const { offset, activeItem = {}, activeIdx } = flowMenuConfig;
@@ -272,10 +310,10 @@ export default class Leftmenu extends Component {
     );
 
     const allSet = initDataList.map((item, idx) => {
-      let _item = self.getMenuItem(item);
-      let { child, title, code } = _item;
+      let _item = this.getMenuItem(item);
+      let { child, title, code, icon } = _item;
       let to = this.wrapLink(_item);
-      let isFold = child && child.length > 0;
+      let isFold = !code || (child && child.length > 0);
       let key = code + title;
       let isHovering = activeIdx == idx;
       return isFold ? (
@@ -293,13 +331,15 @@ export default class Leftmenu extends Component {
             this.hideFlowMenu();
           }}
           className={'fold' + (isHovering ? ' hover' : '')}>
-          <span className="caret" />
-          {gm(title)}
+          <MenuItem {..._item} gm={gm}/>
+          {/* <span className="caret" />
+          {gm(title)} */}
         </div>
       ) : (
-        self.getMenuLinkerDOM({
+        this.getMenuLinkerDOM({
           key: key,
           to: to,
+          icon: icon,
           onClick: () => $GH.CallFunc(onChangeMenu)(code),
           menuText: title
         })
@@ -324,17 +364,21 @@ export default class Leftmenu extends Component {
       icon: item[icon],
     }
   }
+  showSearch = () => {
+
+  }
   render() {
     const {
       menuData,
       onChangeMenu,
       onToggleNav,
       versionInfo,
-      title = '系统版本',
+      title = '猎户座管理系统',
+      gm,
       showLeftMenu
     } = this.props;
 
-    const { searchMap, flowMode } = this.state;
+    const { flowMode } = this.state;
 
     const container = flowMode ? (
       this.getFlowModeDOM(menuData)
@@ -356,32 +400,35 @@ export default class Leftmenu extends Component {
         <div className="menu-header">
           <h5 className="title">
             <span className="mr5">{title}</span>
-            {
-              versionInfo ? (
-                <VersionComponent numberVersion={versionInfo.numberVersion} />
-              ) : null
-            }
           </h5>
+          <span className="flex"></span>
+          <Icon
+            title="菜单搜索"
+            onClick={e => {
+              this._seatchBox.show()
+              // console.log(this._seatchBox.show)
+            }}
+            type="search"
+            classNames={['_action-btn mr10']}/>
+          <SearchBox
+            ref={e => this._seatchBox = e}
+            onChangeMenu={onChangeMenu}
+            onToggleNav={onToggleNav}
+            codeMapper={menuCodeMapper}
+            showLeftMenu={showLeftMenu}
+          />
+          <Icon 
+            title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
+            classNames={['_action-btn mr10']}
+            onClick={e => this.changeMenuUIMode(!flowMode)}
+            type={!flowMode ? "align-justify" : "align-left"}/>
         </div>
-        <div className="action-btn-group">
-          <span
-            className={"menulist-title flex mr10 " + (flowMode ? 'flow' : 'tree')}
-            onClick={e => this.changeMenuUIMode(!flowMode)}>
-            {flowMode ? '悬浮' : '传统'}模式
-          </span>
-          <span
-            className="action-btn"
-            onClick={e => onToggleNav(!showLeftMenu)}>
-            {showLeftMenu ? '<' : '>'}
-          </span>
-        </div>
-        <SearchBox
-          onChangeMenu={onChangeMenu}
-          onToggleNav={onToggleNav}
-          codeMapper={menuCodeMapper}
-          showLeftMenu={showLeftMenu}
-        />
         {container}
+        {
+          versionInfo ? (
+            <VersionComponent gm={gm} versionInfo={versionInfo} />
+          ) : null
+        }
       </div>
     );
 

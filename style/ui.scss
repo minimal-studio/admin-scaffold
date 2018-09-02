@@ -1,8 +1,42 @@
+// 重定义 UI 库的样式
 
 $flipperTime: 0.5s;
 $avatarScale: 100px;
 $avatarSmScale: 50px;
 $avatarMiniScale: 24px;
+
+.form-layout {
+  .form-group {
+    &.input,&.password {
+      .input-control {
+        border: 1px solid #EEE;
+        border-radius: 3px;
+        background-color: #fafafa;
+        padding: 0 8px;
+        &.forcing {
+          border-color: $themeColor;
+        }
+        .title {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.uke-dropdown-menu {
+  .display-title {
+    color: #999;
+  }
+}
+
+.fill,[fill] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 
 .fill-height {
   height: 100%;
@@ -29,77 +63,6 @@ $avatarMiniScale: 24px;
   margin: 0 !important;
 }
 
-.card-form-style {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 10px;
-  .card-form {
-    width: 49%;
-    padding: 10px;
-    border: 2px dashed #eee;
-    margin: 0 10px 5px 0;
-    border-radius: 5px;
-    transition: border-color ease 0.2s;
-    position: relative;
-    .close-btn {
-      right: -10px;
-      top: -10px;
-    }
-    &:hover {
-      border-color: $colorOrange;
-      .control-label {
-        color: darken(#71a3b8, 20%) !important;
-      }
-      .form-tip {
-        color: $colorRed;
-      }
-    }
-    .form-tip {
-      color: $themeColor;
-    }
-    .horizontal-form {
-      .form-group {
-        margin-bottom: 5px;
-        width: 100%;
-        .control-label {
-          width: 100px;
-          margin-right: 10px;
-        }
-        .form-control {
-          width: 160px !important;
-          min-width: 160px !important;
-        }
-      }
-    }
-  }
-}
-
-// .panel-warm {
-//   background-color: #fffeea;
-//   color: #887210;
-//   margin: 10px;
-//   border: 3px dashed #eae7ab;
-//   padding: 5px 10px;
-//
-//   .item {
-//     padding: 5px 0;
-//   }
-// }
-.jump-icons {
-  .fa {
-    @include jump();
-  }
-}
-.animate-jump {
-  @include jump();
-}
-.jump-container {
-  &:hover {
-    .jump-elem {
-      @include jumpLoop();
-    }
-  }
-}
 .checkbox-group {
   @include layout();
   border-radius: 5px;
@@ -120,106 +83,23 @@ $avatarMiniScale: 24px;
       color: $colorRed;
     }
   }
-  // label {
-  //   &:hover {
-  //     color: $colorRed;
-  //     .tree-node-icon {
-  //       color: $colorRed;
-  //     }
-  //   }
-  // }
-}
-
-.radio-group {
-  .btn {
-    margin: 0 5px 5px 0;
-  }
 }
 
 img {
   max-width: 100%;
 }
-
-.divid {
-  display: block;
-  background-color: #eee;
-  height: 1px;
-  margin: 3px 0;
-  width: 100%;
-}
-// .lineChart {
-//   height: 560px !important;
-//   width: 100% !important;
-// }
-.carousel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  &-item {
-    @include fill();
-    transition: all ease 0.3s;
-    width: 100%;
-    height: 100%;
-    .banner-img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .tip-group {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.6);
-    .carousel-tip {
-      // width: 20px;
-      // height: 20px;
-      padding: 5px 20px;
-      display: inline-block;
-      cursor: default;
-      &.active {
-        background-color: $themeColor;
-        color: #fff;
-      }
-    }
-  }
-}
-// .panel-green {
-//   background-color: #faf9de;
-//   color: #a98c0a;
-// }
 .text-indent {
   text-indent: 28px;
 }
-.half-layout {
-  display: flex;
-  .detail-desc {
-    width: 50%;
-  }
-}
-.close-btn,
-.unread-tip {
+.close-btn {
   width: 24px;
   height: 24px;
   text-align: center;
-  line-height: 20px;
-  // border: 2px solid #FFF;
+  line-height: 22px;
   background-color: $themeColor;
   color: #fff;
   border-radius: 50%;
   display: inline-block;
-}
-.unread-tip {
-  border-color: $themeColor;
-}
-.block {
-  .item {
-    border: 1px solid #ccc;
-    padding: 5px 20px;
-    display: block;
-    border-radius: 3px;
-  }
 }
 
 .image-button {
@@ -233,6 +113,7 @@ img {
     opacity: 0;
   }
 }
+
 .tips-group-panel {
   padding: 0 10px;
   .header {
@@ -256,75 +137,6 @@ img {
       display: none;
     }
     .item {
-    }
-  }
-}
-
-.flip-container {
-  perspective: 1000px;
-  -webkit-perspective: 1000px;
-  -ms-perspective: 1000px;
-  -moz-perspective: 1000px;
-  // &:hover,
-  .flipper {
-    transition: transform $flipperTime ease;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    position: relative;
-    backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    -moz-backface-visibility: visible;
-    -ms-backface-visibility: visible;
-  }
-  &.flipper {
-    .flipper {
-      transform: rotateY(180deg);
-      .front {
-        transform: rotateY(0deg);
-      }
-      .back {
-        transform: rotateY(-180deg);
-      }
-    }
-  }
-  .back,
-  .front {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-  }
-}
-@keyframes stayvisible {
-  from {
-    visibility: visible;
-  }
-  to {
-    visibility: visible;
-  }
-}
-@-ms-keyframes donothing {
-  0% {
-  }
-  100% {
-  }
-}
-
-@media print {
-  .no-print {
-    display: none;
-  }
-  .desc-container {
-    display: block;
-    .item {
-      width: 100%;
-      border-bottom: 1px solid #ddd;
-      .ball {
-        border-color: #fff !important;
-        background-color: transparent;
-      }
     }
   }
 }

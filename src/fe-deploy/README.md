@@ -1,9 +1,9 @@
 # 前端资源发布管理模块
 
-需要指定:
+启动时需要通过 setApiUrl 接口设置前端管理服务的地址
 
 ```js
-window.FEManagerURL  //  接口
-window.PubToken （看 fetchData.js）   // 认证 token
-window.getAdmin = fucntion() {return ''} // 返回管理员用户名
+import { setApiUrl } from 'orion-admin-web-scaffold/fe-deploy';
+
+setApiUrl('http://127.0.0.6550');
 ```

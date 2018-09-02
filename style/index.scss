@@ -1,16 +1,8 @@
 /**
  * 基础通用样式, 包含布局 UI 和一些动画过度样式
  */
-@import './common.scss';
 @import './ui.scss';
 
-/**
- * 桌面版使用的样式, 移动版需要自定义样式
- */
-@import './login.scss';
-@import './manager.scss';
-@import './common/table.scss';
-@import './menu.tree.scss';
-@import './checkbox.scss';
-@import './react-checkbox-tree.scss';
-@import './component/multiple-selector.scss';
+@import './layout/index.scss';
+@import './component/index.scss';
+@import './common/index.scss';

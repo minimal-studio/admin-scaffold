@@ -1,84 +1,26 @@
-
-
 $userInfoItemOverBgColor: #f7f7f7;
 
-.status-bar {
-  display: flex;
-  // margin-bottom: 10px;
+.table-render-container {
+  position: relative;
+  top: 0;
+  padding-top: 0.1px;
+  .table-container {
+    overflow: auto;
+  }
+}
+
+.card-content {
+  background-color: #FFF;
+  padding-top: 0.1px;
+}
+
+.manager-container {
   background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .user-info-group {
-    // display: flex;
-    color: #666;
-    .update-config-btn {
-      color: inherit;
-      margin-right: 10px;
-    }
-    .item {
-      margin: 0 5px;
-    }
-  }
-  .item {
-    margin-left: 10px;
-  }
+}
 
-  .sub-menu {
-    display: flex;
-    flex-direction: column;
-    // padding: 20px;
-    .item-btn {
-      padding: 8px 10px;
-      border-bottom: 1px dashed #ddd;
-      margin: 5px 10px;
-      &:hover {
-        background-color: $userInfoItemOverBgColor;
-        // border-color: darken($themeColor, 10%);
-      }
-    }
-  }
-  .user-sub-detail {
-    background-color: $themeColor;
-    color: #FFF;
-    .avatar {
-      background-color: #FFF;
-      color: $themeColor;
-    }
-  }
-  .user-info-item {
-    padding: 6px 20px;
-    cursor: pointer;
-  }
-  .hide-container {
-    &:hover {
-      .user-info-item {
-        background-color: #FFF;
-      }
-      // .hide-content {
-      //   // background-color: $userInfoItemOverBgColor;
-      // }
-    }
-    .hide-content {
-      position: absolute;
-      right: 0;
-      width: 280px;
-      top: 100%;
-      box-shadow: 0 6px 24px rgba(#000, 0.3);
-      background-color: #fff;
-    }
-  }
-
-  .avatar {
-    background-color: $themeColor;
-    &.sm {
-      $scale: 26px;
-      height: $scale;
-      width: $scale;
-      line-height: $scale;
-      font-size: 18px;
-    }
-  }
+.manager-container {
+  @include layout();
+  align-items: stretch;
 }
 
 .fix-group {
@@ -89,6 +31,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 .pages-container {
   >.common-mode {
     padding: 10px;
+    position: relative;
   }
 }
 

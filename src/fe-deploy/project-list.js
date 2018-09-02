@@ -109,7 +109,7 @@ export default class Records extends Component {
   };
 
   async queryData() {
-    const {username} = this.props.userInfo;
+    const {username} = this.props;
     const {range} = this.conditionRef.value;
     let res = await getProjects({username, range});
     let records = this.projRecordSearch(res.data);

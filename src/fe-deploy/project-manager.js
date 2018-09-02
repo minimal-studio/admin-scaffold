@@ -5,14 +5,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'ukelli-ui';
+
 import CreateAsset from './create-asset';
 import AssetManager from './assets-manager';
 import EditProject from './edit-project';
 import AuditLog from './audit-log';
-
-const versionFilter = (version) => {
-  return `v${(version + '').split('').join('.')}`;
-}
 
 class ProjectManager extends Component {
   static propTypes = {

@@ -4,18 +4,16 @@ import PropTypes from 'prop-types';
 import { FormGenerator, FormLayout, Popover, TipPanel } from 'ukelli-ui';
 import { uploadFile } from './apis';
 
-let testProjId = 'b24a4a53-3429-3637-9efc-456b73c752d1';
-
 export default class CreateAsset extends Component {
   static propTypes = {
-    projId: PropTypes.string,
+    projId: PropTypes.string.isRequired,
     onSuccess: PropTypes.func.isRequired,
   };
   formOptions = [
     {
       ref: 'projId',
       type: 'hidden',
-      defaultValue: this.props.projId || testProjId
+      defaultValue: this.props.projId
     },
     {
       ref: 'desc',
@@ -26,6 +24,7 @@ export default class CreateAsset extends Component {
   ];
 
   state = {
+    
   };
 
   constructor(props) {
@@ -35,8 +34,7 @@ export default class CreateAsset extends Component {
   btnConfig = [
     {
       action: async (formRef) => {
-        const {userInfo, onSuccess} = this.props;
-        const {username} = userInfo;
+        const { username, onSuccess } = this.props;
         const payload = {
           founder: username,
           ...formRef.value,

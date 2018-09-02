@@ -11,7 +11,7 @@ export default class EditProject extends Component {
   constructor(props) {
     super(props);
 
-    const {project, userInfo} = props;
+    const { project, username } = props;
     
     this.formOptions = [
       {
@@ -36,7 +36,7 @@ export default class EditProject extends Component {
       {
         type: 'hidden',
         ref: 'username',
-        defaultValue: userInfo.username
+        defaultValue: username
       },
       {
         type: 'input',
@@ -59,9 +59,9 @@ export default class EditProject extends Component {
   }
 
   deleteProject = async () => {
-    const { userInfo, project } = this.props;
+    const { username, project } = this.props;
     let delRes = await delPropject({
-      username: userInfo.username,
+      username,
       projId: project.id
     });
     console.log(delRes)

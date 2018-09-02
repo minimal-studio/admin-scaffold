@@ -40,8 +40,7 @@ class AssetsManager extends Component {
         let { id, belongto, isRollback } = item;
         let { currProject } = this.state;
         let { releaseRef } = currProject;
-        let { notify, userInfo } = this.props;
-        let { username } = userInfo;
+        let { notify, username } = this.props;
         let isReleased = releaseRef == id;
         let canRollback = isReleased;
         let releasText = canRollback ? '回滚' : '发布';
@@ -132,8 +131,7 @@ class AssetsManager extends Component {
   }
 
   async queryData() {
-    const { userInfo, projId } = this.props;
-    const { username } = userInfo;
+    const { username, projId } = this.props;
     const assetRecord = (await getAssets(username, projId)).data || [];
     const projectData = (await getProjects({username, projId})).data || [];
     this.setState({

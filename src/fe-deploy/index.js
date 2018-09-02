@@ -10,9 +10,9 @@ import React from 'react';
 import ProjectList from './project-list';
 import {setApiUrl} from './apis';
 
-const FEDEPLOY = (props) => (
+const FEDEPLOY = ({userInfo}) => (
   <div className="card-content" style={{minHeight: 400}}>
-    <ProjectList {...props}/>
+    <ProjectList username={userInfo.username}/>
   </div>
 )
 

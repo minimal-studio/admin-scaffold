@@ -51,7 +51,7 @@ export default class AddFEProject extends Component {
   };
 
   onCreateProj = (formValue) => {
-    const {username} = this.props.userInfo;
+    const { username } = this.props;
     formValue.username = username;
     // console.log(formValue)
     createProject(formValue).then((res) => {

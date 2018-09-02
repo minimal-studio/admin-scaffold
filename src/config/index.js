@@ -16,9 +16,20 @@ export const storageHelper = {
   }
 }
 
+export function toJson(objStr) {
+  let res = null;
+  try {
+    res = JSON.parse(objStr);
+  } catch(e) {
+    console.log(e)
+  }
+  return res;
+}
+
 let adminWebTemplate = {
-  versionUrl: './js/version.txt',
+  versionUrl: './js/version.json',
   $request: {},
+  toJson,
   storageHelper
 }
 
