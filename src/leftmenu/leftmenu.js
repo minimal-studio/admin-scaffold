@@ -50,6 +50,8 @@ const MenuItem = ({ icon = 'bars', title, gm }) => {
     <div className="layout a-i-c">
       <Icon type={icon} classNames={['mr10']}/>
       <span>{gm(title)}</span>
+      <span className="flex"></span>
+      <Icon type="angle-right" classNames={['direct']}/>
     </div>
   )
 }

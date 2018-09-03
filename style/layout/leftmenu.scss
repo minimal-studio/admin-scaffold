@@ -102,6 +102,10 @@ $hoverBgColor: rgb(140, 190, 234);
 
 .leftmenu-tree {
   background-color: rgba(#000, 0.1);
+  .direct {
+    transition: transform ease 0.3s;
+    margin-right: 15px;
+  }
   .fold {
     padding: 10px 0 10px 10px;
     cursor: pointer;
@@ -133,6 +137,10 @@ $hoverBgColor: rgb(140, 190, 234);
       > .children {
         display: block;
         border-left-color: rgba(#BBB, 0.5);
+      }
+      .direct {
+        // transition: transform ease 0.3s;
+        transform: rotate(90deg);
       }
     }
     &.hide-fold {
