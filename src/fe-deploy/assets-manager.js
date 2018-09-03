@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   TableBody, ShowGlobalModal, CloseGlobalModal
 } from 'ukelli-ui';
-import { getAssets, getProjects, release } from './apis';
+import { getAssets, getProjects, release, rollback, delAsset } from './apis';
 
 const versionFilter = (version) => {
   return `v${(version + '').split('').join('.')}`;
@@ -23,7 +23,7 @@ class AssetsManager extends Component {
     },
     {
       key: 'createdDate',
-      title: '日期',
+      title: '上传日期',
       datetime: true
     },
     {
@@ -37,17 +37,29 @@ class AssetsManager extends Component {
       key: 'action',
       title: '操作',
       filter: (str, item, keyMap, idx) => {
-        let { id, belongto, isRollback } = item;
+        let { id, belongto, isRollback, isReleased } = item;
         let { currProject } = this.state;
         let { releaseRef } = currProject;
         let { notify, username } = this.props;
-        let isReleased = releaseRef == id;
-        let canRollback = isReleased;
-        let releasText = canRollback ? '回滚' : '发布';
+        let isCurrReleased = isReleased && releaseRef == id;
+        let canRollback = isReleased && !isCurrReleased;
+        let releasText = '发布';
+        switch (true) {
+          case isCurrReleased:
+            releasText = '已发布';
+            break;
+          case canRollback:
+            releasText = '回滚';
+            break;
+          case isRollback:
+            releasText = '已回滚';
+            break;
+        }
         return (
           <React.Fragment>
-            <span
+            <button
               className="btn theme flat"
+              disabled={isRollback}
               onClick={() => {
                 let ModalId = ShowGlobalModal({
                   title: releasText,
@@ -62,19 +74,30 @@ class AssetsManager extends Component {
                         height: 200,
                         width: '100%'
                       }}
-                      className="form-control" placeholder="回滚原因" ref={e => this._note = e}></textarea>
+                      className="form-control" placeholder="回滚原因" ref={e => this.rollbackNote = e}></textarea>
                   ),
                   type: 'confirm',
                   width: 340,
-                  onConfirm: async (isRelease) => {
-                    if(!isRelease) return;
+                  onConfirm: async (isSure) => {
+                    if(!isSure) return;
                     let isSuccess;
+                    let releaseRes;
                     try {
-                      let releaseRes = await release({
-                        assetId: id,
-                        projId: belongto,
-                        username,
-                      });
+                      if(canRollback) {
+                        releaseRes = await rollback({
+                          assetId: id,
+                          prevAssetId: releaseRef,
+                          projId: belongto,
+                          username,
+                          rollbackMark: (this.rollbackNote.value || '').trim(),
+                        });
+                      } else {
+                        releaseRes = await release({
+                          assetId: id,
+                          projId: belongto,
+                          username,
+                        });
+                      }
                       isSuccess = !releaseRes.err;
                       CloseGlobalModal(ModalId);
                       this.onReleased();
@@ -86,21 +109,25 @@ class AssetsManager extends Component {
                 });
               }}>
               {releasText}
-            </span>
-            <span
-              className="link-btn theme warn ml10"
+            </button>
+            <button
+              className="red btn ml10"
               onClick={() => {
                 let ModalId = ShowGlobalModal({
                   title: '删除',
                   type: 'confirm',
                   confirmText: (
-                    <h3 className="text-center">确定删除 {versionFilter(item.version)} ?</h3>
+                    <div className="text-center">
+                      <h3>确定删除 {versionFilter(item.version)} ?</h3>
+                      <h5>系统将会把资源文件也删除，不可恢复.</h5>
+                    </div>
                   ),
                   width: 340,
                   onConfirm: async (isDel) => {
                     if(!isDel) return;
-                    let delRes = await deleteAsset(record.id, item.id);
-                    let isSuccess = delRes.status == 'ok';
+                    let delRes = await delAsset({assetId: id, projId: belongto});
+                    let isSuccess = !delRes.err;
+                    console.log(delRes)
                     if(isSuccess) {
                       CloseGlobalModal(ModalId);
                       this.onReleased();
@@ -110,7 +137,7 @@ class AssetsManager extends Component {
                 });
               }}>
               删除
-            </span>
+            </button>
           </React.Fragment>
         )
       }
@@ -131,9 +158,9 @@ class AssetsManager extends Component {
   }
 
   async queryData() {
-    const { username, projId } = this.props;
-    const assetRecord = (await getAssets(username, projId)).data || [];
-    const projectData = (await getProjects({username, projId})).data || [];
+    const { projId } = this.props;
+    const assetRecord = (await getAssets(projId)).data || [];
+    const projectData = (await getProjects({projId})).data || [];
     this.setState({
       records: assetRecord,
       currProject: projectData,

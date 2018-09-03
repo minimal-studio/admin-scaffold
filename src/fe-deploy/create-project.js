@@ -11,14 +11,12 @@ export default class AddFEProject extends Component {
       type: 'input',
       required: true,
       ref: 'projName',
-      defaultValue: $GH.GenerteID(),
       title: '项目名称'
     },
     {
       type: 'input',
       required: true,
       ref: 'projCode',
-      defaultValue: 'Project1',
       title: '项目代号'
     },
     {
@@ -88,7 +86,7 @@ export default class AddFEProject extends Component {
   render() {
     const { activeIdx, prevProjId } = this.state;
     return (
-      <div style={{ position: 'relative' }}>
+      <div>
         <TipPanel
           title="使用说明"
           texts={[

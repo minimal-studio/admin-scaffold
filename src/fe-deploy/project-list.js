@@ -17,7 +17,7 @@ export default class Records extends Component {
           <span className="link-btn" onClick={() => {
             ShowGlobalModal({
               title: projName + ' 版本管理',
-              width: 1000,
+              width: 900,
               // draggable: true,
               showFuncBtn: false,
               children: (
@@ -109,9 +109,8 @@ export default class Records extends Component {
   };
 
   async queryData() {
-    const {username} = this.props;
     const {range} = this.conditionRef.value;
-    let res = await getProjects({username, range});
+    let res = await getProjects({range});
     let records = this.projRecordSearch(res.data);
     this.setState({ records });
     return records;
@@ -125,7 +124,7 @@ export default class Records extends Component {
   create() {
     let ModalId = ShowGlobalModal({
       title: '新增项目',
-      width: 600,
+      width: 900,
       showFuncBtn: false,
       children: (
         <CreateProjectHelper

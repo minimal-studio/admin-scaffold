@@ -26,8 +26,10 @@ class AuditLog extends Component {
       title: '发布类型',
       namesMapper: {
         rollback: '回滚',
-        release: '发布资源',
+        release: '资源发布',
         createProj: '创建项目',
+        systemDeleteAsset: '系统自动清理',
+        deleteAsset: '删除项目',
         createAsset: '上传资源'
       }
     },

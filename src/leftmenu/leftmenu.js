@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass } from 'basic-helper';
-import { Icon, DropdownMenu, Avatar } from 'ukelli-ui';
+import { Icon, Avatar } from 'ukelli-ui';
 
 import { storageHelper } from '../config';
 
@@ -422,7 +422,7 @@ export default class Leftmenu extends Component {
           />
           <Icon 
             title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
-            classNames={['_action-btn mr10']}
+            classNames={['_action-btn']}
             onClick={e => this.changeMenuUIMode(!flowMode)}
             type={!flowMode ? "align-justify" : "align-left"}/>
         </div>

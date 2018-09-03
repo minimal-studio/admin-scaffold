@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGenerator, FormLayout, Popover, TipPanel } from 'ukelli-ui';
+import { FormLayout } from 'ukelli-ui';
 import { uploadFile } from './apis';
 
 export default class CreateAsset extends Component {
   static propTypes = {
-    projId: PropTypes.string.isRequired,
+    projId: PropTypes.string,
     onSuccess: PropTypes.func.isRequired,
   };
   formOptions = [

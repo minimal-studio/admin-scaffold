@@ -8,7 +8,7 @@
 
 import React from 'react';
 import ProjectList from './project-list';
-import {setApiUrl} from './apis';
+import { setFEDeployConfig, setApiUrl, setDefaultUser } from './apis';
 
 const FEDEPLOY = ({userInfo}) => (
   <div className="card-content" style={{minHeight: 400}}>
@@ -18,5 +18,5 @@ const FEDEPLOY = ({userInfo}) => (
 
 export default FEDEPLOY;
 export {
-  setApiUrl
+  setFEDeployConfig, setApiUrl, setDefaultUser
 }
