@@ -84,16 +84,26 @@ class RouterHelper extends Component {
     this.setState(({routers, routerInfo, activeRouteIdx}) => {
       let targetRoute = routers[idx];
       let nextRouters = RemoveArrayItem(routers, targetRoute);
+      let nextRouteInfo = {...routerInfo};
+      delete nextRouteInfo[targetRoute];
       let nextRoutersLen = nextRouters.length - 1;
       let activeIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-      let activeRoute = nextRouters[activeIdx];
+      let nextActiveRoute = nextRouters[activeIdx];
+      // console.log(activeRoute)
+      setTimeout(() => {
+        onNavigate({
+          type: 'PUSH',
+          component: nextActiveRoute,
+          params: nextRouteInfo[nextActiveRoute].params
+        });
+      }, 1);
       return {
         routers: nextRouters,
-        activeRoute: activeRoute,
-        activeRouteIdx: activeIdx,
-        // routerInfo: nextRouterInfo
+        routerInfo: nextRouteInfo,
+        // activeRoute: activeRoute,
+        // activeRouteIdx: activeIdx,
       }
-    })
+    });
   }
   selectTab = (activeRoute) => {
     this.setState(({routers, routerInfo}) => {

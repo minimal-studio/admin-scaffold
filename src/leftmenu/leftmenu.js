@@ -89,7 +89,7 @@ export default class Leftmenu extends Component {
     lang: PropTypes.any,
     menuData: PropTypes.any.isRequired,
     i18nConfig: PropTypes.object,
-    onChangeMenu: PropTypes.func
+    onClickMenu: PropTypes.func
   };
   flowModeKey = 'IS_FLOW_MODA';
   constructor(props) {
@@ -133,7 +133,7 @@ export default class Leftmenu extends Component {
   getNormalMenuChildren = initDataList => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
-    const { onChangeMenu, gm } = this.props;
+    const { onClickMenu, gm } = this.props;
     const { showMenuMapper, flowMode } = this.state;
     let allSet = [];
     let foldIdx = 0;
@@ -184,7 +184,7 @@ export default class Leftmenu extends Component {
             to: to,
             code,
             icon,
-            onClick: () => $GH.CallFunc(onChangeMenu)(code),
+            onClick: () => $GH.CallFunc(onClickMenu)(code),
             menuText: title
           });
         }
@@ -340,7 +340,7 @@ export default class Leftmenu extends Component {
           key: key,
           to: to,
           icon: icon,
-          onClick: () => $GH.CallFunc(onChangeMenu)(code),
+          onClick: () => $GH.CallFunc(onClickMenu)(code),
           menuText: title
         })
       );
@@ -370,7 +370,7 @@ export default class Leftmenu extends Component {
   render() {
     const {
       menuData,
-      onChangeMenu,
+      onClickMenu,
       onToggleNav,
       versionInfo,
       title = '猎户座管理系统',
@@ -412,7 +412,7 @@ export default class Leftmenu extends Component {
             classNames={['_action-btn mr10']}/>
           <SearchBox
             ref={e => this._seatchBox = e}
-            onChangeMenu={onChangeMenu}
+            onClickMenu={onClickMenu}
             onToggleNav={onToggleNav}
             codeMapper={menuCodeMapper}
             showLeftMenu={showLeftMenu}

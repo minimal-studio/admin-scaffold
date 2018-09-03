@@ -1,8 +1,18 @@
 # orion-admin-web-scaffold
 
-管理后台的脚手架，快速打造用户体验一致的
+猎户座管理后台脚手架引擎，快速打造用户体验一致的管理系统
 
-## 使用
+## 使用方式
+
+### 安装
+
+```shell
+npm i orion-admin-web-scaffold --save
+```
+
+### 使用
+
+[详情请看 orion admin seed 项目](https://github.com/SANGET/orion-admin-seed.git)
 
 ## 前端资源管理模块
 
@@ -10,7 +20,6 @@
 
 ```js
 import { setApiUrl } from 'orion-admin-web-scaffold/fe-deploy';
-
 setApiUrl('http://127.0.0.6550');
 ```
 

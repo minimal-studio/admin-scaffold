@@ -24,7 +24,7 @@ class ManagerLayout extends RouterHelper {
   static propTypes = {
     userInfo: PropTypes.object,
     onLogout: PropTypes.func,
-    headerPlugin: PropTypes.object,
+    pluginComponent: PropTypes.object,
     iframeMode: PropTypes.bool,
     pageComponents: PropTypes.object,
     i18nConfig: PropTypes.object,
@@ -164,7 +164,7 @@ class ManagerLayout extends RouterHelper {
       userInfo = {},
       logout,
       pageComponents,
-      HeaderPlugin,
+      pluginComponent = {},
       menuMappers,
       versionInfo,
       iframeMode,
@@ -184,6 +184,7 @@ class ManagerLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
+    const { Statusbar } = pluginComponent;
 
     const container = (
       <div>
@@ -191,7 +192,7 @@ class ManagerLayout extends RouterHelper {
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
           menuData={menuData}
           title={title}
-          onChangeMenu={code => {
+          onClickMenu={code => {
             // this.pushRoute(code)
           }}
           i18nConfig={i18nConfig}
@@ -220,19 +221,20 @@ class ManagerLayout extends RouterHelper {
             <span
               className="_action-btn mr10"
               onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
-              <Icon title={this.gm(showLeftMenu ? "收起" : "展开")} type={showLeftMenu ? "chevron-left" : "chevron-right"}/>
+              <Icon
+                title={this.gm(showLeftMenu ? "收起" : "展开")}
+                type={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
             </span>
           </div>
             {
-              HeaderPlugin ? (
-                <HeaderPlugin
-                  onLogout={logout}
-                  showShortcut={this.showShortcut}
-                  displayFloat={displayFloat}
-                  gm={this.gm}
-                  userInfo={userInfo}
-                  toggleFloat={this.toggleFloat}/>
-              ) : null
+              Statusbar ? React.cloneElement(Statusbar, {
+                onLogout: logout,
+                showShortcut: this.showShortcut,
+                displayFloat: displayFloat,
+                gm: this.gm,
+                userInfo: userInfo,
+                toggleFloat: this.toggleFloat,
+              }) : null
             }
             {
               i18nConfig ? (
@@ -249,7 +251,7 @@ class ManagerLayout extends RouterHelper {
             withContent={true} 
             activeTabIdx={activeRouteIdx} 
             closeabled={true}
-            onClose={idx => this.closeTab(idx)}>
+            onClose={idx => this.closeTab(idx, routerInfo)}>
             {
               routers.map((route, idx) => {
                 let C = pageComponents[route];
