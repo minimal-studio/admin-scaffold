@@ -7,7 +7,6 @@ $activePadding: 10px;
 $hoverBgColor: rgb(140, 190, 234);
 
 .leftmenu-response {
-  // background-color: $leftmenuBgColor;
   padding-bottom: 50px;
   background: linear-gradient(
     45deg,
@@ -15,7 +14,6 @@ $hoverBgColor: rgb(140, 190, 234);
     lighten($leftmenuBgColor, 5%),
     lighten($leftmenuBgColor, 15%)
   );
-  // background-image: url(/images/bg/001.jpg);
   color: #c5c5c7;
   @include fill();
   width: $leftmenuWidth;
@@ -49,7 +47,7 @@ $hoverBgColor: rgb(140, 190, 234);
   .menu-header {
     position: relative;
     padding: 2px 10px;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
     background-color: #EEE;
     display: flex;
@@ -58,6 +56,9 @@ $hoverBgColor: rgb(140, 190, 234);
     .title {
       // text-align: center;
       color: #fff;
+    }
+    .fa {
+      padding: 8px 3px;
     }
   }
   .menulist-title {
@@ -84,7 +85,23 @@ $hoverBgColor: rgb(140, 190, 234);
   }
 }
 
+.userinfo {
+  display: flex;
+  align-items: center;
+  // margin: 5px 0;
+  padding: 10px;
+  .avatar {
+    background-color: $colorGreen;
+    $scale: 40px;
+    line-height: $scale;
+    height: $scale;
+    width: $scale;
+    margin-right: 15px;
+  }
+}
+
 .leftmenu-tree {
+  background-color: rgba(#000, 0.1);
   .fold {
     padding: 10px 0 10px 10px;
     cursor: pointer;

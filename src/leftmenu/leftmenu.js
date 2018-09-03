@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass } from 'basic-helper';
-import { Icon, DropdownMenu } from 'ukelli-ui';
+import { Icon, DropdownMenu, Avatar } from 'ukelli-ui';
 
 import { storageHelper } from '../config';
 
@@ -374,13 +374,14 @@ export default class Leftmenu extends Component {
       onToggleNav,
       versionInfo,
       title = '猎户座管理系统',
+      username,
       gm,
       showLeftMenu
     } = this.props;
 
     const { flowMode } = this.state;
 
-    const container = flowMode ? (
+    const menuTree = flowMode ? (
       this.getFlowModeDOM(menuData)
     ) : (
       <div className="leftmenu-tree">
@@ -423,7 +424,14 @@ export default class Leftmenu extends Component {
             onClick={e => this.changeMenuUIMode(!flowMode)}
             type={!flowMode ? "align-justify" : "align-left"}/>
         </div>
-        {container}
+        <div className="userinfo">
+          <Avatar size="sm" text={username[0]}/>
+          <span>
+            <div>{username}</div>
+            <div>{gm('在线')}</div>
+          </span>
+        </div>
+        {menuTree}
         {
           versionInfo ? (
             <VersionComponent gm={gm} versionInfo={versionInfo} />

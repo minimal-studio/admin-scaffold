@@ -23,6 +23,7 @@ class ManagerLayout extends RouterHelper {
   }
   static propTypes = {
     userInfo: PropTypes.object,
+    username: PropTypes.string,
     onLogout: PropTypes.func,
     pluginComponent: PropTypes.object,
     iframeMode: PropTypes.bool,
@@ -161,7 +162,7 @@ class ManagerLayout extends RouterHelper {
   }
   render() {
     const {
-      userInfo = {},
+      username = 'U',
       logout,
       pageComponents,
       pluginComponent = {},
@@ -197,6 +198,7 @@ class ManagerLayout extends RouterHelper {
           }}
           i18nConfig={i18nConfig}
           menuMappers={menuMappers}
+          username={username}
           lang={lang}
           defaultFlowMode={false}
           versionInfo={versionInfo}
@@ -232,7 +234,6 @@ class ManagerLayout extends RouterHelper {
                 showShortcut: this.showShortcut,
                 displayFloat: displayFloat,
                 gm: this.gm,
-                userInfo: userInfo,
                 toggleFloat: this.toggleFloat,
               }) : null
             }
@@ -241,6 +242,7 @@ class ManagerLayout extends RouterHelper {
                 <div className="lang-selector mr10">
                   <DropdownMenu 
                     onChange={val => this.changeLang(val)}
+                    position="right"
                     value={lang}
                     values={i18nConfig}/>
                 </div>

@@ -84,24 +84,17 @@ class RouterHelper extends Component {
     this.setState(({routers, routerInfo, activeRouteIdx}) => {
       let targetRoute = routers[idx];
       let nextRouters = RemoveArrayItem(routers, targetRoute);
-      let nextRouteInfo = {...routerInfo};
-      delete nextRouteInfo[targetRoute];
+      let nextRouterInfo = {...routerInfo};
+      delete nextRouterInfo[targetRoute];
       let nextRoutersLen = nextRouters.length - 1;
-      let activeIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-      let nextActiveRoute = nextRouters[activeIdx];
-      // console.log(activeRoute)
-      setTimeout(() => {
-        onNavigate({
-          type: 'PUSH',
-          component: nextActiveRoute,
-          params: nextRouteInfo[nextActiveRoute].params
-        });
-      }, 1);
+      let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
+      let nextActiveRoute = nextRouters[nextActiveIdx];
+      
       return {
         routers: nextRouters,
-        routerInfo: nextRouteInfo,
-        // activeRoute: activeRoute,
-        // activeRouteIdx: activeIdx,
+        routerInfo: nextRouterInfo,
+        activeRoute: nextActiveRoute,
+        activeRouteIdx: nextActiveIdx,
       }
     });
   }
