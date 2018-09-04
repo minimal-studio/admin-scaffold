@@ -1,10 +1,10 @@
 /**
- * 与 orion web server 通讯的 api 接口
+ * 与 uke web server 通讯的 api 接口
  */
 
-import { wrapReqHashUrl, OrionRequestClass } from 'orion-request';
+import { wrapReqHashUrl, UkeFetchClass } from 'uke-fetch';
 
-let request = new OrionRequestClass();
+let request = new UkeFetchClass();
 
 let apiUrl = '';
 let defaultUsername = '';

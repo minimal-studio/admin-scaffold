@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {getUrlParams} from 'orion-request';
+import {getUrlParams} from 'uke-fetch';
 import createBrowserHistory from "history/createBrowserHistory";
 import {RemoveArrayItem} from 'basic-helper';
 

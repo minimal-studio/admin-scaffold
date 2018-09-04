@@ -1,6 +1,6 @@
 {
-  "name": "orion-admin-web-scaffold",
-  "version": "0.9.0",
+  "name": "uke-admin-web-scaffold",
+  "version": "0.10.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -13,23 +13,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.9th.go/frontend-orion/orion-admin-web-scaffold.git"
+    "url": "http://github.9th.go/frontend-uke/uke-admin-web-scaffold.git"
   },
   "description": "",
   "peerDependencies": {
-    "ukelli-ui": "^2.4.x",
     "cross-env": "^5.1.6",
+    "mousetrap": "^1.6.1",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-transition-group": "^2.2.0"
-  },
-  "dependencies": {
-    "mousetrap": "^1.6.1"
+    "react-transition-group": "^2.2.0",
+    "ukelli-ui": "^2.4.x"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react-app": "^3.0.2"
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-app": "^3.0.2",
+    "fs-extra": "^7.0.0"
   },
   "author": "alex",
   "license": "ISC"
