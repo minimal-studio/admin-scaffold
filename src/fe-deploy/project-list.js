@@ -23,7 +23,8 @@ export default class Records extends Component {
               children: (
                 <ProjectManager
                   {...this.props}
-                  targetProject={item}
+                  queryProject={this.queryData}
+                  getProject={e => this.getProject(idx)}
                   notify={this.notify}
                 />
               )
@@ -77,13 +78,18 @@ export default class Records extends Component {
     records: [],
   };
 
-  notify = (title, isSuccess) => {
+  getProject = (idx) => {
+    return this.state.records[idx];
+  }
+
+  notify = (title, isSuccess, text) => {
     const normalType = typeof isSuccess == 'undefined';
     Notify({
       config: {
         id: GenerteID(),
         type: normalType ? 'normal' : isSuccess ? 'success' : 'error',
         title: normalType ? title : title + (isSuccess ? '成功' : '失败'),
+        text
       }
     })
   }
@@ -108,7 +114,7 @@ export default class Records extends Component {
     });
   };
 
-  async queryData() {
+  queryData = async () => {
     const {range} = this.conditionRef.value;
     let res = await getProjects({range});
     let records = this.projRecordSearch(res.data);
@@ -130,8 +136,7 @@ export default class Records extends Component {
         <CreateProjectHelper
           {...this.props}
           notify={this.notify}
-          handleSuccess={() => {
-            // CloseGlobalModal(ModalId);
+          onCreatedProject={() => {
             this.queryData();
           }}
         />
@@ -143,6 +148,7 @@ export default class Records extends Component {
    * 根据 input-selector 的输入来过滤结果
    */
   projRecordSearch(records) {
+    if(!records) return [];
     const {founder, projCode, projName} = this.conditionRef.value;
     const filterArr = {founder, projCode, projName};
     let nextRecords = [...records];

@@ -6,14 +6,24 @@ import { uploadFile } from './apis';
 
 export default class CreateAsset extends Component {
   static propTypes = {
-    projId: PropTypes.string,
+    project: PropTypes.object,
     onSuccess: PropTypes.func.isRequired,
   };
   formOptions = [
     {
       ref: 'projId',
       type: 'hidden',
-      defaultValue: this.props.projId
+      defaultValue: this.props.project.id
+    },
+    {
+      ref: 'isCallHook',
+      type: 'radio',
+      defaultValue: this.props.project.webhook ? '1' : '0',
+      title: '触发 webhook',
+      values: {
+        '0': '否',
+        '1': '是',
+      }
     },
     {
       ref: 'desc',

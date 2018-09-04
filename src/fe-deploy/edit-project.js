@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormLayout} from 'ukelli-ui';
 import { updatePropject, delPropject } from './apis';
+import { CallFunc } from 'basic-helper/basic';
 
 export default class EditProject extends Component {
   static propTypes = {
@@ -11,8 +12,9 @@ export default class EditProject extends Component {
   constructor(props) {
     super(props);
 
-    const { project, username } = props;
-    
+    const { getProject, username } = props;
+    const project = getProject();
+
     this.formOptions = [
       {
         type: 'input',
@@ -54,8 +56,13 @@ export default class EditProject extends Component {
     ];
   }
 
-  updateProject = (nextProject) => {
-    updatePropject(nextProject);
+  updateProject = async (nextProject) => {
+    let updateRes = await updatePropject(nextProject);
+    let resErr = updateRes.err;
+    this.props.notify('更新项目', !resErr, resErr);
+    if(!resErr) {
+      CallFunc(this.props.onUpdated)();
+    }
   }
 
   deleteProject = async () => {
@@ -64,7 +71,6 @@ export default class EditProject extends Component {
       username,
       projId: project.id
     });
-    console.log(delRes)
   }
 
   btnConfig = [

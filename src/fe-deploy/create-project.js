@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { FormGenerator, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
 
 import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
+import { CallFunc } from 'basic-helper/basic';
 
-export default class AddFEProject extends Component {
+export default class CreateProject extends Component {
+  static propTypes = {
+    onCreatedProject: PropTypes.func,
+  }
   formOptions = [
     {
       type: 'input',
@@ -44,12 +49,8 @@ export default class AddFEProject extends Component {
     // this.refs.formHelper.refs.name && this.refs.formHelper.refs.name.focus();
   }
 
-  handleSuccess = () => {
-    this.props.handleSuccess();
-  };
-
   onCreateProj = (formValue) => {
-    const { username } = this.props;
+    const { username, notify, onCreatedProject } = this.props;
     formValue.username = username;
     // console.log(formValue)
     createProject(formValue).then((res) => {
@@ -61,6 +62,10 @@ export default class AddFEProject extends Component {
           activeIdx: 1,
           prevProjId: projId
         });
+
+        CallFunc(onCreatedProject)();
+      } else {
+        notify('创建项目', false, err)
       }
     });
   }

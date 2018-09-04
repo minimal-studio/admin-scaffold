@@ -2,7 +2,9 @@
  * 与 orion web server 通讯的 api 接口
  */
 
-import { wrapReqHashUrl } from 'orion-request';
+import { wrapReqHashUrl, OrionRequestClass } from 'orion-request';
+
+let request = new OrionRequestClass();
 
 let apiUrl = '';
 let defaultUsername = '';
@@ -66,34 +68,12 @@ export async function getAssets(projId, user = defaultUsername) {
     },
     toBase64: false,
   });
-  return await parseToJson(await fetch(url));
+  return await request.get(url);
 }
 
 export async function delAsset({projId, assetId, username = defaultUsername}) {
   let postData = {assetId, projId, username};
-  return await parseToJson(await fetch(delAssetUrl, {
-    headers: jsonHeader,
-    method: 'POST',
-    body: JSON.stringify(postData)
-  }));
-}
-
-export async function release({assetId, projId, username = defaultUsername}) {
-  let postData = {assetId, projId, username};
-  return await parseToJson(await fetch(releaseUrl, {
-    method: 'POST',
-    headers: jsonHeader,
-    body: JSON.stringify(postData)
-  }));
-}
-
-export async function rollback({prevAssetId, assetId, projId, rollbackMark, username = defaultUsername}) {
-  let postData = {assetId, projId, rollbackMark, username, prevAssetId};
-  return await parseToJson(await fetch(rollbackUrl, {
-    method: 'POST',
-    headers: jsonHeader,
-    body: JSON.stringify(postData)
-  }));
+  return await request.post(delAssetUrl, postData);
 }
 
 export async function getProjects(options) {
@@ -107,31 +87,29 @@ export async function getProjects(options) {
     },
     toBase64: false,
   });
-  return await parseToJson(await fetch(url));
+  return await request.get(url);
 }
 
 export async function createProject(projConfig) {
-  return parseToJson(await fetch(projectUrl, {
-    method: 'POST',
-    body: JSON.stringify(projConfig),
-    headers: jsonHeader,
-  }));
+  return await request.post(projectUrl, projConfig);
 }
 
 export async function updatePropject(projConfig) {
-  return parseToJson(await fetch(projectUrl, {
-    method: 'PUT',
-    body: JSON.stringify(projConfig),
-    headers: jsonHeader,
-  }));
+  return await request.post(projectUrl, projConfig, null, 'PUT');
 }
 
 export async function delPropject({projId, username = defaultUsername}) {
-  return parseToJson(await fetch(delProjectUrl, {
-    method: 'POST',
-    body: JSON.stringify({projId, username}),
-    headers: jsonHeader,
-  }));
+  return await request.post(delProjectUrl, {projId, username});
+}
+
+export async function release({assetId, projId, username = defaultUsername}) {
+  let postData = {assetId, projId, username};
+  return await request.post(releaseUrl, postData);
+}
+
+export async function rollback({prevAssetId, assetId, projId, rollbackMark, username = defaultUsername}) {
+  let postData = {assetId, projId, rollbackMark, username, prevAssetId};
+  return await request.post(rollbackUrl, postData);
 }
 
 export async function uploadFile(assetData) {
@@ -150,5 +128,5 @@ export async function getAudit(projId) {
     },
     toBase64: false,
   });
-  return await parseToJson(await fetch(url));
+  return await request.get(url);
 }
