@@ -2,9 +2,9 @@
  * 与 uke web server 通讯的 api 接口
  */
 
-import { wrapReqHashUrl, UkeFetchClass } from 'uke-fetch';
+import { wrapReqHashUrl, RequestClass } from 'uke-request';
 
-let request = new UkeFetchClass();
+let request = new RequestClass();
 
 let apiUrl = '';
 let defaultUsername = '';

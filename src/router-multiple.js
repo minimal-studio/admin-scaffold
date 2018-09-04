@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {getUrlParams} from 'uke-fetch';
+import {getUrlParams} from 'uke-request';
 import createBrowserHistory from "history/createBrowserHistory";
 import {RemoveArrayItem} from 'basic-helper';
 
