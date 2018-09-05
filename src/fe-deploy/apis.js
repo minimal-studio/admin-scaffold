@@ -4,7 +4,7 @@
 
 import { wrapReqHashUrl, RequestClass } from 'uke-request';
 
-let request = new RequestClass();
+let $R = new RequestClass();
 
 let apiUrl = '';
 let defaultUsername = '';
@@ -68,12 +68,12 @@ export async function getAssets(projId, user = defaultUsername) {
     },
     toBase64: false,
   });
-  return await request.get(url);
+  return await $R.get(url);
 }
 
 export async function delAsset({projId, assetId, username = defaultUsername}) {
   let postData = {assetId, projId, username};
-  return await request.post(delAssetUrl, postData);
+  return await $R.request(delAssetUrl, postData);
 }
 
 export async function getProjects(options) {
@@ -87,29 +87,29 @@ export async function getProjects(options) {
     },
     toBase64: false,
   });
-  return await request.get(url);
+  return await $R.get(url);
 }
 
 export async function createProject(projConfig) {
-  return await request.post(projectUrl, projConfig);
+  return await $R.request(projectUrl, projConfig);
 }
 
 export async function updatePropject(projConfig) {
-  return await request.post(projectUrl, projConfig, null, 'PUT');
+  return await $R.request(projectUrl, projConfig, null, 'PUT');
 }
 
 export async function delPropject({projId, username = defaultUsername}) {
-  return await request.post(delProjectUrl, {projId, username});
+  return await $R.request(delProjectUrl, {projId, username});
 }
 
 export async function release({assetId, projId, username = defaultUsername}) {
   let postData = {assetId, projId, username};
-  return await request.post(releaseUrl, postData);
+  return await $R.request(releaseUrl, postData);
 }
 
 export async function rollback({prevAssetId, assetId, projId, rollbackMark, username = defaultUsername}) {
   let postData = {assetId, projId, rollbackMark, username, prevAssetId};
-  return await request.post(rollbackUrl, postData);
+  return await $R.request(rollbackUrl, postData);
 }
 
 export async function uploadFile(assetData) {
@@ -128,5 +128,5 @@ export async function getAudit(projId) {
     },
     toBase64: false,
   });
-  return await request.get(url);
+  return await $R.get(url);
 }
