@@ -375,7 +375,7 @@ export default class Leftmenu extends Component {
       onClickMenu,
       onToggleNav,
       versionInfo,
-      title = '猎户座管理系统',
+      title = 'UKE管理系统',
       username,
       gm,
       showLeftMenu
