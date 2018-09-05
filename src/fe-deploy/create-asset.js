@@ -7,13 +7,14 @@ import { uploadFile } from './apis';
 export default class CreateAsset extends Component {
   static propTypes = {
     project: PropTypes.object,
+    projId: PropTypes.string,
     onSuccess: PropTypes.func.isRequired,
   };
   formOptions = [
     {
       ref: 'projId',
       type: 'hidden',
-      defaultValue: this.props.project.id
+      defaultValue: this.props.projId
     },
     {
       ref: 'isCallHook',
