@@ -10,29 +10,6 @@ export default class CreateAsset extends Component {
     projId: PropTypes.string,
     onSuccess: PropTypes.func.isRequired,
   };
-  formOptions = [
-    {
-      ref: 'projId',
-      type: 'hidden',
-      defaultValue: this.props.projId
-    },
-    {
-      ref: 'isCallHook',
-      type: 'radio',
-      defaultValue: this.props.project.webhook ? '1' : '0',
-      title: '触发 webhook',
-      values: {
-        '0': '否',
-        '1': '是',
-      }
-    },
-    {
-      ref: 'desc',
-      type: 'textarea',
-      title: '版本说明',
-      required: true
-    }
-  ];
 
   state = {
     
@@ -40,6 +17,33 @@ export default class CreateAsset extends Component {
 
   constructor(props) {
     super(props);
+
+    const { project, projId } = props;
+    console.log(project)
+
+    this.formOptions = [
+      {
+        ref: 'projId',
+        type: 'hidden',
+        defaultValue: projId
+      },
+      project ? {
+        ref: 'isCallHook',
+        type: 'radio',
+        defaultValue: project.webhook ? '1' : '0',
+        title: '触发 webhook',
+        values: {
+          '0': '否',
+          '1': '是',
+        }
+      } : null,
+      {
+        ref: 'desc',
+        type: 'textarea',
+        title: '版本说明',
+        required: true
+      }
+    ];
   }
 
   btnConfig = [
