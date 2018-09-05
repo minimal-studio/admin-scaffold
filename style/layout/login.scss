@@ -39,6 +39,7 @@
     .title {
       // color: #FFF;
       // margin-bottom: 10px;
+      display: flex !important;
     }
     .form-group {
       position: relative;
@@ -48,7 +49,7 @@
         display: none;
       }
       .form-control {
-        width: 100%;
+        // width: 100%;
         // background-color: rgba(255,255,255,0);
         // color: #FFF;
       }

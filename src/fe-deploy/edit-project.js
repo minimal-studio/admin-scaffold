@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormLayout} from 'ukelli-ui';
 import { updatePropject, delPropject } from './apis';
-import { CallFunc } from 'basic-helper/basic';
+import { CallFunc } from 'basic-helper';
 
 export default class EditProject extends Component {
   static propTypes = {

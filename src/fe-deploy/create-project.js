@@ -5,7 +5,7 @@ import { FormGenerator, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
 import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
-import { CallFunc } from 'basic-helper/basic';
+import { CallFunc } from 'basic-helper';
 
 export default class CreateProject extends Component {
   static propTypes = {
