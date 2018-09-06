@@ -19,7 +19,6 @@ export default class CreateAsset extends Component {
     super(props);
 
     const { project, projId } = props;
-    console.log(project)
 
     this.formOptions = [
       {
@@ -63,9 +62,9 @@ export default class CreateAsset extends Component {
           onSuccess(res.data);
           isSuccess = true;
         }
-        this.props.notify('上传', isSuccess)
+        this.props.notify('上传', isSuccess, res.err)
       },
-      text: '新增',
+      text: '上传资源',
     }
   ];
 

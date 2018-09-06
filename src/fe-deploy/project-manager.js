@@ -4,17 +4,24 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'ukelli-ui';
+import { Tabs, Tab, TipPanel } from 'ukelli-ui';
 
 import CreateAsset from './create-asset';
 import AssetManager from './assets-manager';
 import EditProject from './edit-project';
 import AuditLog from './audit-log';
 
+import { applyToJoinInProject } from './apis';
+
 class ProjectManager extends Component {
   static propTypes = {
     getProject: PropTypes.func.isRequired,
     queryProject: PropTypes.func.isRequired,
+  }
+  constructor(props) {
+    super(props);
+
+    this.authFilter();
   }
   onCreatedAsset() {
     this.tabRef._onChangeTab(0);
@@ -22,9 +29,20 @@ class ProjectManager extends Component {
   onUpdateProject() {
     this.props.queryProject();
   }
+  authFilter() {
+    const { username } = this.props;
+    const { collaborators, founder } = this.props.getProject();
+    this.canOperate = username == founder || collaborators.hasOwnProperty(username);
+  }
+  async applyToJoin(projId) {
+    const { username } = this.props;
+    let applyRes = await applyToJoinInProject({projId, username});
+    console.log(applyRes)
+  }
   render() {
     const targetProject = this.props.getProject();
-    return (
+
+    const container = this.canOperate ? (
       <div className="project-manager p10">
         <Tabs ref={e => this.tabRef = e}>
           <Tab label="资源列表">
@@ -41,7 +59,16 @@ class ProjectManager extends Component {
           </Tab>
         </Tabs>
       </div>
+    ) : (
+      <div>
+        <TipPanel title="你暂时还不是该项目的协作者，可以通过申请进行项目协作"/>
+        <div className="text-center">
+          <span className="btn flat theme" onClick={e => this.applyToJoin(targetProject.id)}>申请加入协作</span>
+        </div>
+      </div>
     );
+
+    return container;
   }
 }
 

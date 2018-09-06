@@ -17,6 +17,7 @@ let releaseUrl = '';
 let uploadUrl = '';
 let auditUrl = '';
 let rollbackUrl = '';
+let joinInUrl = '';
 
 let jsonHeader = {
   "Content-Type": "application/json"
@@ -27,6 +28,9 @@ let uploadHeader = {
   // "Content-Type": "multipart/form-data;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL"
 };
 
+/**
+ * 处理 fetch 回调
+ */
 async function parseToJson(fetchRes) {
   let res = null;
   try {
@@ -37,15 +41,24 @@ async function parseToJson(fetchRes) {
   return res;
 }
 
+/**
+ * 设置 F-E-Deployment 模块的配置
+ */
 export function setFEDeployConfig({username, apiUrl}) {
   setDefaultUser(username);
   setApiUrl(apiUrl);
 }
 
+/**
+ * 设置默认的操作者的用户名
+ */
 export function setDefaultUser(username) {
   defaultUsername = username;
 }
 
+/**
+ * 设置 APIs 的地址
+ */
 export function setApiUrl(url) {
   apiUrl = url;
   apiUrl = apiUrl.replace(/\/$/, '');
@@ -57,8 +70,12 @@ export function setApiUrl(url) {
   releaseUrl = apiUrl + '/release';
   auditUrl = apiUrl + '/audit';
   rollbackUrl = apiUrl + '/rollback';
+  joinInUrl = apiUrl + '/join';
 }
 
+/**
+ * 获取资源
+ */
 export async function getAssets(projId, user = defaultUsername) {
   let url = wrapReqHashUrl({
     url: assetUrl,
@@ -71,11 +88,17 @@ export async function getAssets(projId, user = defaultUsername) {
   return await $R.get(url);
 }
 
+/**
+ * 删除资源
+ */
 export async function delAsset({projId, assetId, username = defaultUsername}) {
   let postData = {assetId, projId, username};
   return await $R.request(delAssetUrl, postData);
 }
 
+/**
+ * 获取项目列表
+ */
 export async function getProjects(options) {
   let {projId, range, user = defaultUsername} = options;
   let url = wrapReqHashUrl({
@@ -90,28 +113,54 @@ export async function getProjects(options) {
   return await $R.get(url);
 }
 
+/**
+ * 创建项目
+ */
 export async function createProject(projConfig) {
   return await $R.request(projectUrl, projConfig);
 }
 
+/**
+ * 更新项目
+ */
 export async function updatePropject(projConfig) {
   return await $R.request(projectUrl, projConfig, null, 'PUT');
 }
 
+/**
+ * 删除项目
+ */
 export async function delPropject({projId, username = defaultUsername}) {
   return await $R.request(delProjectUrl, {projId, username});
 }
 
+/**
+ * 发布
+ */
 export async function release({assetId, projId, username = defaultUsername}) {
   let postData = {assetId, projId, username};
   return await $R.request(releaseUrl, postData);
 }
 
+/**
+ * 回滚
+ */
 export async function rollback({prevAssetId, assetId, projId, rollbackMark, username = defaultUsername}) {
   let postData = {assetId, projId, rollbackMark, username, prevAssetId};
   return await $R.request(rollbackUrl, postData);
 }
 
+/**
+ * 申请加入协作
+ */
+export async function applyToJoinInProject({projId, username = defaultUsername}) {
+  let postData = {username, projId};
+  return await $R.request(joinInUrl, postData);
+}
+
+/**
+ * 上传资源文件
+ */
 export async function uploadFile(assetData) {
   return parseToJson(await fetch(uploadUrl, {
     method: 'POST',
@@ -120,6 +169,9 @@ export async function uploadFile(assetData) {
   }));
 }
 
+/**
+ * 获取审计日志
+ */
 export async function getAudit(projId) {
   let url = wrapReqHashUrl({
     url: auditUrl,

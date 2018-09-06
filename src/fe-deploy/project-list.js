@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Loading, TableBody, Notify, ShowGlobalModal, ConditionGenerator, CloseGlobalModal } from 'ukelli-ui';
+import { Loading, TableBody, Notify, ShowGlobalModal, ConditionGenerator, CloseGlobalModal, TipPanel } from 'ukelli-ui';
 import {GenerteID} from 'basic-helper';
 
 import { getProjects } from './apis';
@@ -16,7 +16,7 @@ export default class Records extends Component {
         return (
           <span className="link-btn" onClick={() => {
             ShowGlobalModal({
-              title: projName + ' 版本管理',
+              title: '项目 ' + projName + ' 管理',
               width: 900,
               // draggable: true,
               showFuncBtn: false,
@@ -42,6 +42,15 @@ export default class Records extends Component {
       title: '创建人'
     },
     {
+      key: 'collaborators',
+      title: '协作者',
+      filter: (str, item) => {
+        let collaborators = Object.keys(item.collaborators);
+        let has = collaborators.length > 0;
+        return has ? collaborators.join(',') : '-';
+      }
+    },
+    {
       key: 'createdDate',
       title: '创建日期',
       datetime: true
@@ -56,7 +65,7 @@ export default class Records extends Component {
     {
       type: 'radio',
       ref: 'range',
-      defaultValue: 'me',
+      defaultValue: 'all',
       title: '项目',
       values: {
         'me': '我的',
@@ -76,6 +85,7 @@ export default class Records extends Component {
 
   state = {
     records: [],
+    querying: true
   };
 
   getProject = (idx) => {
@@ -115,10 +125,16 @@ export default class Records extends Component {
   };
 
   queryData = async () => {
+    this.setState({
+      querying: true
+    });
     const {range} = this.conditionRef.value;
     let res = await getProjects({range});
     let records = this.projRecordSearch(res.data);
-    this.setState({ records });
+    this.setState({
+      records,
+      querying: false
+    });
     return records;
   };
 
@@ -167,30 +183,38 @@ export default class Records extends Component {
   }
 
   render() {
-    const { records } = this.state;
+    const { records, querying } = this.state;
 
     return (
-      <Loading loading={!records} inrow={true}>
-        <div className="project-list p10">
-          <ConditionGenerator
-            ref={e => this.conditionRef = e}
-            conditionConfig={this.conditionOptions}>
-            <button className="btn theme flat" onClick={e => this.queryData()}>查询</button>
-          </ConditionGenerator>
-          <div className="action-group">
-            <button
-              className="btn theme flat mr10"
-              onClick={() => this.create()}>
-              新增项目
-            </button>
-          </div>
-          <TableBody
-            keyMapper={this.keyMapper}
-            records={records}
-            needCount={false}
-          />
-        </div>
-      </Loading>
+      <div>
+        <TipPanel title="使用说明" texts={[
+          '项目发布后的路由为: host:28101/public/projectName',
+          '根据实际情况来绑定域名',
+          '项目创建人对自身创建的项目有绝对控制权',
+          '如果需要与其他人协作，协作者可以申请加入到具体项目中'
+        ]}/>
+        <Loading loading={querying} inrow={true}>
+            <div className="project-list p10">
+              <ConditionGenerator
+                ref={e => this.conditionRef = e}
+                conditionConfig={this.conditionOptions}>
+                <button className="btn theme flat" onClick={e => this.queryData()}>查询</button>
+              </ConditionGenerator>
+              <div className="action-group">
+                <button
+                  className="btn theme flat mr10"
+                  onClick={() => this.create()}>
+                  新增项目
+                </button>
+              </div>
+              <TableBody
+                keyMapper={this.keyMapper}
+                records={records}
+                needCount={false}
+              />
+            </div>
+        </Loading>
+      </div>
     );
   }
 }
