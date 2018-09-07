@@ -261,6 +261,7 @@ class ManagerLayout extends RouterHelper {
                 let {params} = currInfo;
                 return C ? (
                   <Tab 
+                    contentClass={route}
                     label={this.gm(menuCodeMapper[route] || route)} 
                     key={route + JSON.stringify(params)} 
                     onChange={e => this.changeRoute(route, params)}>
