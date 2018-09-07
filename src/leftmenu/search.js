@@ -81,7 +81,7 @@ export default class SearchBox extends Component {
             setTimeout(() => {
               this.setSearchCon(false);
               this.shouldBeHidden = false;
-            }, 50);
+            }, 100);
           }}
           onKeyUp={this.handleEsc}
         />
@@ -99,7 +99,7 @@ export default class SearchBox extends Component {
                   <Link
                     className="result-item"
                     key={idx}
-                    to={`${code}`}
+                    to={code}
                     onClick={e => $GH.CallFunc(onChangeMenu)(code)}>
                     {codeMapper[code]}
                   </Link>
