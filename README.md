@@ -14,6 +14,12 @@ npm i uke-admin-web-scaffold --save
 
 [详情请看 uke admin seed 项目](https://github.com/SANGET/uke-admin-seed.git)
 
+## 提供三个默认数据渲染模版
+
+```js
+import { FormRender, ReportTemplate, GeneralReportRender } from 'uke-admin-web-scaffold/template-engine';
+```
+
 ## 前端资源管理模块
 
 启动时需要通过 setApiUrl 接口设置前端管理服务的地址
