@@ -14,8 +14,8 @@ import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
 import Posts from './posts';
 
-import {RouterHelper} from './router-multiple';
-let i18nMapperUrl = '/i18n/';
+import { RouterHelper } from './router-multiple';
+let i18nMapperUrl = './i18n/';
 
 class ManagerLayout extends RouterHelper {
   static setI18nUrl = (nextUrl) => {
@@ -85,7 +85,7 @@ class ManagerLayout extends RouterHelper {
       });
       setUkeLang(lang);
     } catch(e) {
-      console.log(e)
+      console.log('please set the correct i18n url');
     }
     // setState && this.setState({
     //   langMapper: mapper
@@ -108,7 +108,7 @@ class ManagerLayout extends RouterHelper {
   }
 
   componentDidMount() {
-    Mousetrap.bind(['ctrl ctrl', 'alt alt'], e => {
+    Mousetrap.bind(['alt alt'], e => {
       this.toggleLeftMenu(!this.state.showLeftMenu);
       return false;
     });
@@ -117,7 +117,7 @@ class ManagerLayout extends RouterHelper {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind(['alt+k', 'ctrl ctrl', 'alt alt']);
+    Mousetrap.unbind(['alt+k', 'alt alt']);
   }
 
   toggleFloat = () => {
@@ -169,7 +169,6 @@ class ManagerLayout extends RouterHelper {
       menuMappers,
       versionInfo,
       iframeMode,
-      multiplePage = true,
       i18nConfig,
       title
     } = this.props;
@@ -187,7 +186,7 @@ class ManagerLayout extends RouterHelper {
     } = this.state;
     const { Statusbar } = pluginComponent;
 
-    const container = (
+    const container = ready ? (
       <div>
         <LeftmenuLayout
           onDidMount={this.onGetMenuCodeMapper.bind(this)}
@@ -251,11 +250,11 @@ class ManagerLayout extends RouterHelper {
           </div>
           <Tabs 
             withContent={true} 
-            activeTabIdx={activeRouteIdx} 
             closeabled={true}
+            activeTabIdx={activeRouteIdx} 
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
-              routers.map((route, idx) => {
+              routers.map(route => {
                 let C = pageComponents[route];
                 let currInfo = routerInfo[route];
                 let {params} = currInfo;
@@ -273,12 +272,12 @@ class ManagerLayout extends RouterHelper {
           </Tabs>
         </div>
       </div>
-    );
+    ) : null;
 
     return (
       <div id="managerApp" className="fill">
         <Loading loading={!ready}>
-          { ready ? container : null }
+          {container}
         </Loading>
       </div>
     );
