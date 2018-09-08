@@ -9,7 +9,6 @@
 .login-panel {
   @include fill();
   position: fixed;
-  background-image: url(/css/images/bg/001.jpg);
   background-size: cover;
   .panel-tip {
     margin: 0;

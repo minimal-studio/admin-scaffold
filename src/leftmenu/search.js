@@ -69,7 +69,7 @@ export default class SearchBox extends Component {
     return (
       <div 
         className={'search-container' + (isShow ? ' show-content' : '')}
-        style={{zIndex: isShowCon ? '1' : '-1'}}>
+        style={{zIndex: isShowCon ? '111' : '-1'}}>
         <input
           ref={c => (this._input = c)}
           type="text"
