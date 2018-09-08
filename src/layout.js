@@ -23,7 +23,7 @@ class ManagerLayout extends RouterHelper {
   }
   static propTypes = {
     userInfo: PropTypes.object,
-    username: PropTypes.string,
+    username: PropTypes.string.isRequired,
     onLogout: PropTypes.func,
     pluginComponent: PropTypes.object,
     iframeMode: PropTypes.bool,
@@ -152,9 +152,10 @@ class ManagerLayout extends RouterHelper {
     });
   }
   getRouteProps() {
-    const {userInfo} = this.props;
+    const { userInfo, username } = this.props;
     return {
       userInfo,
+      username,
       gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,

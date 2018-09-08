@@ -65,7 +65,7 @@ export default class Records extends Component {
     {
       type: 'radio',
       ref: 'range',
-      defaultValue: 'all',
+      defaultValue: 'me',
       title: '项目',
       values: {
         'me': '我的',

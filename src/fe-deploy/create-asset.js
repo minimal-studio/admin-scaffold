@@ -19,6 +19,7 @@ export default class CreateAsset extends Component {
     super(props);
 
     const { project, projId, username } = props;
+    console.log(username)
 
     this.formOptions = [
       {

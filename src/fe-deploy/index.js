@@ -10,13 +10,14 @@ import React from 'react';
 import ProjectList from './project-list';
 import { setFEDeployConfig, setApiUrl, setDefaultUser } from './apis';
 
-const FEDEPLOY = ({userInfo}) => (
+const FEDEPLOY = ({username}) => (
   <div className="card-content" style={{minHeight: 400}}>
-    <ProjectList username={userInfo.username}/>
+    <ProjectList username={username}/>
   </div>
 )
 
 export default FEDEPLOY;
+
 export {
   setFEDeployConfig, setApiUrl, setDefaultUser
 }
