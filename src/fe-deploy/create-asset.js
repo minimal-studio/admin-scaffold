@@ -18,13 +18,18 @@ export default class CreateAsset extends Component {
   constructor(props) {
     super(props);
 
-    const { project, projId } = props;
+    const { project, projId, username } = props;
 
     this.formOptions = [
       {
         ref: 'projId',
         type: 'hidden',
         defaultValue: projId
+      },
+      {
+        ref: 'username',
+        type: 'hidden',
+        defaultValue: username
       },
       project ? {
         ref: 'isCallHook',
