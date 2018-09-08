@@ -12,14 +12,13 @@ export default class CreateAsset extends Component {
   };
 
   state = {
-    
+    uploading: false,
   };
 
   constructor(props) {
     super(props);
 
     const { project, projId, username } = props;
-    console.log(username)
 
     this.formOptions = [
       {
@@ -51,6 +50,16 @@ export default class CreateAsset extends Component {
     ];
   }
 
+  // uploadFile = function* (formData) {
+  //   yield this.setState({
+  //     uploading: true
+  //   });
+  //   yield uploadFile(formData);
+  //   yield this.setState({
+  //     uploading: false
+  //   });
+  // }
+
   btnConfig = [
     {
       action: async (formRef) => {
@@ -62,21 +71,36 @@ export default class CreateAsset extends Component {
         const formData = new FormData();
         formData.append('assetZip', this._zip.files[0]);
         Object.keys(payload).forEach(e => formData.append(e, payload[e]));
+
+        // let res = [...this.uploadFile(formData)];
+        // console.log(object)
+
+        this.setState({
+          uploading: true
+        });
+        
         let res = await uploadFile(formData);
+
+        this.setState({
+          uploading: false
+        });
+
         let isSuccess = false;
         if(!res.err && !!res.data) {
           onSuccess(res.data);
           isSuccess = true;
         }
-        this.props.notify('上传', isSuccess, res.err)
+        this.props.notify('上传', isSuccess, res.err);
       },
       text: '上传资源',
+      actingRef: 'uploading'
     }
   ];
 
   render() {
     return (
       <FormLayout formOptions={this.formOptions} 
+        {...this.state}
         btnConfig={this.btnConfig}
         childrenBeforeBtn={(
           <div className="form-group" style={{ position: 'relative' }}>
