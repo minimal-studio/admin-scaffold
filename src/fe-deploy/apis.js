@@ -116,15 +116,17 @@ export async function getProjects(options) {
 /**
  * 创建项目
  */
-export async function createProject(projConfig) {
-  return await $R.request(projectUrl, projConfig);
+export async function createProject({projName, projCode, projDesc, webhook, username = defaultUsername}) {
+  let postData = {projName, projCode, projDesc, webhook, username};
+  return await $R.request(projectUrl, postData);
 }
 
 /**
  * 更新项目
  */
-export async function updatePropject(projConfig) {
-  return await $R.request(projectUrl, projConfig, null, 'PUT');
+export async function updatePropject({projName, projCode, projDesc, webhook, username = defaultUsername}) {
+  let postData = {projName, projCode, projDesc, webhook, username};
+  return await $R.request(projectUrl, postData, null, 'PUT');
 }
 
 /**
