@@ -38,7 +38,7 @@ class ProjectManager extends Component {
     this.updatable = this.isFounder || collaboratorConfig.updatable;
     this.deletable = this.isFounder || collaboratorConfig.deletable;
     this.releasable = this.isFounder || collaboratorConfig.releasable;
-    this.canOperate = this.isFounder || !!collaboratorConfig;
+    this.canOperate = this.isFounder || collaborators.hasOwnProperty(username);
   }
   async applyToJoin(projId) {
     const { username, notify, onApplied } = this.props;

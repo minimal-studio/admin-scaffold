@@ -117,7 +117,9 @@ export default class CreateProject extends Component {
               onSuccess={assetData => this.onCreatedAsset(assetData)}/>
           </Tab>
           <Tab label="3. 资源管理">
-            <AssetsManager {...this.props} projId={prevProjId}/>
+            <AssetsManager
+              releasable={true}
+              {...this.props} projId={prevProjId}/>
           </Tab>
         </Tabs>
         <form
