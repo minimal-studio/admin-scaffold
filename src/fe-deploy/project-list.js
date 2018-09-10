@@ -1,10 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { Loading, TableBody, Notify, ShowGlobalModal, ConditionGenerator, CloseGlobalModal, TipPanel } from 'ukelli-ui';
+import React, { Component } from 'react';
+import {
+  Loading, TableBody, Notify, ShowGlobalModal, 
+  ConditionGenerator, CloseGlobalModal, TipPanel, FormLayout
+} from 'ukelli-ui';
 import {GenerteID} from 'basic-helper';
 
 import { getProjects } from './apis';
 import ProjectManager from './project-manager';
 import CreateProjectHelper from './create-project';
+import ApprovePanel from './approve-panel';
 
 export default class Records extends Component {
   keyMapper = [
@@ -15,17 +19,16 @@ export default class Records extends Component {
         const {projName, id} = item;
         return (
           <span className="link-btn" onClick={() => {
-            ShowGlobalModal({
+            let ModalId = ShowGlobalModal({
               title: '项目 ' + projName + ' 管理',
               width: 900,
               // draggable: true,
               showFuncBtn: false,
               children: (
                 <ProjectManager
-                  {...this.props}
-                  queryProject={this.queryData}
+                  {...this.passProps()}
+                  onApplied={e => CloseGlobalModal(ModalId)}
                   getProject={e => this.getProject(idx)}
-                  notify={this.notify}
                 />
               )
             })
@@ -44,10 +47,41 @@ export default class Records extends Component {
     {
       key: 'collaborators',
       title: '协作者',
-      filter: (str, item) => {
-        let collaborators = Object.keys(item.collaborators);
-        let has = collaborators.length > 0;
-        return has ? collaborators.join(',') : '-';
+      filter: (collaboratorsObj) => {
+        let collaborators = Object.keys(collaboratorsObj);
+        let hasCollaborators = collaborators.length > 0;
+        let collaboratorsDOM = hasCollaborators ? collaborators.join(',') : '-';
+        return collaboratorsDOM;
+      }
+    },
+    {
+      key: 'collaboratorApplies',
+      title: '申请协作者',
+      filter: (applicants = [], item) => {
+        let applicantDOM = applicants.map((applicant, idx) => {
+          return (
+            <p key={applicant + idx}>
+              <span className="link-btn" onClick={e => {
+                let ModalId = ShowGlobalModal({
+                  title: `同意 ${applicant} 加入协作`,
+                  width: 500,
+                  showFuncBtn: false,
+                  children: (
+                    <ApprovePanel 
+                      {...this.passProps()}
+                      projId={item.id}
+                      applicant={applicant}
+                      onUpdated={e => {
+                        this.queryData();
+                        CloseGlobalModal(ModalId);
+                      }}/>
+                  )
+                });
+              }}>{applicant}</span>
+            </p>
+          )
+        });
+        return applicantDOM;
       }
     },
     {
@@ -55,6 +89,14 @@ export default class Records extends Component {
       title: '创建日期',
       datetime: true
     },
+    // {
+    //   key: 'host',
+    //   title: '地址',
+    //   filter: (str, item) => {
+    //     let { host, projCode }
+    //     return 
+    //   }
+    // },
     // {
     //   key: 'version',
     //   title: '当前版本'
@@ -88,6 +130,14 @@ export default class Records extends Component {
     querying: true
   };
 
+  passProps() {
+    return {
+      ...this.props,
+      notify: this.notify,
+      queryProject: this.queryData,
+    }
+  }
+
   getProject = (idx) => {
     return this.state.records[idx];
   }
@@ -101,7 +151,7 @@ export default class Records extends Component {
         title: normalType ? title : title + (isSuccess ? '成功' : '失败'),
         text
       }
-    })
+    });
   }
 
   pathFilter = (str) => {
@@ -188,31 +238,30 @@ export default class Records extends Component {
     return (
       <div>
         <TipPanel title="使用说明" texts={[
-          '项目发布后的路由为: host:28101/public/projectName',
-          '根据实际情况来绑定域名',
+          '项目发布后静态资源路由为: host:28101/pb/projectName || host:28101/public/projectName',
           '项目创建人对自身创建的项目有绝对控制权',
           '如果需要与其他人协作，协作者可以申请加入到具体项目中'
         ]}/>
         <Loading loading={querying} inrow={true}>
-            <div className="project-list p10">
-              <ConditionGenerator
-                ref={e => this.conditionRef = e}
-                conditionConfig={this.conditionOptions}>
-                <button className="btn theme flat" onClick={e => this.queryData()}>查询</button>
-              </ConditionGenerator>
-              <div className="action-group">
-                <button
-                  className="btn theme flat mr10"
-                  onClick={() => this.create()}>
-                  新增项目
-                </button>
-              </div>
-              <TableBody
-                keyMapper={this.keyMapper}
-                records={records}
-                needCount={false}
-              />
+          <div className="project-list p10">
+            <ConditionGenerator
+              ref={e => this.conditionRef = e}
+              conditionConfig={this.conditionOptions}>
+              <button className="btn theme flat" onClick={e => this.queryData()}>查询</button>
+            </ConditionGenerator>
+            <div className="action-group">
+              <button
+                className="btn theme flat mr10"
+                onClick={() => this.create()}>
+                新增项目
+              </button>
             </div>
+            <TableBody
+              keyMapper={this.keyMapper}
+              records={records}
+              needCount={false}
+            />
+          </div>
         </Loading>
       </div>
     );

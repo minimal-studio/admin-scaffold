@@ -18,6 +18,7 @@ let uploadUrl = '';
 let auditUrl = '';
 let rollbackUrl = '';
 let joinInUrl = '';
+let approveInUrl = '';
 
 let jsonHeader = {
   "Content-Type": "application/json"
@@ -71,6 +72,7 @@ export function setApiUrl(url) {
   auditUrl = apiUrl + '/audit';
   rollbackUrl = apiUrl + '/rollback';
   joinInUrl = apiUrl + '/join';
+  approveInUrl = apiUrl + '/approve';
 }
 
 /**
@@ -158,6 +160,17 @@ export async function rollback({prevAssetId, assetId, projId, rollbackMark, user
 export async function applyToJoinInProject({projId, username = defaultUsername}) {
   let postData = {username, projId};
   return await $R.request(joinInUrl, postData);
+}
+
+/**
+ * 申请加入协作
+ */
+export async function approveToJoinInProject({
+  projId, username = defaultUsername, applicant,
+  updatable, deletable, releasable
+}) {
+  let postData = {username, projId, applicant, updatable, deletable, releasable};
+  return await $R.request(approveInUrl, postData);
 }
 
 /**

@@ -37,10 +37,11 @@ class AssetsManager extends Component {
       key: 'action',
       title: '操作',
       filter: (str, item, keyMap, idx) => {
+        let { notify, username, releasable } = this.props;
+        if(!releasable) return '-';
         let { id, belongto, isRollback, isReleased } = item;
         let { currProject } = this.state;
         let { releaseRef } = currProject;
-        let { notify, username } = this.props;
         let isCurrReleased = isReleased && releaseRef == id;
         let canRollback = isReleased && !isCurrReleased;
         let releasText = '发布';

@@ -31,6 +31,11 @@ export default class CreateProject extends Component {
     },
     {
       type: 'input',
+      ref: 'host',
+      title: '项目域名'
+    },
+    {
+      type: 'input',
       ref: 'webhook',
       title: 'web hook',
       desc: '开发人员填写'

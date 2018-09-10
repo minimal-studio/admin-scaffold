@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, TipPanel } from 'ukelli-ui';
+import { CallFunc } from 'basic-helper';
 
 import CreateAsset from './create-asset';
 import AssetManager from './assets-manager';
@@ -32,12 +33,21 @@ class ProjectManager extends Component {
   authFilter() {
     const { username } = this.props;
     const { collaborators, founder } = this.props.getProject();
-    this.canOperate = username == founder || collaborators.hasOwnProperty(username);
+    let collaboratorConfig = collaborators[username] || {};
+    this.isFounder = username === founder;
+    this.updatable = this.isFounder || collaboratorConfig.updatable;
+    this.deletable = this.isFounder || collaboratorConfig.deletable;
+    this.releasable = this.isFounder || collaboratorConfig.releasable;
+    this.canOperate = this.isFounder || !!collaboratorConfig;
   }
   async applyToJoin(projId) {
-    const { username } = this.props;
+    const { username, notify, onApplied } = this.props;
     let applyRes = await applyToJoinInProject({projId, username});
-    console.log(applyRes)
+    let isSuccess = !applyRes.err;
+    if(isSuccess) {
+      CallFunc(onApplied)();
+    }
+    notify('申请', isSuccess, applyRes.err);
   }
   render() {
     const targetProject = this.props.getProject();
@@ -46,17 +56,25 @@ class ProjectManager extends Component {
       <div className="project-manager p10">
         <Tabs ref={e => this.tabRef = e}>
           <Tab label="资源列表">
-            <AssetManager {...this.props} projId={targetProject.id}/>
+            <AssetManager releasable={this.releasable} {...this.props} projId={targetProject.id}/>
           </Tab>
           <Tab label="上传新资源">
             <CreateAsset {...this.props} project={targetProject} projId={targetProject.id} onSuccess={e => this.onCreatedAsset()}/>
           </Tab>
-          <Tab label="项目编辑">
-            <EditProject {...this.props} project={targetProject} onUpdated={e => this.onUpdateProject()}/>
-          </Tab>
-          <Tab label="操作记录">
-            <AuditLog {...this.props} projId={targetProject.id}/>
-          </Tab>
+          {
+            this.updatable ? (
+              <Tab label="项目编辑">
+                <EditProject {...this.props} project={targetProject} onUpdated={e => this.onUpdateProject()}/>
+              </Tab>
+            ) : null
+          }
+          {
+            this.isFounder ? (
+              <Tab label="操作记录">
+                <AuditLog {...this.props} projId={targetProject.id}/>
+              </Tab>
+            ) : null
+          }
         </Tabs>
       </div>
     ) : (

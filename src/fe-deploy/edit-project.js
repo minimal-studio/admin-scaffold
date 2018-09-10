@@ -36,6 +36,12 @@ export default class EditProject extends Component {
         defaultValue: project.id
       },
       {
+        type: 'input',
+        ref: 'host',
+        title: '项目域名',
+        defaultValue: project.host
+      },
+      {
         type: 'hidden',
         ref: 'username',
         defaultValue: username
