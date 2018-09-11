@@ -8,6 +8,8 @@ const versionFilter = (version) => {
   return `v${(version + '').split('').join('.')}`;
 }
 
+let prevRecords = [];
+
 class AssetsManager extends Component {
   keyMapper = [
     {
@@ -148,7 +150,7 @@ class AssetsManager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      records: [],
+      records: prevRecords,
       loading: true,
       currProject: {}
     }
@@ -162,6 +164,7 @@ class AssetsManager extends Component {
     const { projId } = this.props;
     const assetRecord = (await getAssets(projId)).data || [];
     const projectData = (await getProjects({projId})).data || [];
+    prevRecords = assetRecord;
     this.setState({
       records: assetRecord,
       currProject: projectData,

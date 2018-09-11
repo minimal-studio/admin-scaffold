@@ -81,7 +81,7 @@ export default class SearchBox extends Component {
             setTimeout(() => {
               this.setSearchCon(false);
               this.shouldBeHidden = false;
-            }, 100);
+            }, 200);
           }}
           onKeyUp={this.handleEsc}
         />
