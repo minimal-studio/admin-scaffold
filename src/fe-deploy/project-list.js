@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Loading, TableBody, Notify, ShowGlobalModal, 
+  Loading, TableBody, Notify, ShowGlobalModal, Button,
   ConditionGenerator, CloseGlobalModal, TipPanel, FormLayout
 } from 'ukelli-ui';
-import {GenerteID} from 'basic-helper';
+import { GenerteID } from 'basic-helper';
 
 import { getProjects } from './apis';
 import ProjectManager from './project-manager';
@@ -247,14 +247,14 @@ export default class Records extends Component {
             <ConditionGenerator
               ref={e => this.conditionRef = e}
               conditionConfig={this.conditionOptions}>
-              <button className="btn theme flat" onClick={e => this.queryData()}>查询</button>
+              <Button icon="feather" className="btn theme flat" onClick={e => this.queryData()} text="查询"/>
             </ConditionGenerator>
             <div className="action-group">
-              <button
-                className="btn theme flat mr10"
-                onClick={() => this.create()}>
-                新增项目
-              </button>
+              <Button
+                text="新增项目"
+                icon="plus"
+                className="mr10"
+                onClick={() => this.create()}/>
             </div>
             <TableBody
               keyMapper={this.keyMapper}
