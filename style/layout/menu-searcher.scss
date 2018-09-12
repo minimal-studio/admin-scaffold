@@ -2,9 +2,16 @@
   position: relative;
   // margin: 0 10px 10px;
   @include fill();
+  transform: translateY(-100px);
+  transition: all ease 0.3s;
+  z-index: 111;
 
-  .sub-content {
-    // display: none;
+  &.show-content {
+    transform: translateY(0);
+    .hide-content {
+      border: 1px solid $themeColor;
+      height: 300px;
+    }
   }
 
   .form-control {
@@ -51,13 +58,6 @@
         background-color: rgba(#FFF, 0.1);
       }
       // text-align: left;
-    }
-  }
-
-  &.show-content {
-    .hide-content {
-      border: 1px solid $themeColor;
-      height: 300px;
     }
   }
 }
