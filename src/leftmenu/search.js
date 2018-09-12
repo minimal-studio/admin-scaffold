@@ -44,7 +44,6 @@ export default class SearchBox extends Component {
   setSearchCon(isShow) {
     this.setState({
       isShow,
-      isShowCon: isShow
     });
   }
   handleEsc = e => {
@@ -63,13 +62,12 @@ export default class SearchBox extends Component {
     this._input.focus();
   }
   render() {
-    const { searchMap, isShow, isShowCon } = this.state;
+    const { searchMap, isShow } = this.state;
     const { codeMapper, onChangeMenu } = this.props;
     const allCode = Object.keys(codeMapper) || [];
     return (
       <div 
-        className={'search-container' + (isShow ? ' show-content' : '')}
-        style={{zIndex: isShowCon ? '111' : '-1'}}>
+        className={'search-container' + (isShow ? ' show-content' : '')}>
         <input
           ref={c => (this._input = c)}
           type="text"
