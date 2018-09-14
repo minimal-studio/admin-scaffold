@@ -18,6 +18,7 @@ class ProjectManager extends Component {
   static propTypes = {
     getProject: PropTypes.func.isRequired,
     queryProject: PropTypes.func.isRequired,
+    defaultTab: PropTypes.string,
   }
   constructor(props) {
     super(props);
@@ -51,10 +52,16 @@ class ProjectManager extends Component {
   }
   render() {
     const targetProject = this.props.getProject();
+    const { defaultTab } = this.props;
+    const _defaultTab = {
+      'edit': 2,
+      'asset-list': 0,
+      'upload': 1,
+    }
 
     const container = this.canOperate ? (
       <div className="project-manager p10">
-        <Tabs ref={e => this.tabRef = e}>
+        <Tabs ref={e => this.tabRef = e} defaultTab={_defaultTab[defaultTab]}>
           <Tab label="资源列表">
             <AssetManager releasable={this.releasable} {...this.props} projId={targetProject.id}/>
           </Tab>

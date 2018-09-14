@@ -16,23 +16,23 @@ export default class Records extends Component {
       key: 'projName',
       title: '项目名',
       filter: (str, item, _, idx) => {
-        const {projName, id} = item;
         return (
           <span className="link-btn" onClick={() => {
-            let ModalId = ShowGlobalModal({
-              title: '项目 ' + projName + ' 管理',
-              width: 900,
-              // draggable: true,
-              showFuncBtn: false,
-              children: (
-                <ProjectManager
-                  {...this.passProps()}
-                  onApplied={e => CloseGlobalModal(ModalId)}
-                  getProject={e => this.getProject(idx)}
-                />
-              )
-            })
+            this.showProjectDetail(item, idx, 'edit');
           }}>{str}</span>
+        )
+      }
+    },
+    {
+      key: 'actions',
+      title: '操作',
+      filter: (_, item, __, idx) => {
+        return (
+          <div>
+            <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'asset-list')}>资源列表</span>
+            <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'upload')}>上传新资源</span>
+            {/* <span className="link-btn" onClick={e => this.showProjectDetail(item, idx, 'edit')}>编辑项目</span><br/> */}
+          </div>
         )
       }
     },
@@ -129,6 +129,24 @@ export default class Records extends Component {
     records: [],
     querying: true
   };
+
+  showProjectDetail(targetItem, idx, type = 'edit') {
+    const { projName } = targetItem;
+    let ModalId = ShowGlobalModal({
+      title: '项目 ' + projName + ' 管理',
+      width: 900,
+      // draggable: true,
+      showFuncBtn: false,
+      children: (
+        <ProjectManager
+          {...this.passProps()}
+          defaultTab={type}
+          onApplied={e => CloseGlobalModal(ModalId)}
+          getProject={e => this.getProject(idx)}
+        />
+      )
+    })
+  }
 
   passProps() {
     return {

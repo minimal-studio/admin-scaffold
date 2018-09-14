@@ -18,7 +18,7 @@ export default class CreateAsset extends Component {
   constructor(props) {
     super(props);
 
-    const { project, projId, username } = props;
+    const { projId, username } = props;
 
     this.formOptions = [
       {
@@ -31,16 +31,6 @@ export default class CreateAsset extends Component {
         type: 'hidden',
         defaultValue: username
       },
-      project ? {
-        ref: 'isCallHook',
-        type: 'radio',
-        defaultValue: project.webhook ? '1' : '0',
-        title: '触发 webhook',
-        values: {
-          '0': '否',
-          '1': '是',
-        }
-      } : null,
       {
         ref: 'desc',
         type: 'textarea',

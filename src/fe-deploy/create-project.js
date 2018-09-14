@@ -1,57 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormGenerator, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
+import { Loading, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
 
+import { CallFunc } from 'basic-helper';
 import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
-import { CallFunc } from 'basic-helper';
+import wrapProjectFormOptions from './project-form';
 
 export default class CreateProject extends Component {
   static propTypes = {
     onCreatedProject: PropTypes.func,
   }
-  formOptions = [
-    {
-      type: 'input',
-      required: true,
-      ref: 'projName',
-      title: '项目名称'
-    },
-    {
-      type: 'input',
-      required: true,
-      ref: 'projCode',
-      title: '项目代号'
-    },
-    {
-      type: 'input',
-      ref: 'projDesc',
-      title: '项目介绍'
-    },
-    {
-      type: 'input',
-      ref: 'host',
-      title: '项目域名'
-    },
-    {
-      type: 'input',
-      ref: 'webhook',
-      title: 'web hook',
-      desc: '开发人员填写'
-    },
-  ];
 
   state = {
-    activeIdx: 0
+    activeIdx: 0,
+    querying: true
   };
 
   constructor(props) {
     super(props);
+
+    
   }
 
   componentDidMount() {
+    this.initData();
     // this.refs.formHelper.refs.name && this.refs.formHelper.refs.name.focus();
+  }
+
+  async initData() {
+    this.formOptions = await wrapProjectFormOptions();
+
+    this.setState({
+      querying: false
+    });
   }
 
   onCreateProj = (formValue) => {
@@ -94,7 +77,7 @@ export default class CreateProject extends Component {
   ]
 
   render() {
-    const { activeIdx, prevProjId } = this.state;
+    const { activeIdx, prevProjId, querying } = this.state;
     return (
       <div>
         <TipPanel
@@ -104,29 +87,30 @@ export default class CreateProject extends Component {
             'web hook 是项目资源发布成功后触发的，与 GitHub 的 web hook 类似，用于回调通知',
           ]}
         />
-        <Tabs activeTabIdx={activeIdx} stepMode={true}>
-          <Tab label="1. 创建项目">
-            <FormLayout 
-              formOptions={this.formOptions} 
-              btnConfig={this.btnConfig}
-              ref="formHelper"/>
-          </Tab>
-          <Tab label="2. 上传资源文件">
-            <CreateAsset {...this.props} 
-              projId={prevProjId} 
-              onSuccess={assetData => this.onCreatedAsset(assetData)}/>
-          </Tab>
-          <Tab label="3. 资源管理">
-            <AssetsManager
-              releasable={true}
-              {...this.props} projId={prevProjId}/>
-          </Tab>
-        </Tabs>
-        <form
-          style={{ marginLeft: 10, marginRight: 10 }}
-          onSubmit={this.add}
-          ref={c => (this._form = c)}>
-        </form>
+        <Loading loading={querying} inrow={false}>
+          {
+            querying ? null : (
+              <Tabs activeTabIdx={activeIdx} stepMode={true}>
+                <Tab label="1. 创建项目">
+                  <FormLayout 
+                    formOptions={this.formOptions} 
+                    btnConfig={this.btnConfig}
+                    ref="formHelper"/>
+                </Tab>
+                <Tab label="2. 上传资源文件">
+                  <CreateAsset {...this.props} 
+                    projId={prevProjId} 
+                    onSuccess={assetData => this.onCreatedAsset(assetData)}/>
+                </Tab>
+                <Tab label="3. 资源管理">
+                  <AssetsManager
+                    releasable={true}
+                    {...this.props} projId={prevProjId}/>
+                </Tab>
+              </Tabs>
+            )
+          }
+        </Loading>
       </div>
     );
   }

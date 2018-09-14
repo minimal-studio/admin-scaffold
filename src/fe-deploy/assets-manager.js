@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import {
-  TableBody, ShowGlobalModal, CloseGlobalModal
+  TableBody, ShowGlobalModal, CloseGlobalModal, FormLayout
 } from 'ukelli-ui';
 import { getAssets, getProjects, release, rollback, delAsset } from './apis';
-
-const versionFilter = (version) => {
-  return `v${(version + '').split('').join('.')}`;
-}
+import ReleaseComfirm from './release-comfirm';
+import { versionFilter } from './filter';
 
 let prevRecords = [];
 
@@ -47,6 +45,9 @@ class AssetsManager extends Component {
         let isCurrReleased = isReleased && releaseRef == id;
         let canRollback = isReleased && !isCurrReleased;
         let releasText = '发布';
+        let options = {
+          releasText, canRollback, item,
+        }
         switch (true) {
           case isCurrReleased:
             releasText = '已发布';
@@ -64,52 +65,7 @@ class AssetsManager extends Component {
               className="btn theme flat"
               disabled={isRollback}
               onClick={() => {
-                let ModalId = ShowGlobalModal({
-                  title: releasText,
-                  confirmText: !canRollback ? (
-                    <div className="text-center">
-                      <h3>确定发布 {versionFilter(item.version)} ?</h3>
-                      <span>日志: {item.desc}</span>
-                    </div>
-                  ) : (
-                    <textarea 
-                      style={{
-                        height: 200,
-                        width: '100%'
-                      }}
-                      className="form-control" placeholder="回滚原因" ref={e => this.rollbackNote = e}></textarea>
-                  ),
-                  type: 'confirm',
-                  width: 340,
-                  onConfirm: async (isSure) => {
-                    if(!isSure) return;
-                    let isSuccess;
-                    let releaseRes;
-                    try {
-                      if(canRollback) {
-                        releaseRes = await rollback({
-                          assetId: id,
-                          prevAssetId: releaseRef,
-                          projId: belongto,
-                          username,
-                          rollbackMark: (this.rollbackNote.value || '').trim(),
-                        });
-                      } else {
-                        releaseRes = await release({
-                          assetId: id,
-                          projId: belongto,
-                          username,
-                        });
-                      }
-                      isSuccess = !releaseRes.err;
-                      CloseGlobalModal(ModalId);
-                      this.onReleased();
-                    } catch(e) {
-                      isSuccess = false;
-                    }
-                    notify(releasText, isSuccess);
-                  }
-                });
+                this.comfirmRelease(options);
               }}>
               {releasText}
             </button>
@@ -160,6 +116,67 @@ class AssetsManager extends Component {
     this.queryData();
   }
 
+  comfirmRelease = (options) => {
+    const { notify, username, getProject } = this.props;
+    const { releasText, canRollback, item } = options;
+    const project = getProject();
+    let ModalId = ShowGlobalModal({
+      title: releasText,
+      showFuncBtn: false,
+      children: (
+        <ReleaseComfirm
+          canRollback={canRollback}
+          onCancel={e => CloseGlobalModal(ModalId)}
+          onReleased={isSuccess => {
+            CloseGlobalModal(ModalId);
+            this.props.notify(releasText, isSuccess);
+          }}
+          {...this.props} asset={item} project={project}/>
+      )
+      // !canRollback ? (
+        
+      // ) : (
+      //   <textarea 
+      //     style={{
+      //       height: 200,
+      //       width: '100%'
+      //     }}
+      //     className="form-control" placeholder="回滚原因" ref={e => this.rollbackNote = e}></textarea>
+      // )
+      ,
+      // type: 'confirm',
+      width: 560,
+      // onConfirm: async (isSure) => {
+      //   if(!isSure) return;
+      //   let isSuccess;
+      //   let releaseRes;
+      //   try {
+      //     if(canRollback) {
+      //       releaseRes = await rollback({
+      //         assetId: id,
+      //         prevAssetId: releaseRef,
+      //         projId: belongto,
+      //         username,
+      //         rollbackMark: (this.rollbackNote.value || '').trim(),
+      //       });
+      //     } else {
+      //       releaseRes = await release({
+      //         assetId: id,
+      //         projId: belongto,
+      //         username,
+      //       });
+      //     }
+      //     isSuccess = !releaseRes.err;
+      //     CloseGlobalModal(ModalId);
+      //     this.onReleased();
+      //   } catch(e) {
+      //     isSuccess = false;
+      //   }
+      //   notify(releasText, isSuccess);
+      // }
+    });
+  }
+
   async queryData() {
     const { projId } = this.props;
     const assetRecord = (await getAssets(projId)).data || [];
@@ -187,7 +204,7 @@ class AssetsManager extends Component {
   }
 
   render() {
-    const {records} = this.state;
+    const { records } = this.state;
     return (
       <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
     );

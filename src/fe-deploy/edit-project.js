@@ -1,65 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormLayout} from 'ukelli-ui';
-import { updatePropject, delPropject } from './apis';
 import { CallFunc } from 'basic-helper';
+import { FormLayout, Loading } from 'ukelli-ui';
+
+import { updatePropject, delPropject } from './apis';
+import wrapProjectFormOptions from './project-form';
 
 export default class EditProject extends Component {
   static propTypes = {
     project: PropTypes.object.isRequired,
     onUpdated: PropTypes.func,
   }
+  state = {
+    querying: true
+  }
   constructor(props) {
     super(props);
+  }
 
-    const { getProject, username } = props;
+  async initData() {
+    const { getProject, username } = this.props;
     const project = getProject();
+    this.formOptions = await wrapProjectFormOptions(project);
 
-    this.formOptions = [
-      {
-        type: 'input',
-        required: true,
-        ref: 'projName',
-        defaultValue: project.projName,
-        title: '项目名称'
-      },
-      {
-        type: 'input',
-        required: true,
-        ref: 'projCode',
-        defaultValue: project.projCode,
-        title: '项目代号'
-      },
-      {
-        type: 'hidden',
-        ref: 'projId',
-        defaultValue: project.id
-      },
-      {
-        type: 'input',
-        ref: 'host',
-        title: '项目域名',
-        defaultValue: project.host
-      },
-      {
-        type: 'hidden',
-        ref: 'username',
-        defaultValue: username
-      },
-      {
-        type: 'input',
-        ref: 'projDesc',
-        defaultValue: project.projDesc,
-        title: '项目介绍'
-      },
-      {
-        type: 'input',
-        ref: 'webhook',
-        title: 'web hook',
-        defaultValue: project.webhook,
-        desc: '开发人员填写'
-      },
-    ];
+    this.setState({
+      querying: false
+    });
+  }
+
+  componentDidMount() {
+    this.initData();
   }
 
   updateProject = async (nextProject) => {
@@ -92,6 +62,7 @@ export default class EditProject extends Component {
   ]
 
   render() {
+    const { querying } = this.state;
     const deleteBtn = (
       <div className="text-center">
         <hr/>
@@ -102,12 +73,16 @@ export default class EditProject extends Component {
       </div>
     )
     return (
-      <div>
-        <FormLayout
-          formOptions={this.formOptions}
-          childrenAfterForm={deleteBtn}
-          btnConfig={this.btnConfig}/>
-      </div>
+      <Loading loading={querying}>
+        {
+          querying ? null : (
+            <FormLayout
+              formOptions={this.formOptions}
+              childrenAfterForm={deleteBtn}
+              btnConfig={this.btnConfig}/>
+          )
+        }
+      </Loading>
     );
   }
 }
