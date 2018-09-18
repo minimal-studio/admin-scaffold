@@ -85,7 +85,6 @@ export default class ReleaseComfirm extends Component {
               prevAssetId: releaseRef,
               projId: belongto,
               username,
-              rollbackMark: (this.rollbackNote.value || '').trim(),
             });
           } else {
             releaseRes = await release({

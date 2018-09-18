@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   TableBody, ShowGlobalModal, CloseGlobalModal, FormLayout
 } from 'ukelli-ui';
@@ -9,6 +10,12 @@ import { versionFilter } from './filter';
 let prevRecords = [];
 
 class AssetsManager extends Component {
+  static propTypes = {
+    notify: PropTypes.func,
+    getProject: PropTypes.func.isRequired,
+    username: PropTypes.string,
+    releasable: PropTypes.bool
+  }
   keyMapper = [
     {
       key: 'version',
@@ -86,7 +93,6 @@ class AssetsManager extends Component {
                     if(!isDel) return;
                     let delRes = await delAsset({assetId: id, projId: belongto});
                     let isSuccess = !delRes.err;
-                    console.log(delRes)
                     if(isSuccess) {
                       CloseGlobalModal(ModalId);
                       this.onReleased();
@@ -118,6 +124,7 @@ class AssetsManager extends Component {
 
   comfirmRelease = (options) => {
     const { notify, username, getProject } = this.props;
+    console.log(this.props)
     const { releasText, canRollback, item } = options;
     const project = getProject();
     let ModalId = ShowGlobalModal({

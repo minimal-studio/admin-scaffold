@@ -15,13 +15,12 @@ export default class CreateProject extends Component {
 
   state = {
     activeIdx: 0,
-    querying: true
+    querying: true,
+    createdProj: {},
   };
 
   constructor(props) {
     super(props);
-
-    
   }
 
   componentDidMount() {
@@ -43,17 +42,17 @@ export default class CreateProject extends Component {
     // console.log(formValue)
     createProject(formValue).then((res) => {
       // console.log(res)
-      const { err, projId } = res;
+      const { err, data } = res;
       if(!err) {
         // 创建项目成功后，跳转到第二步，上传资源
         this.setState({
           activeIdx: 1,
-          prevProjId: projId
+          createdProj: data
         });
 
         CallFunc(onCreatedProject)();
       } else {
-        notify('创建项目', false, err)
+        notify('创建项目', false, err);
       }
     });
   }
@@ -77,7 +76,7 @@ export default class CreateProject extends Component {
   ]
 
   render() {
-    const { activeIdx, prevProjId, querying } = this.state;
+    const { activeIdx, createdProj, querying } = this.state;
     return (
       <div>
         <TipPanel
@@ -99,13 +98,14 @@ export default class CreateProject extends Component {
                 </Tab>
                 <Tab label="2. 上传资源文件">
                   <CreateAsset {...this.props} 
-                    projId={prevProjId} 
+                    projId={createdProj.id} 
                     onSuccess={assetData => this.onCreatedAsset(assetData)}/>
                 </Tab>
                 <Tab label="3. 资源管理">
                   <AssetsManager
                     releasable={true}
-                    {...this.props} projId={prevProjId}/>
+                    getProject={e => createdProj}
+                    {...this.props} projId={createdProj.id}/>
                 </Tab>
               </Tabs>
             )
