@@ -124,7 +124,6 @@ class AssetsManager extends Component {
 
   comfirmRelease = (options) => {
     const { notify, username, getProject } = this.props;
-    console.log(this.props)
     const { releasText, canRollback, item } = options;
     const project = getProject();
     let ModalId = ShowGlobalModal({
