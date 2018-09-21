@@ -9,13 +9,7 @@ import { versionFilter } from './filter';
 
 const getReleaseFormOptions = (project, asset, canRollback = false) => {
   const { webhook, scpTargetHost } = project;
-  let formOptions = !canRollback ? [
-    {
-      ref: 'note',
-      type: 'text',
-      defaultValue: asset.desc,
-      title: '更新内容',
-    },
+  let formOptions = [
     webhook ? {
       ref: 'isCallHook',
       type: 'radio',
@@ -28,7 +22,7 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
         1: '是',
       }
     } : null,
-    {
+    scpTargetHost ? {
       ref: 'isExecScp',
       type: 'radio',
       defaultValue: scpTargetHost ? 1 : 0,
@@ -39,6 +33,13 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
         0: '否',
         1: '是',
       }
+    } : null,
+  ].concat(!canRollback ? [
+    {
+      ref: 'note',
+      type: 'text',
+      defaultValue: asset.desc,
+      title: '更新内容',
     },
   ] : [
     {
@@ -46,7 +47,7 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
       type: 'textarea',
       title: '回滚原因',
     }
-  ];
+  ]);
   return formOptions;
 }
 

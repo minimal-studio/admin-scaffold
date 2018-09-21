@@ -136,50 +136,12 @@ class AssetsManager extends Component {
           onReleased={isSuccess => {
             CloseGlobalModal(ModalId);
             this.props.notify(releasText, isSuccess);
+            isSuccess && this.queryData();
           }}
           {...this.props} asset={item} project={project}/>
       )
-      // !canRollback ? (
-        
-      // ) : (
-      //   <textarea 
-      //     style={{
-      //       height: 200,
-      //       width: '100%'
-      //     }}
-      //     className="form-control" placeholder="回滚原因" ref={e => this.rollbackNote = e}></textarea>
-      // )
       ,
-      // type: 'confirm',
       width: 560,
-      // onConfirm: async (isSure) => {
-      //   if(!isSure) return;
-      //   let isSuccess;
-      //   let releaseRes;
-      //   try {
-      //     if(canRollback) {
-      //       releaseRes = await rollback({
-      //         assetId: id,
-      //         prevAssetId: releaseRef,
-      //         projId: belongto,
-      //         username,
-      //         rollbackMark: (this.rollbackNote.value || '').trim(),
-      //       });
-      //     } else {
-      //       releaseRes = await release({
-      //         assetId: id,
-      //         projId: belongto,
-      //         username,
-      //       });
-      //     }
-      //     isSuccess = !releaseRes.err;
-      //     CloseGlobalModal(ModalId);
-      //     this.onReleased();
-      //   } catch(e) {
-      //     isSuccess = false;
-      //   }
-      //   notify(releasText, isSuccess);
-      // }
     });
   }
 

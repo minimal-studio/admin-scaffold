@@ -65,10 +65,9 @@ export function setDefaultUser(username) {
  */
 export function setApiUrl(url) {
   apiUrl = url;
-  apiUrl = apiUrl.replace(/\/$/, '');
-  for (const api in APIs) {
-    APIs[api] = apiUrl + APIs[api];
-  }
+  $R.setConfig({
+    baseUrl: apiUrl
+  });
 }
 
 /**
@@ -116,7 +115,7 @@ export async function getProjects(options) {
  */
 export async function createProject({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.request(APIs.project, postData);
+  return await $R.post(APIs.project, postData);
 }
 
 /**
@@ -124,16 +123,14 @@ export async function createProject({username = defaultUsername, ...other}) {
  */
 export async function updatePropject({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.request(APIs.project, postData, {
-    method: 'PUT'
-  });
+  return await $R.put(APIs.project, postData);
 }
 
 /**
  * 删除项目
  */
 export async function delPropject({username = defaultUsername, ...other}) {
-  return await $R.request(APIs.delProjectUrl, {...other, username});
+  return await $R.post(APIs.delProjectUrl, {...other, username});
 }
 
 /**
@@ -141,7 +138,7 @@ export async function delPropject({username = defaultUsername, ...other}) {
  */
 export async function release({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.request(APIs.release, postData);
+  return await $R.post(APIs.release, postData);
 }
 
 /**
@@ -149,7 +146,7 @@ export async function release({username = defaultUsername, ...other}) {
  */
 export async function rollback({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.request(APIs.rollback, postData);
+  return await $R.post(APIs.rollback, postData);
 }
 
 /**
@@ -157,7 +154,7 @@ export async function rollback({username = defaultUsername, ...other}) {
  */
 export async function applyToJoinInProject({projId, username = defaultUsername}) {
   let postData = {username, projId};
-  return await $R.request(APIs.joinIn, postData);
+  return await $R.post(APIs.joinIn, postData);
 }
 
 /**
@@ -165,18 +162,14 @@ export async function applyToJoinInProject({projId, username = defaultUsername})
  */
 export async function approveToJoinInProject({username = defaultUsername, ...other}) {
   let postData = {username, ...other};
-  return await $R.request(APIs.approveIn, postData);
+  return await $R.post(APIs.approveIn, postData);
 }
 
 /**
  * 上传资源文件
  */
 export async function uploadFile(assetData) {
-  return parseToJson(await fetch(APIs.upload, {
-    method: 'POST',
-    body: assetData,
-    // headers: uploadHeader,
-  }));
+  return parseToJson(await $R.upload(APIs.upload, assetData));
 }
 
 /**
