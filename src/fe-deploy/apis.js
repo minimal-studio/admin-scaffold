@@ -2,7 +2,7 @@
  * 与 uke web server 通讯的 api 接口
  */
 
-import { wrapReqHashUrl, RequestClass } from 'uke-request';
+import { RequestClass } from 'uke-request';
 
 let $R = new RequestClass();
 
@@ -22,15 +22,6 @@ let APIs = {
   approveIn: '/approve',
   getHostList: '/ssh-host',
 }
-
-let jsonHeader = {
-  "Content-Type": "application/json"
-};
-
-let uploadHeader = {
-  "Content-Type": "application/x-www-form-urlencoded",
-  // "Content-Type": "multipart/form-data;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL"
-};
 
 /**
  * 处理 fetch 回调
@@ -74,15 +65,14 @@ export function setApiUrl(url) {
  * 获取资源
  */
 export async function getAssets(projId, user = defaultUsername) {
-  let url = wrapReqHashUrl({
+  let getConfig = {
     url: APIs.asset,
     params: {
       user,
       projId: projId
-    },
-    toBase64: false,
-  });
-  return await $R.get(url);
+    }
+  };
+  return await $R.get(getConfig);
 }
 
 /**
@@ -90,7 +80,7 @@ export async function getAssets(projId, user = defaultUsername) {
  */
 export async function delAsset({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.request(APIs.delAsset, postData);
+  return await $R.post(APIs.delAsset, postData);
 }
 
 /**
@@ -98,16 +88,15 @@ export async function delAsset({username = defaultUsername, ...other}) {
  */
 export async function getProjects(options) {
   let {projId, range, user = defaultUsername} = options;
-  let url = wrapReqHashUrl({
+  let getConfig = {
     url: APIs.project,
     params: {
       user,
       projId,
       range
     },
-    toBase64: false,
-  });
-  return await $R.get(url);
+  };
+  return await $R.get(getConfig);
 }
 
 /**
@@ -176,23 +165,19 @@ export async function uploadFile(assetData) {
  * 获取审计日志
  */
 export async function getAudit(projId) {
-  let url = wrapReqHashUrl({
+  let getConfig = {
     url: APIs.audit,
     params: {
       projId
-    },
-    toBase64: false,
-  });
-  return await $R.get(url);
+    }
+  };
+  return await $R.get(getConfig);
 }
 
 /**
  * 获取审计日志
  */
 export async function getSSHHost() {
-  let url = wrapReqHashUrl({
-    url: APIs.getHostList,
-    toBase64: false,
-  });
+  let url = APIs.getHostList;
   return await $R.get(url);
 }

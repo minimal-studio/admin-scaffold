@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.11.17",
+  "version": "0.12.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -13,9 +13,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.9th.go/frontend-uke/uke-admin-web-scaffold.git"
+    "url": "https://github.com/SANGET/uke-admin-web-scaffold.git"
   },
-  "description": "",
+  "description": "管理后台脚手架",
   "peerDependencies": {
     "cross-env": "^5.1.6",
     "mousetrap": "^1.6.1",
@@ -23,7 +23,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.2.0",
-    "uke-request": "^0.11.x",
+    "uke-request": "^0.12.x",
     "ukelli-ui": "^2.5.x"
   },
   "devDependencies": {
@@ -33,8 +33,8 @@
     "@babel/preset-react": "^7.0.0",
     "fs-extra": "^7.0.0"
   },
-  "author": "alex",
-  "license": "ISC",
+  "author": "Alex",
+  "license": "MIT",
   "dependencies": {
     "history": "^4.7.2"
   }
