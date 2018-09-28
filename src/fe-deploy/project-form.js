@@ -1,9 +1,11 @@
 import { getSSHHost } from './apis';
 
 const wrapProjectFormOptions = async (project = {}) => {
-  let hostList = (await getSSHHost()).data || [];
-  let targetHostList = {};
-  hostList.forEach(item => targetHostList[item] = item);
+  let hostRes = await getSSHHost();
+  // let hostList = hostRes.data || [];
+  let hostMapper = hostRes.mapper || {};
+  // let targetHostList = {};
+  // hostList.forEach(item => targetHostList[item] = item);
 
   let formOptions = [
     {
@@ -50,7 +52,7 @@ const wrapProjectFormOptions = async (project = {}) => {
       ref: 'scpTargetHost',
       title: 'SCP Host',
       position: 'top',
-      values: targetHostList,
+      values: hostMapper,
       desc: '请咨询 SA',
       defaultValue: project.scpTargetHost,
     },
