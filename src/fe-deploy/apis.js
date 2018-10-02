@@ -11,8 +11,6 @@ let defaultUsername = '';
 
 let APIs = {
   project: '/project',
-  delProj: '/del-project',
-  delAsset: '/del-asset',
   asset: '/assets',
   upload: '/upload',
   release: '/release',
@@ -21,7 +19,7 @@ let APIs = {
   joinIn: '/join',
   approveIn: '/approve',
   getHostList: '/ssh-host',
-}
+};
 
 /**
  * 处理 fetch 回调
@@ -31,7 +29,7 @@ async function parseToJson(fetchRes) {
   try {
     res = await fetchRes.json();
   } catch(e) {
-    console.log(e)
+    console.log(e);
   }
   return res;
 }
@@ -80,7 +78,7 @@ export async function getAssets(projId, user = defaultUsername) {
  */
 export async function delAsset({username = defaultUsername, ...other}) {
   let postData = {...other, username};
-  return await $R.post(APIs.delAsset, postData);
+  return await $R.del(APIs.asset, postData);
 }
 
 /**
@@ -119,7 +117,7 @@ export async function updatePropject({username = defaultUsername, ...other}) {
  * 删除项目
  */
 export async function delPropject({username = defaultUsername, ...other}) {
-  return await $R.post(APIs.delProjectUrl, {...other, username});
+  return await $R.del(APIs.project, {...other, username});
 }
 
 /**

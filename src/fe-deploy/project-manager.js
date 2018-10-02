@@ -20,6 +20,9 @@ class ProjectManager extends Component {
     queryProject: PropTypes.func.isRequired,
     defaultTab: PropTypes.string,
   }
+  static defaultProps = {
+    defaultTab: '0'
+  }
   constructor(props) {
     super(props);
 
@@ -35,6 +38,7 @@ class ProjectManager extends Component {
     const { username } = this.props;
     const { collaborators, founder } = this.props.getProject();
     let collaboratorConfig = collaborators[username] || {};
+
     this.isFounder = username === founder;
     this.updatable = this.isFounder || collaboratorConfig.updatable;
     this.deletable = this.isFounder || collaboratorConfig.deletable;
@@ -57,7 +61,7 @@ class ProjectManager extends Component {
       'edit': 2,
       'asset-list': 0,
       'upload': 1,
-    }
+    };
 
     const container = this.canOperate ? (
       <div className="project-manager p10">

@@ -19,8 +19,10 @@ export default class Records extends Component {
         return (
           <span className="link-btn" onClick={() => {
             this.showProjectDetail(item, idx, 'edit');
-          }}>{str}</span>
-        )
+          }}>
+            {str}
+          </span>
+        );
       }
     },
     {
@@ -33,7 +35,7 @@ export default class Records extends Component {
             <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'upload')}>上传新资源</span>
             {/* <span className="link-btn" onClick={e => this.showProjectDetail(item, idx, 'edit')}>编辑项目</span><br/> */}
           </div>
-        )
+        );
       }
     },
     {
@@ -77,9 +79,11 @@ export default class Records extends Component {
                       }}/>
                   )
                 });
-              }}>{applicant}</span>
+              }}>
+                {applicant}
+              </span>
             </p>
-          )
+          );
         });
         return applicantDOM;
       }
@@ -130,66 +134,17 @@ export default class Records extends Component {
     querying: true
   };
 
-  showProjectDetail(targetItem, idx, type = 'edit') {
-    const { projName } = targetItem;
-    let ModalId = ShowGlobalModal({
-      title: '项目 ' + projName + ' 管理',
-      width: 900,
-      // draggable: true,
-      showFuncBtn: false,
-      children: (
-        <ProjectManager
-          {...this.passProps()}
-          defaultTab={type}
-          onApplied={e => CloseGlobalModal(ModalId)}
-          getProject={e => this.getProject(idx)}
-        />
-      )
-    })
-  }
-
-  passProps() {
-    return {
-      ...this.props,
-      notify: this.notify,
-      queryProject: this.queryData,
-    }
+  componentDidMount() {
+    this.queryData();
   }
 
   getProject = (idx) => {
     return this.state.records[idx];
   }
 
-  notify = (title, isSuccess, text) => {
-    const normalType = typeof isSuccess == 'undefined';
-    Notify({
-      config: {
-        id: GenerteID(),
-        type: normalType ? 'normal' : isSuccess ? 'success' : 'error',
-        title: normalType ? title : title + (isSuccess ? '成功' : '失败'),
-        text
-      }
-    });
-  }
-
-  pathFilter = (str) => {
-    let defaultPath = '/assets';
-    let [start, end] = str.split(defaultPath);
-    return end ? '~' + defaultPath + end : start;
-  }
-
-  getAssetsRecord = (idx) => {
-    return this.state.records[idx];
-  }
-
-  componentDidMount() {
-    this.queryData();
-  }
-
-  handleSearch = e => {
-    this.setState({
-      searchValue: e.target.value
-    });
+  delProject = id => {
+    if (this.submiting) return;
+    this.submiting = true;
   };
 
   queryData = async () => {
@@ -206,10 +161,59 @@ export default class Records extends Component {
     return records;
   };
 
-  delProject = id => {
-    if (this.submiting) return;
-    this.submiting = true;
+  handleSearch = e => {
+    this.setState({
+      searchValue: e.target.value
+    });
   };
+
+  getAssetsRecord = (idx) => {
+    return this.state.records[idx];
+  }
+
+  pathFilter = (str) => {
+    let defaultPath = '/assets';
+    let [start, end] = str.split(defaultPath);
+    return end ? '~' + defaultPath + end : start;
+  }
+
+  notify = (title, isSuccess, text) => {
+    const normalType = typeof isSuccess == 'undefined';
+    Notify({
+      config: {
+        id: GenerteID(),
+        type: normalType ? 'normal' : isSuccess ? 'success' : 'error',
+        title: normalType ? title : title + (isSuccess ? '成功' : '失败'),
+        text
+      }
+    });
+  }
+
+  showProjectDetail(targetItem, idx, type = 'edit') {
+    const { projName } = targetItem;
+    let ModalId = ShowGlobalModal({
+      title: '项目 ' + projName + ' 管理',
+      width: 900,
+      // draggable: true,
+      showFuncBtn: false,
+      children: (
+        <ProjectManager
+          {...this.passProps()}
+          defaultTab={type}
+          onApplied={e => CloseGlobalModal(ModalId)}
+          onClose={e => CloseGlobalModal(ModalId)}
+          getProject={e => this.getProject(idx)}/>
+      )
+    });
+  }
+
+  passProps() {
+    return {
+      ...this.props,
+      notify: this.notify,
+      queryProject: this.queryData,
+    };
+  }
 
   create() {
     let ModalId = ShowGlobalModal({
@@ -222,10 +226,9 @@ export default class Records extends Component {
           notify={this.notify}
           onCreatedProject={() => {
             this.queryData();
-          }}
-        />
+          }}/>
       )
-    })
+    });
   }
 
   /**
@@ -260,7 +263,7 @@ export default class Records extends Component {
           '项目创建人对自身创建的项目有绝对控制权',
           '如果需要与其他人协作，协作者可以申请加入到具体项目中'
         ]}/>
-        <Loading loading={querying} inrow={true}>
+        <Loading loading={querying} inrow>
           <div className="project-list p10">
             <ConditionGenerator
               ref={e => this.conditionRef = e}
@@ -277,8 +280,7 @@ export default class Records extends Component {
             <TableBody
               keyMapper={this.keyMapper}
               records={records}
-              needCount={false}
-            />
+              needCount={false}/>
           </div>
         </Loading>
       </div>
