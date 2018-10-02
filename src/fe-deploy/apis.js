@@ -2,7 +2,7 @@
  * 与 uke web server 通讯的 api 接口
  */
 
-import { RequestClass } from 'uke-request';
+import { RequestClass, wrapReqHashUrl } from 'uke-request';
 
 let $R = new RequestClass();
 
@@ -14,6 +14,7 @@ let APIs = {
   asset: '/assets',
   upload: '/upload',
   release: '/release',
+  download: '/download-asset',
   audit: '/audit',
   rollback: '/rollback',
   joinIn: '/join',
@@ -178,4 +179,29 @@ export async function getAudit(projId) {
 export async function getSSHHost() {
   let url = APIs.getHostList;
   return await $R.get(url);
+}
+
+/**
+ * 下载链接
+ */
+// export async function downloadAsset(assetId) {
+//   let config = {
+//     url: APIs.download,
+//     params: {
+//       assetId
+//     },
+//     toBase64: false,
+//   };
+//   return await fetch(apiUrl + wrapReqHashUrl(config));
+// }
+export function downloadAsset(assetId) {
+  let config = {
+    url: APIs.download,
+    params: {
+      assetId
+    },
+    toBase64: false,
+  };
+  return apiUrl + wrapReqHashUrl(config);
+  // return await fetch(apiUrl + wrapReqHashUrl(config));
 }

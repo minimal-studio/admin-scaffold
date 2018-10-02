@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   TableBody, ShowGlobalModal, CloseGlobalModal, FormLayout
 } from 'ukelli-ui';
-import { getAssets, getProjects, release, rollback, delAsset } from './apis';
+import { getAssets, getProjects, downloadAsset, delAsset } from './apis';
 import ReleaseComfirm from './release-comfirm';
 import { versionFilter } from './filter';
 
@@ -11,10 +11,13 @@ let prevRecords = [];
 
 class AssetsManager extends Component {
   static propTypes = {
-    notify: PropTypes.func,
+    notify: PropTypes.func.isRequired,
     getProject: PropTypes.func.isRequired,
     username: PropTypes.string,
     releasable: PropTypes.bool
+  }
+  static defaultProps = {
+    releasable: false
   }
   keyMapper = [
     {
@@ -54,22 +57,23 @@ class AssetsManager extends Component {
         let releasText = '发布';
         let options = {
           releasText, canRollback, item,
-        }
+        };
         switch (true) {
-          case isCurrReleased:
-            releasText = '已发布';
-            break;
-          case canRollback:
-            releasText = '回滚';
-            break;
-          case isRollback:
-            releasText = '已回滚';
-            break;
+        case isCurrReleased:
+          releasText = '已发布';
+          break;
+        case canRollback:
+          releasText = '回滚';
+          break;
+        case isRollback:
+          releasText = '已回滚';
+          break;
         }
         return (
           <React.Fragment>
             <button
               className="btn theme flat"
+              type="submit"
               disabled={isRollback}
               onClick={() => {
                 this.comfirmRelease(options);
@@ -78,6 +82,7 @@ class AssetsManager extends Component {
             </button>
             <button
               className="red btn ml10"
+              type="submit"
               onClick={() => {
                 let ModalId = ShowGlobalModal({
                   title: '删除',
@@ -103,8 +108,10 @@ class AssetsManager extends Component {
               }}>
               删除
             </button>
+            {/* <span className="link-btn ml10" onClick={e => downloadAsset(id)}>下载</span> */}
+            <a className="link-btn ml10" href={downloadAsset(id)}>下载</a>
           </React.Fragment>
-        )
+        );
       }
     }
   ]
@@ -115,7 +122,7 @@ class AssetsManager extends Component {
       records: prevRecords,
       loading: true,
       currProject: {}
-    }
+    };
   }
 
   componentDidMount() {
