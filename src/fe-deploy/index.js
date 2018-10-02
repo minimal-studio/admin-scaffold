@@ -13,10 +13,10 @@ const FEDEPLOY = ({username}) => (
   <div className="card-content" style={{minHeight: 400}}>
     <ProjectList username={username}/>
   </div>
-)
+);
 
 export default FEDEPLOY;
 
 export {
   setFEDeployConfig, setApiUrl, setDefaultUser
-}
+};
