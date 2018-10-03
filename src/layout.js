@@ -13,8 +13,8 @@ import Mousetrap from 'mousetrap';
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
 import Posts from './posts';
-
 import { RouterHelper } from './router-multiple';
+
 let i18nMapperUrl = './i18n/';
 
 class ManagerLayout extends RouterHelper {
@@ -77,21 +77,21 @@ class ManagerLayout extends RouterHelper {
 
   fetchLangMapper = async (lang) => {
     let url = this.geti18nUrl(lang);
-    let mapper = await (await fetch(url)).text();
     try {
-      mapper = JSON.parse(mapper);
+      let mapper = await (await fetch(url)).json();
       setUkelliConfig({
         getKeyMap: this.gm,
       });
       setUkeLang(lang);
+      return mapper;
     } catch(e) {
       console.log('please set the correct i18n url');
+      return {};
     }
     // setState && this.setState({
     //   langMapper: mapper
     // });
     // 设置 UI 库的 keyMapper
-    return mapper;
   }
 
   gm = (key) => {

@@ -1,4 +1,4 @@
-import {defineGlobalScope} from 'basic-helper';
+import { defineGlobalScope } from 'basic-helper';
 
 export const storageHelper = {
   get(name, parseToObj) {
@@ -7,21 +7,21 @@ export const storageHelper = {
     try {
       res = JSON.parse(res);
     } catch(e) {
-      console.log(e)
+      console.log(e);
     }
     return res;
   },
   set(name, item, toString) {
     window.localStorage.setItem(name, toString ? JSON.stringify(item) : item);
   }
-}
+};
 
 export function toJson(objStr) {
   let res = null;
   try {
     res = JSON.parse(objStr);
   } catch(e) {
-    console.log(e)
+    console.log(e);
   }
   return res;
 }
@@ -31,7 +31,7 @@ let adminWebTemplate = {
   $request: {},
   toJson,
   storageHelper
-}
+};
 
 export function setAdminWebTemplateConfig(config) {
   Object.assign(adminWebTemplate, config);
