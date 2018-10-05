@@ -49,7 +49,7 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
     }
   ]);
   return formOptions;
-}
+};
 
 export default class ReleaseComfirm extends Component {
   state = {
@@ -71,7 +71,7 @@ export default class ReleaseComfirm extends Component {
             releasing: true
           });
           let isSuccess;
-          let releaseRes;
+          let releaseRes = {};
           let formValue = formRef.value;
 
           if(formValue.isExecScp) Notify({config: {
@@ -95,7 +95,7 @@ export default class ReleaseComfirm extends Component {
               username,
             });
           }
-          isSuccess = !releaseRes.err;
+          isSuccess = !!releaseRes && !releaseRes.err;
           this.setState({
             releasing: false
           });
@@ -123,6 +123,6 @@ export default class ReleaseComfirm extends Component {
           formOptions={this.formOptions}
           btnConfig={this.btnConfig}/>
       </div>
-    )
+    );
   }
 }
