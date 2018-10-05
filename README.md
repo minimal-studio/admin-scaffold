@@ -29,7 +29,7 @@ import { setApiUrl } from 'uke-admin-web-scaffold/fe-deploy';
 setApiUrl('http://127.0.0.6550');
 ```
 
-发布机制说明
+### 发布机制说明
 
 1. 功能介绍、名词解释, 「开发(Dev)须知」
     - 创建「项目 Project」
