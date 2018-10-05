@@ -37,6 +37,10 @@ const CompleteManual = () => {
         'scp 机制: 从中转服务器 scp 资源压缩包 -> 目标服务器(存放压缩包路径为 /var/front-end-zip/), 在目标服务器进行 unzip 解压到部署路径(例如 /var/www/deploy/[projCode]/)',
         'SSH 配置说明: 根据 Host 字段获取 scp 目标名，Host 后可以用 # 写中文名词(只用于显示)，格式严格验证，例如 Host demoHost #测试地址',
       ]}/>
+      <TipPanel title="关于 webhook 机制「开发(Dev)须知」" type="warm" texts={[
+        '资源发布成功后，可以触发指定的 webhook，具体 webhook 的功能由对应的服务提供，uke-web-server 有提供对应的 webhook 机制',
+        'webhook 可以触发 telegram 机器人，或者发送邮件'
+      ]}/>
     </div>
   );
 };
