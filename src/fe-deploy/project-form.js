@@ -57,6 +57,16 @@ const wrapProjectFormOptions = async (project = {}) => {
       defaultValue: project.scpTargetHost,
     },
     {
+      type: 'radio',
+      ref: 'pushMode',
+      title: '发布方式',
+      values: {
+        'push-files': '推送解压后的文件(慢, 但是安全)',
+        'push-zip': '推送压缩资源到目标服务器再解压(快, 但需要目标服务器支持)',
+      },
+      defaultValue: project.pushMode || 'push-files',
+    },
+    {
       type: 'input',
       ref: 'scpSourceDir',
       title: '资源目录',

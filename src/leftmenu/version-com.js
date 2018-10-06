@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Tip } from 'ukelli-ui';
 
 export default class VersionDisplayer extends Component {
+  static propTypes = {
+    gm: PropTypes.func.isRequired,
+    versionInfo: PropTypes.object.isRequired,
+  }
   constructor(props) {
     super(props);
 
@@ -61,6 +67,7 @@ export default class VersionDisplayer extends Component {
         {
           lastVersion != currVersion ? (
             <div>
+              <Tip/>
               <sup
                 className="new-app-version"
                 onClick={this.reload}
