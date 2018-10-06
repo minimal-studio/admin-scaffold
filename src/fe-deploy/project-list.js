@@ -9,6 +9,7 @@ import { getProjects } from './apis';
 import ProjectManager from './project-manager';
 import CreateProjectHelper from './create-project';
 import ApprovePanel from './approve-panel';
+import ConfigGenerator from './config-generator';
 import CompleteManual from './manual';
 
 export default class Records extends Component {

@@ -6,6 +6,8 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import ProjectList from './project-list';
 import { setFEDeployConfig, setApiUrl, setDefaultUser } from './apis';
 
@@ -14,6 +16,10 @@ const FEDEPLOY = ({username}) => (
     <ProjectList username={username}/>
   </div>
 );
+
+FEDEPLOY.propTypes = {
+  username: PropTypes.string.isRequired
+};
 
 export default FEDEPLOY;
 
