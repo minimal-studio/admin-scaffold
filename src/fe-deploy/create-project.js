@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Loading, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
 
-import { CallFunc } from 'basic-helper';
+import { Call } from 'basic-helper';
 import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
@@ -50,7 +50,7 @@ export default class CreateProject extends Component {
           createdProj: data
         });
 
-        CallFunc(onCreatedProject)();
+        Call(onCreatedProject);
       } else {
         notify('创建项目', false, err);
       }

@@ -5,6 +5,7 @@ import {
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 
+import { ActionBasic } from "../actions-basic";
 import { getProjects } from './apis';
 import ProjectManager from './project-manager';
 import CreateProjectHelper from './create-project';
@@ -12,7 +13,7 @@ import ApprovePanel from './approve-panel';
 import ConfigGenerator from './config-generator';
 import CompleteManual from './manual';
 
-export default class Records extends Component {
+export default class ProjectList extends ActionBasic {
   keyMapper = [
     {
       key: 'projName',
@@ -132,9 +133,14 @@ export default class Records extends Component {
   ];
 
   state = {
+    ...this.state,
     records: [],
     querying: true
   };
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     this.queryData();
@@ -150,17 +156,17 @@ export default class Records extends Component {
   };
 
   queryData = async () => {
-    this.setState({
-      querying: true
-    });
-    const {range} = this.conditionRef.value;
-    let res = await getProjects({range});
-    let records = this.projRecordSearch(res.data);
-    this.setState({
-      records,
-      querying: false
-    });
-    return records;
+    const { range } = this.conditionRef.value;
+    const postData = { range };
+    const agentOptions = {
+      actingRef: 'querying',
+      after: (res) => ({
+        record: res.data
+      }),
+      resFilter: (res) => res.data
+    };
+    const resData = await this.reqAgent(getProjects, agentOptions)(postData);
+    return this.projRecordSearch(resData);
   };
 
   handleSearch = e => {

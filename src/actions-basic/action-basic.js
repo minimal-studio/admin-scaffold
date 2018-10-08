@@ -5,24 +5,17 @@
 
 import React, {Component, PureComponent} from 'react';
 
-import { CallFunc, ToBasicUnitMoney, DebounceClass } from 'basic-helper';
+import { Call, IsFunc, ToBasicUnitMoney, DebounceClass } from 'basic-helper';
 import { getUrlParams } from 'uke-request';
 
-import { MANAGER_APIS } from '../lib/apis';
-import { getFields, setFields, getFieldsConfig } from '../lib/fields';
+import * as paginHelper from '../utils/pagination-helper';
 
 export default class ActionBasic extends Component {
-  getFields = getFields;
-  setFields = setFields;
-  getFieldsConfig = getFieldsConfig;
-  defaultActingRef = 'loading';
-  apis = MANAGER_APIS;
   getUrlParams = getUrlParams;
+  paginHelper = paginHelper;
   routerParams = getUrlParams();
   constructor(props) {
     super(props);
-
-    // const {defaultActingRef} = this;
 
     this.state = {
       loading: false,
@@ -30,8 +23,11 @@ export default class ActionBasic extends Component {
       resDesc: '',
       resData: {},
       records: [],
-      pagingInfo: $MN.DefaultPaging,
+      pagingInfo: paginHelper.getDefPagin(),
     };
+  }
+  resFilter() {
+
   }
   toBasicUnitMoney(money) {
     return ToBasicUnitMoney(money);
@@ -45,7 +41,7 @@ export default class ActionBasic extends Component {
   }
   defaultStateAfterPost(resData, actingRef) {
     let records = resData.data || [];
-    let pagingInfo = resData.paging || this.state.pagingInfo || $MN.DefaultPaging;
+    let pagingInfo = resData.paging || this.state.pagingInfo || paginHelper.getDefPagin();
 
     return Object.assign({}, this.getResDescInfo(resData), {
       [actingRef]: false,
@@ -75,7 +71,37 @@ export default class ActionBasic extends Component {
   stateSetter(state) {
     if(!this.__unmount) this.setState(state);
   }
-  async _sendData(options) {
+  reqAgent = (reqFunc, options) => {
+    if(!IsFunc(reqFunc)) return console.warn('should pass func');
+
+    const {
+      method, data = {}, onGetResInfo,
+      before, path,
+      after,
+      resFilter,
+      actingRef = 'loading',
+      onSuccess, onRes
+    } = options;
+
+    this.stateSetter(this.getStateBeforePost(Call(before), actingRef));
+
+    return async (...args) => {
+      try {
+        let res = await reqFunc(...args);
+        this.stateSetter(
+          Object.assign({},
+            this.defaultStateAfterPost(res, actingRef),
+            Call(after, res)
+          )
+        );
+        return IsFunc(resFilter) ? resFilter(res) : res;
+      } catch(e) {
+        console.log(e);
+      }
+    };
+  }
+  async send(options) {
+    if(!this._sendFilter) return console.log('please set _sendFilter form this');
     /**
      * 参数说明
      * method@String          请求的接口
@@ -109,16 +135,16 @@ export default class ActionBasic extends Component {
       }
     );
 
-    const sendDataRes = await $MN.$request.send({sendData, path});
+    const sendDataRes = await this._sendFilter({sendData, path});
 
     if(sendDataRes) {
-      CallFunc(onRes)(sendDataRes);
-      CallFunc(onSuccess)(sendDataRes.data);
-      CallFunc(onGetResInfo)(this.getResDescInfo(sendDataRes));
+      Call(onRes, sendDataRes);
+      Call(onSuccess, sendDataRes.data);
+      Call(onGetResInfo, this.getResDescInfo(sendDataRes));
       this.stateSetter(
         Object.assign({},
           this.defaultStateAfterPost(sendDataRes, actingRef),
-          CallFunc(stateAfterPostHook)(sendDataRes)
+          Call(stateAfterPostHook, sendDataRes)
         )
       );
     } else {

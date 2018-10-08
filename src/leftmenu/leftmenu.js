@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { DebounceClass } from 'basic-helper';
+import { DebounceClass, Call } from 'basic-helper';
 import { Icon, Avatar } from 'ukelli-ui';
 
 import { storageHelper } from '../config';
@@ -50,11 +50,11 @@ const MenuItem = ({ icon = 'bars', title, gm }) => {
     <div className="layout a-i-c">
       <Icon type={icon} classNames={['mr10']}/>
       <span>{gm(title)}</span>
-      <span className="flex"></span>
+      <span className="flex" />
       <Icon type="angle-right" classNames={['direct']}/>
     </div>
-  )
-}
+  );
+};
 
 /**
  * 左菜单控件
@@ -122,14 +122,14 @@ export default class Leftmenu extends Component {
     };
   }
   componentDidMount() {
-    $GH.CallFunc(this.props.onDidMount)(menuCodeMapper);
+    Call(this.props.onDidMount, menuCodeMapper);
   }
 
   changeMenuUIMode(isFlowMode) {
     this.setState({
       flowMode: isFlowMode
     });
-    storageHelper.set(this.flowModeKey, isFlowMode ? '1' : '0')
+    storageHelper.set(this.flowModeKey, isFlowMode ? '1' : '0');
   }
 
   getNormalMenuChildren = initDataList => {
@@ -186,15 +186,14 @@ export default class Leftmenu extends Component {
             to: to,
             code,
             icon,
-            onClick: () => $GH.CallFunc(onClickMenu)(code),
+            onClick: () => Call(onClickMenu, code),
             menuText: title
           });
         }
-        if (window.MENU_MAPPER) window.MENU_MAPPER[Id] = title;
         currDOMSets.push(dom);
       });
       return currDOMSets;
-    }
+    };
     allSet = recursive.call(this, initDataList);
     return allSet;
   };
@@ -256,7 +255,7 @@ export default class Leftmenu extends Component {
         key={key}
         className="menu"
         to={to}
-        onClick={e => $GH.CallFunc(onClick)(key)}>
+        onClick={e => Call(onClick, key)}>
         {
           !icon ? (
             <span className="menu-tip">-</span>
@@ -342,7 +341,7 @@ export default class Leftmenu extends Component {
           key: key,
           to: to,
           icon: icon,
-          onClick: () => $GH.CallFunc(onClickMenu)(code),
+          onClick: () => Call(onClickMenu, code),
           menuText: title
         })
       );
@@ -364,7 +363,7 @@ export default class Leftmenu extends Component {
       code: item[code],
       title: item[title],
       icon: item[icon],
-    }
+    };
   }
   showSearch = () => {
 
@@ -404,11 +403,11 @@ export default class Leftmenu extends Component {
           <h5 className="title">
             <span className="mr5">{title}</span>
           </h5>
-          <span className="flex"></span>
+          <span className="flex" />
           <Icon
             title="菜单搜索"
             onClick={e => {
-              this._seatchBox.show()
+              this._seatchBox.show();
               // console.log(this._seatchBox.show)
             }}
             type="search"
@@ -418,8 +417,7 @@ export default class Leftmenu extends Component {
             onClickMenu={onClickMenu}
             onToggleNav={onToggleNav}
             codeMapper={menuCodeMapper}
-            showLeftMenu={showLeftMenu}
-          />
+            showLeftMenu={showLeftMenu}/>
           <Icon 
             title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
             classNames={['_action-btn']}

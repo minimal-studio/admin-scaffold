@@ -103,7 +103,7 @@ export default class CreateAsset extends Component {
             />
           </div>
         )}
-        ref="formHelper"/>
+        ref={e => this.formHelper = e}/>
     );
   }
 }

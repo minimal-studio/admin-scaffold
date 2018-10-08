@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, TipPanel } from 'ukelli-ui';
-import { CallFunc } from 'basic-helper';
+import { Call } from 'basic-helper';
 
 import CreateAsset from './create-asset';
 import AssetManager from './assets-manager';
@@ -50,7 +50,7 @@ class ProjectManager extends Component {
     let applyRes = await applyToJoinInProject({projId, username});
     let isSuccess = !applyRes.err;
     if(isSuccess) {
-      CallFunc(onApplied)();
+      Call(onApplied);
     }
     notify('申请', isSuccess, applyRes.err);
   }

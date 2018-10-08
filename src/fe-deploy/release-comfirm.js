@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Notify, FormLayout
 } from 'ukelli-ui';
-import { CallFunc } from 'basic-helper';
+import { Call } from 'basic-helper';
 
 import { release, rollback } from './apis';
 import { versionFilter } from './filter';
@@ -99,14 +99,14 @@ export default class ReleaseComfirm extends Component {
           this.setState({
             releasing: false
           });
-          CallFunc(this.props.onReleased)(isSuccess);
+          Call(this.props.onReleased, isSuccess);
         },
         actingRef: 'releasing',
         text: '发布'
       },
       {
         action: () => {
-          CallFunc(this.props.onCancel)();
+          Call(this.props.onCancel);
         },
         text: '取消',
         className: 'default'

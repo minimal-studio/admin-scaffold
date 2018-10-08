@@ -14,17 +14,21 @@ import {
   TableBody, ConditionGenerator
 } from 'ukelli-ui';
 
+import { getDefPagin } from '../../utils/pagination-helper';
+
 const delayExec = new DebounceClass();
 
 export default class ReportTemplate extends Component {
   static propTypes = {
     onQueryData: PropTypes.func.isRequired,
+    gm: PropTypes.func.isRequired,
     showCondition: PropTypes.bool,
     loadingCondition: PropTypes.bool,
     needPaging: PropTypes.bool,
     needCheck: PropTypes.bool,
     autoQuery: PropTypes.bool,
-    didMountQuery: PropTypes.bool,
+    isMobile: PropTypes.bool,
+    // didMountQuery: PropTypes.bool,
     needCount: PropTypes.bool,
   
     keyMapper: PropTypes.array.isRequired,
@@ -33,16 +37,21 @@ export default class ReportTemplate extends Component {
     records: PropTypes.array.isRequired,
     pagingInfo: PropTypes.object,
     loading: PropTypes.bool.isRequired,
-    template: PropTypes.string,
-    hasErr: PropTypes.bool,
+    template: PropTypes.oneOf(['table', 'RecordItemsHelper']),
+    // hasErr: PropTypes.bool,
     resDesc: PropTypes.string
   };
   static defaultProps = {
     autoQuery: false,
-    didMountQuery: true,
+    // didMountQuery: true,
     needCount: false,
+    isMobile: false,
+    needCheck: false,
+    loadingCondition: false,
     showCondition: true,
     needPaging: true,
+    template: 'table',
+    resDesc: '',
   }
   constructor(props) {
     super(props);
@@ -81,9 +90,9 @@ export default class ReportTemplate extends Component {
 
   getQueryData(conditionData) {
     return {
-      nextPaging: $MN.DefaultPaging,
+      nextPaging: getDefPagin(),
       conditionData: conditionData || this.conditionHelper.value
-    }
+    };
   }
 
   toggleSelectItem(item, idx) {
@@ -114,7 +123,7 @@ export default class ReportTemplate extends Component {
 
   checkTableFilter() {
     const {
-      keyMapper = [], needCheck = false
+      keyMapper = [], needCheck
     } = this.props;
 
     let checkExtend = {
@@ -124,9 +133,9 @@ export default class ReportTemplate extends Component {
         let checked = !!this.state.checkedItems[idx];
         return (
           <input type="checkbox" checked={checked} onClick={e => this.toggleSelectItem(item, idx)}/>
-        )
+        );
       }
-    }
+    };
 
     let result = needCheck ? [checkExtend, ...keyMapper] : keyMapper;
 
@@ -153,9 +162,9 @@ export default class ReportTemplate extends Component {
 
   render() {
     const {
-      records = [], pagingInfo = {}, loading = '', children, template = 'table',
+      records = [], pagingInfo = {}, loading = '', children, template,
       needCount, autoQuery, showCondition,
-      needPaging, loadingCondition = false,
+      needPaging, loadingCondition,
       conditionOptions, isMobile, gm,
       onQueryData
     } = this.props;
@@ -174,28 +183,28 @@ export default class ReportTemplate extends Component {
 
     let templateDOM = null;
     switch (template) {
-      case 'table':
-        templateDOM = (
-          <div className="table-container" ref="renderContent">
-            <div className="table-scroll">
-              <Loading loading={loading} inrow={true}>
-                <TableBody
-                  onCheckAll={e => this.toggleAllItems(e)}
-                  allCheck={isAllCheck}
-                  keyMapper={_thumbKeyMapper}
-                  records={records}
-                  needCount={needCount}/>
-              </Loading>
-            </div>
+    case 'table':
+      templateDOM = (
+        <div className="table-container" ref={e => this.renderContent = e}>
+          <div className="table-scroll">
+            <Loading loading={loading} inrow>
+              <TableBody
+                onCheckAll={e => this.toggleAllItems(e)}
+                allCheck={isAllCheck}
+                keyMapper={_thumbKeyMapper}
+                records={records}
+                needCount={needCount}/>
+            </Loading>
           </div>
-        )
-        break;
-      case 'RecordItemsHelper':
-        templateDOM = (
-          <Loading loading={loading} inrow={true}>
-            <RecordItemsHelper keyMapper={keyMapper} records={records}/>
-          </Loading>
-        )
+        </div>
+      );
+      break;
+    case 'RecordItemsHelper':
+      templateDOM = (
+        <Loading loading={loading} inrow>
+          <RecordItemsHelper keyMapper={keyMapper} records={records}/>
+        </Loading>
+      );
     }
     if(!templateDOM) return (
       <span>{gm('没有对应的模板')}</span>
@@ -208,7 +217,7 @@ export default class ReportTemplate extends Component {
             nextPaging,
             conditionData: this.conditionHelper.value
           });
-      }}/>
+        }}/>
     ) : null;
     const conditionHelper = loadingCondition ? null : (
       <ConditionGenerator
@@ -226,8 +235,7 @@ export default class ReportTemplate extends Component {
           }, 200);
         }}
         conditionConfig={conditionOptions || []}
-        className={showCondition ? undefined : 'hide'}>
-      </ConditionGenerator>
+        className={showCondition ? undefined : 'hide'} />
     );
     const actionArea = (
       <div className="action-area">
@@ -240,12 +248,12 @@ export default class ReportTemplate extends Component {
           className="default ml10"
           onClick={e => this.toggleFloat()}/>
       </div>
-    )
+    );
 
     return (
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
-        <div className="report-fix-con" ref="fixReportCon">
+        <div className="report-fix-con" ref={e => this.fixReportCon = e}>
           {conditionHelper}
           {actionArea}
           {children}
@@ -253,6 +261,6 @@ export default class ReportTemplate extends Component {
         {templateDOM}
         {pagingDOM}
       </div>
-    )
+    );
   }
 }

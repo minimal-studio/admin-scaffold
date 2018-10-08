@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import { FormLayout } from 'ukelli-ui';
-import { CallFunc } from 'basic-helper';
+import { Call } from 'basic-helper';
 // import FormBasic from '../actions-basic/action-form-basic';
 import { approveToJoinInProject } from './apis';
 
 const activeMapper = {
   0: '否',
   1: '是',
-}
+};
 
 export default class ApprovePanel extends Component {
   formOptions = [
@@ -38,9 +38,9 @@ export default class ApprovePanel extends Component {
     {
       action: async formRef => {
         let { projId, applicant, notify, onUpdated } = this.props;
-        let approveRes = await approveToJoinInProject({projId, applicant, ...formRef.value})
+        let approveRes = await approveToJoinInProject({projId, applicant, ...formRef.value});
         notify('审核', !approveRes.err, approveRes.err);
-        CallFunc(onUpdated)();
+        Call(onUpdated);
       }
     }
   ]
@@ -51,6 +51,6 @@ export default class ApprovePanel extends Component {
           formOptions={this.formOptions}
           btnConfig={this.btnConfig}/>
       </div>
-    )
+    );
   }
 }

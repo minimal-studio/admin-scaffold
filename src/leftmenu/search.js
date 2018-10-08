@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
 import { Icon } from 'ukelli-ui';
+import { Call } from 'basic-helper';
 
 import { Link } from '../router-multiple';
 
@@ -9,7 +10,10 @@ const ESC_KEY = 27;
 
 export default class SearchBox extends Component {
   static propTypes = {
-    onChangeMenu: PropTypes.func
+    onChangeMenu: PropTypes.func,
+    onToggleNav: PropTypes.func,
+    showLeftMenu: PropTypes.bool,
+    codeMapper: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -81,15 +85,14 @@ export default class SearchBox extends Component {
               this.shouldBeHidden = false;
             }, 200);
           }}
-          onKeyUp={this.handleEsc}
-        />
+          onKeyUp={this.handleEsc}/>
         <div className="hide-content">
           {
             allCode
               .filter(
                 code => {
                   let item = codeMapper[code] || '';
-                  return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1
+                  return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
                 }
               )
               .map((code, idx) => {
@@ -98,12 +101,12 @@ export default class SearchBox extends Component {
                     className="result-item"
                     key={idx}
                     to={code}
-                    onClick={e => $GH.CallFunc(onChangeMenu)(code)}>
+                    onClick={e => Call(onChangeMenu, code)}>
                     {codeMapper[code]}
                   </Link>
                 );
               })
-            }
+          }
         </div>
       </div>
     );
