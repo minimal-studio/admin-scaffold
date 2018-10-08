@@ -36,7 +36,7 @@
   "author": "Alex",
   "license": "MIT",
   "dependencies": {
-    "basic-helper": "^1.4.x",
+    "basic-helper": "^1.4.2",
     "history": "^4.7.2"
   }
 }
