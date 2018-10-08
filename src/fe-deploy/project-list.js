@@ -11,7 +11,7 @@ import ProjectManager from './project-manager';
 import CreateProjectHelper from './create-project';
 import ApprovePanel from './approve-panel';
 import ConfigGenerator from './config-generator';
-import CompleteManual from './manual';
+import Manual from './manual';
 
 export default class ProjectList extends ActionBasic {
   keyMapper = [
@@ -284,7 +284,7 @@ export default class ProjectList extends ActionBasic {
                 onClick={e => ShowGlobalModal({
                   width: 800,
                   title: '发布系统的使用手册',
-                  children: <CompleteManual/>
+                  children: <Manual/>
                 })}>
                 查看使用手册
               </span>

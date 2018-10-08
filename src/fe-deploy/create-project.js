@@ -7,13 +7,15 @@ import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
 import wrapProjectFormOptions from './project-form';
+import { ActionBasic } from "../actions-basic";
 
-export default class CreateProject extends Component {
+export default class CreateProject extends ActionBasic {
   static propTypes = {
     onCreatedProject: PropTypes.func,
   }
 
   state = {
+    ...this.state,
     activeIdx: 0,
     querying: true,
     createdProj: {},
@@ -25,12 +27,14 @@ export default class CreateProject extends Component {
 
   componentDidMount() {
     this.initData();
-    // this.refs.formHelper.refs.name && this.refs.formHelper.refs.name.focus();
   }
 
   async initData() {
+    // const agentOptions = {
+    //   actingRef: 'querying',
+    // };
+    // this.formOptions = await this.reqAgent(wrapProjectFormOptions, agentOptions)();
     this.formOptions = await wrapProjectFormOptions();
-
     this.setState({
       querying: false
     });
@@ -84,17 +88,15 @@ export default class CreateProject extends Component {
           texts={[
             '新建项目，只需要填写项目名称',
             'web hook 是项目资源发布成功后触发的，与 GitHub 的 web hook 类似，用于回调通知',
-          ]}
-        />
+          ]}/>
         <Loading loading={querying} inrow={false}>
           {
             querying ? null : (
-              <Tabs activeTabIdx={activeIdx} stepMode={true}>
+              <Tabs activeTabIdx={activeIdx} stepMode>
                 <Tab label="1. 创建项目">
                   <FormLayout 
                     formOptions={this.formOptions} 
-                    btnConfig={this.btnConfig}
-                    ref="formHelper"/>
+                    btnConfig={this.btnConfig}/>
                 </Tab>
                 <Tab label="2. 上传资源文件">
                   <CreateAsset {...this.props} 
@@ -103,7 +105,7 @@ export default class CreateProject extends Component {
                 </Tab>
                 <Tab label="3. 资源管理">
                   <AssetsManager
-                    releasable={true}
+                    releasable
                     getProject={e => createdProj}
                     {...this.props} projId={createdProj.id}/>
                 </Tab>

@@ -4,8 +4,9 @@ import { FormLayout, Loading, ShowGlobalModal } from 'ukelli-ui';
 
 import { updatePropject, delPropject } from './apis';
 import wrapProjectFormOptions from './project-form';
+import { ActionBasic } from "../actions-basic";
 
-export default class EditProject extends Component {
+export default class EditProject extends ActionBasic {
   static propTypes = {
     project: PropTypes.object.isRequired,
     onUpdated: PropTypes.func,
@@ -16,6 +17,7 @@ export default class EditProject extends Component {
     onUpdated: () => {}
   }
   state = {
+    ...this.state,
     querying: true
   }
 
@@ -50,8 +52,12 @@ export default class EditProject extends Component {
   }
 
   updateProject = async (nextProject) => {
-    let updateRes = await updatePropject(nextProject);
-    let resErr = updateRes.err;
+    const postData = nextProject;
+    const agentOptions = {
+      actingRef: 'updating',
+    };
+    const updateRes = await this.reqAgent(updatePropject, agentOptions)(postData);
+    const resErr = updateRes.err;
     this.props.notify('更新项目', !resErr, resErr);
     if(!resErr) {
       this.props.onUpdated();
