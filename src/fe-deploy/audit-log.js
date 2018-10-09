@@ -3,10 +3,16 @@
  */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { TableBody, Loading } from 'ukelli-ui';
+import ActionAgent from "../action-agent";
+
 import { getAudit } from './apis';
 
-class AuditLog extends Component {
+class AuditLog extends ActionAgent {
+  static propTypes = {
+    projId: PropTypes.string
+  }
   keyMapper = [
     {
       key: 'operator',
@@ -46,22 +52,22 @@ class AuditLog extends Component {
     this.queryData();
   }
   async queryData() {
-    let auditRes = (await getAudit(this.props.projId)).data || {};
-    this.setState({
-      records: auditRes,
-      loading: false,
-    });
+    let auditRes = await this.reqAgent(getAudit, {
+      actingRef: 'loading',
+      after: ({ data }) => ({
+        records: data
+      })
+    })(this.props.projId);
   }
   render() {
     const { records, loading } = this.state;
     return (
       <div className="p10">
-        <Loading loading={loading} inrow={true}>
+        <Loading loading={loading} inrow>
           <TableBody
             keyMapper={this.keyMapper}
             records={records}
-            needCount={false}
-          />
+            needCount={false}/>
         </Loading>
       </div>
     );

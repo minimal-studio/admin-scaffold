@@ -7,9 +7,9 @@ import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
 import { createProject } from './apis';
 import wrapProjectFormOptions from './project-form';
-import { ActionBasic } from "../actions-basic";
+import ActionAgent from "../action-agent";
 
-export default class CreateProject extends ActionBasic {
+export default class CreateProject extends ActionAgent {
   static propTypes = {
     onCreatedProject: PropTypes.func,
   }
@@ -30,35 +30,30 @@ export default class CreateProject extends ActionBasic {
   }
 
   async initData() {
-    // const agentOptions = {
-    //   actingRef: 'querying',
-    // };
-    // this.formOptions = await this.reqAgent(wrapProjectFormOptions, agentOptions)();
     this.formOptions = await wrapProjectFormOptions();
     this.setState({
       querying: false
     });
   }
 
-  onCreateProj = (formValue) => {
-    const { username, notify, onCreatedProject } = this.props;
-    formValue.username = username;
-    // console.log(formValue)
-    createProject(formValue).then((res) => {
-      // console.log(res)
-      const { err, data } = res;
-      if(!err) {
-        // 创建项目成功后，跳转到第二步，上传资源
-        this.setState({
+  onCreateProj = async (formValue, actingRef) => {
+    const { notify, onCreatedProject } = this.props;
+    const agentOptions = {
+      actingRef,
+      after: (res) => {
+        return {
           activeIdx: 1,
-          createdProj: data
-        });
-
-        Call(onCreatedProject);
-      } else {
-        notify('创建项目', false, err);
+          createdProj: res.data
+        };
       }
-    });
+    };
+    const createRes = await this.reqAgent(createProject, agentOptions)(formValue);
+    const { err } = createRes;
+    if(!err) {
+      Call(onCreatedProject);
+    } else {
+      notify('创建项目', false, err);
+    }
   }
   onCreatedAsset(assetData) {
     this.setState({
@@ -69,12 +64,11 @@ export default class CreateProject extends ActionBasic {
 
   btnConfig = [
     {
-      action: (formRef) => {
-        // console.log(formRef)
+      action: (formRef, actingRef) => {
         let checkRes = formRef.checkForm();
-        // console.log()
-        if(checkRes.isPass) this.onCreateProj(formRef.value);
+        if(checkRes.isPass) this.onCreateProj(formRef.value, actingRef);
       },
+      actingRef: 'creating',
       text: '新增',
     }
   ]

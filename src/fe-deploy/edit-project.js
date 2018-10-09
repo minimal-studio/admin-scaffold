@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormLayout, Loading, ShowGlobalModal } from 'ukelli-ui';
+import { FormLayout, Loading, ShowGlobalModal, Button } from 'ukelli-ui';
 
 import { updatePropject, delPropject } from './apis';
 import wrapProjectFormOptions from './project-form';
-import { ActionBasic } from "../actions-basic";
+import ActionAgent from "../action-agent";
 
-export default class EditProject extends ActionBasic {
+export default class EditProject extends ActionAgent {
   static propTypes = {
     project: PropTypes.object.isRequired,
     onUpdated: PropTypes.func,
@@ -24,10 +24,11 @@ export default class EditProject extends ActionBasic {
   btnConfig = [
     {
       text: '更新',
-      action: (formRef) => {
+      actingRef: 'updating',
+      action: (formRef, actingRef) => {
         let {isPass} = formRef.checkForm();
         if(isPass) {
-          this.updateProject(formRef.value);
+          this.updateProject(formRef.value, actingRef);
         }
       }
     },
@@ -51,10 +52,10 @@ export default class EditProject extends ActionBasic {
     });
   }
 
-  updateProject = async (nextProject) => {
+  updateProject = async (nextProject, actingRef) => {
     const postData = nextProject;
     const agentOptions = {
-      actingRef: 'updating',
+      actingRef,
     };
     const updateRes = await this.reqAgent(updatePropject, agentOptions)(postData);
     const resErr = updateRes.err;
@@ -64,7 +65,7 @@ export default class EditProject extends ActionBasic {
     }
   }
 
-  deleteProject = async () => {
+  deleteProject = async (actingRef) => {
     const { username, project, onClose, queryProject } = this.props;
 
     ShowGlobalModal({
@@ -75,7 +76,9 @@ export default class EditProject extends ActionBasic {
       onConfirm: async isSure => {
         if(!isSure) return;
 
-        let delRes = await delPropject({
+        let delRes = await this.reqAgent(delPropject, {
+          actingRef
+        })({
           username,
           projId: project.id
         });
@@ -91,12 +94,16 @@ export default class EditProject extends ActionBasic {
   }
 
   render() {
-    const { querying } = this.state;
+    const { querying, deleting, updating } = this.state;
     const deleteBtn = (
       <div className="text-center">
         <hr/>
         <p>
-          <span className="btn red flat" onClick={e => this.deleteProject()}>删除该项目</span>
+          <Button
+            text="删除该项目"
+            className="btn red flat"
+            disabled={deleting}
+            onClick={e => this.deleteProject('deleting')}/>
         </p>
         <p className="form-tip">不可恢复, 同时删除相关的所有资源</p>
       </div>
@@ -107,6 +114,7 @@ export default class EditProject extends ActionBasic {
           querying ? null : (
             <FormLayout
               formOptions={this.formOptions}
+              updating={updating}
               childrenAfterForm={deleteBtn}
               btnConfig={this.btnConfig}/>
           )

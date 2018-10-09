@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 import { FormLayout } from 'ukelli-ui';
 import { Call } from 'basic-helper';
-// import FormBasic from '../actions-basic/action-form-basic';
 import { approveToJoinInProject } from './apis';
+import ActionAgent from "../action-agent";
 
 const activeMapper = {
   0: '否',
   1: '是',
 };
 
-export default class ApprovePanel extends Component {
+export default class ApprovePanel extends ActionAgent {
   formOptions = [
     {
       type: 'radio',
@@ -36,9 +36,13 @@ export default class ApprovePanel extends Component {
   ];
   btnConfig = [
     {
-      action: async formRef => {
+      text: '审核',
+      actingRef: 'updating',
+      action: async (formRef, actingRef) => {
         let { projId, applicant, notify, onUpdated } = this.props;
-        let approveRes = await approveToJoinInProject({projId, applicant, ...formRef.value});
+        let approveRes = await this.reqAgent(approveToJoinInProject, {
+          actingRef
+        })({projId, applicant, ...formRef.value});
         notify('审核', !approveRes.err, approveRes.err);
         Call(onUpdated);
       }
@@ -48,6 +52,7 @@ export default class ApprovePanel extends Component {
     return (
       <div className="approve-panel">
         <FormLayout
+          {...this.state}
           formOptions={this.formOptions}
           btnConfig={this.btnConfig}/>
       </div>

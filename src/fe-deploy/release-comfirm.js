@@ -6,6 +6,7 @@ import { Call } from 'basic-helper';
 
 import { release, rollback } from './apis';
 import { versionFilter } from './filter';
+import ActionAgent from "../action-agent";
 
 const getReleaseFormOptions = (project, asset, canRollback = false) => {
   const { webhook, scpTargetHost } = project;
@@ -51,7 +52,7 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
   return formOptions;
 };
 
-export default class ReleaseComfirm extends Component {
+export default class ReleaseComfirm extends ActionAgent {
   state = {
     releasing: false
   }
@@ -66,10 +67,7 @@ export default class ReleaseComfirm extends Component {
 
     this.btnConfig = [
       {
-        action: async (formRef) => {
-          this.setState({
-            releasing: true
-          });
+        action: async (formRef, actingRef) => {
           let isSuccess;
           let releaseRes = {};
           let formValue = formRef.value;
@@ -80,7 +78,9 @@ export default class ReleaseComfirm extends Component {
           }});
 
           if(canRollback) {
-            releaseRes = await rollback({
+            releaseRes = await this.reqAgent(rollback, {
+              actingRef
+            })({
               ...formValue,
               assetId: id,
               prevAssetId: releaseRef,
@@ -88,7 +88,9 @@ export default class ReleaseComfirm extends Component {
               username,
             });
           } else {
-            releaseRes = await release({
+            releaseRes = await this.reqAgent(release, {
+              actingRef
+            })({
               ...formValue,
               assetId: id,
               projId: belongto,
@@ -96,9 +98,6 @@ export default class ReleaseComfirm extends Component {
             });
           }
           isSuccess = !!releaseRes && !releaseRes.err;
-          this.setState({
-            releasing: false
-          });
           Call(this.props.onReleased, isSuccess);
         },
         actingRef: 'releasing',

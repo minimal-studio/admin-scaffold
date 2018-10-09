@@ -5,7 +5,7 @@ import {
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 
-import { ActionBasic } from "../actions-basic";
+import ActionAgent from "../action-agent";
 import { getProjects } from './apis';
 import ProjectManager from './project-manager';
 import CreateProjectHelper from './create-project';
@@ -13,7 +13,7 @@ import ApprovePanel from './approve-panel';
 import ConfigGenerator from './config-generator';
 import Manual from './manual';
 
-export default class ProjectList extends ActionBasic {
+export default class ProjectList extends ActionAgent {
   keyMapper = [
     {
       key: 'projName',
@@ -150,18 +150,13 @@ export default class ProjectList extends ActionBasic {
     return this.state.records[idx];
   }
 
-  delProject = id => {
-    if (this.submiting) return;
-    this.submiting = true;
-  };
-
   queryData = async () => {
     const { range } = this.conditionRef.value;
     const postData = { range };
     const agentOptions = {
       actingRef: 'querying',
       after: (res) => ({
-        record: res.data
+        records: res.data
       }),
       resFilter: (res) => res.data
     };

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import { FormLayout } from 'ukelli-ui';
 import { uploadFile } from './apis';
+import ActionAgent from "../action-agent";
 
-export default class CreateAsset extends Component {
+export default class CreateAsset extends ActionAgent {
   static propTypes = {
     project: PropTypes.object,
     projId: PropTypes.string,
@@ -52,7 +53,8 @@ export default class CreateAsset extends Component {
 
   btnConfig = [
     {
-      action: async (formRef) => {
+      actingRef: 'uploading',
+      action: async (formRef, actingRef) => {
         const { username, onSuccess } = this.props;
         const payload = {
           founder: username,
@@ -65,15 +67,17 @@ export default class CreateAsset extends Component {
         // let res = [...this.uploadFile(formData)];
         // console.log(object)
 
-        this.setState({
-          uploading: true
-        });
+        // this.setState({
+        //   uploading: true
+        // });
         
-        let res = await uploadFile(formData);
+        let res = await this.reqAgent(uploadFile, {
+          actingRef
+        })(formData);
 
-        this.setState({
-          uploading: false
-        });
+        // this.setState({
+        //   uploading: false
+        // });
 
         let isSuccess = false;
         if(!res.err && !!res.data) {
@@ -83,7 +87,6 @@ export default class CreateAsset extends Component {
         this.props.notify('上传', isSuccess, res.err);
       },
       text: '上传资源',
-      actingRef: 'uploading'
     }
   ];
 

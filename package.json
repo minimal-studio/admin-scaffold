@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.12.10",
+  "version": "0.12.11",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -36,7 +36,7 @@
   "author": "Alex",
   "license": "MIT",
   "dependencies": {
-    "basic-helper": "^1.4.2",
+    "basic-helper": "^1.4.3",
     "history": "^4.7.2"
   }
 }

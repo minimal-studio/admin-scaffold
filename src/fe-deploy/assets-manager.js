@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  TableBody, ShowGlobalModal, CloseGlobalModal, FormLayout
+  TableBody, ShowGlobalModal, CloseGlobalModal, Loading
 } from 'ukelli-ui';
 import { getAssets, getProjects, downloadAsset, delAsset } from './apis';
 import ReleaseComfirm from './release-comfirm';
 import { versionFilter } from './filter';
+import ActionAgent from "../action-agent";
 
 let prevRecords = [];
 
-class AssetsManager extends Component {
+class AssetsManager extends ActionAgent {
   static propTypes = {
     notify: PropTypes.func.isRequired,
     getProject: PropTypes.func.isRequired,
@@ -120,7 +121,7 @@ class AssetsManager extends Component {
     super(props);
     this.state = {
       records: prevRecords,
-      loading: true,
+      querying: true,
       currProject: {}
     };
   }
@@ -136,6 +137,7 @@ class AssetsManager extends Component {
     let ModalId = ShowGlobalModal({
       title: releasText,
       showFuncBtn: false,
+      width: 560,
       children: (
         <ReleaseComfirm
           canRollback={canRollback}
@@ -146,27 +148,28 @@ class AssetsManager extends Component {
             isSuccess && this.queryData();
           }}
           {...this.props} asset={item} project={project}/>
-      )
-      ,
-      width: 560,
+      ),
     });
   }
 
   async queryData() {
     const { projId } = this.props;
+    this.setState({
+      querying: true,
+    });
     const assetRecord = (await getAssets(projId)).data || [];
     const projectData = (await getProjects({projId})).data || [];
     prevRecords = assetRecord;
     this.setState({
       records: assetRecord,
       currProject: projectData,
-      loading: false
+      querying: false
     });
   }
 
   onReleased = () => {
     this.setState({
-      loading: true
+      querying: true
     });
     this.queryData();
   }
@@ -179,9 +182,11 @@ class AssetsManager extends Component {
   }
 
   render() {
-    const { records } = this.state;
+    const { records, querying } = this.state;
     return (
-      <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
+      <Loading loading={querying} inrow>
+        <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
+      </Loading>
     );
   }
 }
