@@ -5,7 +5,7 @@
 
 import React, {Component, PureComponent} from 'react';
 
-import { Call, IsFunc, DebounceClass } from 'basic-helper';
+import { Call, CallFunc, IsFunc, DebounceClass } from 'basic-helper';
 import { getUrlParams } from 'uke-request';
 
 import * as paginHelper from '../utils/pagination-helper';
@@ -14,13 +14,19 @@ class ActionAgent extends Component {
   getUrlParams = getUrlParams;
   paginHelper = paginHelper;
   routerParams = getUrlParams();
+  componentWillUnmount() {
+    this.__unmount = true;
+  }
   _before(params, actingRef) {
     return Object.assign({}, {
       [actingRef]: true,
     }, params);
   }
-  componentWillUnmount() {
-    this.__unmount = true;
+  _after(res) {
+    return { };
+  }
+  resStatus(res) {
+
   }
   delayExec(...args) {
     if(!this._delayExec) this._delayExec = new DebounceClass();
@@ -40,6 +46,7 @@ class ActionAgent extends Component {
     // if(!actingRef) return console.warn('need pass actingRef');
 
     const {
+      id = 'reqAction',
       before,
       after,
       resFilter,
@@ -56,9 +63,11 @@ class ActionAgent extends Component {
             {
               [actingRef]: false
             },
+            this._after(res),
             Call(after, res)
           )
         );
+        this.resStatus(res, id);
         return IsFunc(resFilter) ? resFilter(res) : res;
       } catch(e) {
         console.log(e);

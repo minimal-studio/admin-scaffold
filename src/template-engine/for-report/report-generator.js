@@ -17,7 +17,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           <span className="link-btn mr5" key={text + idx} onClick={e => {
             action(item);
           }}>
-            {text}
+            {this.props.gm(text)}
           </span>
         );
       });
