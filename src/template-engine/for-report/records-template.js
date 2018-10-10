@@ -36,7 +36,7 @@ export default class ReportTemplate extends Component {
   
     records: PropTypes.array.isRequired,
     pagingInfo: PropTypes.object,
-    loading: PropTypes.bool.isRequired,
+    querying: PropTypes.bool,
     template: PropTypes.oneOf(['table', 'RecordItemsHelper']),
     // hasErr: PropTypes.bool,
     resDesc: PropTypes.string
@@ -162,7 +162,7 @@ export default class ReportTemplate extends Component {
 
   render() {
     const {
-      records = [], pagingInfo = {}, loading = '', children, template,
+      records = [], pagingInfo = {}, querying = true, children, template,
       needCount, autoQuery, showCondition,
       needPaging, loadingCondition,
       conditionOptions, isMobile, gm,
@@ -187,7 +187,7 @@ export default class ReportTemplate extends Component {
       templateDOM = (
         <div className="table-container" ref={e => this.renderContent = e}>
           <div className="table-scroll">
-            <Loading loading={loading} inrow>
+            <Loading loading={querying} inrow>
               <TableBody
                 onCheckAll={e => this.toggleAllItems(e)}
                 allCheck={isAllCheck}
@@ -201,7 +201,7 @@ export default class ReportTemplate extends Component {
       break;
     case 'RecordItemsHelper':
       templateDOM = (
-        <Loading loading={loading} inrow>
+        <Loading loading={querying} inrow>
           <RecordItemsHelper keyMapper={keyMapper} records={records}/>
         </Loading>
       );
@@ -241,7 +241,7 @@ export default class ReportTemplate extends Component {
       <div className="action-area">
         <Button
           text={gm("查询")}
-          loading={loading}
+          loading={querying}
           onClick={e => this.handleQueryData()}/>
         <Button
           text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
