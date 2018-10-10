@@ -12,7 +12,8 @@ import Mousetrap from 'mousetrap';
 
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
-import Posts from './posts';
+// import Posts from './posts';
+import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
 
 let i18nMapperUrl = './i18n/';
@@ -132,7 +133,7 @@ class ManagerLayout extends RouterHelper {
       menuData
     });
   }
-  onGetMenuCodeMapper(menuCodeMapper) {
+  onGetMenuCodeMapper = (menuCodeMapper) => {
     this.setState({
       menuCodeMapper
     });
@@ -159,7 +160,7 @@ class ManagerLayout extends RouterHelper {
       gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,
-    }
+    };
   }
   render() {
     const {
@@ -185,12 +186,12 @@ class ManagerLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
-    const { Statusbar } = pluginComponent;
+    const { Statusbar, NotfoundPage } = pluginComponent;
 
     const container = ready ? (
       <div>
         <LeftmenuLayout
-          onDidMount={this.onGetMenuCodeMapper.bind(this)}
+          onDidMount={this.onGetMenuCodeMapper}
           menuData={menuData}
           title={title}
           onClickMenu={code => {
@@ -219,15 +220,15 @@ class ManagerLayout extends RouterHelper {
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
           }>
           <div className="status-bar" id="statusBar">
-          <div className="menu-actions">
-            <span
-              className="_action-btn mr10"
-              onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
-              <Icon
-                title={this.gm(showLeftMenu ? "收起" : "展开")}
-                type={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
-            </span>
-          </div>
+            <div className="menu-actions">
+              <span
+                className="_action-btn mr10"
+                onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
+                <Icon
+                  title={this.gm(showLeftMenu ? "收起" : "展开")}
+                  type={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
+              </span>
+            </div>
             {
               Statusbar ? React.cloneElement(Statusbar, {
                 onLogout: logout,
@@ -250,8 +251,8 @@ class ManagerLayout extends RouterHelper {
             }
           </div>
           <Tabs 
-            withContent={true} 
-            closeabled={true}
+            withContent 
+            closeabled
             activeTabIdx={activeRouteIdx} 
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
@@ -259,15 +260,23 @@ class ManagerLayout extends RouterHelper {
                 let C = pageComponents[route];
                 let currInfo = routerInfo[route];
                 let {params} = currInfo;
-                return C ? (
+                return (
                   <Tab 
                     contentClass={route}
                     label={this.gm(menuCodeMapper[route] || route)} 
                     key={route + JSON.stringify(params)} 
                     onChange={e => this.changeRoute(route, params)}>
-                    <C {...this.getRouteProps()}/>
+                    {
+                      C ? (
+                        <C {...this.getRouteProps()}/>
+                      ) : NotfoundPage ? (
+                        <NotfoundPage/>
+                      ) : (
+                        <Notfound key={route + '404'}/>
+                      )
+                    }
                   </Tab>
-                ) : null
+                );
               })
             }
           </Tabs>
