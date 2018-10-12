@@ -30,6 +30,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           needCount={this.needCount}
 
           {...passProps}
+          {...this.templateOptions}
           {...this.state}
           {...this.props}
           onQueryData={this.queryData.bind(this)}/>
