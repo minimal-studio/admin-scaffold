@@ -80,6 +80,7 @@ export default class CreateAsset extends ActionAgent {
         // });
 
         let isSuccess = false;
+        if(!res) return;
         if(!res.err && !!res.data) {
           onSuccess(res.data);
           isSuccess = true;
