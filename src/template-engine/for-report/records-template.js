@@ -90,7 +90,7 @@ export default class ReportTemplate extends Component {
 
   getQueryData(conditionData) {
     return {
-      nextPaging: getDefPagin(),
+      nextPagin: getDefPagin(),
       conditionData: conditionData || this.conditionHelper.value
     };
   }
@@ -212,9 +212,9 @@ export default class ReportTemplate extends Component {
     const pagingDOM = needPaging ? (
       <PagingBtn
         pagingInfo={pagingInfo}
-        onPagin={nextPaging => {
+        onPagin={nextPagin => {
           onQueryData({
-            nextPaging,
+            nextPagin,
             conditionData: this.conditionHelper.value
           });
         }}/>
