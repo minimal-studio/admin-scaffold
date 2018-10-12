@@ -56,22 +56,24 @@ class ActionAgent extends Component {
     this.stateSetter(this._before(Call(before), actingRef));
 
     return async (...args) => {
+      let res = {};
       try {
-        let res = await reqFunc(...args);
-        this.stateSetter(
-          Object.assign({},
-            {
-              [actingRef]: false
-            },
-            this._after(res),
-            Call(after, res)
-          )
-        );
-        this.resStatus(res, id);
-        return IsFunc(resFilter) ? resFilter(res) : res;
+        res = await reqFunc(...args);
       } catch(e) {
         console.log(e);
+        res.err = e;
       }
+      this.stateSetter(
+        Object.assign({},
+          {
+            [actingRef]: false
+          },
+          this._after(res),
+          Call(after, res)
+        )
+      );
+      this.resStatus(res, id);
+      return IsFunc(resFilter) ? resFilter(res) : res;
     };
   }
 }

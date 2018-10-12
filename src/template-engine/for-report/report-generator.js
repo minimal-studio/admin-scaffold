@@ -3,6 +3,8 @@
  */
 
 import React, {Component, PureComponent} from 'react';
+import { Notify } from 'ukelli-ui';
+import { GenerteID } from 'basic-helper';
 
 import ReportLayoutRender from './records-template';
 
@@ -20,6 +22,18 @@ export function GeneralReportRender(Action, passProps = {}) {
             {this.props.gm(text)}
           </span>
         );
+      });
+    }
+
+    showDesc({title = '消息提示', msg, type = 'error'}) {
+      if(!msg) return;
+      Notify({
+        config: {
+          title: title,
+          type: type,
+          text: msg,
+          id: GenerteID()
+        }
       });
     }
     render() {
