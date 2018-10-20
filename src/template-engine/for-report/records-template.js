@@ -99,7 +99,8 @@ export default class ReportTemplate extends Component {
   getQueryData(conditionData) {
     return {
       nextPagin: getDefPagin(),
-      conditionData: conditionData || this.conditionHelper.value
+      conditionData: conditionData || this.conditionHelper.value,
+      selectedItems: this.state.checkedItems
     };
   }
 
