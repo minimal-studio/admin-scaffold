@@ -61,7 +61,6 @@ export default class ReportTemplate extends Component {
     super(props);
 
     this.state = {
-      checkedItems: {},
       displayFloat: GetFloatLen() != 0,
       tableHeight: props.height || 200
     };
@@ -72,6 +71,10 @@ export default class ReportTemplate extends Component {
 
   componentWillUnmount() {
     this.restoreBasicFloatLen();
+  }
+
+  clearCheckeds = () => {
+    this._tableRef.clearCheckeds();
   }
 
   restoreBasicFloatLen() {
@@ -100,34 +103,8 @@ export default class ReportTemplate extends Component {
     return {
       nextPagin: getDefPagin(),
       conditionData: conditionData || this.conditionHelper.value,
-      selectedItems: this.state.checkedItems
+      selectedItems: this.checkedItems
     };
-  }
-
-  toggleSelectItem(item, idx) {
-    let nextCheckedItems = this.state.checkedItems;
-    if(nextCheckedItems[idx]) {
-      delete nextCheckedItems[idx];
-    } else {
-      nextCheckedItems[idx] = item;
-    }
-    this.selectItems(nextCheckedItems);
-  }
-
-  toggleAllItems(allCheck) {
-    let nextCheckedItems = this.state.checkedItems;
-    if(!allCheck) {
-      nextCheckedItems = {};
-    } else {
-      this.props.records.forEach((item, idx) => nextCheckedItems[idx] = item);
-    }
-    this.selectItems(nextCheckedItems);
-  }
-
-  selectItems(nextState) {
-    this.setState({
-      checkedItems: nextState
-    });
   }
 
   setTableContainerHeight(fixGroup) {
@@ -166,7 +143,7 @@ export default class ReportTemplate extends Component {
       onQueryData
     } = this.props;
 
-    const { checkedItems, displayFloat, tableHeight } = this.state;
+    const { displayFloat, tableHeight } = this.state;
 
     // let _thumbKeyMapper = !isMobile ? keyMapper : keyMapper.filter(item => {
     //   const itemKey = item.key;
@@ -186,6 +163,7 @@ export default class ReportTemplate extends Component {
             <Loading loading={querying} inrow>
               <TableBody
                 height={_tableH}
+                ref={e => this._tableRef = e}
                 keyMapper={keyMapper}
                 needCheck={needCheck}
                 whenCheckAction={whenCheckAction}

@@ -42,6 +42,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           keyMapper={this.keyMapper}
           conditionOptions={this.conditionOptions}
           needCount={this.needCount}
+          ref={e => this.ReportRef = e}
 
           {...passProps}
           {...this.templateOptions}
