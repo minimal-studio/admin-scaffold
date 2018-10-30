@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass } from 'basic-helper';
 import {
-  PagingBtn, RecordItemsHelper,
+  Pagination, RecordItemsHelper,
   Loading, Button, Toast,
   TableBody, ConditionGenerator
 } from 'ukelli-ui';
@@ -188,7 +188,7 @@ export default class ReportTemplate extends Component {
       <span>{gm('没有对应的模板')}</span>
     );
     const pagingDOM = needPaging ? (
-      <PagingBtn
+      <Pagination
         pagingInfo={pagingInfo}
         onPagin={nextPagin => {
           onQueryData({
