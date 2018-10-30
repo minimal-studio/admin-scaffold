@@ -211,7 +211,7 @@ class ManagerLayout extends RouterHelper {
         {/* {
           showLeftMenu ? null : (
             <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>
-              <Icon type="angle-right"/>
+              <Icon n="angle-right"/>
             </span>
           )
         } */}
@@ -226,7 +226,7 @@ class ManagerLayout extends RouterHelper {
                 onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
                 <Icon
                   title={this.gm(showLeftMenu ? "收起" : "展开")}
-                  type={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
+                  n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
               </span>
             </div>
             {

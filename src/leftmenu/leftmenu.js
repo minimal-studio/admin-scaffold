@@ -48,10 +48,10 @@ let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 const MenuItem = ({ icon = 'bars', title, gm }) => {
   return (
     <div className="layout a-i-c">
-      <Icon type={icon} classNames={['mr10']}/>
+      <Icon n={icon} classNames={['mr10']}/>
       <span>{gm(title)}</span>
       <span className="flex" />
-      <Icon type="angle-right" classNames={['direct']}/>
+      <Icon n="angle-right" classNames={['direct']}/>
     </div>
   );
 };
@@ -260,7 +260,7 @@ export default class Leftmenu extends Component {
           !icon ? (
             <span className="menu-tip">-</span>
           ) : (
-            <Icon type={icon} classNames={['mr10']}/>
+            <Icon n={icon} classNames={['mr10']}/>
           )
         }
         {gm(menuText)}
@@ -410,7 +410,7 @@ export default class Leftmenu extends Component {
               this._seatchBox.show();
               // console.log(this._seatchBox.show)
             }}
-            type="search"
+            n="search"
             classNames={['_action-btn mr10']}/>
           <SearchBox
             ref={e => this._seatchBox = e}
@@ -422,10 +422,10 @@ export default class Leftmenu extends Component {
             title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
             classNames={['_action-btn']}
             onClick={e => this.changeMenuUIMode(!flowMode)}
-            type={!flowMode ? "align-justify" : "align-left"}/>
+            n={!flowMode ? "align-justify" : "align-left"}/>
         </div>
         <div className="userinfo">
-          <Avatar size="sm" text={username[0]}/>
+          <Avatar size={40} text={username[0]}/>
           <span>
             <div>{username}</div>
             <div>{gm('在线')}</div>
