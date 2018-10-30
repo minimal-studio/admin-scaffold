@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {getUrlParams} from 'uke-request';
 import createBrowserHistory from "history/createBrowserHistory";
@@ -15,7 +16,7 @@ let cacheState = {
 
 const pushToHistory = (url, params) => {
   history.push(url.replace(/\/\//g, '/'), params);
-}
+};
 
 const wrapPushUrl = (pushConfig) => {
   const {component, params} = pushConfig;
@@ -29,30 +30,30 @@ const wrapPushUrl = (pushConfig) => {
   }
   let result = `/${component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
   // let result = `/${component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
-  result = result.replace(/\&&$/g, '');
+  result = result.replace(/&&$/g, '');
   return result;
-}
+};
 
 const onNavigate = config => {
-  if(!config) return console.log('Not config')
+  if(!config) return console.log('Not config');
   const { location } = history;
   config["from"] = location;
   switch (config.type) {
-    case "PUSH":
-      var pushUrl = wrapPushUrl(config);
-      pushToHistory(`#/${pushUrl}`, config);
-      break;
-    case "LINK":
-      break;
+  case "PUSH":
+    var pushUrl = wrapPushUrl(config);
+    pushToHistory(`#/${pushUrl}`, config);
+    break;
+  case "LINK":
+    break;
     // case "MODAL":
     //   ShowGlobalModal({
     //     ...config,
     //     showFuncBtn: false
     //   })
     //   break;
-    case "GO_BACK":
-      history.goBack();
-      break;
+  case "GO_BACK":
+    history.goBack();
+    break;
   }
 };
 
@@ -60,7 +61,7 @@ const resolvePath = (path) => {
   let result = path.split('?')[0].replace(/#/g, '');
   let pathArr = result.split('/').filter(item => !!item);
   return pathArr;
-}
+};
 
 class RouterHelper extends Component {
   history = history;
@@ -95,7 +96,7 @@ class RouterHelper extends Component {
         routerInfo: nextRouterInfo,
         activeRoute: nextActiveRoute,
         activeRouteIdx: nextActiveIdx,
-      }
+      };
     });
   }
   selectTab = (activeRoute) => {
@@ -105,19 +106,19 @@ class RouterHelper extends Component {
       nextRouterInfo[activeRoute] = {
         ...(nextRouterInfo[activeRoute] || {}),
         params: getUrlParams()
-      }
+      };
       let nextRouters = [...routers];
       let activeIdx = currComIdx;
       if(currComIdx == -1) {
         nextRouters = [...routers, activeRoute];
-        activeIdx = nextRouters.length - 1
+        activeIdx = nextRouters.length - 1;
       }
       let nextState = {
         routers: nextRouters,
         activeRoute: activeRoute,
         activeRouteIdx: activeIdx,
         routerInfo: nextRouterInfo
-      }
+      };
       cacheState = nextState;
       return nextState;
     });
@@ -137,9 +138,16 @@ class RouterHelper extends Component {
   }
 }
 
+/**
+ * 用于导航到另外页面的组件
+ * @param {object} options 参数
+ * @TODO: 完善是否激活的判定
+ */
 const Link = ({ to, className = 'link-btn', children, params }) => {
-  const {location} = history;
-  const isActive = location.hash != '/' && location.hash.indexOf(to) !== -1;
+  const { location } = history;
+  const { hash } = location;
+  const isActive = hash != '/' && hash.split('/')[1] === to;
+
   return (
     <span 
       className={className + (isActive ? ' active' : '')}
@@ -150,7 +158,18 @@ const Link = ({ to, className = 'link-btn', children, params }) => {
       })}>
       {children}
     </span>
-  )
+  );
+};
+Link.defaultProps = {
+  className: 'link-btn',
+  params: {}
+};
+Link.propTypes = {
+  to: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  params: PropTypes.shape({
+    type: PropTypes.string,
+  }),
 };
 
 export {
@@ -160,4 +179,4 @@ export {
   wrapPushUrl,
   pushToHistory,
   onNavigate,
-}
+};
