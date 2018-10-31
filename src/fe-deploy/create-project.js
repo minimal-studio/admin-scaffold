@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Loading, FormLayout, Tabs, Tab, TipPanel } from 'ukelli-ui';
+import { Loading, FormLayout, Tabs, Tab, TipPanel, Steps } from 'ukelli-ui';
 
 import { Call } from 'basic-helper';
 import CreateAsset from './create-asset';
@@ -86,24 +86,31 @@ export default class CreateProject extends ActionAgent {
         <Loading loading={querying} inrow={false}>
           {
             querying ? null : (
-              <Tabs activeTabIdx={activeIdx} stepMode>
-                <Tab label="1. 创建项目">
-                  <FormLayout 
-                    formOptions={this.formOptions} 
-                    btnConfig={this.btnConfig}/>
-                </Tab>
-                <Tab label="2. 上传资源文件">
-                  <CreateAsset {...this.props} 
-                    projId={createdProj.id} 
-                    onSuccess={assetData => this.onCreatedAsset(assetData)}/>
-                </Tab>
-                <Tab label="3. 资源管理">
-                  <AssetsManager
-                    releasable
-                    getProject={e => createdProj}
-                    {...this.props} projId={createdProj.id}/>
-                </Tab>
-              </Tabs>
+              <div>
+                <Steps activeIdx={activeIdx} className="p10">
+                  <Steps.Step title="创建项目"></Steps.Step>
+                  <Steps.Step title="上传资源文件"></Steps.Step>
+                  <Steps.Step title="资源管理"></Steps.Step>
+                </Steps>
+                <Tabs activeTabIdx={activeIdx}>
+                  <Tab label="创建项目">
+                    <FormLayout 
+                      formOptions={this.formOptions} 
+                      btnConfig={this.btnConfig}/>
+                  </Tab>
+                  <Tab label="上传资源文件">
+                    <CreateAsset {...this.props} 
+                      projId={createdProj.id} 
+                      onSuccess={assetData => this.onCreatedAsset(assetData)}/>
+                  </Tab>
+                  <Tab label="资源管理">
+                    <AssetsManager
+                      releasable
+                      getProject={e => createdProj}
+                      {...this.props} projId={createdProj.id}/>
+                  </Tab>
+                </Tabs>
+              </div>
             )
           }
         </Loading>
