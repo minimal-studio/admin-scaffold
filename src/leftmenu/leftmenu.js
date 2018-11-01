@@ -405,7 +405,7 @@ export default class Leftmenu extends Component {
               <span className="mr5">{title}</span>
             </h5>
             <span className="flex" />
-            <ToolTip
+            <Icon
               title="菜单搜索"
               onClick={e => {
                 this._seatchBox.show();

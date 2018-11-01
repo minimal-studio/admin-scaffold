@@ -37,6 +37,12 @@ export default class ReportTemplate extends Component {
   
     keyMapper: PropTypes.array.isRequired,
     conditionOptions: PropTypes.array,
+
+    actionBtns: PropTypes.arrayOf(PropTypes.shape({
+      action: PropTypes.func,
+      text: PropTypes.string,
+      color: PropTypes.string,
+    })),
   
     records: PropTypes.array.isRequired,
     pagingInfo: PropTypes.object,
@@ -138,7 +144,7 @@ export default class ReportTemplate extends Component {
     const {
       records = [], pagingInfo = {}, querying = true, children, template,
       needCount, autoQuery, showCondition, needCheck, whenCheckAction,
-      needPaging, loadingCondition, height,
+      needPaging, loadingCondition, height, actionBtns,
       conditionOptions, isMobile, gm, keyMapper,
       onQueryData
     } = this.props;
@@ -225,6 +231,18 @@ export default class ReportTemplate extends Component {
           text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
           className="default ml10"
           onClick={e => this.toggleFloat()}/>
+        {
+          actionBtns && actionBtns.map((btn, idx) => {
+            const { text, action, color = 'default' } = btn;
+            return (
+              <Button
+                key={idx}
+                text={text}
+                className={"ml10 " + color}
+                onClick={action}/>
+            );
+          })
+        }
       </div>
     );
 
