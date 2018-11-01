@@ -9,6 +9,7 @@ import {
   Loading, setUkelliConfig, setUkeLang
 } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
+import { ToggleBasicFloatLen, EventEmitter } from 'basic-helper';
 
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
@@ -49,7 +50,7 @@ class ManagerLayout extends RouterHelper {
 
     const { pageComponents, iframeMode } = props;
     this.pageRoutes = iframeMode ? ['Posts'] : Object.keys(pageComponents);
-    $GH.EventEmitter.subscribe('QUERY_MENU', (resMenuData) => {
+    EventEmitter.on('QUERY_MENU', (resMenuData) => {
       this.changeMenuData(resMenuData);
     });
     this.initApp();
@@ -114,6 +115,7 @@ class ManagerLayout extends RouterHelper {
       return false;
     });
     Mousetrap.bind(['alt+k'], e => this.showShortcut());
+    Mousetrap.bind(['alt+w'], e => this.handleCloseFormShortcut());
     this.initRoute();
   }
 
@@ -121,8 +123,13 @@ class ManagerLayout extends RouterHelper {
     Mousetrap.unbind(['alt+k', 'alt alt']);
   }
 
+  handleCloseFormShortcut = () => {
+    const { activeRouteIdx, routerInfo } = this.state;
+    this.closeTab(activeRouteIdx, routerInfo);
+  }
+
   toggleFloat = () => {
-    let isDisplay = $GH.ToggleBasicFloatLen();
+    let isDisplay = ToggleBasicFloatLen();
     this.setState({
       displayFloat: !this.state.displayFloat
     });

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {getUrlParams} from 'uke-request';
 import createBrowserHistory from "history/createBrowserHistory";
-import {RemoveArrayItem} from 'basic-helper';
+import { getUrlParams } from 'uke-request';
+import { RemoveArrayItem } from 'basic-helper';
 
 const history = createBrowserHistory();
 
@@ -68,6 +68,12 @@ class RouterHelper extends Component {
   wrapPushUrl = wrapPushUrl;
   pushToHistory = pushToHistory;
   onNavigate = onNavigate;
+  state = cacheState;
+  constructor(props) {
+    super(props);
+
+    history.listen(this.handleHistory);
+  }
   changeRoute = (component, params) => {
     onNavigate({
       type: 'PUSH',
@@ -76,31 +82,42 @@ class RouterHelper extends Component {
     });
   };
   handleHistory = (location, action) => {
-    // console.log(location, action)
-    const {hash} = location;
+    const { hash, state } = location;
     const activeRoute = resolvePath(hash)[0];
-    this.selectTab(activeRoute);
+    const nextRouterState = state.nextRouters;
+    this.selectTab(activeRoute, nextRouterState);
   };
-  closeTab = (idx) => {
-    this.setState(({routers, routerInfo, activeRouteIdx}) => {
-      let targetRoute = routers[idx];
-      let nextRouters = RemoveArrayItem(routers, targetRoute);
-      let nextRouterInfo = {...routerInfo};
-      delete nextRouterInfo[targetRoute];
-      let nextRoutersLen = nextRouters.length - 1;
-      let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-      let nextActiveRoute = nextRouters[nextActiveIdx];
-      
-      return {
-        routers: nextRouters,
-        routerInfo: nextRouterInfo,
-        activeRoute: nextActiveRoute,
-        activeRouteIdx: nextActiveIdx,
-      };
+  closeTab = (idx, routeInfo) => {
+    const { routers, routerInfo, activeRouteIdx } = this.state;
+
+    let targetRoute = routers[idx];
+    let nextRouters = RemoveArrayItem(routers, targetRoute);
+    let nextRouterInfo = {...routerInfo};
+    delete nextRouterInfo[targetRoute];
+    let nextRoutersLen = nextRouters.length - 1;
+    let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
+    let nextActiveRoute = nextRouters[nextActiveIdx];
+
+    const nextState = {
+      routers: nextRouters,
+      routerInfo: nextRouterInfo,
+      activeRoute: nextActiveRoute,
+      activeRouteIdx: nextActiveIdx,
+    };
+
+    pushToHistory(`#/${nextActiveRoute}`, {
+      type: 'CLOSE',
+      component: nextActiveRoute,
+      params: nextRouterInfo,
+      nextRouters: nextState
     });
+    
+    return nextState;
   }
-  selectTab = (activeRoute) => {
-    this.setState(({routers, routerInfo}) => {
+  selectTab = (activeRoute, nextRouterState) => {
+    if(nextRouterState) return this.setState(nextRouterState);
+
+    this.setState(({ routers, routerInfo }) => {
       let currComIdx = routers.indexOf(activeRoute);
       let nextRouterInfo = {...routerInfo};
       nextRouterInfo[activeRoute] = {
@@ -122,12 +139,6 @@ class RouterHelper extends Component {
       cacheState = nextState;
       return nextState;
     });
-  }
-  state = cacheState;
-  constructor(props) {
-    super(props);
-
-    history.listen(this.handleHistory);
   }
   initRoute = () => {
     let initRoute = resolvePath(location.hash)[0];
