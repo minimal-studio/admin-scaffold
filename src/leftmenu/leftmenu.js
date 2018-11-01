@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass, Call } from 'basic-helper';
-import { Icon, Avatar } from 'ukelli-ui';
+import { ToolTip, Icon, Avatar } from 'ukelli-ui';
 
 import { storageHelper } from '../config';
 
@@ -45,7 +45,7 @@ const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
-const MenuItem = ({ icon = 'bars', title, gm }) => {
+const MenuItem = ({ icon = 'angle-right', title, gm }) => {
   return (
     <div className="layout a-i-c">
       <Icon n={icon} classNames={['mr10']}/>
@@ -391,47 +391,52 @@ export default class Leftmenu extends Component {
     );
 
     const renderRes = (
-      <div
-        ref={leftmenuDOM => {
-          if(leftmenuDOM) this.leftmenuDOM = leftmenuDOM;
-        }}
-        style={showLeftMenu ? {} : {zIndex: -1}}
-        className={
-          'leftmenu-response' + (flowMode ? ' flow-mode' : ' tree-mode')
-        }>
-        <div className="menu-header">
-          <h5 className="title">
-            <span className="mr5">{title}</span>
-          </h5>
-          <span className="flex" />
-          <Icon
-            title="菜单搜索"
-            onClick={e => {
-              this._seatchBox.show();
+      <div>
+        <div
+          ref={leftmenuDOM => {
+            if(leftmenuDOM) this.leftmenuDOM = leftmenuDOM;
+          }}
+          style={showLeftMenu ? {} : {zIndex: -1}}
+          className={
+            'leftmenu-response' + (flowMode ? ' flow-mode' : ' tree-mode')
+          }>
+          <div className="menu-header">
+            <h5 className="title">
+              <span className="mr5">{title}</span>
+            </h5>
+            <span className="flex" />
+            <ToolTip
+              title="菜单搜索"
+              onClick={e => {
+                this._seatchBox.show();
               // console.log(this._seatchBox.show)
-            }}
-            n="search"
-            classNames={['_action-btn mr10']}/>
-          <SearchBox
-            ref={e => this._seatchBox = e}
-            onClickMenu={onClickMenu}
-            onToggleNav={onToggleNav}
-            codeMapper={menuCodeMapper}
-            showLeftMenu={showLeftMenu}/>
-          <Icon 
-            title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
-            classNames={['_action-btn']}
-            onClick={e => this.changeMenuUIMode(!flowMode)}
-            n={!flowMode ? "align-justify" : "align-left"}/>
+              }}
+              position="bottom"
+              n="search"
+              classNames={['_action-btn mr10']}/>
+            <SearchBox
+              ref={e => this._seatchBox = e}
+              onClickMenu={onClickMenu}
+              onToggleNav={onToggleNav}
+              codeMapper={menuCodeMapper}
+              showLeftMenu={showLeftMenu}/>
+            <ToolTip 
+              position="bottom"
+              title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
+              classNames={['_action-btn']}
+              className="p10"
+              onClick={e => this.changeMenuUIMode(!flowMode)}
+              n={!flowMode ? "align-justify" : "align-left"}/>
+          </div>
+          <div className="userinfo">
+            <Avatar size={40} text={username[0]}/>
+            <span>
+              <div>{username}</div>
+              <div>{gm('在线')}</div>
+            </span>
+          </div>
+          {menuTree}
         </div>
-        <div className="userinfo">
-          <Avatar size={40} text={username[0]}/>
-          <span>
-            <div>{username}</div>
-            <div>{gm('在线')}</div>
-          </span>
-        </div>
-        {menuTree}
         {
           versionInfo ? (
             <VersionComponent gm={gm} versionInfo={versionInfo} />

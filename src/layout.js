@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ShowGlobalModal, Icon, Tabs, Tab, DropdownMenu,
+  ShowGlobalModal, Icon, Tabs, Tab, DropdownMenu, ToolTip,
   Loading, setUkelliConfig, setUkeLang
 } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
@@ -224,8 +224,8 @@ class ManagerLayout extends RouterHelper {
               <span
                 className="_action-btn mr10"
                 onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
-                <Icon
-                  title={this.gm(showLeftMenu ? "收起" : "展开")}
+                <ToolTip
+                  title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单'}
                   n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
               </span>
             </div>
