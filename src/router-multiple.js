@@ -82,7 +82,7 @@ class RouterHelper extends Component {
     });
   };
   handleHistory = (location, action) => {
-    const { hash, state } = location;
+    const { hash, state = {} } = location;
     const activeRoute = resolvePath(hash)[0];
     const nextRouterState = state.nextRouters;
     this.selectTab(activeRoute, nextRouterState);
