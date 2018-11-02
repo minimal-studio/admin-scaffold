@@ -42,7 +42,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           keyMapper={this.keyMapper}
           conditionOptions={this.conditionOptions}
           needCount={this.needCount}
-          actionBtns={this.actionBtns}
+          actionBtns={this.reportActionBtns}
           ref={e => this.ReportRef = e}
 
           {...passProps}
