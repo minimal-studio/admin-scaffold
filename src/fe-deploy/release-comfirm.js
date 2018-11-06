@@ -73,7 +73,7 @@ export default class ReleaseComfirm extends ActionAgent {
           let formValue = formRef.value;
 
           if(formValue.isExecScp) Notify({config: {
-            title: 'SCP 同步中，这需要花点时间，请稍后',
+            title: 'SCP 同步中，完成后系统会在通知大家的.',
             id: '1'
           }});
 

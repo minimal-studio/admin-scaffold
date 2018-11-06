@@ -144,7 +144,7 @@ class AssetsManager extends ActionAgent {
           onCancel={e => CloseGlobalModal(ModalId)}
           onReleased={isSuccess => {
             CloseGlobalModal(ModalId);
-            this.props.notify(releasText, isSuccess);
+            // this.props.notify(releasText, isSuccess);
             isSuccess && this.queryData();
           }}
           {...this.props} asset={item} project={project}/>
