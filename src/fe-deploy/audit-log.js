@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TableBody, Loading } from 'ukelli-ui';
+import { Table, Loading } from 'ukelli-ui';
 import ActionAgent from "../action-agent";
 
 import { getAudit } from './apis';
@@ -64,7 +64,7 @@ class AuditLog extends ActionAgent {
     return (
       <div className="p10">
         <Loading loading={loading} inrow>
-          <TableBody
+          <Table
             keyMapper={this.keyMapper}
             records={records}
             needCount={false}/>

@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 
 import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass } from 'basic-helper';
 import {
-  Pagination, RecordItemsHelper,
+  Pagination, CardTable,
   Loading, Button, Toast,
-  TableBody, ConditionGenerator
+  Table, ConditionGenerator
 } from 'ukelli-ui';
 
 import { getDefPagin } from '../../utils/pagination-helper';
@@ -47,7 +47,7 @@ export default class ReportTemplate extends Component {
     records: PropTypes.array.isRequired,
     pagingInfo: PropTypes.object,
     querying: PropTypes.bool,
-    template: PropTypes.oneOf(['table', 'RecordItemsHelper']),
+    template: PropTypes.oneOf(['Table', 'CardTable']),
     // hasErr: PropTypes.bool,
     resDesc: PropTypes.string
   };
@@ -60,7 +60,7 @@ export default class ReportTemplate extends Component {
     loadingCondition: false,
     showCondition: true,
     needPaging: true,
-    template: 'table',
+    template: 'Table',
     resDesc: '',
   }
   constructor(props) {
@@ -162,12 +162,20 @@ export default class ReportTemplate extends Component {
     let _tableH = height ? height : tableHeight;
 
     switch (template) {
-    case 'table':
+    case 'CardTable':
+      templateDOM = (
+        <Loading loading={querying} inrow>
+          <CardTable keyMapper={keyMapper} records={records}/>
+        </Loading>
+      );
+      break;
+    case 'Table':
+    default:
       templateDOM = (
         <div className="table-container" ref={e => this.renderContent = e}>
           <div className="table-scroll">
             <Loading loading={querying} inrow>
-              <TableBody
+              <Table
                 height={_tableH}
                 ref={e => this._tableRef = e}
                 keyMapper={keyMapper}
@@ -183,12 +191,6 @@ export default class ReportTemplate extends Component {
         </div>
       );
       break;
-    case 'RecordItemsHelper':
-      templateDOM = (
-        <Loading loading={querying} inrow>
-          <RecordItemsHelper keyMapper={keyMapper} records={records}/>
-        </Loading>
-      );
     }
     if(!templateDOM) return (
       <span>{gm('没有对应的模板')}</span>
@@ -232,11 +234,11 @@ export default class ReportTemplate extends Component {
           className="default ml10"
           onClick={e => this.toggleFloat()}/>
         {
-          actionBtns && actionBtns.map((btn, idx) => {
+          actionBtns && actionBtns.map(btn => {
             const { text, action, color = 'default' } = btn;
             return (
               <Button
-                key={idx}
+                key={text}
                 text={text}
                 className={"ml10 " + color}
                 onClick={action}/>

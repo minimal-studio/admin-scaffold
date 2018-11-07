@@ -96,7 +96,7 @@ class RouterHelper extends Component {
     delete nextRouterInfo[targetRoute];
     let nextRoutersLen = nextRouters.length - 1;
     let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-    let nextActiveRoute = nextRouters[nextActiveIdx];
+    let nextActiveRoute = nextRouters[nextActiveIdx] || '/';
 
     const nextState = {
       routers: nextRouters,
@@ -116,6 +116,7 @@ class RouterHelper extends Component {
   }
   selectTab = (activeRoute, nextRouterState) => {
     if(nextRouterState) return this.setState(nextRouterState);
+    if(!activeRoute) return;
 
     this.setState(({ routers, routerInfo }) => {
       let currComIdx = routers.indexOf(activeRoute);
@@ -142,7 +143,7 @@ class RouterHelper extends Component {
   }
   initRoute = () => {
     let initRoute = resolvePath(location.hash)[0];
-    this.selectTab(initRoute);
+    initRoute && this.selectTab(initRoute);
   }
   componentDidMount() {
     this.initRoute();

@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.13.15",
+  "version": "0.14.0",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
@@ -25,7 +25,7 @@
     "react-transition-group": "^2.2.0",
     "uke-request": "^0.12.x",
     "basic-helper": "^1.4.x",
-    "ukelli-ui": "^2.7.x"
+    "ukelli-ui": "^2.7.10"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

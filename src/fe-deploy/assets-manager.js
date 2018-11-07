@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  TableBody, ShowGlobalModal, CloseGlobalModal, Loading
+  Table, ShowGlobalModal, CloseGlobalModal, Loading
 } from 'ukelli-ui';
 import { getAssets, getProjects, downloadAsset, delAsset } from './apis';
 import ReleaseComfirm from './release-comfirm';
@@ -185,7 +185,7 @@ class AssetsManager extends ActionAgent {
     const { records, querying } = this.state;
     return (
       <Loading loading={querying} inrow>
-        <TableBody keyMapper={this.keyMapper} records={records} needCount={false} />
+        <Table keyMapper={this.keyMapper} records={records} needCount={false} />
       </Loading>
     );
   }

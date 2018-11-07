@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TableBody } from 'ukelli-ui';
+import { Table } from 'ukelli-ui';
 import records from './data';
 
 export default class Shortcut extends Component {
@@ -23,6 +23,6 @@ export default class Shortcut extends Component {
   }
 
   render() {
-    return <TableBody keyMapper={this.keyMapper} records={records} />;
+    return <Table keyMapper={this.keyMapper} records={records} />;
   }
 }

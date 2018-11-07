@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Loading, TableBody, Notify, ShowGlobalModal, Button,
+  Loading, Table, Notify, ShowGlobalModal, Button,
   ConditionGenerator, CloseGlobalModal, TipPanel
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
@@ -63,9 +63,9 @@ export default class ProjectList extends ActionAgent {
       key: 'collaboratorApplies',
       title: '申请协作者',
       filter: (applicants = [], item) => {
-        let applicantDOM = applicants.map((applicant, idx) => {
+        let applicantDOM = applicants.map(applicant => {
           return (
-            <p key={applicant + idx}>
+            <p key={applicant}>
               <span className="link-btn" onClick={e => {
                 let ModalId = ShowGlobalModal({
                   title: `同意 ${applicant} 加入协作`,
@@ -284,7 +284,7 @@ export default class ProjectList extends ActionAgent {
                 查看使用手册
               </span>
             </div>
-            <TableBody
+            <Table
               keyMapper={this.keyMapper}
               records={records}
               needCount={false}/>

@@ -16,6 +16,7 @@ import LeftmenuLayout from './leftmenu';
 // import Posts from './posts';
 import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
+import DashBoardWrapper from './dash-board';
 
 let i18nMapperUrl = './i18n/';
 
@@ -31,6 +32,7 @@ class ManagerLayout extends RouterHelper {
     iframeMode: PropTypes.bool,
     pageComponents: PropTypes.object,
     i18nConfig: PropTypes.object,
+    DashBoard: PropTypes.any,
   };
 
   state = {
@@ -130,9 +132,9 @@ class ManagerLayout extends RouterHelper {
 
   toggleFloat = () => {
     let isDisplay = ToggleBasicFloatLen();
-    this.setState({
-      displayFloat: !this.state.displayFloat
-    });
+    this.setState(({ displayFloat }) => ({
+      displayFloat: !displayFloat
+    }));
   }
 
   changeMenuData(menuData = []) {
@@ -179,6 +181,7 @@ class ManagerLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       i18nConfig,
+      DashBoard,
       title
     } = this.props;
     const {
@@ -194,6 +197,8 @@ class ManagerLayout extends RouterHelper {
       routers
     } = this.state;
     const { Statusbar, NotfoundPage } = pluginComponent;
+    const hasRouter = routers.length > 0;
+    // console.log(hasRouter)
 
     const container = ready ? (
       <div>
@@ -259,14 +264,14 @@ class ManagerLayout extends RouterHelper {
           </div>
           <Tabs 
             withContent 
-            closeabled
-            activeTabIdx={activeRouteIdx} 
+            closeabled={hasRouter}
+            activeTabIdx={hasRouter ? activeRouteIdx : 0}
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
-              routers.map(route => {
-                let C = pageComponents[route];
-                let currInfo = routerInfo[route];
-                let {params} = currInfo;
+              hasRouter ? routers.map(route => {
+                const C = pageComponents[route];
+                const currInfo = routerInfo[route];
+                const { params } = currInfo;
                 return (
                   <Tab 
                     contentClass={route}
@@ -284,7 +289,14 @@ class ManagerLayout extends RouterHelper {
                     }
                   </Tab>
                 );
-              })
+              }) : (
+                <Tab
+                  contentClass="dash-board"
+                  label={this.gm("仪表盘")}
+                  key="dash-board">
+                  <DashBoardWrapper CustomerComponent={DashBoard}/>
+                </Tab>
+              )
             }
           </Tabs>
         </div>
