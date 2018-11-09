@@ -8,15 +8,50 @@ import { GenerteID } from 'basic-helper';
 
 import ReportLayoutRender from './records-template';
 
+/**
+ * 用于记录所有页面的按钮
+ */
+let __btns = {};
+window.GetRegisteBtn = () => __btns;
+
 export function GeneralReportRender(Action, passProps = {}) {
+  __btns[Action.name] = {};
   return class C extends Action {
+    /** 用于记录所有的按钮 */
+    powerFilterForBtn(btnId) {
+      const { powerMapper } = this.props;
+      if(!powerMapper) return true;
+      let res = true;
+      if(powerMapper.hasOwnProperty(btnId)) {
+        res = !!powerMapper[btnId];
+      }
+      return res;
+    }
+    reportBtnFilter() {
+      if(!Array.isArray(this.reportActionBtns)) return;
+      let res = [];
+      for (const btn of this.reportActionBtns) {
+        const id = btn.id;
+        if(!id) {
+          console.warn('每个按钮需要设置 id，用于记录该按钮在对应页面的功能');
+          continue;
+        }
+        __btns[Action.name][id] = true;
+        if(this.powerFilterForBtn(btn.id)) res.push(btn);
+      }
+      return res;
+    }
     getActionBtn(item) {
       const {actionBtnConfig} = this;
       if(!actionBtnConfig) return '-';
       return actionBtnConfig.map((config, idx) => {
-        const {text, action} = config;
+        const {text, action, id} = config;
+        /** 用于控制权限 */
+        const isActive = this.powerFilterForBtn(id);
+        if(!isActive) return;
+        if(!__btns[Action.name][id]) __btns[Action.name][id] = config;
         return (
-          <span className="link-btn mr5" key={text + idx} onClick={e => {
+          <span className="link-btn mr5" key={text} onClick={e => {
             action(item);
           }}>
             {this.props.gm(text)}
@@ -42,7 +77,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           keyMapper={this.keyMapper}
           conditionOptions={this.conditionOptions}
           needCount={this.needCount}
-          actionBtns={this.reportActionBtns}
+          actionBtns={this.reportBtnFilter()}
           ref={e => this.ReportRef = e}
 
           {...passProps}
