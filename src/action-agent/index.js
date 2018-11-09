@@ -69,7 +69,7 @@ class ActionAgent extends Component {
             [actingRef]: false
           },
           this._after(res),
-          Call(after, res)
+          await CallFunc(after)(res)
         )
       );
       this.resStatus(res, id);

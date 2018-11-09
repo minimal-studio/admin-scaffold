@@ -65,13 +65,13 @@ export function setApiUrl(url) {
  */
 export async function getAssets(projId, user = defaultUsername) {
   let getConfig = {
-    url: APIs.asset,
+    // url: APIs.asset,
     params: {
       user,
       projId: projId
     }
   };
-  return await $R.get(getConfig);
+  return await $R.get(APIs.asset, getConfig);
 }
 
 /**
