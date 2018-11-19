@@ -23,7 +23,7 @@ export default class VersionDisplayer extends Component {
 
   componentDidMount() {
     this.getVersion();
-    this.timer = setInterval(this.getVersion, 100 * 1000);
+    this.timer = setInterval(this.getVersion, 30 * 60 * 1000);
   }
 
   componentWillUnmount() {
@@ -72,12 +72,16 @@ export default class VersionDisplayer extends Component {
                 className="new-app-version"
                 onClick={this.reload}
                 title={gm("有新版本，点击重新加载，新版本说明: ") + updateLog}>
-                {gm('新版本')}{lastVersion}
+                {gm('新版本')}
+                {lastVersion}
               </sup>
             </div>
           ) : null
         }
-        <span>{gm('当前版本')} {currVersion} </span>
+        <span>
+          {gm('当前版本')} 
+          {currVersion}
+        </span>
       </span>
     );
   }

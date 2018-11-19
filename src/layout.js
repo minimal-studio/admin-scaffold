@@ -237,7 +237,7 @@ class ManagerLayout extends RouterHelper {
                 className="_action-btn mr10"
                 onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
                 <ToolTip
-                  title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单'}
+                  title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
                   n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
               </span>
             </div>
@@ -265,6 +265,9 @@ class ManagerLayout extends RouterHelper {
           <Tabs 
             withContent 
             closeabled={hasRouter}
+            CloseComponent={props => (
+              <span className="close-btn tooltipped tooltipped-e" aria-label="快捷键: alt + w" onClick={props.onClick}>x</span>
+            )}
             activeTabIdx={hasRouter ? activeRouteIdx : 0}
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
