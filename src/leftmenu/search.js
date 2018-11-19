@@ -20,7 +20,6 @@ export default class SearchBox extends Component {
 
     this.state = {
       searchMap: '',
-      isShowCon: false,
       isShow: false,
     };
   }
@@ -50,6 +49,7 @@ export default class SearchBox extends Component {
       isShow,
     });
   }
+
   handleEsc = e => {
     if (e.keyCode === ESC_KEY) {
       this._input.blur();
@@ -60,9 +60,6 @@ export default class SearchBox extends Component {
     }
   };
   show = () => {
-    this.setState({
-      isShowCon: true,
-    });
     this._input.focus();
   }
   render() {
@@ -75,7 +72,7 @@ export default class SearchBox extends Component {
         <input
           ref={c => (this._input = c)}
           type="text"
-          placeholder="搜索菜单"
+          placeholder="搜索菜单，首字母组合更快哦"
           className="form-control input-sm"
           onChange={e => this.searchMenu(e.target.value)}
           onFocus={e => this.setSearchCon(true)}
@@ -83,7 +80,7 @@ export default class SearchBox extends Component {
             setTimeout(() => {
               this.setSearchCon(false);
               this.shouldBeHidden = false;
-            }, 200);
+            }, 100);
           }}
           onKeyUp={this.handleEsc}/>
         <div className="hide-content">
