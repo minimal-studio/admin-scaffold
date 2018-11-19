@@ -265,9 +265,7 @@ class ManagerLayout extends RouterHelper {
           <Tabs 
             withContent 
             closeabled={hasRouter}
-            CloseComponent={props => (
-              <span className="close-btn tooltipped tooltipped-e" aria-label="快捷键: alt + w" onClick={props.onClick}>x</span>
-            )}
+            closeTip="快捷键: alt + w"
             activeTabIdx={hasRouter ? activeRouteIdx : 0}
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
