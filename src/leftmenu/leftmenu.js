@@ -408,22 +408,12 @@ export default class Leftmenu extends Component {
             <ToolTip 
               position="bottom"
               title={(
-                <div style={{maxWidth: 240}}>
-快捷键：alt + s
-                  <br />
-小贴士：输入首字母快速查找; 比如
+                <div style={{maxWidth: 240}}>快捷键：alt + s
+                  <br />小贴士：输入首字母快速查找; 比如
                   <strong>账号管理</strong> 
-                  （
-                  <strong style={{color: '#449cea'}}>z</strong>
-hang
-                  <strong style={{color: '#449cea'}}>h</strong>
-ao
-                  <strong style={{color: '#449cea'}}>g</strong>
-uan
-                  <strong style={{color: '#449cea'}}>l</strong>
-i），输入 
-                  <strong style={{color: '#449cea'}}>zhgl</strong>
-（或者zhg）
+                  （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
+                  <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
+                  <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
                 </div>
               )}
               classNames={['_action-btn mr10']}
