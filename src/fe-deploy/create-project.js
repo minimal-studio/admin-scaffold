@@ -41,19 +41,19 @@ export default class CreateProject extends ActionAgent {
     const agentOptions = {
       actingRef,
       after: (res) => {
-        return {
+        const { err } = res;
+        if(!err) {
+          Call(onCreatedProject);
+        } else {
+          notify('创建项目', false, err);
+        }
+        return err ? {} : {
           activeIdx: 1,
-          createdProj: res.data
+          createdProj: res.data || {}
         };
       }
     };
-    const createRes = await this.reqAgent(createProject, agentOptions)(formValue);
-    const { err } = createRes;
-    if(!err) {
-      Call(onCreatedProject);
-    } else {
-      notify('创建项目', false, err);
-    }
+    await this.reqAgent(createProject, agentOptions)(formValue);
   }
   onCreatedAsset(assetData) {
     this.setState({
@@ -85,7 +85,7 @@ export default class CreateProject extends ActionAgent {
           ]}/>
         <Loading loading={querying} inrow={false}>
           {
-            querying ? null : (
+            !querying && (
               <div>
                 <Steps activeIdx={activeIdx} className="p10">
                   <Steps.Step title="创建项目"></Steps.Step>
@@ -110,6 +110,9 @@ export default class CreateProject extends ActionAgent {
                       {...this.props} projId={createdProj.id}/>
                   </Tab>
                 </Tabs>
+                <div className="p10">
+                  <span className="btn" onClick={e => this.props.onCreatedProject()}>完成</span>
+                </div>
               </div>
             )
           }

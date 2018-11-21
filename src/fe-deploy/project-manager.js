@@ -64,37 +64,44 @@ class ProjectManager extends Component {
       'upload': 1,
     };
 
-    const container = this.canOperate ? (
+    const container = (
       <div className="project-manager p10">
+        {
+          !this.canOperate && (
+            <div>
+              <TipPanel title="你暂时还不是该项目的协作者，可以通过申请进行项目协作"/>
+              <div className="text-center">
+                <span className="btn flat theme" onClick={e => this.applyToJoin(projId)}>申请加入协作</span>
+              </div>
+            </div>
+          )
+        }
         <Tabs ref={e => this.tabRef = e} defaultTab={_defaultTab[defaultTab]}>
           <Tab label="资源列表">
             <AssetManager releasable={this.releasable} {...this.props} projId={projId}/>
           </Tab>
-          <Tab label="上传新资源">
-            <CreateAsset {...this.props} project={targetProject} projId={projId} onSuccess={e => this.onCreatedAsset()}/>
-          </Tab>
           {
-            this.updatable ? (
+            this.updatable && (
+              <Tab label="上传新资源">
+                <CreateAsset {...this.props} project={targetProject} projId={projId} onSuccess={e => this.onCreatedAsset()}/>
+              </Tab>
+            )
+          }
+          {
+            this.updatable && (
               <Tab label="项目编辑">
                 <EditProject {...this.props} project={targetProject} onUpdated={e => this.onUpdateProject()}/>
               </Tab>
-            ) : null
+            )
           }
           {
-            this.isFounder ? (
+            this.isFounder && (
               <Tab label="操作记录">
                 <AuditLog {...this.props} projId={projId}/>
               </Tab>
-            ) : null
+            )
           }
         </Tabs>
-      </div>
-    ) : (
-      <div>
-        <TipPanel title="你暂时还不是该项目的协作者，可以通过申请进行项目协作"/>
-        <div className="text-center">
-          <span className="btn flat theme" onClick={e => this.applyToJoin(projId)}>申请加入协作</span>
-        </div>
       </div>
     );
 

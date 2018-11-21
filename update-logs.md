@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.14.5
+
+- 修复发布模块创建项目时的错误
+
 ## v0.14.4
 
 - 完善系统的提示
