@@ -110,8 +110,9 @@ export default class CreateProject extends ActionAgent {
                       {...this.props} projId={createdProj.id}/>
                   </Tab>
                 </Tabs>
-                <div className="p10">
-                  <span className="btn" onClick={e => this.props.onCreatedProject()}>完成</span>
+                <hr/>
+                <div className="p10 text-center">
+                  <span className="btn red " onClick={e => this.props.close()}>关闭</span>
                 </div>
               </div>
             )

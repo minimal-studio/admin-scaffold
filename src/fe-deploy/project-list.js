@@ -227,6 +227,7 @@ export default class ProjectList extends ActionAgent {
         <CreateProjectHelper
           {...this.props}
           notify={this.notify}
+          close={e => CloseGlobalModal(ModalId)}
           onCreatedProject={() => {
             this.queryData();
           }}/>
