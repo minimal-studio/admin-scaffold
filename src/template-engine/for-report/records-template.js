@@ -220,8 +220,7 @@ export default class ReportTemplate extends Component {
             this.handleQueryData(val);
           }, 200);
         }}
-        conditionConfig={conditionOptions || []}
-        className={showCondition ? undefined : 'hide'} />
+        conditionConfig={conditionOptions || []} />
     );
     const actionArea = (
       <div className="action-area">
@@ -251,7 +250,7 @@ export default class ReportTemplate extends Component {
     return (
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
-        <div className="report-fix-con" ref={e => {
+        <div className={"report-fix-con " + (showCondition ? undefined : 'hide')} ref={e => {
           this.fixGroup = e;
           if(this.__setHeight) return;
           setTimeout(() => {
