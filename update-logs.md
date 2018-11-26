@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.14.8
+
+- 完善 ActionAgent 的 state 管理
+
 ## v0.14.7
 
 - 优化 hideCondition 的样式

@@ -25,6 +25,14 @@ class ActionAgent extends Component {
   _after(res) {
     return { };
   }
+  /**
+   * 在调用 after 之前执行的 checker 函数
+   * @param {response} res 系统传入的 res 对象
+   * @return {boolean}
+   */
+  _checkRes(res) {
+    return true;
+  }
   resStatus(res) {
 
   }
@@ -69,7 +77,7 @@ class ActionAgent extends Component {
             [actingRef]: false
           },
           this._after(res),
-          await CallFunc(after)(res)
+          this._checkRes(res) ? await CallFunc(after)(res) : {}
         )
       );
       this.resStatus(res, id);
