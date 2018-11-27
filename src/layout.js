@@ -206,6 +206,7 @@ class ManagerLayout extends RouterHelper {
           onDidMount={this.onGetMenuCodeMapper}
           menuData={menuData}
           title={title}
+          logout={logout}
           onClickMenu={code => {
             // this.pushRoute(code)
           }}
