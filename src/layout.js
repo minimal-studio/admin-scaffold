@@ -20,7 +20,7 @@ import DashBoardWrapper from './dash-board';
 
 let i18nMapperUrl = './i18n/';
 
-class ManagerLayout extends RouterHelper {
+export default class ScaffoldLayout extends RouterHelper {
   static setI18nUrl = (nextUrl) => {
     i18nMapperUrl = nextUrl;
   }
@@ -32,6 +32,7 @@ class ManagerLayout extends RouterHelper {
     iframeMode: PropTypes.bool,
     pageComponents: PropTypes.object,
     i18nConfig: PropTypes.object,
+    menuStore: PropTypes.arrayOf(PropTypes.object),
     DashBoard: PropTypes.any,
   };
 
@@ -314,4 +315,3 @@ class ManagerLayout extends RouterHelper {
     );
   }
 }
-export default ManagerLayout;

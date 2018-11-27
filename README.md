@@ -12,6 +12,49 @@ npm i uke-admin-web-scaffold --save
 
 ### 使用
 
+```js
+import { AdminWevScaffold } from 'uke-admin-web-scaffold';
+
+class LoginFilter extends React.Component {
+  componentDidMount() {
+    // this.props.autoLogin();
+    Call(window.OnLuanched);
+  }
+  render() {
+    const { isLogin, userInfo } = this.props;
+    return (
+      <LoginSelector {...this.props}>
+        {
+          isLogin ? (
+            <AdminWevScaffold
+              {...this.props}
+              // DashBoard 组件
+              DashBoard={DashBoard}
+              // 必须填写的
+              username={userInfo.username}
+              versionInfo={VersionInfo}
+              userInfo={userInfo}
+              menuMappers={{
+                child: 'child',
+                code: 'code',
+                title: 'title',
+                icon: 'icon',
+              }}
+              i18nConfig={i18nConfig}
+              pluginComponent={{
+                Statusbar: <Status/>
+              }}
+              pageComponents={pageComponents}/>
+          ): null
+        }
+      </LoginSelector>
+    );
+  }
+}
+
+ReactDOM.render(LoginFilter, document.querySelector('#Main'));
+```
+
 [详情请看 uke admin seed 项目](https://github.com/SANGET/uke-admin-seed.git)
 
 ## 提供三个默认数据渲染模版

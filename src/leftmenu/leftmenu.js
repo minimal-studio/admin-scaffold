@@ -56,6 +56,20 @@ const MenuItem = ({ icon = 'angle-right', title, gm }) => {
   );
 };
 
+const ShortcutTipDesc = () => {
+  return (
+    <div style={{maxWidth: 240}}>
+      快捷键：alt + s
+      <br />
+      小贴士：输入首字母快速查找; 比如
+      <strong>账号管理</strong> 
+      （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
+      <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
+      <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
+    </div>
+  );
+};
+
 /**
  * 左菜单控件
  * 支持无限嵌套结构，支持“树”模式，支持“悬浮”模式
@@ -88,6 +102,7 @@ export default class Leftmenu extends Component {
     flowMode: PropTypes.bool,
     gm: PropTypes.func,
     changeLang: PropTypes.func,
+    logout: PropTypes.func,
     lang: PropTypes.any,
     menuData: PropTypes.any.isRequired,
     i18nConfig: PropTypes.object,
@@ -311,6 +326,7 @@ export default class Leftmenu extends Component {
     );
 
     const allSet = initDataList.map((item, idx) => {
+      console.log(item);
       let _item = this.getMenuItem(item);
       let { child, title, code, icon } = _item;
       let to = this.wrapLink(_item);
@@ -376,6 +392,7 @@ export default class Leftmenu extends Component {
       versionInfo,
       title = 'UKE管理系统',
       username,
+      logout,
       gm,
       showLeftMenu
     } = this.props;
@@ -408,13 +425,7 @@ export default class Leftmenu extends Component {
             <ToolTip 
               position="bottom"
               title={(
-                <div style={{maxWidth: 240}}>快捷键：alt + s
-                  <br />小贴士：输入首字母快速查找; 比如
-                  <strong>账号管理</strong> 
-                  （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
-                  <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
-                  <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
-                </div>
+                <ShortcutTipDesc />
               )}
               classNames={['_action-btn mr10']}
               className="p10"
@@ -440,6 +451,12 @@ export default class Leftmenu extends Component {
               <div>{username}</div>
               <div>{gm('在线')}</div>
             </span>
+            <span className="flex" />
+            {
+              logout && (
+                <span className="_btn" onClick={e => logout()}>退出登录</span>
+              )
+            }
           </div>
           {menuTree}
         </div>

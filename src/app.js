@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ManagerLayout from './layout';
+import ScaffoldLayout from './layout';
 
 const themeStrong = 'THEME_STORAGE';
 
-export default class ManagerApp extends Component {
+export default class AdminWevScaffold extends Component {
   static propTypes = {
     pageComponents: PropTypes.object,
     versionInfo: PropTypes.object,
@@ -31,7 +31,7 @@ export default class ManagerApp extends Component {
 
     return (
       <div className={'top-lv-layout theme-' + theme}>
-        <ManagerLayout {...this.props} changeTheme={this.changeTheme.bind(this)}/>
+        <ScaffoldLayout {...this.props} changeTheme={this.changeTheme.bind(this)}/>
       </div>
     );
   }
