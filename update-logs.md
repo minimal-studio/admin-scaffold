@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.14.10
+
+- 去除 console log
+
 ## v0.14.9
 
 - 添加内置的退出登录按钮，调整接口的名称

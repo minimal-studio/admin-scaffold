@@ -326,7 +326,6 @@ export default class Leftmenu extends Component {
     );
 
     const allSet = initDataList.map((item, idx) => {
-      console.log(item);
       let _item = this.getMenuItem(item);
       let { child, title, code, icon } = _item;
       let to = this.wrapLink(_item);
