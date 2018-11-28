@@ -108,11 +108,12 @@ $hoverBgColor: rgb(140, 190, 234);
     margin-right: 15px;
   }
   .fold {
-    padding: 10px 0 10px 10px;
+    padding: 10px 0 10px 0;
     cursor: pointer;
     border-bottom: 1px solid rgba(#000, 0.2);
     .fold-title {
       transition: all 0.2s ease;
+      padding: 0 10px;
     }
     .caret {
       margin-right: 10px;
@@ -120,7 +121,7 @@ $hoverBgColor: rgb(140, 190, 234);
     .children {
       background-color: rgba($themeColor, 0.05);
       display: none;
-      border-left: 1px solid transparent;
+      // border-left: 1px solid transparent;
       padding-left: 5px;
     }
     // &:hover {
@@ -159,7 +160,7 @@ $hoverBgColor: rgb(140, 190, 234);
     cursor: pointer;
     display: block;
     transition: all ease 0.2s;
-    border-left: 3px solid transparent;
+    // border-left: 3px solid transparent;
     text-decoration: none;
     border-bottom: 1px solid rgba(#000, 0.1);
     .menu-tip {
@@ -170,17 +171,17 @@ $hoverBgColor: rgb(140, 190, 234);
       // border-left-color: $activeBorderColor;
     }
     // &:hover,
-    &.active {
-      padding-left: 20px;
-    }
+    // &.active {
+    //   padding-left: 20px;
+    // }
     &:hover,&.active {
       margin-left: -6px;
     }
     &.active {
-      border-left-color: $activeBorderColor;
-      background-color: rgba(#fff, 0.1);
-      // background-color: $activeBorderColor;
-      // color: #FFF;
+      // border-left-color: $activeBorderColor;
+      // background-color: rgba(#fff, 0.1);
+      background-color: $activeBorderColor;
+      color: #FFF;
     }
   }
 }
