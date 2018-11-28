@@ -1,0 +1,161 @@
+@import "../node_modules/ukelli-ui/style/var.scss";
+
+/*
+ * color config
+ */
+$headBgColor: #eee;
+$defaultColor: #fafafa;
+$warmColor: #ff9800;
+$dangerColor: #ff5252;
+$importantColor: #027bf5;
+
+$tableHeaderBgColor: #f7f7f7;
+$tableHeaderTextColor: #333;
+$tableBodyBgColor: #fff;
+$tableBodyTextColor: #333;
+
+$classicBgColor: #fbfbfb;
+$colorRedDark: #b1147a;
+$rangerBgH: 6px;
+$rangerContentH: 26px;
+$rangerHandleScale: 20px;
+$colorGold: #fcd477;
+$mainContainerWidth: 1000px;
+$copyrightH: 142px;
+
+$colorRed: #f86270;
+$colorGreen: #05af9a;
+$colorGrey: rgba(40, 44, 52, 0.95);
+$colorCyan: #03b7aa;
+$colorYellow: #ffa200;
+$colorBlue: #449cea;
+$colorBlueLight: #23b1ed;
+$colorPurple: #7375e5;
+$colorPurpleLight: #a974e4;
+$colorOrange: #ff9800;
+
+$colorBlackPrue: #322f28;
+$colorBlack: #2e2e2f;
+
+$themeColor: $colorBlue;
+
+$navBg: $colorBlack;
+$navActiveBg: $themeColor;
+$foldBtnBg: $colorBlack;
+
+$topLvPanelWidth: 1024px;
+$statusbarH: 85px;
+/*
+ * account manager
+ */
+$accountContentHeight: 580px;
+$accountContentMargin: 5px;
+$accountBgColor: #fafafa;
+$accountScrollContentBgColor: #f9f9f9;
+$accountDefaultBorderColor: #ddd;
+
+$conditionGroupBgColor: $accountBgColor;
+
+/*
+ * tabs
+ */
+$tabsGroupHeight: 40px;
+$tabsContentHeight: $accountContentHeight - $accountContentMargin * 2 -
+  $tabsGroupHeight;
+$tabBorderColor: #ddd;
+$tabBgColor: #fff;
+$tabTextColor: #999;
+$tabTextHoverColor: #777;
+$tabTextActiveColor: #000;
+
+/*
+ * leftmenu
+ */
+// $leftmenuBgColor: #c38181;
+$containerBgColorRed: #c38181;
+$containerBgColorGreen: #558a83;
+$containerBgColorCyan: #459cab;
+$containerBgColorOrange: #cc874b;
+$containerBgColorBlue: rgba(85, 104, 138, 1);
+$containerBgColorBlack: rgba(40, 44, 52, 0.95);
+$containerBgColorWhile: #e6e6e6;
+
+$leftmenuBgColor: #1d2939;
+$containerBgColor: $leftmenuBgColor;
+$leftmenuWidth: 220px;
+$leftmenuItemBorderColor: #777;
+$leftmenuItemActiveTextColor: #000;
+
+/*
+ * Scroll bar style
+ */
+$lightThemeScrollBg: rgba(0, 0, 0, 0.2);
+$lightThemeScrollThumb: rgba(0, 0, 0, 0.3);
+$lightThemeScrollThumbHover: $themeColor;
+$lightThemeScrollThumbActive: darken($themeColor, 5%);
+
+$darkThemeScrollBg: $colorGrey;
+$darkThemeScrollThumb: rgba(80, 80, 80, 0.8);
+$darkThemeScrollThumbHover: darken($darkThemeScrollThumb, 3%);
+$darkThemeScrollThumbActive: darken($darkThemeScrollThumb, 5%);
+
+$borderRadius: 4px;
+/**
+ * card style
+ * @type {[type]}
+ */
+$cardContainerBgColor: #eee;
+
+@mixin mixinTheme($basicBgColor, $basicTextColor) {
+  .leftmenu-response {
+    // background-color: $basicBgColor;
+    .menu-header,
+    .toggle-left-menu-btn {
+      color: $basicTextColor;
+    }
+    .navigation-list {
+      .menu {
+        color: lighten($basicTextColor, 5%);
+        &:hover {
+          color: lighten($basicTextColor, 10%);
+          border-left-color: lighten($basicTextColor, 10%);
+          background-color: rgba(0, 0, 0, 0.03);
+        }
+        &.active {
+          border-left-color: #fff;
+          color: lighten($basicTextColor, 20%);
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+      .fold {
+        color: lighten($basicTextColor, 5%);
+        // border-bottom-color: darken($basicBgColor, 5%);
+        &:hover {
+          color: lighten($basicTextColor, 10%);
+          background-color: darken($basicBgColor, 5%);
+        }
+        &.active {
+          color: lighten($basicTextColor, 20%);
+          background-color: rgba(0, 0, 0, 0.05);
+          border-left-color: #fff;
+        }
+      }
+    }
+  }
+  .pages-container {
+    // background-color: $basicBgColor;
+  }
+  .login-panel {
+    // background-color: $basicBgColor;
+    .form-layout {
+      .title {
+        color: $basicTextColor;
+      }
+      .form-control {
+        background-color: rgba(255, 255, 255, 0);
+        border-color: darken($basicBgColor, 10%);
+        color: lighten($basicTextColor, 10%);
+      }
+    }
+  }
+}

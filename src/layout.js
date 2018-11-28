@@ -25,14 +25,24 @@ export default class ScaffoldLayout extends RouterHelper {
     i18nMapperUrl = nextUrl;
   }
   static propTypes = {
+    /** 用户登录后的信息，会传递给每一个页面 */
     userInfo: PropTypes.object,
+    /** 用户名，用于在左菜单显示 */
     username: PropTypes.string.isRequired,
+    /** 退出登录 */
     onLogout: PropTypes.func,
-    pluginComponent: PropTypes.object,
-    iframeMode: PropTypes.bool,
+    /** 插件管理 */
+    pluginComponent: PropTypes.shape({
+      Statusbar: PropTypes.any
+    }),
+    // iframeMode: PropTypes.bool,
+    /** 所有的页面的 mapper 引用 */
     pageComponents: PropTypes.object,
+    /** 国际化配置 */
     i18nConfig: PropTypes.object,
+    /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
+    /** DashBoard 插件 */
     DashBoard: PropTypes.any,
   };
 

@@ -1,0 +1,79 @@
+---
+name: Uke-admin-web-scaffold
+route: /
+order: -1
+sidebar: true
+---
+
+# Uke-admin-web-scaffold
+
+> 管理中心的脚手架
+
+import { Playground, PropsTable } from 'docz'
+import { AdminWevScaffold } from './';
+
+# 介绍
+
+<PropsTable of={AdminWevScaffold} />
+
+<Playground style={{
+  height: 600
+}}>
+  {
+    () => {
+      const Status = () => {
+        return (
+          <div>Status bar</div>
+        )
+      }
+      const TestPage = () => {
+        return (
+          <div>Test Page</div>
+        )
+      }
+      const pageComponents = {
+        TEST: TestPage
+      }
+      const userInfo = {
+        username: 'alex'
+      };
+      const VersionInfo = {
+        numberVersion: '0.1.1'
+      }
+      const i18nConfig = {
+        'zh-CN': '中文',
+        'en-US': 'English',
+      };
+      const menuStore = [{
+        title: '一级菜单',
+        icon: 'time',
+        child: [
+          {
+            title: '测试页面',
+            code: 'TEST',
+          }
+        ]
+      }];
+      return (
+        <AdminWevScaffold
+          // DashBoard={DashBoard}
+          // 必须填写的
+          username={userInfo.username}
+          versionInfo={VersionInfo}
+          menuMappers={{
+            child: 'child',
+            code: 'code',
+            title: 'title',
+            icon: 'icon',
+          }}
+          title="Uke 管理系统"
+          menuStore={menuStore}
+          i18nConfig={i18nConfig}
+          pluginComponent={{
+            Statusbar: <Status />
+          }}
+          pageComponents={pageComponents}/>
+      )
+    }
+  }
+</Playground>
