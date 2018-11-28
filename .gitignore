@@ -38,3 +38,5 @@ public/images
 yarn.lock
 public/car
 dist
+
+.docz
