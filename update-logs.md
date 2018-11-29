@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.1
+
+- 调整菜单样式
+
 ## v0.15.0
 
 ### 新功能
