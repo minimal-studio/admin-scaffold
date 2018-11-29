@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Loading, FormLayout, Tabs, Tab, TipPanel, Steps } from 'ukelli-ui';
+import { Loading, FormLayout, Tabs, Tab, TipPanel, Steps, GlobalPopover, Radio } from 'ukelli-ui';
 
 import { Call } from 'basic-helper';
 import CreateAsset from './create-asset';
 import AssetsManager from './assets-manager';
-import { createProject } from './apis';
+import { createProject, getSShConfig } from './apis';
 import wrapProjectFormOptions from './project-form';
 import ActionAgent from "../action-agent";
 
@@ -31,7 +31,11 @@ export default class CreateProject extends ActionAgent {
 
   async initData() {
     this.formOptions = await wrapProjectFormOptions();
+    const hostConfigRes = (await getSShConfig() || {}).data;
+    // let hostConfigData = {};
+    // hostConfigRes.forEach(item => hostConfigData[item.sshHost] = item);
     this.setState({
+      sshConfig: hostConfigRes,
       querying: false
     });
   }
@@ -55,6 +59,11 @@ export default class CreateProject extends ActionAgent {
     };
     await this.reqAgent(createProject, agentOptions)(formValue);
   }
+  // async getSSHConfig() {
+  //   let hostConfigRes = await getSShConfig();
+  //   // console.log(hostConfigRes)
+
+  // }
   onCreatedAsset(assetData) {
     this.setState({
       activeIdx: 2,
@@ -74,7 +83,7 @@ export default class CreateProject extends ActionAgent {
   ]
 
   render() {
-    const { activeIdx, createdProj, querying } = this.state;
+    const { activeIdx, createdProj, querying, sshConfig } = this.state;
     return (
       <div>
         <TipPanel
@@ -94,8 +103,63 @@ export default class CreateProject extends ActionAgent {
                 </Steps>
                 <Tabs activeTabIdx={activeIdx}>
                   <Tab label="创建项目">
-                    <FormLayout 
-                      formOptions={this.formOptions} 
+                    <FormLayout
+                      formOptions={this.formOptions}
+                      ref={e => {
+                        if(!e) return;
+                        this.formRef = e.formHelper;
+                      }}
+                      onChange={(values, ref, val) => {
+                        let targetDOM = '';
+                        if(ref !== 'scpTargetHost') return;
+                        try {
+                          targetDOM = this.formRef._refs.scpTargetDir.iconInput;
+                        } catch(e) {
+                          console.log(e);
+                        }
+                        const targetValues = [...sshConfig].filter(item => item.sshHost === val);
+                        let ideaTip = {};
+                        for (const item of targetValues) {
+                          ideaTip[item.deployPath] = item.desc + '~' + item.deployPath;
+                        }
+                        let hasIdea = targetValues.length > 0;
+                        if(hasIdea) {
+                          GlobalPopover.show({
+                            elem: targetDOM,
+                            props: {
+                              style: {
+                                zIndex: 1111,
+                                width: 400,
+                              }
+                            },
+                            children: (
+                              <div className="p10">
+                                <h4>部署路径建议</h4>
+                                <div className="p10">
+                                  <Radio values={ideaTip}
+                                    onChange={val => this.selectedDeploy = val} />
+                                </div>
+                                <span className="btn theme"
+                                  onClick={e => {
+                                    GlobalPopover.close();
+                                    this.formRef.changeValues({
+                                      scpTargetDir: this.selectedDeploy
+                                    });
+                                  }}>
+                                  确定
+                                </span>
+                              </div>
+                            )
+                          });
+                        }
+                        // let targetPath = '';
+                        // if(sshConfig[val]) {
+                        //   targetPath = sshConfig[val].deployPath || '';
+                        // }
+                        // this.formRef.changeValues({
+                        //   scpTargetDir: targetPath
+                        // });
+                      }}
                       btnConfig={this.btnConfig}/>
                   </Tab>
                   <Tab label="上传资源文件">

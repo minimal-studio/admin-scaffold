@@ -276,13 +276,29 @@ export default class ProjectList extends ActionAgent {
                 className="mr10"
                 onClick={() => this.create()}/>
               <span 
-                className="btn red"
+                className="btn red mr10"
                 onClick={e => ShowGlobalModal({
                   width: 800,
                   title: '发布系统的使用手册',
                   children: <Manual/>
                 })}>
                 查看使用手册
+              </span>
+              <span 
+                className="btn green mr10"
+                onClick={e => {
+                  this.props.onNavigate({
+                    type: 'PUSH',
+                    route: 'DeployManager'
+                  });
+                  // ShowGlobalModal({
+                  //   width: 800,
+                  //   title: '部署路径配置',
+                  //   showFuncBtn: false,
+                  //   children: <DeployConfigManager />
+                  // });
+                }}>
+                部署路径配置
               </span>
             </div>
             <Table

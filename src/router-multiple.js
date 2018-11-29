@@ -19,7 +19,7 @@ const pushToHistory = (url, params) => {
 };
 
 const wrapPushUrl = (pushConfig) => {
-  const {component, params} = pushConfig;
+  const { component, route, params } = pushConfig;
   let paramsObj = typeof params == 'string' ? {id: params} : {...params};
   let paramsStr = '';
   let {id = '', ...other} = paramsObj;
@@ -28,12 +28,16 @@ const wrapPushUrl = (pushConfig) => {
     const val = otherParams[key];
     paramsStr += `${key}=${val}&&`;
   }
-  let result = `/${component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
-  // let result = `/${component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
+  let result = `/${route || component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
+  // let result = `/${route}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
   result = result.replace(/&&$/g, '');
   return result;
 };
 
+/**
+ * 
+ * @param {object} config { type: 'PUSH | GO_BACK | LINK', component: route, params: {} }
+ */
 const onNavigate = config => {
   if(!config) return console.log('Not config');
   const { location } = history;
@@ -74,10 +78,11 @@ class RouterHelper extends Component {
 
     history.listen(this.handleHistory);
   }
-  changeRoute = (component, params) => {
+  changeRoute = (route, params) => {
     onNavigate({
       type: 'PUSH',
-      component,
+      route,
+      component: route, // 兼容旧版
       params
     });
   };

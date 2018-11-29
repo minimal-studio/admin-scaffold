@@ -20,6 +20,7 @@ let APIs = {
   joinIn: '/join',
   approveIn: '/approve',
   getHostList: '/ssh-host',
+  sshConfig: '/ssh-config',
 };
 
 /**
@@ -72,6 +73,42 @@ export async function getAssets(projId, user = defaultUsername) {
     }
   };
   return await $R.get(APIs.asset, getConfig);
+}
+
+/**
+ * 获取 ssh 的配置
+ * @param {void}
+ * @return {data}
+ */
+export async function getSShConfig() {
+  return await $R.get(APIs.sshConfig);
+}
+
+/**
+ * 新增 ssh config
+ * @param {void}
+ * @return {data}
+ */
+export async function addSShConfig(data) {
+  return await $R.post(APIs.sshConfig, data);
+}
+
+/**
+ * 更新 ssh config
+ * @param {void}
+ * @return {data}
+ */
+export async function updateSShConfig(data) {
+  return await $R.put(APIs.sshConfig, data);
+}
+
+/**
+ * 删除 ssh config
+ * @param {void}
+ * @return {data}
+ */
+export async function delSShConfig(data) {
+  return await $R.del(APIs.sshConfig, data);
 }
 
 /**

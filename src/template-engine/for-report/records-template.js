@@ -22,12 +22,13 @@ const delayExec = new DebounceClass();
 export default class ReportTemplate extends Component {
   static propTypes = {
     onQueryData: PropTypes.func.isRequired,
-    gm: PropTypes.func.isRequired,
+    gm: PropTypes.func,
     showCondition: PropTypes.bool,
-    height: PropTypes.number,
+    height: PropTypes.any,
     children: PropTypes.any,
     loadingCondition: PropTypes.bool,
     needPaging: PropTypes.bool,
+    hideFloatable: PropTypes.bool,
     needCheck: PropTypes.bool,
     whenCheckAction: PropTypes.any,
     autoQuery: PropTypes.bool,
@@ -54,6 +55,7 @@ export default class ReportTemplate extends Component {
   static defaultProps = {
     autoQuery: false,
     // didMountQuery: true,
+    hideFloatable: false,
     needCount: false,
     isMobile: false,
     needCheck: false,
@@ -61,6 +63,7 @@ export default class ReportTemplate extends Component {
     showCondition: true,
     needPaging: true,
     template: 'Table',
+    gm: str => str,
     resDesc: '',
   }
   constructor(props) {
@@ -145,7 +148,7 @@ export default class ReportTemplate extends Component {
       records = [], pagingInfo = {}, querying = true, children, template,
       needCount, autoQuery, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns,
-      conditionOptions, isMobile, gm, keyMapper,
+      conditionOptions, isMobile, gm, keyMapper, hideFloatable,
       onQueryData
     } = this.props;
 
@@ -228,10 +231,14 @@ export default class ReportTemplate extends Component {
           text={gm("查询")}
           loading={querying}
           onClick={e => this.handleQueryData()}/>
-        <Button
-          text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
-          className="default ml10"
-          onClick={e => this.toggleFloat()}/>
+        {
+          !hideFloatable && (
+            <Button
+              text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
+              className="default ml10"
+              onClick={e => this.toggleFloat()}/>
+          )
+        }
         {
           actionBtns && actionBtns.map(btn => {
             const { text, action, color = 'default' } = btn;

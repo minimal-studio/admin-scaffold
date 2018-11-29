@@ -278,6 +278,7 @@ export default class ScaffoldLayout extends RouterHelper {
             withContent 
             closeabled={hasRouter}
             closeTip="快捷键: alt + w"
+            className="top-tab-wrapper tabs-container"
             activeTabIdx={hasRouter ? activeRouteIdx : 0}
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {

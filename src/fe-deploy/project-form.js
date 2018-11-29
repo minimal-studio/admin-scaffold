@@ -1,7 +1,9 @@
-import { getSSHHost } from './apis';
+import { getSSHHost, getSShConfig } from './apis';
 
 const wrapProjectFormOptions = async (project = {}) => {
   let hostRes = await getSSHHost();
+  let hostConfigRes = await getSShConfig();
+  console.log(hostRes, hostConfigRes)
   // let hostList = hostRes.data || [];
   let hostMapper = hostRes.mapper || {};
   // let targetHostList = {};
@@ -57,14 +59,11 @@ const wrapProjectFormOptions = async (project = {}) => {
       defaultValue: project.scpTargetHost,
     },
     {
-      type: 'radio',
-      ref: 'pushMode',
-      title: '发布方式',
-      values: {
-        'push-files': '推送解压后的文件(慢, 但是安全)',
-        'push-zip': '推送压缩资源到目标服务器再解压(快, 但需要目标服务器支持)',
-      },
-      defaultValue: project.pushMode || 'push-files',
+      type: 'input',
+      ref: 'scpTargetDir',
+      title: 'SSH 的部署目录',
+      desc: '请咨询 SA 对应的目录',
+      defaultValue: project.scpTargetDir,
     },
     {
       type: 'input',
@@ -74,11 +73,14 @@ const wrapProjectFormOptions = async (project = {}) => {
       defaultValue: project.scpSourceDir,
     },
     {
-      type: 'input',
-      ref: 'scpTargetDir',
-      title: 'SCP 目标目录',
-      desc: '请咨询 SA 对应的目录',
-      defaultValue: project.scpTargetDir,
+      type: 'radio',
+      ref: 'pushMode',
+      title: '发布方式',
+      values: {
+        'push-files': '推送解压后的文件(慢, 但是安全)',
+        'push-zip': '推送压缩资源到目标服务器再解压(快, 但需要目标服务器支持)',
+      },
+      defaultValue: project.pushMode || 'push-files',
     },
     {
       type: 'hidden',

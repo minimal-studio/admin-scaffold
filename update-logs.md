@@ -1,5 +1,17 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.0
+
+### 新功能
+
+- 新增部署路径配置
+
+### 调整
+
+- 重做系统的外层样式，使用亮色主题
+
+------------
+
 ## v0.14.10
 
 - 去除 console log

@@ -9,20 +9,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectList from './project-list';
+import DeployManager from './deploy-config-manager';
 import { setFEDeployConfig, setApiUrl, setDefaultUser } from './apis';
 
-const FEDEPLOY = ({username}) => (
+const FEDEPLOY = ({ username, onNavigate }) => (
   <div className="card-content" style={{minHeight: 400}}>
-    <ProjectList username={username}/>
+    <ProjectList username={username} onNavigate={onNavigate} />
   </div>
 );
 
 FEDEPLOY.propTypes = {
-  username: PropTypes.string.isRequired
+  username: PropTypes.string.isRequired,
+  onNavigate: PropTypes.func.isRequired,
 };
 
 export default FEDEPLOY;
 
 export {
-  setFEDeployConfig, setApiUrl, setDefaultUser
+  setFEDeployConfig, setApiUrl, setDefaultUser, DeployManager
 };

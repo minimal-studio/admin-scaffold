@@ -47,6 +47,11 @@ $userInfoItemOverBgColor: #f7f7f7;
   &.hide-menu {
     left: 0;
   }
+  .top-tab-wrapper {
+    .tab-content {
+      box-shadow: 0 4px 10px rgba(#000, 0.05);
+    }
+  }
 
   .page-content {
     padding: 0.1px 10px;
