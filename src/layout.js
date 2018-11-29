@@ -40,6 +40,7 @@ export default class ScaffoldLayout extends RouterHelper {
     pageComponents: PropTypes.object,
     /** 国际化配置 */
     i18nConfig: PropTypes.object,
+    style: PropTypes.object,
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
     /** DashBoard 插件 */
@@ -193,6 +194,7 @@ export default class ScaffoldLayout extends RouterHelper {
       iframeMode,
       i18nConfig,
       DashBoard,
+      style,
       title
     } = this.props;
     const {
@@ -318,7 +320,7 @@ export default class ScaffoldLayout extends RouterHelper {
     ) : null;
 
     return (
-      <div id="managerApp" className="fill">
+      <div id="managerApp" className="fill main-container fixbg" style={style}>
         <Loading loading={!ready}>
           {container}
         </Loading>

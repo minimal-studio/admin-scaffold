@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.2
+
+- 调整背景，抽离成配置
+
 ## v0.15.1
 
 - 调整菜单样式
