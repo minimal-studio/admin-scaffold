@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.3
+
+- 完善背景机制
+
 ## v0.15.2
 
 - 调整背景，抽离成配置

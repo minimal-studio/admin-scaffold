@@ -12,11 +12,15 @@ $userInfoItemOverBgColor: #f7f7f7;
 .card,.card-content {
   background-color: #FFF;
   padding-top: 0.1px;
+  padding-bottom: 0.1px;
 }
 
-.main-container {
+.main-bg-color {
   background-color: $mainBgColor;
   // background-repeat: no-repeat;
+}
+.main-container {
+  background-color: rgba($mainBgColor, 0.5);
 }
 
 .manager-container {
