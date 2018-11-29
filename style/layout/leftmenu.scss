@@ -1,20 +1,134 @@
 
 $mainColor: #ccc;
-$activeColor: #fff;
-$activeBorderColor: $colorRed;
+$activeColor: #444;
+$activeBorderColor: $themeColor;
 $activePadding: 10px;
+$leftmenuBgColor: $mainBgColor;
+
+$textColor: #777;
+$textExtendColor: #444;
 
 $hoverBgColor: rgb(140, 190, 234);
 
+/** 设置颜色 */
+.leftmenu-response {
+  background: $leftmenuBgColor;
+  // background: linear-gradient(
+  //   45deg,
+  //   $leftmenuBgColor,
+  //   lighten($leftmenuBgColor, 5%),
+  //   lighten($leftmenuBgColor, 15%)
+  // );
+  color: $textColor;
+  .uke-dropdown-menu {
+    .menu-wrapper {
+      background-color: rgba(0, 0, 0, 0.3);
+      .search-input,.display-title {
+        border-color: rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+  .menu-header {
+    // background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
+    // background-color: #EEE;
+    .title {
+      color: $themeColor;
+      // text-align: center;
+      // color: #FFF;
+    }
+    .icon {
+      color: #FFF;
+    }
+  }
+  .menulist-title {
+    color: #fff;
+    &.flow {
+      background: linear-gradient(45deg, $colorCyan, darken($themeColor, 5%));
+    }
+    &.tree {
+      background: linear-gradient(45deg, $colorOrange, $colorRed);
+    }
+  }
+  ._action-btn {
+    color: #FFF;
+  }
+}
+.leftmenu-tree {
+  // padding: 0 5px;
+  .fold {
+    border-bottom: 1px solid rgba(#000, 0.05);
+    .children {
+      // background-color: rgba($themeColor, 0.05);
+    }
+    // &:hover {
+    //   color: $activeColor;
+    // }
+    &.active {
+      color: $activeColor;
+      > .children {
+        border-left-color: rgba(#BBB, 0.5);
+      }
+    }
+    &:hover {
+      background-color: rgba(#000, 0.03);
+    }
+  }
+  .menu {
+    // border-bottom: 1px solid rgba(#000, 0.1);
+    border-radius: 6px;
+    .menu-tip {
+      // margin-right: 10px;
+      color: #999;
+    }
+    &:hover {
+      background-color: rgba(#000, 0.05);
+    }
+    &.active {
+      background-color: $activeBorderColor;
+      background: linear-gradient(
+        -45deg,
+        $activeBorderColor,
+        darken($activeBorderColor, 10%),
+      );
+      color: #FFF;
+      .menu-tip {
+        // margin-right: 10px;
+        color: #FFF;
+      }
+    }
+  }
+}
+
+.flow-menu-container {
+  background-color: $leftmenuBgColor;
+  // background-color: #29394a;
+  box-shadow: 0 24px 24px rgba(#000, 0.3);
+}
+
+.flow-mode {
+  .leftmenu-tree {
+    .fold {
+      .children {
+        background-color: $leftmenuBgColor;
+        .fold {
+          background-color: rgba($hoverBgColor, 0.1);
+        }
+        .children {
+          background-color: lighten($leftmenuBgColor, 10%);
+        }
+      }
+      &.hover,
+      &:hover {
+        color: $activeColor;
+        border-left-color: $activeBorderColor;
+        background-color: rgba($hoverBgColor, 0.1);
+      }
+    }
+  }
+}
+/** 设置布局 */
 .leftmenu-response {
   padding-bottom: 50px;
-  background: linear-gradient(
-    45deg,
-    $leftmenuBgColor,
-    lighten($leftmenuBgColor, 5%),
-    lighten($leftmenuBgColor, 15%)
-  );
-  color: #c5c5c7;
   @include fill();
   width: $leftmenuWidth;
   .uke-dropdown-menu {
@@ -31,9 +145,9 @@ $hoverBgColor: rgb(140, 190, 234);
       min-width: 60px;
       border-radius: 4px;
       position: relative;
-      background-color: rgba(0, 0, 0, 0.3);
+      // background-color: rgba(0, 0, 0, 0.3);
       .search-input,.display-title {
-        border-color: rgba(0, 0, 0, 0.4);
+        // border-color: rgba(0, 0, 0, 0.4);
       }
     }
   }
@@ -48,38 +162,38 @@ $hoverBgColor: rgb(140, 190, 234);
     position: relative;
     padding: 2px 10px;
     // margin-bottom: 20px;
-    background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
-    background-color: #EEE;
+    // background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
+    // background-color: #EEE;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .title {
       // text-align: center;
-      color: #fff;
+      // color: #fff;
     }
     .icon {
       padding: 0 5px;
-      color: #FFF;
+      // color: #FFF;
     }
   }
   .menulist-title {
     padding: 10px 10px;
-    color: #fff;
+    // color: #fff;
     // margin: 10px;
     text-align: center;
     cursor: pointer;
     &.flow {
-      background: linear-gradient(45deg, $colorCyan, darken($themeColor, 5%));
+      // background: linear-gradient(45deg, $colorCyan, darken($themeColor, 5%));
     }
     &.tree {
-      background: linear-gradient(45deg, $colorOrange, $colorRed);
+      // background: linear-gradient(45deg, $colorOrange, $colorRed);
     }
   }
   ._action-btn {
     // padding: 7px 10px 6px;
     // background-color: $colorCyan;
     // border-radius: 3px;
-    color: #FFF;
+    // color: #FFF;
   }
   &.hide-menu {
     width: 0;
@@ -92,8 +206,8 @@ $hoverBgColor: rgb(140, 190, 234);
   // margin: 5px 0;
   padding: 10px;
   .avatar {
-    background-color: $colorGreen;
-    $scale: 40px;
+    background-color: $themeColor;
+    $scale: 50px;
     line-height: $scale;
     height: $scale;
     width: $scale;
@@ -102,7 +216,7 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .leftmenu-tree {
-  background-color: rgba(#000, 0.1);
+  // background-color: rgba(#000, 0.1);
   .direct {
     transition: transform ease 0.3s;
     margin-right: 15px;
@@ -110,38 +224,24 @@ $hoverBgColor: rgb(140, 190, 234);
   .fold {
     padding: 10px 0 10px 0;
     cursor: pointer;
-    border-bottom: 1px solid rgba(#000, 0.2);
+    // border-bottom: 1px solid rgba(#000, 0.2);
     .fold-title {
       transition: all 0.2s ease;
-      padding: 0 10px;
+      // padding: 0 5px;
     }
     .caret {
       margin-right: 10px;
     }
     .children {
-      background-color: rgba($themeColor, 0.05);
       display: none;
-      // border-left: 1px solid transparent;
-      padding-left: 5px;
+      padding: 0 5px;
     }
-    // &:hover {
-    //   color: $activeColor;
-    // }
     &.active {
-      color: $activeColor;
-      background-color: rgba(#000, 0.2);
-      // border-left-color: $activeBorderColor;
-      // > .fold-title {
-      //   margin-bottom: $activePadding;
-      //   background-color: rgba(#000, 0.3);
-      //   padding: 5px 5px;
-      // }
       > .children {
         display: block;
         border-left-color: rgba(#BBB, 0.5);
       }
       .direct {
-        // transition: transform ease 0.3s;
         transform: rotate(90deg);
       }
     }
@@ -156,43 +256,26 @@ $hoverBgColor: rgb(140, 190, 234);
     }
   }
   .menu {
-    padding: 8px 10px;
+    padding: 6px 10px;
     cursor: pointer;
     display: block;
-    transition: all ease 0.2s;
-    // border-left: 3px solid transparent;
+    margin-bottom: 3px;
+    // transition: all ease 0.2s;
     text-decoration: none;
-    border-bottom: 1px solid rgba(#000, 0.1);
     .menu-tip {
       margin-right: 10px;
     }
     &:hover {
-      background-color: rgba(#fff, 0.1);
-      // border-left-color: $activeBorderColor;
-    }
-    // &:hover,
-    // &.active {
-    //   padding-left: 20px;
-    // }
-    &:hover,&.active {
-      margin-left: -6px;
     }
     &.active {
-      // border-left-color: $activeBorderColor;
-      // background-color: rgba(#fff, 0.1);
-      background-color: $activeBorderColor;
-      color: #FFF;
     }
   }
 }
 
 .flow-menu-container {
   position: fixed;
-  background-color: #29394a;
-  // top: 0;
   width: 200px;
   transition: top ease 0.3s;
-  box-shadow: 0 24px 24px rgba(#000, 0.3);
   .menu {
     padding: 10px 10px;
   }
@@ -220,19 +303,13 @@ $hoverBgColor: rgb(140, 190, 234);
         width: 200px;
         height: auto;
         display: none;
-        background-color: $leftmenuBgColor;
         .fold {
-          background-color: rgba($hoverBgColor, 0.1);
         }
         .children {
-          background-color: lighten($leftmenuBgColor, 10%);
         }
       }
       &.hover,
       &:hover {
-        color: $activeColor;
-        border-left-color: $activeBorderColor;
-        background-color: rgba($hoverBgColor, 0.1);
         > .caret,
         .fold-title .caret {
           transform: rotate(-90deg);

@@ -40,7 +40,8 @@ $userInfoItemOverBgColor: #f7f7f7;
   @include fill();
   left: $leftmenuWidth;
   transition: all 0.2s ease;
-  background-color: #e4e7ea;
+  background-color: $mainBgColor;
+  // background-color: #e4e7ea;
   border-radius: 0 0 0 4px;
 
   &.hide-menu {
