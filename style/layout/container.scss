@@ -17,11 +17,11 @@ $userInfoItemOverBgColor: #f7f7f7;
 
 .main-bg-color {
   background-color: $mainBgColor;
-  border-top: 2px solid $themeColor;
   // background-repeat: no-repeat;
 }
 .main-container {
   background-color: rgba($mainBgColor, 0.5);
+  border-top: 2px solid $themeColor;
 }
 
 .manager-container {

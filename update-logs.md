@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.5
+
+- 调整样式
+
 ## v0.15.4
 
 - 调整部署的显示字段
