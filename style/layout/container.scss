@@ -17,6 +17,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 
 .main-bg-color {
   background-color: $mainBgColor;
+  border-top: 2px solid $themeColor;
   // background-repeat: no-repeat;
 }
 .main-container {

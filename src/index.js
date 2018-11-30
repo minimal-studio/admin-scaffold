@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminWevScaffold from './app';
+import AdminWevScaffold from './layout';
 import { Link } from './router-multiple';
 
 const ManagerAPP = (props) => {
