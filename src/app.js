@@ -24,8 +24,6 @@ export default class AdminWevScaffold extends Component {
     i18nConfig: PropTypes.object,
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
-    /** DashBoard 插件 */
-    DashBoard: PropTypes.any,
   };
   constructor(props) {
     super(props);

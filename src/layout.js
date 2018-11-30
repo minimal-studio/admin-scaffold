@@ -260,7 +260,7 @@ export default class ScaffoldLayout extends RouterHelper {
           className={
             'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
           }>
-          <div className="status-bar" id="statusBar">
+          <div className="uke-status-bar" id="statusBar">
             <div className="menu-actions">
               <span
                 className="_action-btn mr10"

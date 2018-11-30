@@ -163,7 +163,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 }
 
 @media screen and (max-width: 1441px) {
-  .pages-container .status-bar .user-info-group {
+  .pages-container .uke-status-bar .user-info-group {
     max-width: 46%;
     overflow-x: auto;
     white-space: nowrap;
@@ -171,7 +171,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 }
 
 @media screen and (max-width: 1300px) {
-  .pages-container .status-bar .user-info-group {
+  .pages-container .uke-status-bar .user-info-group {
     max-width: 38%;
   }
 }
