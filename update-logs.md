@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.6
+
+- 调整菜单的写法，避免错误
+- 优化插件的写法
+
 ## v0.15.5
 
 - 调整样式

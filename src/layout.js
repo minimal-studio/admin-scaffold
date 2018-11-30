@@ -9,7 +9,7 @@ import {
   Loading, setUkelliConfig, setUkeLang
 } from 'ukelli-ui';
 import Mousetrap from 'mousetrap';
-import { ToggleBasicFloatLen, EventEmitter } from 'basic-helper';
+import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
 
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
@@ -33,7 +33,12 @@ export default class ScaffoldLayout extends RouterHelper {
     onLogout: PropTypes.func,
     /** 插件管理 */
     pluginComponent: PropTypes.shape({
-      Statusbar: PropTypes.any
+      /** 顶部状态栏插件 */
+      Statusbar: PropTypes.any,
+      /** DashBoard 插件 */
+      DashBoard: PropTypes.any,
+      /** 404 页面插件 */
+      NotfoundPage: PropTypes.any,
     }),
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
@@ -44,7 +49,7 @@ export default class ScaffoldLayout extends RouterHelper {
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
     /** DashBoard 插件 */
-    DashBoard: PropTypes.any,
+    // DashBoard: PropTypes.any,
   };
   static defaultProps = {
     bgStyle: {}
@@ -186,6 +191,13 @@ export default class ScaffoldLayout extends RouterHelper {
       history: this.history,
     };
   }
+  loadPlugin = (Plugin, props) => {
+    let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
+
+    P = React.cloneElement(P, props);
+
+    return P;
+  }
   render() {
     const {
       username = 'U',
@@ -196,7 +208,7 @@ export default class ScaffoldLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       i18nConfig,
-      DashBoard,
+      // DashBoard,
       bgStyle,
       title
     } = this.props;
@@ -212,7 +224,7 @@ export default class ScaffoldLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
-    const { Statusbar, NotfoundPage } = pluginComponent;
+    const { Statusbar, NotfoundPage, DashBoard = this.props.DashBoard } = pluginComponent;
     const hasRouter = routers.length > 0;
     // console.log(hasRouter)
 
@@ -259,7 +271,7 @@ export default class ScaffoldLayout extends RouterHelper {
               </span>
             </div>
             {
-              Statusbar ? React.cloneElement(Statusbar, {
+              Statusbar ? this.loadPlugin(Statusbar, {
                 onLogout: logout,
                 showShortcut: this.showShortcut,
                 displayFloat: displayFloat,
@@ -300,9 +312,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     {
                       C ? (
                         <C {...this.getRouteProps()}/>
-                      ) : NotfoundPage ? (
-                        <NotfoundPage/>
-                      ) : (
+                      ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
                         <Notfound key={route + '404'}/>
                       )
                     }
@@ -313,7 +323,7 @@ export default class ScaffoldLayout extends RouterHelper {
                   contentClass="dash-board"
                   label={this.gm("仪表盘")}
                   key="dash-board">
-                  <DashBoardWrapper CustomerComponent={DashBoard}/>
+                  <DashBoardWrapper CustomerComponent={DashBoard} loadPlugin={this.loadPlugin}/>
                 </Tab>
               )
             }

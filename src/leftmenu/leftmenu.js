@@ -157,6 +157,7 @@ export default class Leftmenu extends Component {
     const recursive = (dataList) => {
       let currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
+        if(!item) return;
         let _item = this.getMenuItem(item);
         let { child, title, code, icon, path } = _item;
         let key = code + title;
@@ -326,6 +327,7 @@ export default class Leftmenu extends Component {
     );
 
     const allSet = initDataList.map((item, idx) => {
+      if(!item) return;
       let _item = this.getMenuItem(item);
       let { child, title, code, icon } = _item;
       let to = this.wrapLink(_item);

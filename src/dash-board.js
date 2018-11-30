@@ -13,7 +13,8 @@ const desc = `const DashBoard = () => {
 
 export default class DashBoard extends React.PureComponent {
   static propTypes = {
-    CustomerComponent: PropTypes.func,
+    CustomerComponent: PropTypes.any,
+    loadPlugin: PropTypes.func,
   }
   constructor(props) {
     super(props);
@@ -22,13 +23,11 @@ export default class DashBoard extends React.PureComponent {
     };
   }
   render() {
-    const { CustomerComponent } = this.props;
+    const { loadPlugin, CustomerComponent } = this.props;
     return (
       <div className="card-content">
         {
-          CustomerComponent ? (
-            <CustomerComponent/>
-          ) : (
+          CustomerComponent ? loadPlugin(CustomerComponent) : (
             <TipPanel title="DashBoard 使用说明"
               texts={[
                 '当所有页面关闭后，会出现这个页面',
