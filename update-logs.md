@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.4
+
+- 调整部署的显示字段
+- 调整 UI 风格
+
 ## v0.15.3
 
 - 完善背景机制

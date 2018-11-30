@@ -67,17 +67,17 @@ export default class DeployConfigManager extends ActionAgent {
       key: 'sshHost',
       title: 'SSH Host',
     },
-    {
-      key: 'alias',
-      title: '别名',
-    },
-    {
-      key: 'desc',
-      title: '描述',
-    },
+    // {
+    //   key: 'alias',
+    //   title: '别名',
+    // },
     {
       key: 'deployPath',
       title: '部署路径',
+    },
+    {
+      key: 'desc',
+      title: '用途',
     },
     {
       key: 'action',
@@ -156,6 +156,9 @@ export default class DeployConfigManager extends ActionAgent {
     return (
       <div className="card-content">
         <TipPanel title="使用说明"
+          needToolTip
+          n="angle-up"
+          defaultShow={false}
           texts={[
             '为了更好的管理发布机器和部署路径',
             '统一在 ~/.ssh/config 中配置',
