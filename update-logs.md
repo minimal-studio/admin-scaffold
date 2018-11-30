@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.8
+
+- 完善左菜单的样式
+
 ## v0.15.7
 
 - 调整 status-bar 的命名
