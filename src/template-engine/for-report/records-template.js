@@ -21,35 +21,60 @@ const delayExec = new DebounceClass();
 
 export default class ReportTemplate extends Component {
   static propTypes = {
+    /** 查询数据接口 */
     onQueryData: PropTypes.func.isRequired,
+    /** getKeyMapper 获取 i18n */
     gm: PropTypes.func,
+    /** 是否显示查询条件 */
     showCondition: PropTypes.bool,
-    height: PropTypes.any,
-    children: PropTypes.any,
+    /** 是否正在获取查询条件 */
     loadingCondition: PropTypes.bool,
+    /** 表格的高度 */
+    height: PropTypes.any,
+    /** children */
+    children: PropTypes.any,
+    /** 是否需要分页 */
     needPaging: PropTypes.bool,
+    /** 是否需要隐藏小数点按钮 */
     hideFloatable: PropTypes.bool,
+    /** 是否需要表格的选择器 */
     needCheck: PropTypes.bool,
+    /** 当有表格的细项被选中后出现的 DOM */
     whenCheckAction: PropTypes.any,
+    /** 是否改变查询条件后自动执行查询 */
     autoQuery: PropTypes.bool,
+    /** 是否移动端 */
     isMobile: PropTypes.bool,
     // didMountQuery: PropTypes.bool,
+    /** 是否需要表格统计 */
     needCount: PropTypes.bool,
   
-    keyMapper: PropTypes.array.isRequired,
-    conditionOptions: PropTypes.array,
+    /** Ukelli UI 的表格渲染组件需要的配置 */
+    keyMapper: PropTypes.arrayOf(PropTypes.shape({
+      key: PropTypes.string,
+    })).isRequired,
+    /** Ukelli UI 查询生成器需要的配置 */
+    conditionOptions: PropTypes.arrayOf(PropTypes.shape({
+      key: PropTypes.string,
+    })),
 
+    /** 在查询条件的按钮们 */
     actionBtns: PropTypes.arrayOf(PropTypes.shape({
       action: PropTypes.func,
       text: PropTypes.string,
       color: PropTypes.string,
     })),
   
+    /** 表格渲染记录数据 */
     records: PropTypes.array.isRequired,
+    /** 分页数据 */
     pagingInfo: PropTypes.object,
+    /** 数据是否查询中 */
     querying: PropTypes.bool,
+    /** 数据渲染组件 */
     template: PropTypes.oneOf(['Table', 'CardTable']),
     // hasErr: PropTypes.bool,
+    /** 数据查询的返回描述 */
     resDesc: PropTypes.string
   };
   static defaultProps = {
