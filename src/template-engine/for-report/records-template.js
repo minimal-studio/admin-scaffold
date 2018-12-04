@@ -77,6 +77,12 @@ export default class ReportTemplate extends Component {
 
   componentWillUnmount() {
     this.restoreBasicFloatLen();
+    this.__unmount = true;
+  }
+
+  updateState = (state) => {
+    if (this.__unmount) return;
+    this.setState(state)
   }
 
   clearCheckeds = () => {
@@ -94,7 +100,7 @@ export default class ReportTemplate extends Component {
      * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
      */
     let isDisplay = ToggleBasicFloatLen();
-    this.setState({
+    this.updateState({
       displayFloat: isDisplay
     });
   }
@@ -116,7 +122,7 @@ export default class ReportTemplate extends Component {
   setTableContainerHeight(fixGroup) {
     delayExec.exec(() => {
       const tableContainerHeight = getScreenInfo().screenHeight - fixGroup.offsetHeight - 200;
-      this.setState({
+      this.updateState({
         tableHeight: tableContainerHeight
       });
     }, 100);
@@ -128,6 +134,12 @@ export default class ReportTemplate extends Component {
       this.handleQueryData(data);
     }, 100);
     this.didMountQueried = true;
+  }
+  
+  // 方便刷新数据
+  refreshReport = () => {
+    this.didMountQueried = false;
+    this.whenMountedQuery(this.conditionHelper ? this.conditionHelper.value : {});
   }
 
   handleQueryData(val) {
