@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.10
+
+- 添加分页配置
+
 ## v0.15.9
 
 - 去除 login 的 scss
