@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.11
+
+- 调整分页
+
 ## v0.15.10
 
 - 添加分页配置
