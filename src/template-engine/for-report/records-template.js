@@ -14,7 +14,7 @@ import {
   Table, ConditionGenerator
 } from 'ukelli-ui';
 
-import { getDefPagin } from '../../utils/pagination-helper';
+// import { getDefPagin } from '../../utils/pagination-helper';
 import { getScreenInfo } from '../../utils/dom';
 
 const delayExec = new DebounceClass();
@@ -138,7 +138,8 @@ export default class ReportTemplate extends Component {
 
   getQueryData(conditionData) {
     return {
-      nextPagin: getDefPagin(),
+      // nextPagin: getDefPagin(),
+      nextPagin: this.props.pagingInfo,
       conditionData: conditionData || this.conditionHelper.value,
       selectedItems: this.checkedItems
     };
