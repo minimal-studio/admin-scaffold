@@ -64,6 +64,9 @@ export default class ReportTemplate extends Component {
       text: PropTypes.string,
       color: PropTypes.string,
     })),
+
+    /** 由于不确定远端分页数据具体字段，所以有分页数据的字段映射 */
+    infoMapper: PropTypes.shape({}),
   
     /** 表格渲染记录数据 */
     records: PropTypes.array.isRequired,
@@ -172,7 +175,7 @@ export default class ReportTemplate extends Component {
     const {
       records = [], pagingInfo = {}, querying = true, children, template,
       needCount, autoQuery, showCondition, needCheck, whenCheckAction,
-      needPaging, loadingCondition, height, actionBtns,
+      needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, isMobile, gm, keyMapper, hideFloatable,
       onQueryData
     } = this.props;
@@ -226,6 +229,7 @@ export default class ReportTemplate extends Component {
     const pagingDOM = needPaging ? (
       <Pagination
         pagingInfo={pagingInfo}
+        infoMapper={infoMapper}
         onPagin={nextPagin => {
           onQueryData({
             nextPagin,
