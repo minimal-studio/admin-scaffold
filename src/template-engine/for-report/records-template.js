@@ -108,6 +108,7 @@ export default class ReportTemplate extends Component {
 
   componentWillUnmount() {
     this.restoreBasicFloatLen();
+    this.__unmount = true;
   }
 
   clearCheckeds = () => {
@@ -147,6 +148,7 @@ export default class ReportTemplate extends Component {
 
   setTableContainerHeight(fixGroup) {
     delayExec.exec(() => {
+      if (this.__unmount) return;
       const tableContainerHeight = getScreenInfo().screenHeight - fixGroup.offsetHeight - 200;
       this.setState({
         tableHeight: tableContainerHeight
