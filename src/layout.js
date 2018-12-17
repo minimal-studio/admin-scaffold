@@ -303,14 +303,16 @@ export default class ScaffoldLayout extends RouterHelper {
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
               hasRouter ? routers.map(route => {
+                /** TODO: 优化性能，避免不必要的渲染 */
                 const C = pageComponents[route];
                 const currInfo = routerInfo[route];
                 const { params } = currInfo;
+                const key = route + JSON.stringify(params);
                 return (
                   <Tab 
                     contentClass={route}
                     label={this.gm(menuCodeMapper[route] || route)} 
-                    key={route + JSON.stringify(params)} 
+                    key={key} 
                     onChange={e => this.changeRoute(route, params)}>
                     {
                       C ? (

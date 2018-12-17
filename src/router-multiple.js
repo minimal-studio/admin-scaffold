@@ -128,7 +128,6 @@ class RouterHelper extends Component {
 
     this.setState(({ routers, routerInfo }) => {
       const { maxRouters } = this.props;
-      console.log(maxRouters)
       let currComIdx = routers.indexOf(activeRoute);
       let nextRouters = [...routers];
       let nextRouterInfo = {...routerInfo};
@@ -139,6 +138,7 @@ class RouterHelper extends Component {
       let activeIdx = currComIdx;
       if(currComIdx == -1) {
         nextRouters = [...routers, activeRoute];
+        /** 做最大路由控制 */
         if(nextRouters.length > maxRouters) {
           const [target, ...other] = nextRouters;
           nextRouters = other;
