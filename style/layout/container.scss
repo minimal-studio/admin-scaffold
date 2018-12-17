@@ -58,8 +58,27 @@ $userInfoItemOverBgColor: #f7f7f7;
     left: 0;
   }
   .top-tab-wrapper {
-    .tab-content {
+    >.tab-content {
       box-shadow: 0 4px 10px rgba(#000, 0.05);
+      .tabs-container {
+        background-color: transparent;
+        .tab-group {
+          background-color: #fefefe;
+          box-shadow: none;
+          border-top: 1px solid #EEE;
+          .tab {
+            border-bottom: 1px solid transparent;
+            margin-right: 0;
+            &.active {
+              border-color: $themeColor;
+              background-color: #fefefe;
+            }
+            .tab-label {
+              padding: 6px 15px;
+            }
+          }
+        }
+      }
     }
   }
 

@@ -115,6 +115,27 @@ export default class ReportTemplate extends Component {
     this._tableRef.clearCheckeds();
   }
 
+  handleRes = ({resDesc, hasErr}) => {
+    hasErr && this.toast.show(resDesc, hasErr ? 'error' : 'success');
+  }
+
+  whenMountedQuery = (data) => {
+    if(this.didMountQueried) return;
+    delayExec.exec(() => {
+      this.handleQueryData(data);
+    }, 100);
+    this.didMountQueried = true;
+  }
+
+  getQueryData = (conditionData) => {
+    return {
+      // nextPagin: getDefPagin(),
+      nextPagin: this.props.pagingInfo,
+      conditionData: conditionData || this.conditionHelper.value,
+      selectedItems: this.checkedItems
+    };
+  }
+
   restoreBasicFloatLen() {
     if(GetFloatLen() == 0) {
       ToggleBasicFloatLen();
@@ -137,41 +158,20 @@ export default class ReportTemplate extends Component {
   //   }
   // }
 
-  getQueryData(conditionData) {
-    return {
-      // nextPagin: getDefPagin(),
-      nextPagin: this.props.pagingInfo,
-      conditionData: conditionData || this.conditionHelper.value,
-      selectedItems: this.checkedItems
-    };
-  }
-
-  setTableContainerHeight(fixGroup) {
+  setTableContainerHeight = (fixGroup) => {
     delayExec.exec(() => {
       if (this.__unmount) return;
-      const tableContainerHeight = getScreenInfo().screenHeight - fixGroup.offsetHeight - 200;
+      const tableContainerHeight = getScreenInfo().screenHeight - fixGroup.offsetHeight - 250;
       this.setState({
         tableHeight: tableContainerHeight
       });
     }, 100);
   }
 
-  whenMountedQuery = (data) => {
-    if(this.didMountQueried) return;
-    delayExec.exec(() => {
-      this.handleQueryData(data);
-    }, 100);
-    this.didMountQueried = true;
-  }
-
   handleQueryData(val) {
     this.props.onQueryData(Object.assign({}, this.getQueryData(val), {
       onGetResInfo: this.handleRes
     }));
-  }
-
-  handleRes = ({resDesc, hasErr}) => {
-    hasErr && this.toast.show(resDesc, hasErr ? 'error' : 'success');
   }
 
   render() {
@@ -289,7 +289,7 @@ export default class ReportTemplate extends Component {
     return (
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
-        <div className={"report-fix-con " + (showCondition ? undefined : 'hide')} ref={e => {
+        <div className={"report-fix-con " + (showCondition ? '' : 'hide')} ref={e => {
           this.fixGroup = e;
           if(this.__setHeight) return;
           setTimeout(() => {

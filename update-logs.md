@@ -1,5 +1,11 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.12
+
+- 调整脚手架的样式
+- 新增可以设置最大可打开 Tab 的接口
+- 优化表格模版引擎
+
 ## v0.15.11
 
 - 调整分页

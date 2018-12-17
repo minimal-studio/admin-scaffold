@@ -45,6 +45,8 @@ export default class ScaffoldLayout extends RouterHelper {
     pageComponents: PropTypes.object,
     /** 国际化配置 */
     i18nConfig: PropTypes.object,
+    /** 最大存在的 tab 路由 */
+    maxRouters: PropTypes.number,
     bgStyle: PropTypes.object,
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
@@ -52,7 +54,8 @@ export default class ScaffoldLayout extends RouterHelper {
     // DashBoard: PropTypes.any,
   };
   static defaultProps = {
-    bgStyle: {}
+    bgStyle: {},
+    maxRouters: 10
   }
 
   state = {

@@ -78,6 +78,9 @@ class RouterHelper extends Component {
 
     history.listen(this.handleHistory);
   }
+  componentDidMount() {
+    this.initRoute();
+  }
   changeRoute = (route, params) => {
     onNavigate({
       type: 'PUSH',
@@ -124,22 +127,29 @@ class RouterHelper extends Component {
     if(!activeRoute) return;
 
     this.setState(({ routers, routerInfo }) => {
+      const { maxRouters } = this.props;
+      console.log(maxRouters)
       let currComIdx = routers.indexOf(activeRoute);
+      let nextRouters = [...routers];
       let nextRouterInfo = {...routerInfo};
       nextRouterInfo[activeRoute] = {
         ...(nextRouterInfo[activeRoute] || {}),
         params: getUrlParams()
       };
-      let nextRouters = [...routers];
       let activeIdx = currComIdx;
       if(currComIdx == -1) {
         nextRouters = [...routers, activeRoute];
+        if(nextRouters.length > maxRouters) {
+          const [target, ...other] = nextRouters;
+          nextRouters = other;
+          delete nextRouterInfo[target];
+        }
         activeIdx = nextRouters.length - 1;
       }
       let nextState = {
-        routers: nextRouters,
         activeRoute: activeRoute,
         activeRouteIdx: activeIdx,
+        routers: nextRouters,
         routerInfo: nextRouterInfo
       };
       cacheState = nextState;
@@ -149,9 +159,6 @@ class RouterHelper extends Component {
   initRoute = () => {
     let initRoute = resolvePath(location.hash)[0];
     initRoute && this.selectTab(initRoute);
-  }
-  componentDidMount() {
-    this.initRoute();
   }
 }
 
