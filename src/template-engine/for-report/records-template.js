@@ -217,7 +217,7 @@ export default class ReportTemplate extends Component {
     default:
       this.templateDOM = (
         <div className="table-container" ref={e => {
-          if(!e || records.length === 0) return;
+          if(height || !e || records.length === 0) return;
           this.setTableContainerHeight(e);
         }}>
           <div className="table-scroll">

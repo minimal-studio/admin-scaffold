@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.14
+
+- 优化自动表格引擎的高度设置机制
+
 ## v0.15.13
 
 - 优化查询的操作，默认跳转到第一页
