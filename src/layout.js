@@ -17,6 +17,7 @@ import LeftmenuLayout from './leftmenu';
 import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
 import DashBoardWrapper from './dash-board';
+import VersionComponent from './version-com';
 
 let i18nMapperUrl = './i18n/';
 
@@ -238,15 +239,14 @@ export default class ScaffoldLayout extends RouterHelper {
           menuData={menuData}
           title={title}
           logout={logout}
-          onClickMenu={code => {
-            // this.pushRoute(code)
-          }}
+          // onClickMenu={code => {
+          //   // this.pushRoute(code)
+          // }}
           i18nConfig={i18nConfig}
           menuMappers={menuMappers}
           username={username}
           lang={lang}
           defaultFlowMode={false}
-          versionInfo={versionInfo}
           changeLang={this.changeLang}
           showLeftMenu={showLeftMenu}
           gm={this.gm}
@@ -334,6 +334,11 @@ export default class ScaffoldLayout extends RouterHelper {
             }
           </Tabs>
         </div>
+        {
+          versionInfo ? (
+            <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+          ) : null
+        }
       </div>
     ) : null;
 

@@ -55,7 +55,7 @@ $userInfoItemOverBgColor: #f7f7f7;
   border-radius: 0 0 0 4px;
 
   &.hide-menu {
-    left: 0;
+    left: $leftmenuCollapseWidth;
   }
   .top-tab-wrapper {
     >.tab-content {

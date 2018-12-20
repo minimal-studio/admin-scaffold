@@ -8,7 +8,6 @@ import { storageHelper } from '../config';
 
 import { Link } from '../router-multiple';
 import SearchBox from './search';
-import VersionComponent from './version-com';
 
 let delayExec = new DebounceClass();
 
@@ -198,11 +197,11 @@ export default class Leftmenu extends Component {
           );
         } else {
           dom = this.getMenuLinkerDOM({
-            key: key,
-            to: to,
+            key,
+            to,
             code,
             icon,
-            onClick: () => Call(onClickMenu, code),
+            onClick: onClickMenu,
             menuText: title
           });
         }
@@ -263,7 +262,7 @@ export default class Leftmenu extends Component {
     }, 200);
   }
   getMenuLinkerDOM = ({ code, key, to, onClick, menuText, icon }) => {
-    const {gm} = this.props;
+    const { gm } = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
@@ -271,7 +270,7 @@ export default class Leftmenu extends Component {
         key={key}
         className="menu"
         to={to}
-        onClick={e => Call(onClick, key)}>
+        onClick={e => Call(onClick, key, code)}>
         {
           !icon ? (
             <span className="menu-tip">-</span>
@@ -288,12 +287,12 @@ export default class Leftmenu extends Component {
   }
   getFlowModeDOM = initDataList => {
     const { flowMenuConfig } = this.state;
-    const { gm } = this.props;
-    const { offset, activeItem = {}, activeIdx } = flowMenuConfig;
+    const { gm, onClickMenu } = this.props;
+    const { offset, activeItem = {}, activeIdx, isShow } = flowMenuConfig;
 
     const flowMenuDOM = (
       <div
-        className="flow-menu-container"
+        className={"flow-menu-container" + (isShow ? ' show' : '')}
         onMouseEnter={e => delayExec.cancel()}
         onMouseLeave={e => this.hideFlowMenu()}
         style={{
@@ -355,10 +354,11 @@ export default class Leftmenu extends Component {
         </div>
       ) : (
         this.getMenuLinkerDOM({
-          key: key,
-          to: to,
-          icon: icon,
-          onClick: () => Call(onClickMenu, code),
+          key,
+          to,
+          icon,
+          code,
+          onClick: onClickMenu,
           menuText: title
         })
       );
@@ -390,7 +390,6 @@ export default class Leftmenu extends Component {
       menuData,
       onClickMenu,
       onToggleNav,
-      versionInfo,
       title = 'UKE管理系统',
       username,
       logout,
@@ -409,14 +408,15 @@ export default class Leftmenu extends Component {
     );
 
     const renderRes = (
-      <div>
+      <div className={'leftmenu-wrapper ' + (showLeftMenu ? 'show' : 'collapse')}>
         <div
           ref={leftmenuDOM => {
             if(leftmenuDOM) this.leftmenuDOM = leftmenuDOM;
           }}
-          style={showLeftMenu ? {} : {zIndex: -1}}
+          // style={showLeftMenu ? {} : {zIndex: -1}}
           className={
-            'leftmenu-response' + (flowMode ? ' flow-mode' : ' tree-mode')
+            'leftmenu-response ' +
+            (flowMode ? 'flow-mode ' : 'tree-mode ')
           }>
           <div className="menu-header">
             <h5 className="title">
@@ -461,11 +461,6 @@ export default class Leftmenu extends Component {
           </div>
           {menuTree}
         </div>
-        {
-          versionInfo ? (
-            <VersionComponent gm={gm} versionInfo={versionInfo} />
-          ) : null
-        }
       </div>
     );
 

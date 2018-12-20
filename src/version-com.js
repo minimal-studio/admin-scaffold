@@ -5,7 +5,9 @@ import { Tip } from 'ukelli-ui';
 export default class VersionDisplayer extends Component {
   static propTypes = {
     gm: PropTypes.func.isRequired,
-    versionInfo: PropTypes.object.isRequired,
+    versionInfo: PropTypes.shape({
+      numberVersion: PropTypes.string
+    }).isRequired,
   }
   constructor(props) {
     super(props);
@@ -35,13 +37,9 @@ export default class VersionDisplayer extends Component {
     this.timer && clearInterval(this.timer);
   };
 
-  reload() {
-    location.reload();
-  }
-
   getVersion = () => {
     if (this.errorCount === 5) return this._clear();
-    fetch($AWT.versionUrl + '?t=' + Date.now())
+    fetch(window.$AWT.versionUrl + '?t=' + Date.now())
       .then(res => res.json())
       .then(remoteVersion => {
         let { numberVersion, updateLog } = remoteVersion;
@@ -59,13 +57,18 @@ export default class VersionDisplayer extends Component {
       });
   };
 
+  reload() {
+    location.reload();
+  }
+
   render() {
     const { currVersion, lastVersion, updateLog } = this.state;
     const { gm } = this.props;
+    const hasNewVersion = lastVersion != currVersion;
     return (
-      <span className="version-container">
+      <span className={"version-container" + (hasNewVersion ? ' active' : '')}>
         {
-          lastVersion != currVersion ? (
+          hasNewVersion ? (
             <div>
               <Tip/>
               <sup
