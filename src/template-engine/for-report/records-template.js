@@ -95,6 +95,7 @@ export default class ReportTemplate extends Component {
     showCondition: true,
     needPaging: true,
     template: 'Table',
+    conditionOptions: [],
     gm: str => str,
     resDesc: '',
   }
@@ -185,6 +186,22 @@ export default class ReportTemplate extends Component {
     this.props.onQueryData(data);
   }
 
+  handleChangeCondition = (val, ref) => {
+    const { autoQuery } = this.props;
+    if(!autoQuery || !HasValue(val[ref])) return;
+
+    delayExec.exec(() => {
+      this.handleQueryData(val);
+    }, 200);
+  }
+
+  saveConditionRef = e => {
+    if(e) {
+      this.conditionHelper = e;
+      this.whenMountedQuery(e.value);
+    }
+  }
+
   render() {
     const {
       records = [], pagingInfo = {}, querying, children, template,
@@ -255,20 +272,9 @@ export default class ReportTemplate extends Component {
     ) : null;
     const conditionHelper = !loadingCondition && (
       <ConditionGenerator
-        ref={conditionHelper => {
-          if(conditionHelper) {
-            this.conditionHelper = conditionHelper;
-            this.whenMountedQuery(conditionHelper.value);
-          }
-        }}
-        onChange={(val, ref) => {
-          if(!autoQuery || !HasValue(val[ref])) return;
-
-          delayExec.exec(() => {
-            this.handleQueryData(val);
-          }, 200);
-        }}
-        conditionConfig={conditionOptions || []} />
+        ref={this.saveConditionRef}
+        onChange={this.handleChangeCondition}
+        conditionConfig={conditionOptions} />
     );
     const actionArea = (
       <div className="action-area">
