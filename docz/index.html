@@ -57,6 +57,13 @@
       }
 
     </style>
+    <script>
+      window.__removeLoading = function() {
+        var loadingBg = document.querySelector('#loadingBg');
+        if(!loadingBg) return;
+        document.body.removeChild(loadingBg)
+      }
+    </script>
     {{ head }}
   </head>
   <body>
