@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.16
+
+- 修复左菜单错位的问题
+
 ## v0.15.15
 
 - 调整版本号的位置和结构

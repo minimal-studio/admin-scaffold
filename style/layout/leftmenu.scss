@@ -124,6 +124,7 @@ $hoverBgColor: rgb(140, 190, 234);
   z-index: 101;
   transition: all ease 0.2s;
   box-shadow: 4px 0 10px rgba(#000, 0.08);
+  overflow-y: auto;
   &.show {
     width: $leftmenuWidth;
   }
