@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.17
+
+- 新增一个 onChangeCondition 接口
+
 ## v0.15.16
 
 - 修复左菜单错位的问题

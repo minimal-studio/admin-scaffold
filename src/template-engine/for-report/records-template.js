@@ -7,7 +7,7 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass } from 'basic-helper';
+import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call } from 'basic-helper';
 import {
   Pagination, CardTable,
   Loading, Button, Toast,
@@ -26,6 +26,8 @@ export default class ReportTemplate extends Component {
   static propTypes = {
     /** 查询数据接口 */
     onQueryData: PropTypes.func.isRequired,
+    /** 当查询条件改变时 */
+    onChangeCondition: PropTypes.func,
     /** getKeyMapper 获取 i18n */
     gm: PropTypes.func,
     /** 是否显示查询条件 */
@@ -187,11 +189,12 @@ export default class ReportTemplate extends Component {
   }
 
   handleChangeCondition = (val, ref) => {
-    const { autoQuery } = this.props;
+    const { autoQuery, onChangeCondition } = this.props;
     if(!autoQuery || !HasValue(val[ref])) return;
 
     delayExec.exec(() => {
       this.handleQueryData(val);
+      Call(onChangeCondition, val, ref);
     }, 200);
   }
 
