@@ -190,6 +190,11 @@ export default class ReportTemplate extends Component {
 
   handleChangeCondition = (val, ref) => {
     const { autoQuery, onChangeCondition } = this.props;
+
+    delayExec.exec(() => {
+      Call(onChangeCondition, val, ref);
+    }, 200);
+
     if(!autoQuery || !HasValue(val[ref])) return;
 
     delayExec.exec(() => {
