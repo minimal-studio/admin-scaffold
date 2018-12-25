@@ -79,6 +79,7 @@ export function GeneralReportRender(Action, passProps = {}) {
           needCount={this.needCount}
           actionBtns={this.reportBtnFilter()}
           ref={e => this.ReportRef = e}
+          onChangeCondition={this.onChangeCondition}
 
           {...passProps}
           {...this.templateOptions}

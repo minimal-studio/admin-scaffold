@@ -12,13 +12,6 @@ $hoverBgColor: rgb(140, 190, 234);
 
 /** 设置颜色 */
 .leftmenu-response {
-  // background: $leftmenuBgColor;
-  // background: linear-gradient(
-  //   45deg,
-  //   $leftmenuBgColor,
-  //   lighten($leftmenuBgColor, 5%),
-  //   lighten($leftmenuBgColor, 15%)
-  // );
   color: $textColor;
   .uke-dropdown-menu {
     .menu-wrapper {
@@ -54,14 +47,10 @@ $hoverBgColor: rgb(140, 190, 234);
   }
 }
 .leftmenu-tree {
-  padding: 0 5px;
+  // padding: 0 5px;
   .fold {
-    border-bottom: 1px solid rgba(#000, 0.05);
-    .children {
-      // background-color: rgba($themeColor, 0.05);
-    }
-    // &:hover {
-    //   color: $activeColor;
+    // .children {
+    //   // background-color: rgba($themeColor, 0.05);
     // }
     &.active {
       color: $activeColor;
@@ -72,6 +61,9 @@ $hoverBgColor: rgb(140, 190, 234);
     &:hover {
       background-color: rgba(#000, 0.03);
     }
+  }
+  >.menu,.fold {
+    border-bottom: 1px solid rgba(#000, 0.05);
   }
   .menu {
     // border-bottom: 1px solid rgba(#000, 0.1);
@@ -102,7 +94,7 @@ $hoverBgColor: rgb(140, 190, 234);
 .flow-menu-container {
   background-color: $leftmenuBgColor;
   // background-color: #29394a;
-  box-shadow: 0 24px 24px rgba(#000, 0.3);
+  box-shadow: 0 12px 24px rgba(#000, 0.3);
 }
 
 .flow-mode {
@@ -127,10 +119,30 @@ $hoverBgColor: rgb(140, 190, 234);
   }
 }
 
+.leftmenu-wrapper {
+  @include fill();
+  z-index: 101;
+  transition: all ease 0.2s;
+  overflow-y: auto;
+  &.show {
+    width: $leftmenuWidth;
+  }
+  &.collapse {
+    width: $leftmenuCollapseWidth;
+    overflow: hidden;
+    // padding: 0 10px;
+    &:hover {
+      overflow: auto;
+      width: $leftmenuWidth;
+      background: $leftmenuBgColor;
+      box-shadow: 4px 0 20px rgba(#000, 0.1);
+    }
+  }
+}
+
 /** 设置布局 */
 .leftmenu-response {
   padding-bottom: 50px;
-  @include fill();
   width: $leftmenuWidth;
   .uke-dropdown-menu {
     height: 100%;
@@ -151,9 +163,6 @@ $hoverBgColor: rgb(140, 190, 234);
         // border-color: rgba(0, 0, 0, 0.4);
       }
     }
-  }
-  .icon {
-    font-size: 16px;
   }
   .action-btn-group {
     margin: 10px;
@@ -205,23 +214,29 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .leftmenu-tree {
+  .icon {
+    font-size: 16px;
+  }
+  >.menu {
+    padding: 8px 10px;
+  }
   .direct {
     transition: transform ease 0.3s;
-    margin-right: 15px;
   }
   .fold {
-    padding: 8px 0;
+    padding: 8px 10px;
     cursor: pointer;
+    .icon {
+      width: 18px;
+    }
     .fold-title {
       transition: all 0.2s ease;
-      padding-left: 10px;
     }
     .caret {
       margin-right: 10px;
     }
     .children {
       display: none;
-      padding: 0 5px;
     }
     &.active {
       > .children {
@@ -241,47 +256,51 @@ $hoverBgColor: rgb(140, 190, 234);
         display: none;
       }
     }
+    .menu {
+      padding: 6px 14px;
+      transition: padding ease 0.2s;
+      margin: 3px 0;
+      &:hover, &.active {
+        padding-left: 10px;
+      }
+    }
   }
   .menu {
     padding: 6px 10px;
     cursor: pointer;
     display: block;
-    margin-bottom: 3px;
     // transition: all ease 0.2s;
     text-decoration: none;
     .menu-tip {
       margin-right: 10px;
     }
-    &:hover {
-    }
-    &.active {
-    }
+    // &:hover {
+    // }
+    // &.active {
+    // }
   }
 }
 
 .flow-menu-container {
   position: fixed;
-  width: 200px;
   transition: top ease 0.3s;
-  .menu {
-    padding: 10px 10px;
+  display: none;
+  &.show {
+    width: 200px;
+    padding: 5px 10px;
+    display: block;
   }
+  // .menu {
+  //   padding: 10px 10px;
+  // }
 }
 
 .flow-mode {
   overflow-x: visible !important;
   overflow-y: auto;
   z-index: 111;
-  .menu {
-    // border-left-width: 3px;
-    padding: 6px 10px;
-    margin: 10px;
-    &:hover {
-    }
-  }
   .leftmenu-tree {
     width: 100%;
-    // position: relative;
     .fold {
       position: relative;
       cursor: default;
@@ -293,10 +312,10 @@ $hoverBgColor: rgb(140, 190, 234);
         width: 200px;
         height: auto;
         display: none;
-        .fold {
-        }
-        .children {
-        }
+        // .fold {
+        // }
+        // .children {
+        // }
       }
       &.hover,
       &:hover {

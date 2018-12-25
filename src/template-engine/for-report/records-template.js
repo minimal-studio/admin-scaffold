@@ -7,11 +7,12 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass } from 'basic-helper';
+import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call } from 'basic-helper';
 import {
   Pagination, CardTable,
   Loading, Button, Toast,
-  Table, ConditionGenerator
+  Table, ConditionGenerator,
+  getElementOffset,
 } from 'ukelli-ui';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
@@ -19,10 +20,14 @@ import { getScreenInfo } from '../../utils/dom';
 
 const delayExec = new DebounceClass();
 
+const offsetBottom = 50;
+
 export default class ReportTemplate extends Component {
   static propTypes = {
     /** 查询数据接口 */
     onQueryData: PropTypes.func.isRequired,
+    /** 当查询条件改变时 */
+    onChangeCondition: PropTypes.func,
     /** getKeyMapper 获取 i18n */
     gm: PropTypes.func,
     /** 是否显示查询条件 */
@@ -85,15 +90,19 @@ export default class ReportTemplate extends Component {
     // didMountQuery: true,
     hideFloatable: false,
     needCount: false,
+    querying: true,
     isMobile: false,
     needCheck: false,
     loadingCondition: false,
     showCondition: true,
     needPaging: true,
     template: 'Table',
+    conditionOptions: [],
     gm: str => str,
     resDesc: '',
   }
+  defaultPagin = {};
+  templateDOM = null;
   constructor(props) {
     super(props);
 
@@ -102,9 +111,9 @@ export default class ReportTemplate extends Component {
       tableHeight: props.height || 200
     };
   }
-  // componentDidMount() {
-  //   this.setTableContainerHeight();
-  // }
+  componentDidMount() {
+    this.defaultPagin = this.props.pagingInfo;
+  }
 
   componentWillUnmount() {
     this.restoreBasicFloatLen();
@@ -127,13 +136,26 @@ export default class ReportTemplate extends Component {
     this.didMountQueried = true;
   }
 
-  getQueryData = (conditionData) => {
+  getQueryData = (conditionData, nextPagin) => {
     return {
       // nextPagin: getDefPagin(),
-      nextPagin: this.props.pagingInfo,
+      nextPagin: nextPagin || this.props.pagingInfo,
       conditionData: conditionData || this.conditionHelper.value,
       selectedItems: this.checkedItems
     };
+  }
+
+  setTableContainerHeight = (tableContainer) => {
+    if(this.__setHeight) return;
+    delayExec.exec(() => {
+      if (this.__unmount) return;
+      const tableContainerOffsetTop = getElementOffset(tableContainer).offsetTop;
+      const tableContainerHeight = getScreenInfo().screenHeight - tableContainerOffsetTop - offsetBottom;
+      this.setState({
+        tableHeight: tableContainerHeight
+      });
+      this.__setHeight = true;
+    }, 100);
   }
 
   restoreBasicFloatLen() {
@@ -158,25 +180,39 @@ export default class ReportTemplate extends Component {
   //   }
   // }
 
-  setTableContainerHeight = (fixGroup) => {
-    delayExec.exec(() => {
-      if (this.__unmount) return;
-      const tableContainerHeight = getScreenInfo().screenHeight - fixGroup.offsetHeight - 250;
-      this.setState({
-        tableHeight: tableContainerHeight
-      });
-    }, 100);
+  handleQueryData(val) {
+    /** TODO: 观察，点击查询的时候，默认返回第一页 */
+    const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
+      onGetResInfo: this.handleRes
+    });
+    this.props.onQueryData(data);
   }
 
-  handleQueryData(val) {
-    this.props.onQueryData(Object.assign({}, this.getQueryData(val), {
-      onGetResInfo: this.handleRes
-    }));
+  handleChangeCondition = (val, ref) => {
+    const { autoQuery, onChangeCondition } = this.props;
+
+    delayExec.exec(() => {
+      Call(onChangeCondition, val, ref);
+    }, 200);
+
+    if(!autoQuery || !HasValue(val[ref])) return;
+
+    delayExec.exec(() => {
+      this.handleQueryData(val);
+      Call(onChangeCondition, val, ref);
+    }, 200);
+  }
+
+  saveConditionRef = e => {
+    if(e) {
+      this.conditionHelper = e;
+      this.whenMountedQuery(e.value);
+    }
   }
 
   render() {
     const {
-      records = [], pagingInfo = {}, querying = true, children, template,
+      records = [], pagingInfo = {}, querying, children, template,
       needCount, autoQuery, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, isMobile, gm, keyMapper, hideFloatable,
@@ -192,12 +228,11 @@ export default class ReportTemplate extends Component {
     //          && !item.date;
     // });
 
-    let templateDOM = null;
     let _tableH = height ? height : tableHeight;
 
     switch (template) {
     case 'CardTable':
-      templateDOM = (
+      this.templateDOM = (
         <Loading loading={querying} inrow>
           <CardTable keyMapper={keyMapper} records={records}/>
         </Loading>
@@ -205,8 +240,11 @@ export default class ReportTemplate extends Component {
       break;
     case 'Table':
     default:
-      templateDOM = (
-        <div className="table-container" ref={e => this.renderContent = e}>
+      this.templateDOM = (
+        <div className="table-container" ref={e => {
+          if(height || !e || records.length === 0) return;
+          this.setTableContainerHeight(e);
+        }}>
           <div className="table-scroll">
             <Loading loading={querying} inrow>
               <Table
@@ -226,7 +264,7 @@ export default class ReportTemplate extends Component {
       );
       break;
     }
-    if(!templateDOM) return (
+    if(!this.templateDOM) return (
       <span>{gm('没有对应的模板')}</span>
     );
     const pagingDOM = needPaging ? (
@@ -240,22 +278,11 @@ export default class ReportTemplate extends Component {
           });
         }}/>
     ) : null;
-    const conditionHelper = loadingCondition ? null : (
+    const conditionHelper = !loadingCondition && (
       <ConditionGenerator
-        ref={conditionHelper => {
-          if(conditionHelper) {
-            this.conditionHelper = conditionHelper;
-            this.whenMountedQuery(conditionHelper.value);
-          }
-        }}
-        onChange={(val, ref) => {
-          if(!autoQuery || !HasValue(val[ref])) return;
-
-          delayExec.exec(() => {
-            this.handleQueryData(val);
-          }, 200);
-        }}
-        conditionConfig={conditionOptions || []} />
+        ref={this.saveConditionRef}
+        onChange={this.handleChangeCondition}
+        conditionConfig={conditionOptions} />
     );
     const actionArea = (
       <div className="action-area">
@@ -289,14 +316,7 @@ export default class ReportTemplate extends Component {
     return (
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
-        <div className={"report-fix-con " + (showCondition ? '' : 'hide')} ref={e => {
-          this.fixGroup = e;
-          if(this.__setHeight) return;
-          setTimeout(() => {
-            this.setTableContainerHeight(e);
-          }, 300);
-          this.__setHeight = true;
-        }}>
+        <div className={"report-fix-con" + (showCondition ? '' : ' hide')}>
           {conditionHelper}
           {actionArea}
           {children}
@@ -304,7 +324,7 @@ export default class ReportTemplate extends Component {
         <div>
           {pagingDOM}
         </div>
-        {templateDOM}
+        {this.templateDOM}
       </div>
     );
   }
