@@ -1,4 +1,5 @@
 import doczPluginNetlify from "docz-plugin-netlify";
+import themeConfig from './docz/theme-config/config';
 
 export default {
   // dest: 'docz-dist',
@@ -6,6 +7,18 @@ export default {
   description: 'Uke 管理系统脚手架',
   indexHtml: 'docz/index.html',
   wrapper: 'docz/wrapper',
+  codeSandbox: false,
+  hashRouter: true,
+  htmlContext: {
+    head: {
+      links: [{
+        rel: 'stylesheet',
+        // href: 'https://codemirror.net/theme/dracula.css'
+        href: 'https://codemirror.net/theme/mdn-like.css'
+      }]
+    }
+  },
+  themeConfig: themeConfig,
   // menu: [
   //   { name: 'Core', menu: ['Avatar', 'Button'] },
   // ],
