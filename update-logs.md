@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.20
+
+- 添加 Link 的 onClick 接口
+- 修复渲染模版的问题
+
 ## v0.15.19
 
 - 完善 onChangeCondition 接口

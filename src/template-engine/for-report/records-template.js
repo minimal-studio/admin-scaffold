@@ -118,6 +118,7 @@ export default class ReportTemplate extends Component {
   componentWillUnmount() {
     this.restoreBasicFloatLen();
     this.__unmount = true;
+    // this.didMountQueried = false;
   }
 
   clearCheckeds = () => {
@@ -129,11 +130,11 @@ export default class ReportTemplate extends Component {
   }
 
   whenMountedQuery = (data) => {
-    if(this.didMountQueried) return;
+    // if(this.didMountQueried) return;
     delayExec.exec(() => {
       this.handleQueryData(data);
     }, 100);
-    this.didMountQueried = true;
+    // this.didMountQueried = true;
   }
 
   getQueryData = (conditionData, nextPagin) => {
@@ -158,13 +159,13 @@ export default class ReportTemplate extends Component {
     }, 100);
   }
 
-  restoreBasicFloatLen() {
+  restoreBasicFloatLen = () => {
     if(GetFloatLen() == 0) {
       ToggleBasicFloatLen();
     }
   }
 
-  toggleFloat() {
+  toggleFloat = () => {
     /**
      * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
      */
@@ -180,7 +181,7 @@ export default class ReportTemplate extends Component {
   //   }
   // }
 
-  handleQueryData(val) {
+  handleQueryData = (val) => {
     /** TODO: 观察，点击查询的时候，默认返回第一页 */
     const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
       onGetResInfo: this.handleRes
