@@ -1,5 +1,11 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.21
+
+- 表格模版新增 refreshData 接口
+- 表格模版新增 calculateHeight props 接口，用于标记是否需要自动计算表格高度
+- 调整表格模版的高度调整策略，如果该页面被隐藏，则在下一次 update 的时候更新此高度，保证高度的正确性
+
 ## v0.15.20
 
 - 添加 Link 的 onClick 接口
