@@ -146,8 +146,8 @@ export default class ReportTemplate extends Component {
     if(this.didMountQueried) return;
     delayExec.exec(() => {
       this.handleQueryData(data);
+      this.didMountQueried = true;
     }, 100);
-    this.didMountQueried = true;
   }
 
   refreshData = () => {

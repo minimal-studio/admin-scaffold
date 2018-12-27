@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.22
+
+- 调整表格模版 didMountQuery 的策略
+
 ## v0.15.21
 
 - 表格模版新增 refreshData 接口
