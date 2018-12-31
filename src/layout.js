@@ -185,11 +185,12 @@ export default class ScaffoldLayout extends RouterHelper {
       width: 640
     });
   }
-  getRouteProps() {
+  getRouteProps(isActive) {
     const { userInfo, username } = this.props;
     return {
       userInfo,
       username,
+      isActive,
       gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,
@@ -302,12 +303,12 @@ export default class ScaffoldLayout extends RouterHelper {
             activeTabIdx={hasRouter ? activeRouteIdx : 0}
             onClose={idx => this.closeTab(idx, routerInfo)}>
             {
-              hasRouter ? routers.map(route => {
-                /** TODO: 优化性能，避免不必要的渲染 */
+              hasRouter ? routers.map((route, idx) => {
                 const C = pageComponents[route];
                 const currInfo = routerInfo[route];
                 const { params } = currInfo;
                 const key = route + JSON.stringify(params);
+                const isActive = activeRouteIdx === idx;
                 return (
                   <Tab 
                     contentClass={route}
@@ -316,7 +317,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     onChange={e => this.changeRoute(route, params)}>
                     {
                       C ? (
-                        <C {...this.getRouteProps()}/>
+                        <C {...this.getRouteProps(isActive)}/>
                       ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
                         <Notfound key={route + '404'}/>
                       )

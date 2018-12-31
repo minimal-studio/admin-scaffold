@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.23
+
+- 添加每个 Tab 页是否激活状态的
+
 ## v0.15.22
 
 - 调整表格模版 didMountQuery 的策略
