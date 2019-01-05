@@ -1,6 +1,6 @@
 # Update logs of Uke-admin-web-scaffold
 
-## v0.15.24
+## v0.15.25
 
 - 调整左菜单的 icon 样式
 - 调整搜索框的实现，使用 ClickAway 的方式
