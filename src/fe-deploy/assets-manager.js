@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Table, ShowGlobalModal, CloseGlobalModal, Loading
+  Table, ShowModal, CloseGlobalModal, Loading
 } from 'ukelli-ui';
 import { getAssets, getProjects, downloadAsset, delAsset } from './apis';
 import ReleaseComfirm from './release-comfirm';
@@ -85,7 +85,7 @@ class AssetsManager extends ActionAgent {
               className="red btn ml10"
               type="submit"
               onClick={() => {
-                let ModalId = ShowGlobalModal({
+                let ModalId = ShowModal({
                   title: '删除',
                   type: 'confirm',
                   confirmText: (
@@ -134,7 +134,7 @@ class AssetsManager extends ActionAgent {
     const { notify, username, getProject } = this.props;
     const { releasText, canRollback, item } = options;
     const project = getProject();
-    let ModalId = ShowGlobalModal({
+    let ModalId = ShowModal({
       title: releasText,
       showFuncBtn: false,
       width: 560,

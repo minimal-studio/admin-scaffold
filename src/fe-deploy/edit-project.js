@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormLayout, Loading, ShowGlobalModal, Button } from 'ukelli-ui';
+import { FormLayout, Loading, ShowModal, Button } from 'ukelli-ui';
 
 import { updatePropject, delPropject } from './apis';
 import wrapProjectFormOptions from './project-form';
@@ -68,7 +68,7 @@ export default class EditProject extends ActionAgent {
   deleteProject = async (actingRef) => {
     const { username, project, onClose, queryProject } = this.props;
 
-    ShowGlobalModal({
+    ShowModal({
       title: '确定删除项目？',
       type: 'confirm',
       width: 300,
@@ -110,15 +110,11 @@ export default class EditProject extends ActionAgent {
     );
     return (
       <Loading loading={querying}>
-        {
-          querying ? null : (
-            <FormLayout
-              formOptions={this.formOptions}
-              updating={updating}
-              childrenAfterForm={deleteBtn}
-              btnConfig={this.btnConfig}/>
-          )
-        }
+        <FormLayout
+          formOptions={this.formOptions}
+          updating={updating}
+          childrenAfterForm={deleteBtn}
+          btnConfig={this.btnConfig}/>
       </Loading>
     );
   }

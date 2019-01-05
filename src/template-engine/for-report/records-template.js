@@ -13,7 +13,7 @@ import {
   Loading, Button, Toast,
   Table, ConditionGenerator,
   getElementOffset,
-} from 'ukelli-ui';
+} from '../../ui-refs';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
 import { getScreenInfo } from '../../utils/dom';
@@ -94,7 +94,7 @@ export default class ReportTemplate extends Component {
   static defaultProps = {
     autoQuery: false,
     didMountQuery: true,
-    hideFloatable: false,
+    hideFloatable: true,
     needCount: false,
     calculateHeight: true,
     querying: true,
@@ -229,6 +229,13 @@ export default class ReportTemplate extends Component {
     }
   }
 
+  handlePagin = nextPagin => {
+    this.props.onQueryData({
+      nextPagin,
+      conditionData: this.conditionHelper.value
+    });
+  }
+
   render() {
     const {
       records = [], pagingInfo = {}, querying, children, template,
@@ -291,12 +298,7 @@ export default class ReportTemplate extends Component {
       <Pagination
         pagingInfo={pagingInfo}
         infoMapper={infoMapper}
-        onPagin={nextPagin => {
-          onQueryData({
-            nextPagin,
-            conditionData: this.conditionHelper.value
-          });
-        }}/>
+        onPagin={this.handlePagin}/>
     ) : null;
     const conditionHelper = !loadingCondition && (
       <ConditionGenerator

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {DebounceClass} from 'basic-helper';
+
 let delayExec = new DebounceClass();
 
 const wrapUrl = (str) => {
@@ -36,7 +37,7 @@ export default class Posts extends Component {
   createMarkup() {
     return {
       __html: this.state.markdownHTML
-    }
+    };
   }
   render() {
     const {iframeSrc} = this.state;
@@ -45,7 +46,7 @@ export default class Posts extends Component {
     //   <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()}></div>
     // ) : null
     return (
-      <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()}></div>
-    )
+      <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()} />
+    );
   }
 }

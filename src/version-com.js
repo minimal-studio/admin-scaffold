@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tip } from 'ukelli-ui';
+import { Tip } from './ui-refs';
 
 export default class VersionDisplayer extends Component {
   static propTypes = {

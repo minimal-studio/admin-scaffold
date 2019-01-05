@@ -17,32 +17,6 @@ class ActionAgent extends Component {
   componentWillUnmount() {
     this.__unmount = true;
   }
-  _before(params, actingRef) {
-    return Object.assign({}, {
-      [actingRef]: true,
-    }, params);
-  }
-  _after(res) {
-    return { };
-  }
-  /**
-   * 在调用 after 之前执行的 checker 函数
-   * @param {response} res 系统传入的 res 对象
-   * @return {boolean}
-   */
-  _checkRes(res) {
-    return true;
-  }
-  resStatus(res) {
-
-  }
-  delayExec(...args) {
-    if(!this._delayExec) this._delayExec = new DebounceClass();
-    return this._delayExec.exec(...args);
-  }
-  stateSetter(state) {
-    if(!this.__unmount && this.setState) this.setState(state);
-  }
   /**
    * 请求过程的 state 状态代理
    * @param {reqFunc} asyncFunc 业务 API
@@ -83,6 +57,32 @@ class ActionAgent extends Component {
       this.resStatus(res, id);
       return IsFunc(resFilter) ? resFilter(res) : res;
     };
+  }
+  _before(params, actingRef) {
+    return Object.assign({}, {
+      [actingRef]: true,
+    }, params);
+  }
+  _after(res) {
+    return { };
+  }
+  /**
+   * 在调用 after 之前执行的 checker 函数
+   * @param {response} res 系统传入的 res 对象
+   * @return {boolean}
+   */
+  _checkRes(res) {
+    return true;
+  }
+  resStatus(res) {
+
+  }
+  delayExec(...args) {
+    if(!this._delayExec) this._delayExec = new DebounceClass();
+    return this._delayExec.exec(...args);
+  }
+  stateSetter(state) {
+    if(!this.__unmount && this.setState) this.setState(state);
   }
 }
 

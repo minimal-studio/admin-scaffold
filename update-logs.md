@@ -1,5 +1,11 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.24
+
+- 调整左菜单的 icon 样式
+- 调整搜索框的实现，使用 ClickAway 的方式
+- 调整 UI 库组件的引用方式
+
 ## v0.15.23
 
 - 添加每个 Tab 页是否激活状态的

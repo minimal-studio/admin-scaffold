@@ -50,7 +50,7 @@ const onNavigate = config => {
   case "LINK":
     break;
     // case "MODAL":
-    //   ShowGlobalModal({
+    //   ShowModal({
     //     ...config,
     //     showFuncBtn: false
     //   })
