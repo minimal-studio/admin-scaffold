@@ -190,7 +190,7 @@ export default class ScaffoldLayout extends RouterHelper {
       width: 640
     });
   }
-  getRouteProps() {
+  getRouteProps(isActive) {
     const { userInfo, username, pageProps } = this.props;
     return {
       ...pageProps,
