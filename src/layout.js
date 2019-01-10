@@ -4,12 +4,14 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  ShowGlobalModal, Icon, Tabs, Tab, DropdownMenu, ToolTip,
-  Loading, setUkelliConfig, setUkeLang
-} from 'ukelli-ui';
+
 import Mousetrap from 'mousetrap';
 import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
+
+import {
+  ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
+  Loading, setUkelliConfig, setUkeLang
+} from './ui-refs';
 
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
@@ -182,7 +184,7 @@ export default class ScaffoldLayout extends RouterHelper {
     this.triggerResize();
   }
   showShortcut = () => {
-    ShowGlobalModal({
+    ShowModal({
       children: <ShortcutHelp/>,
       title: '键盘快捷键说明',
       width: 640
@@ -194,6 +196,7 @@ export default class ScaffoldLayout extends RouterHelper {
       ...pageProps,
       userInfo,
       username,
+      isActive,
       gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,
@@ -236,120 +239,116 @@ export default class ScaffoldLayout extends RouterHelper {
     const hasRouter = routers.length > 0;
     // console.log(hasRouter)
 
-    const container = ready ? (
-      <div>
-        <LeftmenuLayout
-          onDidMount={this.onGetMenuCodeMapper}
-          menuData={menuData}
-          title={title}
-          logout={logout}
-          // onClickMenu={code => {
-          //   // this.pushRoute(code)
-          // }}
-          i18nConfig={i18nConfig}
-          menuMappers={menuMappers}
-          username={username}
-          lang={lang}
-          defaultFlowMode={false}
-          changeLang={this.changeLang}
-          showLeftMenu={showLeftMenu}
-          gm={this.gm}
-          onToggleNav={this.toggleLeftMenu}
-          activeMenu={activeMenu}/>
-        {/* {
-          showLeftMenu ? null : (
-            <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>
-              <Icon n="angle-right"/>
-            </span>
-          )
-        } */}
-        <div
-          className={
-            'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
-          }>
-          <div className="uke-status-bar" id="statusBar">
-            <div className="menu-actions">
-              <span
-                className="_action-btn mr10"
-                onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
-                <ToolTip
-                  title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
-                  n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
-              </span>
-            </div>
-            {
-              Statusbar ? this.loadPlugin(Statusbar, {
-                onLogout: logout,
-                showShortcut: this.showShortcut,
-                displayFloat: displayFloat,
-                gm: this.gm,
-                toggleFloat: this.toggleFloat,
-              }) : null
-            }
-            {
-              i18nConfig ? (
-                <div className="lang-selector mr10">
-                  <DropdownMenu 
-                    onChange={val => this.changeLang(val)}
-                    position="right"
-                    value={lang}
-                    values={i18nConfig}/>
-                </div>
-              ) : null
-            }
-          </div>
-          <Tabs 
-            withContent 
-            closeabled={hasRouter}
-            closeTip="快捷键: alt + w"
-            className="top-tab-wrapper tabs-container"
-            activeTabIdx={hasRouter ? activeRouteIdx : 0}
-            onClose={idx => this.closeTab(idx, routerInfo)}>
-            {
-              hasRouter ? routers.map(route => {
-                /** TODO: 优化性能，避免不必要的渲染 */
-                const C = pageComponents[route];
-                const currInfo = routerInfo[route];
-                const { params } = currInfo;
-                const key = route + JSON.stringify(params);
-                return (
-                  <Tab 
-                    contentClass={route}
-                    label={this.gm(menuCodeMapper[route] || route)} 
-                    key={key} 
-                    onChange={e => this.changeRoute(route, params)}>
-                    {
-                      C ? (
-                        <C {...this.getRouteProps()}/>
-                      ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
-                        <Notfound key={route + '404'}/>
-                      )
-                    }
-                  </Tab>
-                );
-              }) : (
-                <Tab
-                  contentClass="dash-board"
-                  label={this.gm("仪表盘")}
-                  key="dash-board">
-                  <DashBoardWrapper CustomerComponent={DashBoard} loadPlugin={this.loadPlugin}/>
-                </Tab>
-              )
-            }
-          </Tabs>
-        </div>
-        {
-          versionInfo ? (
-            <VersionComponent gm={this.gm} versionInfo={versionInfo} />
-          ) : null
-        }
-      </div>
-    ) : null;
-
     return (
       <div id="managerApp" className="fill main-container fixbg">
         <Loading loading={!ready}>
-          {container}
+          <div>
+            <LeftmenuLayout
+              onDidMount={this.onGetMenuCodeMapper}
+              menuData={menuData}
+              title={title}
+              logout={logout}
+              // onClickMenu={code => {
+              //   // this.pushRoute(code)
+              // }}
+              i18nConfig={i18nConfig}
+              menuMappers={menuMappers}
+              username={username}
+              lang={lang}
+              defaultFlowMode={false}
+              changeLang={this.changeLang}
+              showLeftMenu={showLeftMenu}
+              gm={this.gm}
+              onToggleNav={this.toggleLeftMenu}
+              activeMenu={activeMenu}/>
+            {/* {
+              showLeftMenu ? null : (
+                <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>
+                  <Icon n="angle-right"/>
+                </span>
+              )
+            } */}
+            <div
+              className={
+                'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
+              }>
+              <div className="uke-status-bar" id="statusBar">
+                <div className="menu-actions">
+                  <span
+                    className="_action-btn mr10"
+                    onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
+                    <ToolTip
+                      title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
+                      n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
+                  </span>
+                </div>
+                {
+                  Statusbar ? this.loadPlugin(Statusbar, {
+                    onLogout: logout,
+                    showShortcut: this.showShortcut,
+                    displayFloat: displayFloat,
+                    gm: this.gm,
+                    toggleFloat: this.toggleFloat,
+                  }) : null
+                }
+                {
+                  i18nConfig ? (
+                    <div className="lang-selector mr10">
+                      <DropdownMenu 
+                        onChange={val => this.changeLang(val)}
+                        position="right"
+                        value={lang}
+                        values={i18nConfig}/>
+                    </div>
+                  ) : null
+                }
+              </div>
+              <Tabs 
+                withContent 
+                closeabled={hasRouter}
+                closeTip="快捷键: alt + w"
+                className="top-tab-wrapper tabs-container"
+                activeTabIdx={hasRouter ? activeRouteIdx : 0}
+                onClose={idx => this.closeTab(idx, routerInfo)}>
+                {
+                  hasRouter ? routers.map((route, idx) => {
+                    const C = pageComponents[route];
+                    const currInfo = routerInfo[route];
+                    const { params } = currInfo;
+                    const key = route + JSON.stringify(params);
+                    const isActive = activeRouteIdx === idx;
+                    return (
+                      <Tab 
+                        contentClass={route}
+                        label={this.gm(menuCodeMapper[route] || route)} 
+                        key={key} 
+                        onChange={e => this.changeRoute(route, params)}>
+                        {
+                          C ? (
+                            <C {...this.getRouteProps(isActive)}/>
+                          ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
+                            <Notfound key={route + '404'}/>
+                          )
+                        }
+                      </Tab>
+                    );
+                  }) : (
+                    <Tab
+                      contentClass="dash-board"
+                      label={this.gm("仪表盘")}
+                      key="dash-board">
+                      <DashBoardWrapper CustomerComponent={DashBoard} loadPlugin={this.loadPlugin}/>
+                    </Tab>
+                  )
+                }
+              </Tabs>
+            </div>
+            {
+              versionInfo ? (
+                <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+              ) : null
+            }
+          </div>
         </Loading>
         <div className="fill fixbg main-bg-color" style={{
           ...bgStyle,

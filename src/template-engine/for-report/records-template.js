@@ -13,7 +13,7 @@ import {
   Loading, Button, Toast,
   Table, ConditionGenerator,
   getElementOffset,
-} from 'ukelli-ui';
+} from '../../ui-refs';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
 import { getScreenInfo } from '../../utils/dom';
@@ -35,7 +35,12 @@ export default class ReportTemplate extends Component {
     /** 是否正在获取查询条件 */
     loadingCondition: PropTypes.bool,
     /** 表格的高度 */
-    height: PropTypes.any,
+    height: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    /** 是否自动计算并填充表格的高度 */
+    calculateHeight: PropTypes.bool,
     /** children */
     children: PropTypes.any,
     /** 是否需要分页 */
@@ -50,7 +55,8 @@ export default class ReportTemplate extends Component {
     autoQuery: PropTypes.bool,
     /** 是否移动端 */
     isMobile: PropTypes.bool,
-    // didMountQuery: PropTypes.bool,
+    /** 是否需要页面加载完后自动触发一次查询条件 */
+    didMountQuery: PropTypes.bool,
     /** 是否需要表格统计 */
     needCount: PropTypes.bool,
   
@@ -87,9 +93,10 @@ export default class ReportTemplate extends Component {
   };
   static defaultProps = {
     autoQuery: false,
-    // didMountQuery: true,
-    hideFloatable: false,
+    didMountQuery: true,
+    hideFloatable: true,
     needCount: false,
+    calculateHeight: true,
     querying: true,
     isMobile: false,
     needCheck: false,
@@ -111,13 +118,20 @@ export default class ReportTemplate extends Component {
       tableHeight: props.height || 200
     };
   }
+
   componentDidMount() {
     this.defaultPagin = this.props.pagingInfo;
+  }
+
+  componentDidUpdate() {
+    // console.log('asd')
+    this.setTableContainerHeight();
   }
 
   componentWillUnmount() {
     this.restoreBasicFloatLen();
     this.__unmount = true;
+    this.didMountQueried = false;
   }
 
   clearCheckeds = () => {
@@ -132,8 +146,12 @@ export default class ReportTemplate extends Component {
     if(this.didMountQueried) return;
     delayExec.exec(() => {
       this.handleQueryData(data);
+      this.didMountQueried = true;
     }, 100);
-    this.didMountQueried = true;
+  }
+
+  refreshData = () => {
+    this.props.onQueryData(this.getQueryData());
   }
 
   getQueryData = (conditionData, nextPagin) => {
@@ -145,11 +163,18 @@ export default class ReportTemplate extends Component {
     };
   }
 
-  setTableContainerHeight = (tableContainer) => {
-    if(this.__setHeight) return;
+  setTableContainerHeight = () => {
+    const tableContainer = this.tableContainerRef;
+    if(this.__setHeight || !tableContainer) return;
     delayExec.exec(() => {
       if (this.__unmount) return;
       const tableContainerOffsetTop = getElementOffset(tableContainer).offsetTop;
+      /** 高度调整策略，如果该页面被隐藏，则在下一次 update 的时候更新此高度，保证高度的正确性 */
+      if(tableContainerOffsetTop === 0) {
+        this.__setHeight = false;
+        return;
+      }
+      
       const tableContainerHeight = getScreenInfo().screenHeight - tableContainerOffsetTop - offsetBottom;
       this.setState({
         tableHeight: tableContainerHeight
@@ -158,13 +183,13 @@ export default class ReportTemplate extends Component {
     }, 100);
   }
 
-  restoreBasicFloatLen() {
+  restoreBasicFloatLen = () => {
     if(GetFloatLen() == 0) {
       ToggleBasicFloatLen();
     }
   }
 
-  toggleFloat() {
+  toggleFloat = () => {
     /**
      * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
      */
@@ -174,13 +199,7 @@ export default class ReportTemplate extends Component {
     });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if((this.props.loading !== nextProps.loading && nextProps.hasErr && !nextProps.loading) || this.props.hasErr !== nextProps.hasErr) {
-  //     this.toast.show(nextProps.resDesc, nextProps.hasErr ? 'error' : 'success');
-  //   }
-  // }
-
-  handleQueryData(val) {
+  handleQueryData = (val) => {
     /** TODO: 观察，点击查询的时候，默认返回第一页 */
     const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
       onGetResInfo: this.handleRes
@@ -206,16 +225,23 @@ export default class ReportTemplate extends Component {
   saveConditionRef = e => {
     if(e) {
       this.conditionHelper = e;
-      this.whenMountedQuery(e.value);
+      if(this.props.didMountQuery) this.whenMountedQuery(e.value);
     }
+  }
+
+  handlePagin = nextPagin => {
+    this.props.onQueryData({
+      nextPagin,
+      conditionData: this.conditionHelper.value
+    });
   }
 
   render() {
     const {
       records = [], pagingInfo = {}, querying, children, template,
-      needCount, autoQuery, showCondition, needCheck, whenCheckAction,
+      needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
-      conditionOptions, isMobile, gm, keyMapper, hideFloatable,
+      conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
       onQueryData
     } = this.props;
 
@@ -242,8 +268,9 @@ export default class ReportTemplate extends Component {
     default:
       this.templateDOM = (
         <div className="table-container" ref={e => {
-          if(height || !e || records.length === 0) return;
-          this.setTableContainerHeight(e);
+          if(!calculateHeight || height || !e || records.length === 0) return;
+          this.tableContainerRef = e;
+          this.setTableContainerHeight();
         }}>
           <div className="table-scroll">
             <Loading loading={querying} inrow>
@@ -271,12 +298,7 @@ export default class ReportTemplate extends Component {
       <Pagination
         pagingInfo={pagingInfo}
         infoMapper={infoMapper}
-        onPagin={nextPagin => {
-          onQueryData({
-            nextPagin,
-            conditionData: this.conditionHelper.value
-          });
-        }}/>
+        onPagin={this.handlePagin}/>
     ) : null;
     const conditionHelper = !loadingCondition && (
       <ConditionGenerator

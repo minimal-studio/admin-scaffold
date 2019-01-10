@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FormLayout } from 'ukelli-ui';
+import { FormLayout } from 'ukelli-ui/core/form-generator';
 import { Call } from 'basic-helper';
 import { approveToJoinInProject } from './apis';
 import ActionAgent from "../action-agent";

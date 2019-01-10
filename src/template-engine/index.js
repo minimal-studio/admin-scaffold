@@ -5,4 +5,4 @@ export {
   FormRender,
   ReportTemplate,
   GeneralReportRender
-}
+};

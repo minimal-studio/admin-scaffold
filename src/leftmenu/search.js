@@ -1,12 +1,28 @@
+/* eslint-disable react/sort-comp */
+
 import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
 import PropTypes from 'prop-types';
-import { Icon } from 'ukelli-ui';
 import { Call } from 'basic-helper';
+import { ClickAway, ToolTip } from '../ui-refs';
 
 import { Link } from '../router-multiple';
 
 const ESC_KEY = 27;
+
+const ShortcutTipDesc = () => {
+  return (
+    <div style={{maxWidth: 240}}>
+      快捷键：alt + s
+      <br />
+      小贴士：输入首字母快速查找; 比如
+      <strong>账号管理</strong> 
+      （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
+      <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
+      <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
+    </div>
+  );
+};
 
 export default class SearchBox extends Component {
   static propTypes = {
@@ -26,9 +42,9 @@ export default class SearchBox extends Component {
 
   componentDidMount() {
     Mousetrap.bind(['alt+s'], e => {
-      this._input.focus();
+      this.show();
       if (!this.props.showLeftMenu) {
-        this.shouldBeHidden = true;
+        // this.shouldBeHidden = true;
         this.props.onToggleNav(true);
       }
       return false;
@@ -39,73 +55,98 @@ export default class SearchBox extends Component {
     Mousetrap.unbind(['alt+s']);
   }
 
+  setSearchCon(isShow) {
+    this.setState({
+      isShow,
+      searchMap: isShow ? this.state.searchMap : ''
+    });
+  }
   searchMenu(val) {
     this.setState({
       searchMap: val
     });
   }
-  setSearchCon(isShow) {
-    this.setState({
-      isShow,
-    });
+  show() {
+    this.setSearchCon(true);
+    this._input.focus();
+  }
+  hide() {
+    this.setSearchCon(false);
   }
 
   handleEsc = e => {
     if (e.keyCode === ESC_KEY) {
-      this._input.blur();
+      // this._input.blur();
+      this.hide();
       if (this.shouldBeHidden) {
-        this.shouldBeHidden = false;
+        // this.shouldBeHidden = false;
         this.props.onToggleNav(false);
       }
     }
-  };
-  show = () => {
-    this._input.focus();
   }
   render() {
     const { searchMap, isShow } = this.state;
     const { codeMapper, onChangeMenu } = this.props;
     const allCode = Object.keys(codeMapper) || [];
     return (
-      <div 
-        className={'search-container' + (isShow ? ' show-content' : '')}>
-        <input
-          ref={c => (this._input = c)}
-          type="text"
-          placeholder="搜索菜单，首字母组合更快哦"
-          className="form-control input-sm"
-          onChange={e => this.searchMenu(e.target.value)}
-          onFocus={e => this.setSearchCon(true)}
-          onBlur={e => {
-            setTimeout(() => {
-              this.setSearchCon(false);
-              this.shouldBeHidden = false;
-            }, 100);
-          }}
-          onKeyUp={this.handleEsc}/>
-        <div className="hide-content">
-          {
-            allCode
-              .filter(
-                code => {
-                  let item = codeMapper[code] || '';
-                  return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
-                }
-              )
-              .map((code, idx) => {
-                return (
-                  <Link
-                    className="result-item"
-                    key={idx}
-                    to={code}
-                    onClick={e => Call(onChangeMenu, code)}>
-                    {codeMapper[code]}
-                  </Link>
-                );
-              })
-          }
+      <ClickAway onClickAway={e => {
+        this.hide();
+        // this.shouldBeHidden = false;
+      }}>
+        <div>
+          <ToolTip 
+            position="bottom"
+            title={(
+              <ShortcutTipDesc />
+            )}
+            classNames={['_action-btn mr10']}
+            className="p10"
+            onClick={() => this.show()}
+            n="search"/>
+          <div
+            className={'search-container' + (isShow ? ' show-content' : '')}>
+            <input
+              ref={c => this._input = c}
+              type="text"
+              placeholder="搜索菜单，首字母组合更快哦"
+              className="form-control input-sm"
+              value={searchMap}
+              onChange={e => this.searchMenu(e.target.value)}
+              // onFocus={e => this.setSearchCon(true)}
+              // onBlur={e => {
+              //   setTimeout(() => {
+              //     this.setSearchCon(false);
+              //   }, 100);
+              // }}
+              onKeyUp={this.handleEsc} />
+            <div className="hide-content">
+              {
+                allCode
+                  .filter(
+                    code => {
+                      let item = codeMapper[code] || '';
+                      return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
+                    }
+                  )
+                  .map((code, idx) => {
+                    return (
+                      <Link
+                        className="result-item"
+                        key={code}
+                        to={code}
+                        onClick={e => {
+                          Call(onChangeMenu, code);
+                          this.hide();
+                        }}>
+                        {codeMapper[code]}
+                      </Link>
+                    );
+                  })
+              }
+            </div>
+          </div>
         </div>
-      </div>
+      </ClickAway>
     );
   }
 }

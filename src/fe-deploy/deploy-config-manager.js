@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Loading, Table, Notify, ShowGlobalModal, Button, Tabs, Tab,
+  Loading, Table, Notify, ShowModal, Button, Tabs, Tab,
   ConditionGenerator, CloseGlobalModal, TipPanel, FormLayout
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
@@ -41,13 +41,9 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
     const { ready, formOptions } = this.state;
     return (
       <Loading loading={!ready}>
-        {
-          ready && (
-            <FormLayout
-              btnConfig={this.btnConfig}
-              formOptions={formOptions} />
-          )
-        }
+        <FormLayout
+          btnConfig={this.btnConfig}
+          formOptions={formOptions} />
       </Loading>
     );
   }
@@ -86,7 +82,7 @@ export default class DeployConfigManager extends ActionAgent {
         return (
           <React.Fragment>
             <span className="link-btn mr10" onClick={e => {
-              const ModalId = ShowGlobalModal({
+              const ModalId = ShowModal({
                 showFuncBtn: false,
                 title: '编辑',
                 children: (
@@ -100,7 +96,7 @@ export default class DeployConfigManager extends ActionAgent {
               编辑
             </span>
             <span className="link-btn" onClick={e => {
-              const ModalId = ShowGlobalModal({
+              const ModalId = ShowModal({
                 title: '删除',
                 type: 'confirm',
                 width: 300,
@@ -123,7 +119,7 @@ export default class DeployConfigManager extends ActionAgent {
   actionsBtns = [
     {
       action: () => {
-        const ModalId = ShowGlobalModal({
+        const ModalId = ShowModal({
           showFuncBtn: false,
           title: '新增配置',
           children: (

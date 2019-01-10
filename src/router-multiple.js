@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import createBrowserHistory from "history/createBrowserHistory";
 import { getUrlParams } from 'uke-request';
-import { RemoveArrayItem } from 'basic-helper';
+import { RemoveArrayItem, CallFunc } from 'basic-helper';
 
 const history = createBrowserHistory();
 
@@ -50,7 +50,7 @@ const onNavigate = config => {
   case "LINK":
     break;
     // case "MODAL":
-    //   ShowGlobalModal({
+    //   ShowModal({
     //     ...config,
     //     showFuncBtn: false
     //   })
@@ -167,7 +167,7 @@ class RouterHelper extends Component {
  * @param {object} options 参数
  * @TODO: 完善是否激活的判定
  */
-const Link = ({ to, className = 'link-btn', children, params }) => {
+const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
   const { location } = history;
   const { hash } = location;
   const isActive = hash != '/' && hash.split('/')[1] === to;
@@ -175,11 +175,14 @@ const Link = ({ to, className = 'link-btn', children, params }) => {
   return (
     <span 
       className={className + (isActive ? ' active' : '')}
-      onClick={e => onNavigate({
-        type: 'PUSH',
-        component: to,
-        params
-      })}>
+      onClick={e => {
+        CallFunc(onClick)(e);
+        onNavigate({
+          type: 'PUSH',
+          component: to,
+          params
+        });
+      }}>
       {children}
     </span>
   );
@@ -191,6 +194,7 @@ Link.defaultProps = {
 Link.propTypes = {
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
+  onClick: PropTypes.func,
   params: PropTypes.shape({
     type: PropTypes.string,
   }),

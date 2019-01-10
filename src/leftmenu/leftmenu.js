@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass, Call } from 'basic-helper';
-import { ToolTip, Icon, Avatar } from 'ukelli-ui';
+import { ToolTip, Icon, Avatar } from '../ui-refs';
 
 import { storageHelper } from '../config';
 
@@ -47,24 +47,10 @@ let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 const MenuItem = ({ icon = 'angle-right', title, gm }) => {
   return (
     <div className="layout a-i-c">
-      <Icon n={icon} classNames={['mr10']}/>
+      <Icon n={icon} classNames={['item-icon mr10']}/>
       <span>{gm(title)}</span>
       <span className="flex" />
       <Icon n="angle-right" classNames={['direct']}/>
-    </div>
-  );
-};
-
-const ShortcutTipDesc = () => {
-  return (
-    <div style={{maxWidth: 240}}>
-      快捷键：alt + s
-      <br />
-      小贴士：输入首字母快速查找; 比如
-      <strong>账号管理</strong> 
-      （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
-      <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
-      <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
     </div>
   );
 };
@@ -422,15 +408,6 @@ export default class Leftmenu extends Component {
               <span className="mr5">{title}</span>
             </h5>
             <span className="flex" />
-            <ToolTip 
-              position="bottom"
-              title={(
-                <ShortcutTipDesc />
-              )}
-              classNames={['_action-btn mr10']}
-              className="p10"
-              onClick={() => this._seatchBox.show()}
-              n="search"/>
             <SearchBox
               ref={e => this._seatchBox = e}
               onClickMenu={onClickMenu}

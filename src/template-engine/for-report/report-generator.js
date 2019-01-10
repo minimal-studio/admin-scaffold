@@ -3,9 +3,9 @@
  */
 
 import React, {Component, PureComponent} from 'react';
-import { Notify } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 
+import { Notify } from '../../ui-refs';
 import ReportLayoutRender from './records-template';
 
 /**

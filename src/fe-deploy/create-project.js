@@ -92,95 +92,91 @@ export default class CreateProject extends ActionAgent {
             '新建项目，只需要填写项目名称',
             'web hook 是项目资源发布成功后触发的，与 GitHub 的 web hook 类似，用于回调通知',
           ]}/>
-        <Loading loading={querying} inrow={false}>
-          {
-            !querying && (
-              <div>
-                <Steps activeIdx={activeIdx} className="p10">
-                  <Steps.Step title="创建项目"></Steps.Step>
-                  <Steps.Step title="上传资源文件"></Steps.Step>
-                  <Steps.Step title="资源管理"></Steps.Step>
-                </Steps>
-                <Tabs activeTabIdx={activeIdx}>
-                  <Tab label="创建项目">
-                    <FormLayout
-                      formOptions={this.formOptions}
-                      ref={e => {
-                        if(!e) return;
-                        this.formRef = e.formHelper;
-                      }}
-                      onChange={(values, ref, val) => {
-                        let targetDOM = '';
-                        if(ref !== 'scpTargetHost') return;
-                        try {
-                          targetDOM = this.formRef._refs.scpTargetDir.iconInput;
-                        } catch(e) {
-                          console.log(e);
-                        }
-                        const targetValues = [...sshConfig].filter(item => item.sshHost === val);
-                        let ideaTip = {};
-                        for (const item of targetValues) {
-                          ideaTip[item.deployPath] = item.desc + '~' + item.deployPath;
-                        }
-                        let hasIdea = targetValues.length > 0;
-                        if(hasIdea) {
-                          GlobalPopover.show({
-                            elem: targetDOM,
-                            props: {
-                              style: {
-                                zIndex: 1111,
-                                width: 400,
-                              }
-                            },
-                            children: (
-                              <div className="p10">
-                                <h4>部署路径建议</h4>
-                                <div className="p10">
-                                  <Radio values={ideaTip}
-                                    onChange={val => this.selectedDeploy = val} />
-                                </div>
-                                <span className="btn theme"
-                                  onClick={e => {
-                                    GlobalPopover.close();
-                                    this.formRef.changeValues({
-                                      scpTargetDir: this.selectedDeploy
-                                    });
-                                  }}>
-                                  确定
-                                </span>
-                              </div>
-                            )
-                          });
-                        }
-                        // let targetPath = '';
-                        // if(sshConfig[val]) {
-                        //   targetPath = sshConfig[val].deployPath || '';
-                        // }
-                        // this.formRef.changeValues({
-                        //   scpTargetDir: targetPath
-                        // });
-                      }}
-                      btnConfig={this.btnConfig}/>
-                  </Tab>
-                  <Tab label="上传资源文件">
-                    <CreateAsset {...this.props} 
-                      projId={createdProj.id} 
-                      onSuccess={assetData => this.onCreatedAsset(assetData)}/>
-                  </Tab>
-                  <Tab label="资源管理">
-                    <AssetsManager
-                      releasable
-                      getProject={e => createdProj}
-                      {...this.props} projId={createdProj.id}/>
-                  </Tab>
-                </Tabs>
-                <hr/>
-                <div className="p10 text-center">
-                  <span className="btn red " onClick={e => this.props.close()}>关闭</span>
-                </div>
-              </div>
-            )
-          }
+        <Loading loading={querying}>
+          <div>
+            <Steps activeIdx={activeIdx} className="p10">
+              <Steps.Step title="创建项目"></Steps.Step>
+              <Steps.Step title="上传资源文件"></Steps.Step>
+              <Steps.Step title="资源管理"></Steps.Step>
+            </Steps>
+            <Tabs activeTabIdx={activeIdx}>
+              <Tab label="创建项目">
+                <FormLayout
+                  formOptions={this.formOptions}
+                  ref={e => {
+                    if(!e) return;
+                    this.formRef = e.formHelper;
+                  }}
+                  onChange={(values, ref, val) => {
+                    let targetDOM = '';
+                    if(ref !== 'scpTargetHost') return;
+                    try {
+                      targetDOM = this.formRef._refs.scpTargetDir.iconInput;
+                    } catch(e) {
+                      console.log(e);
+                    }
+                    const targetValues = [...sshConfig].filter(item => item.sshHost === val);
+                    let ideaTip = {};
+                    for (const item of targetValues) {
+                      ideaTip[item.deployPath] = item.desc + '~' + item.deployPath;
+                    }
+                    let hasIdea = targetValues.length > 0;
+                    if(hasIdea) {
+                      GlobalPopover.show({
+                        elem: targetDOM,
+                        props: {
+                          style: {
+                            zIndex: 1111,
+                            width: 400,
+                          }
+                        },
+                        children: (
+                          <div className="p10">
+                            <h4>部署路径建议</h4>
+                            <div className="p10">
+                              <Radio values={ideaTip}
+                                onChange={val => this.selectedDeploy = val} />
+                            </div>
+                            <span className="btn theme"
+                              onClick={e => {
+                                GlobalPopover.close();
+                                this.formRef.changeValues({
+                                  scpTargetDir: this.selectedDeploy
+                                });
+                              }}>
+                              确定
+                            </span>
+                          </div>
+                        )
+                      });
+                    }
+                    // let targetPath = '';
+                    // if(sshConfig[val]) {
+                    //   targetPath = sshConfig[val].deployPath || '';
+                    // }
+                    // this.formRef.changeValues({
+                    //   scpTargetDir: targetPath
+                    // });
+                  }}
+                  btnConfig={this.btnConfig}/>
+              </Tab>
+              <Tab label="上传资源文件">
+                <CreateAsset {...this.props} 
+                  projId={createdProj.id} 
+                  onSuccess={assetData => this.onCreatedAsset(assetData)}/>
+              </Tab>
+              <Tab label="资源管理">
+                <AssetsManager
+                  releasable
+                  getProject={e => createdProj}
+                  {...this.props} projId={createdProj.id}/>
+              </Tab>
+            </Tabs>
+            <hr/>
+            <div className="p10 text-center">
+              <span className="btn red " onClick={e => this.props.close()}>关闭</span>
+            </div>
+          </div>
         </Loading>
       </div>
     );

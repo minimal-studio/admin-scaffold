@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TipPanel } from 'ukelli-ui';
+import { TipPanel } from './ui-refs';
 
 const desc = `const DashBoard = () => {
   return (

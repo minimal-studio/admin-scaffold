@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Loading, Table, Notify, ShowGlobalModal, Button,
+  Loading, Table, Notify, ShowModal, Button,
   ConditionGenerator, CloseGlobalModal, TipPanel
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
@@ -67,7 +67,7 @@ export default class ProjectList extends ActionAgent {
           return (
             <p key={applicant}>
               <span className="link-btn" onClick={e => {
-                let ModalId = ShowGlobalModal({
+                let ModalId = ShowModal({
                   title: `同意 ${applicant} 加入协作`,
                   width: 500,
                   showFuncBtn: false,
@@ -194,7 +194,7 @@ export default class ProjectList extends ActionAgent {
 
   showProjectDetail(targetItem, idx, type = 'edit') {
     const { projName } = targetItem;
-    let ModalId = ShowGlobalModal({
+    let ModalId = ShowModal({
       title: '项目 ' + projName + ' 管理',
       width: 900,
       // draggable: true,
@@ -219,7 +219,7 @@ export default class ProjectList extends ActionAgent {
   }
 
   create() {
-    let ModalId = ShowGlobalModal({
+    let ModalId = ShowModal({
       title: '创建项目',
       width: 900,
       showFuncBtn: false,
@@ -277,7 +277,7 @@ export default class ProjectList extends ActionAgent {
                 onClick={() => this.create()}/>
               <span 
                 className="btn red mr10"
-                onClick={e => ShowGlobalModal({
+                onClick={e => ShowModal({
                   width: 800,
                   title: '发布系统的使用手册',
                   children: <Manual/>
@@ -291,7 +291,7 @@ export default class ProjectList extends ActionAgent {
                     type: 'PUSH',
                     route: 'DeployManager'
                   });
-                  // ShowGlobalModal({
+                  // ShowModal({
                   //   width: 800,
                   //   title: '部署路径配置',
                   //   showFuncBtn: false,
