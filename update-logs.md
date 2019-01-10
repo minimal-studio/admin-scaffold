@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.20
+
+- 脚手架新增 pageProps 参数，可以从外层传入参数给所有的 props
+
 ## v0.15.19
 
 - 完善 onChangeCondition 接口

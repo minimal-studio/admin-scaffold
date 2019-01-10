@@ -44,6 +44,8 @@ export default class ScaffoldLayout extends RouterHelper {
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
     pageComponents: PropTypes.object,
+    /** 传给所有页面的 props */
+    pageProps: PropTypes.object,
     /** 国际化配置 */
     i18nConfig: PropTypes.object,
     /** 最大存在的 tab 路由 */
@@ -54,6 +56,7 @@ export default class ScaffoldLayout extends RouterHelper {
     /** DashBoard 插件 */
     // DashBoard: PropTypes.any,
   };
+  
   static defaultProps = {
     bgStyle: {},
     maxRouters: 10
@@ -186,8 +189,9 @@ export default class ScaffoldLayout extends RouterHelper {
     });
   }
   getRouteProps() {
-    const { userInfo, username } = this.props;
+    const { userInfo, username, pageProps } = this.props;
     return {
+      ...pageProps,
       userInfo,
       username,
       gm: this.gm,
