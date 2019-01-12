@@ -205,7 +205,9 @@ export default class ScaffoldLayout extends RouterHelper {
   loadPlugin = (Plugin, props) => {
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
-    P = React.cloneElement(P, props);
+    P = React.cloneElement(P, props, {
+      onNavigate: this.onNavigate
+    });
 
     return P;
   }
@@ -337,7 +339,9 @@ export default class ScaffoldLayout extends RouterHelper {
                       contentClass="dash-board"
                       label={this.gm("仪表盘")}
                       key="dash-board">
-                      <DashBoardWrapper CustomerComponent={DashBoard} loadPlugin={this.loadPlugin}/>
+                      <DashBoardWrapper
+                        CustomerComponent={DashBoard}
+                        loadPlugin={this.loadPlugin}/>
                     </Tab>
                   )
                 }
