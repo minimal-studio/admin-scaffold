@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.28
+
+- 增强高阶模版的使用方式，增加一个新的参数
+
 ## v0.15.27
 
 - 修复一些问题

@@ -14,7 +14,7 @@ import ReportLayoutRender from './records-template';
 let __btns = {};
 window.GetRegisteBtn = () => __btns;
 
-export function GeneralReportRender(Action, passProps = {}) {
+export function GeneralReportRender(Action, passProps = {}, TemplatEngin = ReportLayoutRender) {
   __btns[Action.name] = {};
   return class C extends Action {
     /** 用于记录所有的按钮 */
@@ -73,7 +73,7 @@ export function GeneralReportRender(Action, passProps = {}) {
     }
     render() {
       return (
-        <ReportLayoutRender
+        <TemplatEngin
           keyMapper={this.keyMapper}
           conditionOptions={this.conditionOptions}
           needCount={this.needCount}

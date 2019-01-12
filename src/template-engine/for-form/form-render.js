@@ -8,7 +8,11 @@ export default function FormRender(FormAction) {
       const { querying = false } = this.props;
       return (
         <Loading loading={querying}>
-          <FormLayout {...this.props} {...this.state} {...this}/>
+          {
+            !querying && (
+              <FormLayout {...this.props} {...this.state} {...this}/>
+            )
+          }
         </Loading>
       );
     }
