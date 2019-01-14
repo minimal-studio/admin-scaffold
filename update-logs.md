@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.29
+
+- PluginComponent 传入 onNavigate
+
 ## v0.15.28
 
 - 增强高阶模版的使用方式，增加一个新的参数

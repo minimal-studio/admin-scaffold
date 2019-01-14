@@ -205,7 +205,9 @@ export default class ScaffoldLayout extends RouterHelper {
   loadPlugin = (Plugin, props) => {
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
-    P = React.cloneElement(P, props);
+    P = React.cloneElement(P, props, {
+      onNavigate: this.onNavigate
+    });
 
     return P;
   }
