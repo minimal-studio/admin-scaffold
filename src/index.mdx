@@ -1,6 +1,6 @@
 ---
-name: 脚手架
-route: /scroffold
+name: Scroffold / 脚手架
+route: /Scroffold
 # order: -1
 # sidebar: true
 ---
@@ -10,9 +10,7 @@ route: /scroffold
 > 管理中心的脚手架，适用于管理后台，前台的管理中心部分
 
 import { Playground, PropsTable } from 'docz'
-import { AdminWevScaffold } from './';
-
-<PropsTable of={AdminWevScaffold} />
+import { AdminWebScaffold } from './';
 
 <Playground style={{
   height: 600
@@ -86,7 +84,7 @@ import { AdminWevScaffold } from './';
         ]
       }];
       return (
-        <AdminWevScaffold
+        <AdminWebScaffold
           // DashBoard={DashBoard}
           // 必须填写的
           username={userInfo.username}
@@ -109,10 +107,12 @@ import { AdminWevScaffold } from './';
   }
 </Playground>
 
-```js
-import { AdminWevScaffold } from 'uke-admin-web-scaffold';
+<PropsTable of={AdminWebScaffold} />
 
-<AdminWevScaffold
+```js
+import { AdminWebScaffold } from 'uke-admin-web-scaffold';
+
+<AdminWebScaffold
   // DashBoard={DashBoard}
   // 必须填写的
   username={userInfo.username}

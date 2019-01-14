@@ -6,7 +6,7 @@ import React, {Component, PureComponent} from 'react';
 import { GenerteID } from 'basic-helper';
 
 import { Notify } from '../../ui-refs';
-import ReportLayoutRender from './records-template';
+import ReportTemplate from './records-template';
 
 /**
  * 用于记录所有页面的按钮
@@ -14,7 +14,15 @@ import ReportLayoutRender from './records-template';
 let __btns = {};
 window.GetRegisteBtn = () => __btns;
 
-export function GeneralReportRender(Action, passProps = {}, TemplatEngin = ReportLayoutRender) {
+/** 
+ * GeneralReportRender 接受 3 个参数
+ * 
+ * @param {class} Action 具体业务 action
+ * @param {object} [passProps={}] 传给模版引擎的 props
+ * @param {class} [TemplatEngin=ReportTemplate] 自定义的模版引擎
+ * @return {class} 返回用于 react 的类
+ */
+export function GeneralReportRender(Action, passProps = {}, TemplatEngin = ReportTemplate) {
   __btns[Action.name] = {};
   return class C extends Action {
     /** 用于记录所有的按钮 */

@@ -5,7 +5,7 @@ import ScaffoldLayout from './layout';
 
 const themeStrong = 'THEME_STORAGE';
 
-export default class AdminWevScaffold extends Component {
+export default class AdminWebScaffold extends Component {
   static propTypes = {
     /** 用户登录后的信息，会传递给每一个页面 */
     userInfo: PropTypes.object,

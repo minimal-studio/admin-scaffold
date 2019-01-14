@@ -1,0 +1,117 @@
+---
+name: HOC-Engin / 高阶模版
+route: /High-Order-Engin
+# order: -1
+# sidebar: true
+---
+
+# 高阶模版
+
+参考
+
+- [HOC](https://react.docschina.org/docs/higher-order-components.html)
+
+## 表格高阶模版
+
+```js
+import { GeneralReportRender, ReportTemplate } from 'uke-admin-web-scaffold/template-engine'
+
+class PageAction extends React.Component {
+
+}
+
+const Report = GeneralReportRender(PageAction);
+
+ReactDOM.render(Report, document.querySelector('#APP'));
+```
+
+### 详细配置
+
+```js
+import { GeneralReportRender, ReportTemplate } from 'uke-admin-web-scaffold/template-engine'
+
+class DemoReportPageAction extends React.Component {
+  // 通过 props 的方式传入 ReportTemplate
+  templateOptions = {
+    ...props
+  },
+  // 该表格的操作按钮s
+  actionBtnConfig = [{
+    text: '新增',
+    action: () => {}
+  }],
+  // Ukelli-UI 的渲染 Table 通用配置
+  keyMapper = [];
+  // 是否需要统计表格
+  needCount = boolean;
+  // 查询条件的定义
+  conditionOptions = [{
+    type: 'input',
+    ref: 'input',
+    title: '实例输入框'
+  }]
+  state = {
+    loading: false,
+    // 远端的数据，需要对应 keyMapper
+    records: []
+  },
+  // 查询条件改变时的回调
+  onChangeCondition = () => {}
+  // 内置的查询按钮点击后触发的回调
+  queryData = ({ nextPagin, conditionData, selectedItems }) => {
+    // 下一个分页数据
+    nextPagin
+    // 查询条件数据
+    conditionData
+    // 选择表格项的 mapper
+    selectedItems
+  }
+  componentDidMount() {
+    // 挂载在 this 的表格模版引擎的 ref，其中提供一些有用的函数
+    this.ReportRef
+    // 获取查询条件的 data
+    this.ReportRef.getQueryData()
+    // 刷新表格
+    this.ReportRef.refreshData()
+    // 清除表格中已选项
+    this.ReportRef.clearCheckeds()
+  }
+}
+
+/** 
+ * GeneralReportRender 接受 3 个参数
+ * 
+ * @param {class} DemoReportPageAction 具体业务 action
+ * @param {object} propsForTMPLEngin 传给模版引擎的 props
+ * @param {class} CustomerTemplateEngin 自定义的模版引擎
+ * @return {class} 返回用于 react 的类
+ */
+const Report = GeneralReportRender(DemoReportPageAction, propsForTMPLEngin, CustomerTemplateEngin);
+
+<Report />
+```
+
+## 表单高阶模版
+
+```js
+import { FormRender } from 'uke-admin-web-scaffold/template-engine'
+
+class DemoPage extends React.Component {
+  formOptions = [{
+    type: 'input',
+    ref: 'input',
+    title: '实例输入框'
+  }]
+  state = {
+    loading: false,
+  },
+  btnConfig = [{
+    text: '提交',
+    action: () => {}
+  }]
+}
+
+const FormTMPL = FormRender(DemoPage);
+
+<FormTMPL />
+```
