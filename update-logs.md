@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.30
+
+- 提供 DashBoard 完整的 props 参数
+
 ## v0.15.29
 
 - PluginComponent 传入 onNavigate
