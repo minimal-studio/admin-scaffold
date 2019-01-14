@@ -23,11 +23,11 @@ export default class DashBoard extends React.PureComponent {
     };
   }
   render() {
-    const { loadPlugin, CustomerComponent } = this.props;
+    const { loadPlugin, CustomerComponent, ...other } = this.props;
     return (
       <div className="card-content">
         {
-          CustomerComponent ? loadPlugin(CustomerComponent) : (
+          CustomerComponent ? loadPlugin(CustomerComponent, other) : (
             <TipPanel title="DashBoard 使用说明"
               texts={[
                 '当所有页面关闭后，会出现这个页面',
