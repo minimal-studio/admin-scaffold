@@ -25,6 +25,15 @@ const Report = GeneralReportRender(PageAction);
 ReactDOM.render(Report, document.querySelector('#APP'));
 ```
 
+### 辅助函数
+
+挂载在 ReportRef 之中
+
+- handleQueryData 使用当前查询条件执行查询操作
+- getQueryData    获取当前的表格查询相关数据，包括查询条件和分页数据，已选项等
+- refreshData     刷新当前页面
+- clearCheckeds   清除所有的已选项
+
 ### 详细配置
 
 ```js
@@ -69,6 +78,8 @@ class DemoReportPageAction extends React.Component {
   componentDidMount() {
     // 挂载在 this 的表格模版引擎的 ref，其中提供一些有用的函数
     this.ReportRef
+    // 等于点击了查询按钮
+    this.ReportRef.handleQueryData()
     // 获取查询条件的 data
     this.ReportRef.getQueryData()
     // 刷新表格
