@@ -55,6 +55,13 @@ export default class ScaffoldLayout extends RouterHelper {
     bgStyle: PropTypes.object,
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
+    /** 菜单的字段映射 */
+    menuMappers: PropTypes.shape({
+      child: PropTypes.string.isRequired,
+      code: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      icon: PropTypes.string,
+    }),
     /** DashBoard 插件 */
     // DashBoard: PropTypes.any,
   };

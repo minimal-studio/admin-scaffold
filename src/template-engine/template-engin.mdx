@@ -12,7 +12,7 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
 
 > 高阶模版、模版引擎哲学：大而全，可配置，忽略 HTML 的存在吧
 
-## 表格渲染模版
+## 表格模版引擎
 
 > Props of ReportTemplate
 
@@ -75,3 +75,17 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
     }
   }
 </Playground>
+
+## 通过继承，重新 render 拓展模版引擎
+
+> 表格模版引擎制定了表格的生命周期，通过重写 render，可以实现更多效果
+
+```js
+import ReportTemplate from 'uke-admin-web-scaffold/template-engine/for-report/records-template'
+
+class CustomReportTemplate extends ReportTemplate {
+  render() {
+    // 重写 render
+  }
+}
+```
