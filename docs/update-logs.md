@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.34
+
+- 升级版本号，与 2.13.10，因为 npm 的 bug
+
 ## v0.15.33
 
 - 调整表格的操作按钮，可以添加颜色
