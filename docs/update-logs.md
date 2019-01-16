@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.33
+
+- 调整表格的操作按钮，可以添加颜色
+
 ## v0.15.32
 
 - 优化 handleQueryData 接口
