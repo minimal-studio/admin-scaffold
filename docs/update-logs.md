@@ -1,5 +1,13 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.32
+
+- 优化 handleQueryData 接口
+
+## v0.15.31
+
+- 修复一些问题
+
 ## v0.15.30
 
 - 提供 DashBoard 完整的 props 参数

@@ -154,11 +154,18 @@ export default class ReportTemplate extends Component {
     this.props.onQueryData(this.getQueryData());
   }
 
-  getQueryData = (conditionData, nextPagin) => {
+  /**
+   * 获取查询条件
+   * @param {object} conditionData 查询条件
+   * @param {object} nextPagin 下一个分页数据
+   * @param {boolean} [merge=true] 是否把 conditionData 合并到 this.conditionHelper.value 之中
+   * @memberof ReportTemplate
+   */
+  getQueryData = (conditionData, nextPagin, merge = true) => {
+    const _conditionData = merge ? Object.assign({}, this.conditionHelper.value, conditionData) : conditionData || this.conditionHelper.value;
     return {
-      // nextPagin: getDefPagin(),
       nextPagin: nextPagin || this.props.pagingInfo,
-      conditionData: conditionData || this.conditionHelper.value,
+      conditionData: _conditionData,
       selectedItems: this.checkedItems
     };
   }
