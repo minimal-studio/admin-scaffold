@@ -53,13 +53,13 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
       const {actionBtnConfig} = this;
       if(!actionBtnConfig) return '-';
       return actionBtnConfig.map((config, idx) => {
-        const {text, action, id} = config;
+        const { text, action, id, color = 'blue' } = config;
         /** 用于控制权限 */
         const isActive = this.powerFilterForBtn(id);
         if(!isActive) return;
         if(!__btns[Action.name][id]) __btns[Action.name][id] = config;
         return (
-          <span className="link-btn mr5" key={text} onClick={e => {
+          <span className={"link-btn mr5 t_" + color} key={text} onClick={e => {
             action(item);
           }}>
             {this.props.gm(text)}
