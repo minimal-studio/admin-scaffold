@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.35
+
+- 删除多余样式
+
 ## v0.15.34
 
 - 升级版本号，与 2.13.10，因为 npm 的 bug

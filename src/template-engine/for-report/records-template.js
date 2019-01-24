@@ -20,7 +20,7 @@ import { getScreenInfo } from '../../utils/dom';
 
 const delayExec = new DebounceClass();
 
-const offsetBottom = 50;
+const offsetBottom = 70;
 
 export default class ReportTemplate extends Component {
   static propTypes = {
