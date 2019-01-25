@@ -59,7 +59,7 @@ export default class ReportTemplate extends Component {
     didMountQuery: PropTypes.bool,
     /** 是否需要表格统计 */
     needCount: PropTypes.bool,
-  
+    
     /** Ukelli UI 的表格渲染组件需要的配置 */
     keyMapper: PropTypes.arrayOf(PropTypes.shape({
       key: PropTypes.string,
@@ -89,7 +89,10 @@ export default class ReportTemplate extends Component {
     template: PropTypes.oneOf(['Table', 'CardTable']),
     // hasErr: PropTypes.bool,
     /** 数据查询的返回描述 */
-    resDesc: PropTypes.string
+    resDesc: PropTypes.string,
+    
+    /** 忽略的排序字段 */
+    sortIgnores: PropTypes.array,
   };
   static defaultProps = {
     autoQuery: false,
@@ -249,7 +252,7 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      onQueryData
+      onQueryData, sortIgnores
     } = this.props;
 
     const { displayFloat, tableHeight } = this.state;
@@ -290,6 +293,7 @@ export default class ReportTemplate extends Component {
                 onCheck={nextItems => {
                   this.checkedItems = nextItems;
                 }}
+                sortIgnores={sortIgnores}
                 records={records}
                 needCount={needCount}/>
             </Loading>
