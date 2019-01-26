@@ -90,7 +90,6 @@ export default class ReportTemplate extends Component {
     // hasErr: PropTypes.bool,
     /** 数据查询的返回描述 */
     resDesc: PropTypes.string,
-    
     /** 忽略的排序字段 */
     sortIgnores: PropTypes.array,
   };
@@ -249,10 +248,10 @@ export default class ReportTemplate extends Component {
   render() {
     const {
       records = [], pagingInfo = {}, querying, children, template,
-      needCount, showCondition, needCheck, whenCheckAction,
+      showCondition,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      onQueryData, sortIgnores
+      onQueryData, ...propsForTable
     } = this.props;
 
     const { displayFloat, tableHeight } = this.state;
@@ -285,17 +284,14 @@ export default class ReportTemplate extends Component {
           <div className="table-scroll">
             <Loading loading={querying} inrow>
               <Table
+                {...propsForTable}
                 height={_tableH}
                 ref={e => this._tableRef = e}
                 keyMapper={keyMapper}
-                needCheck={needCheck}
-                whenCheckAction={whenCheckAction}
                 onCheck={nextItems => {
                   this.checkedItems = nextItems;
                 }}
-                sortIgnores={sortIgnores}
-                records={records}
-                needCount={needCount}/>
+                records={records} />
             </Loading>
           </div>
         </div>
