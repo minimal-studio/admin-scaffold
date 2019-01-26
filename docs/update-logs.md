@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.36
+
+- 调整模版引擎传入 Table 的 props 的方式
+
 ## v0.15.35
 
 - 删除多余样式
