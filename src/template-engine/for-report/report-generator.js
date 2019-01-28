@@ -36,7 +36,7 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
       return res;
     }
     reportBtnFilter() {
-      if(!Array.isArray(this.reportActionBtns)) return;
+      if(!Array.isArray(this.reportActionBtns) || this.reportActionBtns.length === 0) return;
       let res = [];
       for (const btn of this.reportActionBtns) {
         const id = btn.id;

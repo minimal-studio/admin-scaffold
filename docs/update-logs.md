@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.38
+
+- 去除没有定义按钮时的警告
+
 ## v0.15.37
 
 - 修复表格的问题
