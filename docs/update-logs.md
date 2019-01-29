@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.15.40
+
+- 调整 statusbar 的位置
+
 ## v0.15.39
 
 - 优化导航栏的样式，添加导航栏配置

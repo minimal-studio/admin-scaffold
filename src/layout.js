@@ -302,6 +302,7 @@ export default class ScaffoldLayout extends RouterHelper {
                           n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
                       </span>
                     </div>
+                    <span className="flex" />
                     {
                       Statusbar ? this.loadPlugin(Statusbar, {
                         onLogout: logout,
@@ -311,7 +312,6 @@ export default class ScaffoldLayout extends RouterHelper {
                         toggleFloat: this.toggleFloat,
                       }) : null
                     }
-                    <span className="flex" />
                     {
                       statusbarConfig && <DefaultStatusbar statusbarConfig={statusbarConfig} />
                     }
