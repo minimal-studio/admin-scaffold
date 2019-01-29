@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.15.39",
+  "version": "0.15.40",
   "main": "./index.js",
   "scripts": {
     "publish": "npm publish ./build",
