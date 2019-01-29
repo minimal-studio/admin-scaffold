@@ -10,7 +10,7 @@ import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
 
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
-  Loading, setUkelliConfig, setUkeLang
+  Loading, setUkelliConfig, setUkeLang, Icon
 } from './ui-refs';
 
 import ShortcutHelp from './shortcut';
@@ -20,6 +20,7 @@ import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
 import DashBoardWrapper from './dash-board';
 import VersionComponent from './version-com';
+import DefaultStatusbar from './statusbar';
 
 let i18nMapperUrl = './i18n/';
 
@@ -34,6 +35,14 @@ export default class ScaffoldLayout extends RouterHelper {
     username: PropTypes.string.isRequired,
     /** 退出登录 */
     onLogout: PropTypes.func,
+    /** 导航栏的配置 */
+    statusbarConfig: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        icon: PropTypes.string,
+        children: PropTypes.func,
+      })
+    ),
     /** 插件管理 */
     pluginComponent: PropTypes.shape({
       /** 顶部状态栏插件 */
@@ -228,6 +237,7 @@ export default class ScaffoldLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       i18nConfig,
+      statusbarConfig,
       // DashBoard,
       bgStyle,
       title
@@ -301,10 +311,21 @@ export default class ScaffoldLayout extends RouterHelper {
                         toggleFloat: this.toggleFloat,
                       }) : null
                     }
+                    <span className="flex" />
+                    {
+                      statusbarConfig && <DefaultStatusbar statusbarConfig={statusbarConfig} />
+                    }
                     {
                       i18nConfig ? (
-                        <div className="lang-selector mr10">
+                        <div className="item">
                           <DropdownMenu 
+                            needAction={false}
+                            menuWrapper={() => (
+                              <div>
+                                <Icon n="globe" classNames={["mr5"]} />
+                                {lang}
+                              </div>
+                            )}
                             onChange={val => this.changeLang(val)}
                             position="right"
                             value={lang}

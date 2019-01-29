@@ -6,6 +6,7 @@ import { Toast } from 'ukelli-ui/core/toast';
 import { FormLayout, ConditionGenerator } from 'ukelli-ui/core/form-generator';
 import { ShowModal, CloseAllModal, CloseModal } from 'ukelli-ui/core/modal';
 import DropdownMenu from 'ukelli-ui/core/selector/dropdown-menu';
+import DropdownWrapper from 'ukelli-ui/core/selector/dropdown-wrapper';
 import { ToolTip } from 'ukelli-ui/core/tooltip';
 import { TipPanel } from 'ukelli-ui/core/tip-panel';
 import { Loading } from 'ukelli-ui/core/loading';
@@ -21,6 +22,6 @@ export {
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar,
   FormLayout, Pagination, ConditionGenerator, TipPanel,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,
-  Icon, Table, CardTable, Button, Toast, Notify,
+  Icon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,
   setUkelliConfig, setUkeLang, getElementOffset
 };

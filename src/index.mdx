@@ -83,6 +83,29 @@ import { AdminWebScaffold } from './';
           },
         ]
       }];
+      const statusbarConfig = [
+        {
+          title: '',
+          icon: 'user',
+          children: () => {
+            return <div>any...</div>
+          }
+        },
+        {
+          title: '',
+          icon: 'comment',
+          children: () => {
+            return <div>any...</div>
+          }
+        },
+        {
+          title: '',
+          icon: 'tasks',
+          children: () => {
+            return <div>any...</div>
+          }
+        },
+      ]
       return (
         <AdminWebScaffold
           // DashBoard={DashBoard}
@@ -98,6 +121,7 @@ import { AdminWebScaffold } from './';
           title="Uke 管理系统"
           menuStore={menuStore}
           i18nConfig={i18nConfig}
+          statusbarConfig={statusbarConfig}
           pluginComponent={{
             Statusbar: <Status />
           }}

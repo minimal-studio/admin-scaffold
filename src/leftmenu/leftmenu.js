@@ -404,9 +404,9 @@ export default class Leftmenu extends Component {
             (flowMode ? 'flow-mode ' : 'tree-mode ')
           }>
           <div className="menu-header">
-            <h5 className="title">
+            <h4 className="title">
               <span className="mr5">{title}</span>
-            </h5>
+            </h4>
             <span className="flex" />
             <SearchBox
               ref={e => this._seatchBox = e}
@@ -422,7 +422,7 @@ export default class Leftmenu extends Component {
               onClick={e => this.changeMenuUIMode(!flowMode)}
               n={!flowMode ? "align-justify" : "align-left"}/>
           </div>
-          <div className="userinfo">
+          {/* <div className="userinfo">
             <Avatar size={40} text={username[0]}/>
             <span>
               <div>{username}</div>
@@ -434,7 +434,7 @@ export default class Leftmenu extends Component {
                 <span className="_btn" onClick={e => logout()}>退出登录</span>
               )
             }
-          </div>
+          </div> */}
           {menuTree}
         </div>
       </div>
