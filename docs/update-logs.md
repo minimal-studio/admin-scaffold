@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.0
+
+- 调整顶级的 Tab 的样式和实现方式
+
 ## v0.15.40
 
 - 调整 statusbar 的位置

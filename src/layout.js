@@ -281,13 +281,6 @@ export default class ScaffoldLayout extends RouterHelper {
                   gm={this.gm}
                   onToggleNav={this.toggleLeftMenu}
                   activeMenu={activeMenu}/>
-                {/* {
-                  showLeftMenu ? null : (
-                    <span className="show-nav-btn" onClick={e => this.toggleLeftMenu(true)}>
-                      <Icon n="angle-right"/>
-                    </span>
-                  )
-                } */}
                 <div
                   className={
                     'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
@@ -302,21 +295,42 @@ export default class ScaffoldLayout extends RouterHelper {
                           n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
                       </span>
                     </div>
+                    <div className="tabs-in-statusbar">
+                      {
+                        hasRouter && routers.map((route, idx) => {
+                          const isActive = activeRouteIdx === idx;
+                          const currInfo = routerInfo[route];
+                          const { params } = currInfo;
+                          const text = this.gm(menuCodeMapper[route] || route);
+                          return (
+                            <span className={"tab-item" + (isActive ? ' active' : '')}
+                              key={route}>
+                              <span
+                                onClick={e => this.changeRoute(route, params)}
+                                className="_btn text">
+                                {text}
+                              </span>
+                              <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
+                            </span>
+                          )
+                        })
+                      }
+                    </div>
                     <span className="flex" />
                     {
-                      Statusbar ? this.loadPlugin(Statusbar, {
+                      Statusbar && this.loadPlugin(Statusbar, {
                         onLogout: logout,
                         showShortcut: this.showShortcut,
                         displayFloat: displayFloat,
                         gm: this.gm,
                         toggleFloat: this.toggleFloat,
-                      }) : null
+                      })
                     }
                     {
                       statusbarConfig && <DefaultStatusbar statusbarConfig={statusbarConfig} />
                     }
                     {
-                      i18nConfig ? (
+                      i18nConfig && (
                         <div className="item">
                           <DropdownMenu 
                             needAction={false}
@@ -331,12 +345,13 @@ export default class ScaffoldLayout extends RouterHelper {
                             value={lang}
                             values={i18nConfig}/>
                         </div>
-                      ) : null
+                      )
                     }
                   </div>
                   <Tabs 
                     withContent 
-                    closeabled={hasRouter}
+                    onlyContent
+                    closeable={hasRouter}
                     closeTip="快捷键: alt + w"
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}

@@ -19,16 +19,19 @@ import { AdminWebScaffold } from './';
     () => {
       const Status = () => {
         return (
-          <div>Status bar</div>
+          <div></div>
         )
       }
-      const TestPage = () => {
+      const TestPage = (text = 'Test Page') => () => {
         return (
-          <div>Test Page</div>
+          <div>{text}</div>
         )
       }
       const pageComponents = {
-        TEST: TestPage
+        TEST: TestPage(),
+        'TEST1-1': TestPage('TEST1-1'),
+        'TEST2-2': TestPage('TEST2-2'),
+        'TEST3-3': TestPage('TEST3-3'),
       }
       const userInfo = {
         username: 'alex'
