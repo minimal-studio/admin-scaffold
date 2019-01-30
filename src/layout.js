@@ -61,6 +61,9 @@ export default class ScaffoldLayout extends RouterHelper {
     i18nConfig: PropTypes.object,
     /** 最大存在的 tab 路由 */
     maxRouters: PropTypes.number,
+    /** 顶级 tab 是否在 statusbar 中 */
+    tabInStatusbar: PropTypes.bool,
+    /** 背景 */
     bgStyle: PropTypes.object,
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
@@ -77,7 +80,8 @@ export default class ScaffoldLayout extends RouterHelper {
   
   static defaultProps = {
     bgStyle: {},
-    maxRouters: 10
+    maxRouters: 10,
+    tabInStatusbar: true,
   }
 
   state = {
@@ -240,6 +244,7 @@ export default class ScaffoldLayout extends RouterHelper {
       statusbarConfig,
       // DashBoard,
       bgStyle,
+      tabInStatusbar,
       title
     } = this.props;
     const {
@@ -297,7 +302,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     </div>
                     <div className="tabs-in-statusbar">
                       {
-                        hasRouter && routers.map((route, idx) => {
+                        tabInStatusbar && hasRouter && routers.map((route, idx) => {
                           const isActive = activeRouteIdx === idx;
                           const currInfo = routerInfo[route];
                           const { params } = currInfo;
@@ -350,7 +355,7 @@ export default class ScaffoldLayout extends RouterHelper {
                   </div>
                   <Tabs 
                     withContent 
-                    onlyContent
+                    onlyContent={tabInStatusbar}
                     closeable={hasRouter}
                     closeTip="快捷键: alt + w"
                     className="top-tab-wrapper tabs-container"
