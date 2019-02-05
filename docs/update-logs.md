@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.4
+
+- 优化左菜单的样式
+
 ## v0.16.3
 
 - 完善 StatusbarConfig

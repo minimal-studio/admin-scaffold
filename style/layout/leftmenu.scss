@@ -42,9 +42,9 @@ $hoverBgColor: rgb(140, 190, 234);
       background: linear-gradient(45deg, $colorOrange, $colorRed);
     }
   }
-  ._action-btn {
-    color: #FFF;
-  }
+  // ._action-btn {
+  //   color: #FFF;
+  // }
 }
 .leftmenu-tree {
   // padding: 0 5px;
@@ -218,8 +218,13 @@ $hoverBgColor: rgb(140, 190, 234);
   .icon {
     font-size: 16px;
   }
+  >.menu,>.fold {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
   >.menu {
     padding: 8px 10px;
+    margin-bottom: 5px;
   }
   .direct {
     transition: transform ease 0.3s;
