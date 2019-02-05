@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.3
+
+- 完善 StatusbarConfig
+
 ## v0.16.2
 
 - 脚手架添加是否 tab 在 statusbar 的选项: tabInStatusbar

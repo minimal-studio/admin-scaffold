@@ -15,7 +15,7 @@ export default class Statusbar extends Component {
   }
   state = {};
   render() {
-    const { statusbarConfig } = this.props;
+    const { statusbarConfig, ...otherProps } = this.props;
     return (
       <div className="status-container">
         {
@@ -31,7 +31,10 @@ export default class Statusbar extends Component {
                     }
                   </React.Fragment>
                 )}>
-                  {children}
+                  {(options) => children({
+                    ...otherProps,
+                    ...options,
+                  })}
                 </DropdownWrapper>
               </span>
             )

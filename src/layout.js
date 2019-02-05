@@ -332,7 +332,7 @@ export default class ScaffoldLayout extends RouterHelper {
                       })
                     }
                     {
-                      statusbarConfig && <DefaultStatusbar statusbarConfig={statusbarConfig} />
+                      statusbarConfig && <DefaultStatusbar {...this.props} statusbarConfig={statusbarConfig} />
                     }
                     {
                       i18nConfig && (
