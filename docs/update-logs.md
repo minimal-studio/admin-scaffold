@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.5
+
+- 新增 Footer 插件，可以自定义右下角的内容
+- 优化新版本的提示交互
+
 ## v0.16.4
 
 - 优化左菜单的样式

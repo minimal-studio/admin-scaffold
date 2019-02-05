@@ -10,6 +10,7 @@ route: /Scroffold
 > 管理中心脚手架，快速搭建管理页面功能，专注业务开发。
 
 import { Playground, PropsTable } from 'docz'
+import { DateFormat } from 'basic-helper'
 import { AdminWebScaffold } from './';
 
 <Playground style={{
@@ -20,6 +21,17 @@ import { AdminWebScaffold } from './';
       const Status = () => {
         return (
           <div></div>
+        )
+      }
+      const Footer = () => {
+        const today = new Date();
+        return (
+          <div className="mr10">
+            <span className="mr10">© {DateFormat(today, 'YYYY')}, Made by <a href="https://github.com/SANGET" target="_blank">SANGET</a>, </span>
+            <a href="https://github.com/SANGET/uke-admin-web-scaffold" target="_blank" className="item mr10">Github</a>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">Blog</a>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">About</a>
+          </div>
         )
       }
       const TestPage = (text = 'Test Page') => () => {
@@ -126,7 +138,8 @@ import { AdminWebScaffold } from './';
           i18nConfig={i18nConfig}
           statusbarConfig={statusbarConfig}
           pluginComponent={{
-            Statusbar: <Status />
+            Statusbar: <Status />,
+            Footer: Footer
           }}
           pageComponents={pageComponents}/>
       )

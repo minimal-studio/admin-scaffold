@@ -1,11 +1,13 @@
-.version-container {
-  padding: 5px 10px;
+.footer-container {
+  padding: 5px 20px;
   position: fixed;
   bottom: 0;
   right: 0;
   z-index: 999;
   color: #555;
-  width: $leftmenuWidth;
+  display: flex;
+  align-items: center;
+  // width: $leftmenuWidth;
   background-color: rgba(#fff, 1);
   border-radius: 3px 0 0 0;
   box-shadow: -3px -3px 12px rgba(#000, 0.1);

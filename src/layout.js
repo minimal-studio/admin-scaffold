@@ -21,6 +21,7 @@ import { RouterHelper } from './router-multiple';
 import DashBoardWrapper from './dash-board';
 import VersionComponent from './version-com';
 import DefaultStatusbar from './statusbar';
+import FooterContainer from './footer';
 
 let i18nMapperUrl = './i18n/';
 
@@ -51,6 +52,8 @@ export default class ScaffoldLayout extends RouterHelper {
       DashBoard: PropTypes.any,
       /** 404 页面插件 */
       NotfoundPage: PropTypes.any,
+      /** Footer 插件 */
+      Footer: PropTypes.any,
     }),
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
@@ -259,7 +262,10 @@ export default class ScaffoldLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
-    const { Statusbar, NotfoundPage, DashBoard = this.props.DashBoard } = pluginComponent;
+    const {
+      Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
+      Footer
+    } = pluginComponent;
     const hasRouter = routers.length > 0;
 
     return (
@@ -357,7 +363,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     withContent 
                     onlyContent={tabInStatusbar}
                     closeable={hasRouter}
-                    closeTip="快捷键: alt + w"
+                    closeTip={this.gm("快捷键") + ": alt + w"}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
                     onClose={idx => this.closeTab(idx, routerInfo)}>
@@ -395,11 +401,18 @@ export default class ScaffoldLayout extends RouterHelper {
                     }
                   </Tabs>
                 </div>
-                {
-                  versionInfo ? (
-                    <VersionComponent gm={this.gm} versionInfo={versionInfo} />
-                  ) : null
-                }
+                <FooterContainer>
+                  {
+                    Footer && this.loadPlugin(Footer, {
+                      gm: this.gm,
+                    })
+                  }
+                  {
+                    versionInfo ? (
+                      <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+                    ) : null
+                  }
+                </FooterContainer>
               </div>
             )
           }
