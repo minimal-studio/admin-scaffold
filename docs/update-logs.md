@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.9
+
+- 状态栏新增分割线
+
 ## v0.16.8
 
 - 优化状态栏的实现

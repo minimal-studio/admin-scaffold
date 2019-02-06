@@ -293,7 +293,8 @@ export default class ScaffoldLayout extends RouterHelper {
       Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
       Footer
     } = pluginComponent;
-    const hasRouter = routers.length > 0;
+    const routersLen = routers.length;
+    const hasRouter = routersLen > 0;
     const statusbarConfig = this.statusbarConfigFilter();
 
     return (
@@ -338,22 +339,26 @@ export default class ScaffoldLayout extends RouterHelper {
                       {
                         tabInStatusbar && hasRouter && routers.map((route, idx) => {
                           const isActive = activeRouteIdx === idx;
+                          const isLastest = idx === routersLen - 1;
                           const currInfo = routerInfo[route];
                           const { params } = currInfo;
                           const text = this.gm(menuCodeMapper[route] || route);
                           return (
-                            <span className={"tab-item" + (isActive ? ' active' : '')}
-                              key={route}>
-                              <span
-                                onClick={e => this.changeRoute(route, params)}
-                                className="_btn text">
-                                {/* {
-                                  isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
-                                } */}
-                                {text}
+                            <React.Fragment>
+                              <span className={"tab-item" + (isActive ? ' active' : '')}
+                                key={route}>
+                                <span
+                                  onClick={e => this.changeRoute(route, params)}
+                                  className="_btn text">
+                                  {/* {
+                                    isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
+                                  } */}
+                                  {text}
+                                </span>
+                                <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
                               </span>
-                              <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
-                            </span>
+                              {!isLastest && <span className="divide">|</span>}
+                            </React.Fragment>
                           )
                         })
                       }
