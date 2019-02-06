@@ -22,6 +22,7 @@ import DashBoardWrapper from './dash-board';
 import VersionComponent from './version-com';
 import DefaultStatusbar from './statusbar';
 import FooterContainer from './footer';
+// import MiniNav from './mini-nav';
 
 let i18nMapperUrl = './i18n/';
 
@@ -267,6 +268,7 @@ export default class ScaffoldLayout extends RouterHelper {
       Footer
     } = pluginComponent;
     const hasRouter = routers.length > 0;
+    console.log(activeMenu)
 
     return (
       <div id="managerApp" className="fill main-container fixbg">

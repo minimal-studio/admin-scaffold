@@ -11,6 +11,9 @@ $textExtendColor: #444;
 $hoverBgColor: rgb(140, 190, 234);
 
 /** 设置颜色 */
+.leftmenu-wrapper {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05)
+}
 .leftmenu-response {
   color: $textColor;
   .uke-dropdown-menu {

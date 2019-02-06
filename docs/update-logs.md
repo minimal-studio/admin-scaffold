@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.6
+
+- 调整总体的样式
+
 ## v0.16.5
 
 - 新增 Footer 插件，可以自定义右下角的内容
