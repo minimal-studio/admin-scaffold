@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.11
+
+- 修复 mini nav 的 key 的警告
+
 ## v0.16.10
 
 - 完善 Statusbar 的配置

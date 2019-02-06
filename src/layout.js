@@ -350,9 +350,8 @@ export default class ScaffoldLayout extends RouterHelper {
                           const { params } = currInfo;
                           const text = this.gm(menuCodeMapper[route] || route);
                           return (
-                            <React.Fragment>
-                              <span className={"tab-item" + (isActive ? ' active' : '')}
-                                key={route}>
+                            <span key={route}>
+                              <span className={"tab-item" + (isActive ? ' active' : '')}>
                                 <span
                                   onClick={e => this.changeRoute(route, params)}
                                   className="_btn text">
@@ -364,7 +363,7 @@ export default class ScaffoldLayout extends RouterHelper {
                                 <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
                               </span>
                               {!isLastest && <span className="divide">|</span>}
-                            </React.Fragment>
+                            </span>
                           )
                         })
                       }
