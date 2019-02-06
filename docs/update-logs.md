@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.7
+
+- 调整导航栏的样式
+
 ## v0.16.6
 
 - 调整总体的样式
