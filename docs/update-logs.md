@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.8
+
+- 优化状态栏的实现
+
 ## v0.16.7
 
 - 调整导航栏的样式
