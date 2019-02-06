@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.10
+
+- 完善 Statusbar 的配置
+
 ## v0.16.9
 
 - 状态栏新增分割线

@@ -40,12 +40,18 @@ export default class ScaffoldLayout extends RouterHelper {
     /** 导航栏的配置 */
     statusbarConfig: PropTypes.arrayOf(
       PropTypes.shape({
+        /** 显示的 title */
         title: PropTypes.string,
+        /** icon */
         icon: PropTypes.string,
-        /** 渲染在 DropWrapper 中的 */
+        /** PureIcon */
+        pureIcon: PropTypes.string,
+        /** 传入 DropdownWrapper 的 children */
         children: PropTypes.func,
-        /** 如果有 component，则优先渲染，并且替换掉 DropWrapper */
+        /** 如果有 component，则直接替换 DropdownWrapper */
         component: PropTypes.any,
+        /** 如果有 action，则直接显示内容，并且触发 action */
+        action: PropTypes.any,
       })
     ),
     /** 插件管理 */

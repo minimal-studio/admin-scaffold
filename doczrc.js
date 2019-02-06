@@ -112,6 +112,11 @@ export default {
   themeConfig: themeConfig,
   menu: [
     'Getting Started',
+    'Scroffold / 脚手架',
+    'ActionAgent',
+    'Template-Engin / 模版引擎',
+    'HOC-Engin / 高阶模版',
+    'Other',
   ],
   modifyBundlerConfig: (config) => {
     config.resolve.extensions.push('.scss');

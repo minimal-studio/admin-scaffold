@@ -11,6 +11,8 @@ route: /Scroffold
 
 import { Playground, PropsTable } from 'docz'
 import { DateFormat } from 'basic-helper'
+import { PureIcon } from 'ukelli-ui/core/icon'
+import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold } from './';
 
 <Playground style={{
@@ -18,6 +20,7 @@ import { AdminWebScaffold } from './';
 }}>
   {
     () => {
+      const githubLink = 'https://github.com/SANGET/uke-admin-web-scaffold';
       const Status = () => {
         return (
           <div></div>
@@ -28,9 +31,18 @@ import { AdminWebScaffold } from './';
         return (
           <div className="mr10">
             <span className="mr10">© {DateFormat(today, 'YYYY')}, Made by <a href="https://github.com/SANGET" target="_blank">SANGET</a>, </span>
-            <a href="https://github.com/SANGET/uke-admin-web-scaffold" target="_blank" className="item mr10">Github</a>
-            <a href="https://ukelli.com" target="_blank" className="item mr10">Blog</a>
-            <a href="https://ukelli.com" target="_blank" className="item mr10">About</a>
+            <span className="item mr10">
+              <PureIcon n="fab fa-github" classNames={['mr5']} />
+              <a href={githubLink} target="_blank">
+                Github
+              </a>
+            </span>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">
+              Blog
+            </a>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">
+              About
+            </a>
           </div>
         )
       }
@@ -118,6 +130,13 @@ import { AdminWebScaffold } from './';
           icon: 'tasks',
           children: () => {
             return <div className="p20">any...</div>
+          }
+        },
+        {
+          title: '',
+          pureIcon: 'fab fa-github',
+          action: () => {
+            window.open(githubLink)
           }
         },
       ]

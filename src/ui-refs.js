@@ -1,5 +1,5 @@
 import { Tip } from 'ukelli-ui/core/tip';
-import { Icon } from 'ukelli-ui/core/icon';
+import { Icon, PureIcon } from 'ukelli-ui/core/icon';
 import { Avatar } from 'ukelli-ui/core/avatar';
 import { Button } from 'ukelli-ui/core/button';
 import { Toast } from 'ukelli-ui/core/toast';
@@ -22,6 +22,6 @@ export {
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar,
   FormLayout, Pagination, ConditionGenerator, TipPanel,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,
-  Icon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,
+  Icon, PureIcon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,
   setUkelliConfig, setUkeLang, getElementOffset
 };
