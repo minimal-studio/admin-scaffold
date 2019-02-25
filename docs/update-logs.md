@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.12
+
+- 优化 ActionAgent 的写法，避免潜在的内存泄漏问题
+
 ## v0.16.11
 
 - 修复 mini nav 的 key 的警告
