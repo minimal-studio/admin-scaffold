@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.13
+
+- 添加了清空搜索条件的功能
+
 ## v0.16.12
 
 - 优化 ActionAgent 的写法，避免潜在的内存泄漏问题

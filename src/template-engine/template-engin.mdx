@@ -68,6 +68,12 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
         <ReportTemplate
           querying={false}
           height={240}
+          conditionOptions={[
+            {
+              type: 'input',
+              ref: 'input'
+            }
+          ]}
           onQueryData={e => {}}
           keyMapper={keyMapper}
           records={mockData} />

@@ -322,8 +322,16 @@ export default class ReportTemplate extends Component {
       <div className="action-area">
         <Button
           text={gm("查询")}
+          className="mr10"
           loading={querying}
           onClick={e => this.handleQueryData()}/>
+        <Button
+          text={gm("清空")}
+          color="red"
+          onClick={e => {
+            if(!this.conditionHelper.clearValue) return console.log('请升级 UI 库到 2.14.34 以上');
+            this.conditionHelper.clearValue();
+          }}/>
         {
           !hideFloatable && (
             <Button
