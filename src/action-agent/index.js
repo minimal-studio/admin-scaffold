@@ -14,8 +14,12 @@ class ActionAgent extends Component {
   getUrlParams = getUrlParams;
   paginHelper = paginHelper;
   routerParams = getUrlParams();
+  agents = [];
   componentWillUnmount() {
     this.__unmount = true;
+    setTimeout(() => {
+      console.log(this.reqInstance)
+    }, 100)
   }
   /**
    * 请求过程的 state 状态代理
@@ -25,19 +29,17 @@ class ActionAgent extends Component {
    */
   reqAgent = (reqFunc, agentOptions = {}) => {
     if(!IsFunc(reqFunc)) return console.warn('should pass func at arguments[0]');
-    // if(!actingRef) return console.warn('need pass actingRef');
 
-    const {
-      id = 'reqAction',
-      before,
-      after,
-      resFilter,
-      actingRef,
-    } = agentOptions;
-
-    this.stateSetter(this._before(Call(before), actingRef));
+    this.stateSetter(this._before(Call(agentOptions.before), agentOptions.actingRef));
 
     return async (...args) => {
+      const {
+        id = 'reqAction',
+        // before,
+        after,
+        resFilter,
+        actingRef,
+      } = agentOptions;
       let res = {};
       try {
         res = await reqFunc(...args);

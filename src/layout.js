@@ -21,6 +21,8 @@ import { RouterHelper } from './router-multiple';
 import DashBoardWrapper from './dash-board';
 import VersionComponent from './version-com';
 import DefaultStatusbar from './statusbar';
+import FooterContainer from './footer';
+// import MiniNav from './mini-nav';
 
 let i18nMapperUrl = './i18n/';
 
@@ -38,9 +40,18 @@ export default class ScaffoldLayout extends RouterHelper {
     /** 导航栏的配置 */
     statusbarConfig: PropTypes.arrayOf(
       PropTypes.shape({
+        /** 显示的 title */
         title: PropTypes.string,
+        /** icon */
         icon: PropTypes.string,
+        /** PureIcon */
+        pureIcon: PropTypes.string,
+        /** 传入 DropdownWrapper 的 children */
         children: PropTypes.func,
+        /** 如果有 component，则直接替换 DropdownWrapper */
+        component: PropTypes.any,
+        /** 如果有 action，则直接显示内容，并且触发 action */
+        action: PropTypes.any,
       })
     ),
     /** 插件管理 */
@@ -51,6 +62,8 @@ export default class ScaffoldLayout extends RouterHelper {
       DashBoard: PropTypes.any,
       /** 404 页面插件 */
       NotfoundPage: PropTypes.any,
+      /** Footer 插件 */
+      Footer: PropTypes.any,
     }),
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
@@ -81,6 +94,7 @@ export default class ScaffoldLayout extends RouterHelper {
   static defaultProps = {
     bgStyle: {},
     maxRouters: 10,
+    statusbarConfig: [],
     tabInStatusbar: true,
   }
 
@@ -231,6 +245,29 @@ export default class ScaffoldLayout extends RouterHelper {
 
     return P;
   }
+  statusbarConfigFilter = () => {
+    const { statusbarConfig, i18nConfig } = this.props;
+    const { lang } = this.state;
+    return [
+      ...statusbarConfig,
+      ...(i18nConfig ? [{
+        component: (
+          <DropdownMenu 
+            needAction={false}
+            menuWrapper={() => (
+              <div>
+                <Icon n="globe" classNames={["mr5"]} />
+                {lang}
+              </div>
+            )}
+            onChange={val => this.changeLang(val)}
+            position="right"
+            value={lang}
+            values={i18nConfig}/>
+        )
+      }] : [])
+    ]
+  }
   render() {
     const {
       username = 'U',
@@ -241,7 +278,6 @@ export default class ScaffoldLayout extends RouterHelper {
       versionInfo,
       iframeMode,
       i18nConfig,
-      statusbarConfig,
       // DashBoard,
       bgStyle,
       tabInStatusbar,
@@ -259,8 +295,13 @@ export default class ScaffoldLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
-    const { Statusbar, NotfoundPage, DashBoard = this.props.DashBoard } = pluginComponent;
-    const hasRouter = routers.length > 0;
+    const {
+      Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
+      Footer
+    } = pluginComponent;
+    const routersLen = routers.length;
+    const hasRouter = routersLen > 0;
+    const statusbarConfig = this.statusbarConfigFilter();
 
     return (
       <div id="managerApp" className="fill main-container fixbg">
@@ -304,18 +345,24 @@ export default class ScaffoldLayout extends RouterHelper {
                       {
                         tabInStatusbar && hasRouter && routers.map((route, idx) => {
                           const isActive = activeRouteIdx === idx;
+                          const isLastest = idx === routersLen - 1;
                           const currInfo = routerInfo[route];
                           const { params } = currInfo;
                           const text = this.gm(menuCodeMapper[route] || route);
                           return (
-                            <span className={"tab-item" + (isActive ? ' active' : '')}
-                              key={route}>
-                              <span
-                                onClick={e => this.changeRoute(route, params)}
-                                className="_btn text">
-                                {text}
+                            <span key={route}>
+                              <span className={"tab-item" + (isActive ? ' active' : '')}>
+                                <span
+                                  onClick={e => this.changeRoute(route, params)}
+                                  className="_btn text">
+                                  {/* {
+                                    isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
+                                  } */}
+                                  {text}
+                                </span>
+                                <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
                               </span>
-                              <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
+                              {!isLastest && <span className="divide">|</span>}
                             </span>
                           )
                         })
@@ -331,33 +378,13 @@ export default class ScaffoldLayout extends RouterHelper {
                         toggleFloat: this.toggleFloat,
                       })
                     }
-                    {
-                      statusbarConfig && <DefaultStatusbar statusbarConfig={statusbarConfig} />
-                    }
-                    {
-                      i18nConfig && (
-                        <div className="item">
-                          <DropdownMenu 
-                            needAction={false}
-                            menuWrapper={() => (
-                              <div>
-                                <Icon n="globe" classNames={["mr5"]} />
-                                {lang}
-                              </div>
-                            )}
-                            onChange={val => this.changeLang(val)}
-                            position="right"
-                            value={lang}
-                            values={i18nConfig}/>
-                        </div>
-                      )
-                    }
+                    <DefaultStatusbar {...this.props} statusbarConfig={statusbarConfig} />
                   </div>
                   <Tabs 
                     withContent 
                     onlyContent={tabInStatusbar}
                     closeable={hasRouter}
-                    closeTip="快捷键: alt + w"
+                    closeTip={this.gm("快捷键") + ": alt + w"}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
                     onClose={idx => this.closeTab(idx, routerInfo)}>
@@ -395,11 +422,18 @@ export default class ScaffoldLayout extends RouterHelper {
                     }
                   </Tabs>
                 </div>
-                {
-                  versionInfo ? (
-                    <VersionComponent gm={this.gm} versionInfo={versionInfo} />
-                  ) : null
-                }
+                <FooterContainer>
+                  {
+                    Footer && this.loadPlugin(Footer, {
+                      gm: this.gm,
+                    })
+                  }
+                  {
+                    versionInfo ? (
+                      <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+                    ) : null
+                  }
+                </FooterContainer>
               </div>
             )
           }

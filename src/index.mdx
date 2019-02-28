@@ -7,19 +7,46 @@ route: /Scroffold
 
 # Scroffold
 
-> 管理中心脚手架，快速搭建管理页面功能，专注业务开发。
+> 快速搭建管理功能，专注业务开发。
+
+[业务页面功能开发，请看 uke-dashboard](https://github.com/SANGET/uke-dashboard.git)
 
 import { Playground, PropsTable } from 'docz'
+import { DateFormat } from 'basic-helper'
+import { PureIcon } from 'ukelli-ui/core/icon'
+import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold } from './';
+import ActionAgentPage from './action-agent/demo'
 
 <Playground style={{
   height: 600
 }}>
   {
     () => {
+      const githubLink = 'https://github.com/SANGET/uke-admin-web-scaffold';
       const Status = () => {
         return (
           <div></div>
+        )
+      }
+      const Footer = () => {
+        const today = new Date();
+        return (
+          <div className="mr10">
+            <span className="mr10">© {DateFormat(today, 'YYYY')}, Made by <a href="https://github.com/SANGET" target="_blank">SANGET</a>, </span>
+            <span className="item mr10">
+              <PureIcon n="fab fa-github" classNames={['mr5']} />
+              <a href={githubLink} target="_blank">
+                Github
+              </a>
+            </span>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">
+              Blog
+            </a>
+            <a href="https://ukelli.com" target="_blank" className="item mr10">
+              About
+            </a>
+          </div>
         )
       }
       const TestPage = (text = 'Test Page') => () => {
@@ -28,7 +55,7 @@ import { AdminWebScaffold } from './';
         )
       }
       const pageComponents = {
-        TEST: TestPage(),
+        ActionAgentPage: ActionAgentPage,
         'TEST1-1': TestPage('TEST1-1'),
         'TEST2-2': TestPage('TEST2-2'),
         'TEST3-3': TestPage('TEST3-3'),
@@ -48,8 +75,8 @@ import { AdminWebScaffold } from './';
         icon: 'bong',
         child: [
           {
-            title: '测试页面1',
-            code: 'TEST1',
+            title: 'ActionAgent',
+            code: 'ActionAgentPage',
           },
           {
             title: '测试页面2',
@@ -108,6 +135,13 @@ import { AdminWebScaffold } from './';
             return <div className="p20">any...</div>
           }
         },
+        {
+          title: '',
+          pureIcon: 'fab fa-github',
+          action: () => {
+            window.open(githubLink)
+          }
+        },
       ]
       return (
         <AdminWebScaffold
@@ -126,7 +160,8 @@ import { AdminWebScaffold } from './';
           i18nConfig={i18nConfig}
           statusbarConfig={statusbarConfig}
           pluginComponent={{
-            Statusbar: <Status />
+            Statusbar: <Status />,
+            Footer: Footer
           }}
           pageComponents={pageComponents}/>
       )

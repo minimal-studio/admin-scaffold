@@ -3,30 +3,50 @@
   // display: flex;
   // flex-wrap: nowrap;
   overflow-x: auto;
+  padding: 5px 0;
+  .divide {
+    color: #c7c7c7;
+  }
   .tab-item {
     display: inline-block;
-    padding: 5px 10px;
-    &.active {
-      background-color: #fefefe;
-      .text {
-        color: $themeColor;
-      }
+    padding: 4px 15px;
+    border-radius: 3px;
+    position: relative;
+    // .indicator {
+    //   font-size: 12px;
+    // }
+    .text {
+      display: inline-block;
+      transition: transform ease 0.2s;
     }
     &:hover {
-      background-color: #fefefe;
+      // background-color: #FFF;
+      // box-shadow: 0 0 3px rgba(#000, 0.05);
       .close {
         opacity: 1;
       }
+      .text {
+        color: $themeColor;
+        transform: translateX(-5px);
+      }
+    }
+    &.active {
+      // background-color: $themeColor;
+      color: $themeColor;
       .text {
         color: $themeColor;
       }
     }
   }
   .close {
-    margin-left: 5px;
     opacity: 0;
+    position: absolute;
+    top: 48%;
+    right: 5px;
+    transform: translateY(-50%);
+    transition: opacity ease 0.2s;
     &:hover {
-      color: $colorRed;
+      // color: $colorRed;
     }
   }
 }
@@ -34,15 +54,17 @@
 .uke-status-bar {
   display: flex;
   // margin-bottom: 10px;
-  background-color: #FFF;
-  box-shadow: 0 2px 2px rgba(#000, 0.1);
+  // background-color: #FFF;
+  // box-shadow: 0 2px 2px rgba(#000, 0.1);
   display: flex;
   align-items: center;
   // justify-content: space-between;
-  .icon {
-    color: #777;
-    &:hover {
-      color: $themeColor;
+  .status-container {
+    .icon {
+      color: #777;
+      &:hover {
+        color: $themeColor;
+      }
     }
   }
   // .lang-selector {
@@ -53,7 +75,7 @@
   //   }
   // }
   .menu-actions {
-    padding: 10px;
+    padding: 0 10px;
   }
   .user-info-group {
     // display: flex;

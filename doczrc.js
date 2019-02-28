@@ -24,6 +24,9 @@ export default {
           #root > div > div:first-of-type > div:first-of-type > div:last-of-type {
             display: none;
           }
+          ul ul {
+            padding-left: 30px !important;
+          }
           #root > div > div:first-of-type > div:first-of-type > div:nth-child(2):before {
             background: transparent;
           }
@@ -112,6 +115,11 @@ export default {
   themeConfig: themeConfig,
   menu: [
     'Getting Started',
+    'Scroffold / 脚手架',
+    'ActionAgent',
+    'Template-Engin / 模版引擎',
+    'HOC-Engin / 高阶模版',
+    'Other',
   ],
   modifyBundlerConfig: (config) => {
     config.resolve.extensions.push('.scss');

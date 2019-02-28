@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tip } from './ui-refs';
+import { Tip, ShowModal, TipPanel } from './ui-refs';
 
 export default class VersionDisplayer extends Component {
   static propTypes = {
     gm: PropTypes.func.isRequired,
+    /** 版本内容 */
     versionInfo: PropTypes.shape({
-      numberVersion: PropTypes.string
+      numberVersion: PropTypes.string,
+      updateLog: PropTypes.string,
     }).isRequired,
   }
   constructor(props) {
@@ -57,8 +59,30 @@ export default class VersionDisplayer extends Component {
       });
   };
 
-  reload() {
-    location.reload();
+  reload = () => {
+    const { updateLog, lastVersion } = this.state;
+    ShowModal({
+      title: '是否更新版本？',
+      type: 'confirm',
+      width: 400,
+      confirmText: (
+        <div>
+          <div>
+            <h4>更新内容:</h4>
+            <p>{updateLog || '日常更新'}</p>
+          </div>
+          <hr />
+          <TipPanel
+            type="success"
+            text="请确保已保存工作内容，页面即将刷新" />
+        </div>
+      ),
+      onConfirm: isSure => {
+        if(isSure) {
+          location.reload();
+        }
+      },
+    })
   }
 
   render() {
@@ -74,7 +98,7 @@ export default class VersionDisplayer extends Component {
               <sup
                 className="new-app-version"
                 onClick={this.reload}
-                title={gm("有新版本，点击重新加载，新版本说明: ") + updateLog}>
+                title={gm("有新版本")}>
                 {gm('新版本')}
                 {lastVersion}
               </sup>

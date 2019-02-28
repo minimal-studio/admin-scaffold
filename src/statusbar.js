@@ -1,43 +1,76 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, DropdownWrapper } from './ui-refs';
+import { Icon, PureIcon, DropdownWrapper } from './ui-refs';
 
-export default class Statusbar extends Component {
-  static propTypes = {
-    statusbarConfig: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        icon: PropTypes.string,
-        children: PropTypes.func,
-      })
-    )
-  }
-  state = {};
-  render() {
-    const { statusbarConfig } = this.props;
-    return (
-      <div className="status-container">
-        {
-          statusbarConfig.map((item) => {
-            const { title, icon, children } = item;
-            return (
-              <span className="item" key={icon + title}>
+const DisplayDOM = ({ onClick, pureIcon, icon, title }) => {
+  const I = pureIcon ? <PureIcon n={pureIcon} /> : <Icon n={icon} />;
+  return (
+    <span onClick={onClick}>
+      {I}
+      {
+        title && <span className="ml5">{title}</span>
+      }
+    </span>
+  )
+};
+
+const Statusbar = (props) => {
+  const { statusbarConfig, ...otherProps } = props;
+  return (
+    <div className="status-container">
+      {
+        statusbarConfig.map((item) => {
+          const { title, icon, pureIcon, children, component, action } = item;
+          let con;
+          switch (true) {
+            case !!component:
+              con = component;
+              break;
+            case !!children:
+              con = (
                 <DropdownWrapper position="right" menuWrapper={() => (
-                  <React.Fragment>
-                    <Icon n={icon} />
-                    {
-                      title && <span className="ml5">{title}</span>
-                    }
-                  </React.Fragment>
+                  <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
                 )}>
-                  {children}
+                  {(options) => children({
+                    ...otherProps,
+                    ...options,
+                  })}
                 </DropdownWrapper>
-              </span>
-            )
-          })
-        }
-      </div>
-    )
-  }
+              );
+              break;
+            case !!action:
+              con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />
+              break;
+          }
+          return (
+            <span className="item" key={icon + title}>
+              {con}
+            </span>
+          )
+        })
+      }
+    </div>
+  )
 }
+
+Statusbar.propTypes = {
+  statusbarConfig: PropTypes.arrayOf(
+    PropTypes.shape({
+      /** 显示的 title */
+      title: PropTypes.string,
+      /** icon */
+      icon: PropTypes.string,
+      /** PureIcon */
+      pureIcon: PropTypes.string,
+      /** 传入 DropdownWrapper 的 children */
+      children: PropTypes.func,
+      /** 如果有 component，则直接替换 DropdownWrapper */
+      component: PropTypes.any,
+      /** 如果有 action，则直接显示内容，并且触发 action */
+      action: PropTypes.any,
+    })
+  )
+}
+
+export default Statusbar;

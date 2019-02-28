@@ -1,16 +1,29 @@
 # uke-admin-web-scaffold
 
-基于 React 的管理后台脚手架，深度结合 Ukelli-UI，统一开发方式，统一视觉与交互体验。
-
 - [在线文档](https://scaffold.ukelli.com/)
 
-## 使用方式
+uke-admin-web-scaffold 是一个基于 React 的管理后台前端脚手架，提供快速以及完善的管理后台的通用功能，包括
+
+- 多标签页共存
+- 前端路由导航
+- 可无限嵌套的导航菜单
+- 各种可自定义的插件接口
+  - 状态栏 Statusabar
+  - 脚注 Footer
+- 完善的模版引擎
+  - 表格引擎 ReportTemplateEngin
+  - 表单引擎 FormTemplateEngin
+- 请求状态与 React state 的代理接口封装 (ActionAgent)
+- 前端资源发布模块
+
+## Usage
 
 ### 安装
 
 ```shell
 # yarn
 yarn add uke-admin-web-scaffold
+
 # 或者 npm
 npm i uke-admin-web-scaffold --save
 ```
@@ -61,8 +74,8 @@ ReactDOM.render(LoginFilter, document.querySelector('#Main'));
 
 ## 参考
 
-- [uke admin seed 项目](https://github.com/SANGET/uke-admin-seed.git)
-- [uke admin seed 示例](https://admin.ukelli.com/)
+- [uke-dashboard Github](https://github.com/SANGET/uke-admin-seed.git)
+- [uke-dashboard 在线事例](https://admin.ukelli.com/)
 
 ## 模版和高阶模版
 

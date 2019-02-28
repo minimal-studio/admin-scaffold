@@ -1,5 +1,46 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.12
+
+- 优化 ActionAgent 的写法，避免潜在的内存泄漏问题
+
+## v0.16.11
+
+- 修复 mini nav 的 key 的警告
+
+## v0.16.10
+
+- 完善 Statusbar 的配置
+
+## v0.16.9
+
+- 状态栏新增分割线
+
+## v0.16.8
+
+- 优化状态栏的实现
+
+## v0.16.7
+
+- 调整导航栏的样式
+
+## v0.16.6
+
+- 调整总体的样式
+
+## v0.16.5
+
+- 新增 Footer 插件，可以自定义右下角的内容
+- 优化新版本的提示交互
+
+## v0.16.4
+
+- 优化左菜单的样式
+
+## v0.16.3
+
+- 完善 StatusbarConfig
+
 ## v0.16.2
 
 - 脚手架添加是否 tab 在 statusbar 的选项: tabInStatusbar
