@@ -45,6 +45,8 @@ export default class ReportTemplate extends Component {
     children: PropTypes.any,
     /** 是否需要分页 */
     needPaging: PropTypes.bool,
+    /** 是否需要分页 */
+    needClearBtn: PropTypes.bool,
     /** 是否需要隐藏小数点按钮 */
     hideFloatable: PropTypes.bool,
     /** 是否需要表格的选择器 */
@@ -97,6 +99,7 @@ export default class ReportTemplate extends Component {
   static defaultProps = {
     autoQuery: false,
     didMountQuery: true,
+    needClearBtn: true,
     hideFloatable: true,
     needCount: false,
     calculateHeight: true,
@@ -252,9 +255,10 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      onQueryData, sortIgnores, needSort
+      onQueryData, sortIgnores, needSort, needClearBtn
     } = this.props;
 
+    const hasConditionOptions = conditionOptions.length > 0;
     const { displayFloat, tableHeight } = this.state;
 
     // let _thumbKeyMapper = !isMobile ? keyMapper : keyMapper.filter(item => {
@@ -325,13 +329,17 @@ export default class ReportTemplate extends Component {
           className="mr10"
           loading={querying}
           onClick={e => this.handleQueryData()}/>
-        <Button
-          text={gm("清空")}
-          color="red"
-          onClick={e => {
-            if(!this.conditionHelper.clearValue) return console.log('请升级 UI 库到 2.14.34 以上');
-            this.conditionHelper.clearValue();
-          }}/>
+        {
+          needClearBtn && hasConditionOptions && (
+            <Button
+              text={gm("清空")}
+              color="red"
+              onClick={e => {
+                if(!this.conditionHelper.clearValue) return console.log('请升级 UI 库到 2.14.34 以上');
+                this.conditionHelper.clearValue();
+              }}/>
+          )
+        }
         {
           !hideFloatable && (
             <Button

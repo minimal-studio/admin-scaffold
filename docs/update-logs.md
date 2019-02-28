@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.14
+
+- 添加可配置清除按钮的 props
+
 ## v0.16.13
 
 - 添加了清空搜索条件的功能
