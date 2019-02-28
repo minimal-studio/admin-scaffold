@@ -2,6 +2,7 @@
   "name": "uke-admin-web-scaffold",
   "version": "0.16.12",
   "main": "./index.js",
+  "files": ["*"],
   "scripts": {
     "publish": "npm publish ./build",
     "release": "npm version patch; npm run publish:build",
