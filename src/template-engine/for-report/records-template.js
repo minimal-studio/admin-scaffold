@@ -118,7 +118,7 @@ export default class ReportTemplate extends Component {
   defaultPagin = {};
   templateDOM = null;
   refreshMask = true;
-  refreshTime = 2;
+  refreshTime = 15;
   refreshTimer = null;
   constructor(props) {
     super(props);
