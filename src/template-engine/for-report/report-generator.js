@@ -27,7 +27,7 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
   return class C extends Action {
     /** 用于记录所有的按钮 */
     powerFilterForBtn(btnId) {
-      const { powerMapper } = this;
+      const { powerMapper } = this.props;
       if(!powerMapper) return true;
       const pageName = window.location.hash.replace(/[^a-zA-Z]/g, '');
       return powerMapper.indexOf(`${pageName}_${btnId}`) > -1;
