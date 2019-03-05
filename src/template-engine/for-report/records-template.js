@@ -12,7 +12,7 @@ import {
   Pagination, CardTable,
   Loading, Button, Toast,
   Table, ConditionGenerator,
-  getElementOffset, DropdownMenu
+  getElementOffset, DropdownMenu, Switch
 } from '../../ui-refs';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
@@ -21,11 +21,6 @@ import { getScreenInfo } from '../../utils/dom';
 const delayExec = new DebounceClass();
 
 const offsetBottom = 70;
-
-let refreshTime;
-const changeRefreshTime = (nextTime) => {
-  refreshTime = nextTime;
-}
 
 export default class ReportTemplate extends Component {
   static propTypes = {
@@ -104,7 +99,7 @@ export default class ReportTemplate extends Component {
   static defaultProps = {
     autoQuery: false,
     didMountQuery: true,
-    needAutoRefresh: true,
+    needAutoRefresh: false,
     needClearBtn: true,
     hideFloatable: true,
     needCount: false,
@@ -122,6 +117,9 @@ export default class ReportTemplate extends Component {
   }
   defaultPagin = {};
   templateDOM = null;
+  refreshMask = true;
+  refreshTime = 2;
+  refreshTimer = null;
   constructor(props) {
     super(props);
 
@@ -133,10 +131,10 @@ export default class ReportTemplate extends Component {
 
   componentDidMount() {
     this.defaultPagin = this.props.pagingInfo;
+    this.setAutoRefreshTimer();
   }
 
   componentDidUpdate() {
-    // console.log('asd')
     this.setTableContainerHeight();
   }
 
@@ -144,6 +142,30 @@ export default class ReportTemplate extends Component {
     this.restoreBasicFloatLen();
     this.__unmount = true;
     this.didMountQueried = false;
+    this.clearAutoRefreshTimer();
+  }
+
+  setAutoRefreshTimer = () => {
+    if(!this.props.needAutoRefresh) return;
+    if(this.refreshTime == 0) {
+      return this.clearAutoRefreshTimer();
+    }
+    this.clearAutoRefreshTimer();
+    this.refreshTimer = setTimeout(() => {
+      this.handleQueryData(null, this.setAutoRefreshTimer);
+    }, this.refreshTime * 1000);
+  }
+
+  clearAutoRefreshTimer = () => {
+    if(this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
+  }
+
+  changeRefreshTime = (nextTime) => {
+    this.refreshTime = nextTime;
+    this.setAutoRefreshTimer();
   }
 
   clearCheckeds = () => {
@@ -208,20 +230,21 @@ export default class ReportTemplate extends Component {
     }
   }
 
+  /**
+   * 小数点开关
+   * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
+   */
   toggleFloat = () => {
-    /**
-     * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
-     */
     let isDisplay = ToggleBasicFloatLen();
     this.setState({
       displayFloat: isDisplay
     });
   }
 
-  handleQueryData = (val) => {
+  handleQueryData = (val, callback) => {
     /** TODO: 观察，点击查询的时候，默认返回第一页 */
     const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
-      onGetResInfo: this.handleRes
+      onGetResInfo: this.handleRes, callback
     });
     this.props.onQueryData(data);
   }
@@ -251,7 +274,7 @@ export default class ReportTemplate extends Component {
   handlePagin = nextPagin => {
     this.props.onQueryData({
       nextPagin,
-      conditionData: this.conditionHelper.value
+      conditionData: this.conditionHelper.value,
     });
   }
 
@@ -261,7 +284,7 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      onQueryData, sortIgnores, needSort, needClearBtn, needAutoRefresh
+      sortIgnores, needSort, needClearBtn, needAutoRefresh
     } = this.props;
 
     const hasConditionOptions = conditionOptions.length > 0;
@@ -329,25 +352,12 @@ export default class ReportTemplate extends Component {
         conditionConfig={conditionOptions} />
     );
     const actionArea = (
-      <div className="action-area">
+      <div className="action-area layout">
         <Button
           text={gm("查询")}
           className="mr10"
           loading={querying}
           onClick={e => this.handleQueryData()}/>
-        {/* {
-          needAutoRefresh && (
-            <DropdownMenu
-              values={{
-                'auto': '自动',
-                15: '15秒',
-                30: '30秒',
-                45: '45秒',
-                60: '60秒',
-              }}
-              onChange={changeRefreshTime} />
-          )
-        } */}
         {
           needClearBtn && hasConditionOptions && (
             <Button
@@ -378,6 +388,35 @@ export default class ReportTemplate extends Component {
                 onClick={action}/>
             );
           })
+        }
+        <span className="flex" />
+        {
+          needAutoRefresh && (
+            <span className="mr10 layout a-i-c">
+              <span className="mr10">自动刷新</span>
+              <Switch
+                onChange={val => {
+                  this.refreshMask = val;
+                  val ? this.setAutoRefreshTimer() : this.clearAutoRefreshTimer();
+                }}
+                defaultChecked={this.refreshMask}
+              />
+              <span className="mr10" />
+              <DropdownMenu
+                needAction={false}
+                position="right"
+                defaultValue={this.refreshTime}
+                values={{
+                  0: '关闭',
+                  2: '自动',
+                  15: '15秒',
+                  30: '30秒',
+                  45: '45秒',
+                  60: '60秒',
+                }}
+                onChange={this.changeRefreshTime} />
+            </span>
+          )
         }
       </div>
     );

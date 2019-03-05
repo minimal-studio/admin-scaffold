@@ -38,6 +38,18 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
 6. 数据交互结束
 ```
 
+### 自动查询
+
+如果需要自动查询，需要在 onQueryData 接口的参数中主动处理 callback，达到等待上一个请求处理完成后的 x 秒之后自动刷新下一个。
+
+```js
+<ReportTemplate
+  ...
+  onQueryData={data => {
+    data.callback();
+  }} />
+```
+
 <Playground style={{
   height: 400
 }}>
@@ -67,6 +79,7 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
       return (
         <ReportTemplate
           querying={false}
+          needAutoRefresh
           height={240}
           conditionOptions={[
             {
@@ -74,7 +87,12 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
               ref: 'input'
             }
           ]}
-          onQueryData={e => {}}
+          onQueryData={data => {
+            console.log(data)
+            setTimeout(() => {
+              data.callback && data.callback()
+            }, 1000)
+          }}
           keyMapper={keyMapper}
           records={mockData} />
       )

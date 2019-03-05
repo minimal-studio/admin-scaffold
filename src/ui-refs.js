@@ -3,6 +3,7 @@ import { Icon, PureIcon } from 'ukelli-ui/core/icon';
 import { Avatar } from 'ukelli-ui/core/avatar';
 import { Button } from 'ukelli-ui/core/button';
 import { Toast } from 'ukelli-ui/core/toast';
+import { Switch } from 'ukelli-ui/core/switch-button';
 import { FormLayout, ConditionGenerator } from 'ukelli-ui/core/form-generator';
 import { ShowModal, CloseAllModal, CloseModal } from 'ukelli-ui/core/modal';
 import DropdownMenu from 'ukelli-ui/core/selector/dropdown-menu';
@@ -19,7 +20,7 @@ import ClickAway from 'ukelli-ui/core/uke-utils/click-away';
 import { getElementOffset } from 'ukelli-ui/core/set-dom';
 
 export {
-  Tip, ShowModal, CloseAllModal, CloseModal, Avatar,
+  Tip, ShowModal, CloseAllModal, CloseModal, Avatar, Switch,
   FormLayout, Pagination, ConditionGenerator, TipPanel,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,
   Icon, PureIcon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,

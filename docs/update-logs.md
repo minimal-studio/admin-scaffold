@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.15
+
+- 添加了自动刷新的机制
+
 ## v0.16.14
 
 - 添加可配置清除按钮的 props
