@@ -12,7 +12,7 @@ import {
   Pagination, CardTable,
   Loading, Button, Toast,
   Table, ConditionGenerator,
-  getElementOffset,
+  getElementOffset, DropdownMenu
 } from '../../ui-refs';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
@@ -21,6 +21,11 @@ import { getScreenInfo } from '../../utils/dom';
 const delayExec = new DebounceClass();
 
 const offsetBottom = 70;
+
+let refreshTime;
+const changeRefreshTime = (nextTime) => {
+  refreshTime = nextTime;
+}
 
 export default class ReportTemplate extends Component {
   static propTypes = {
@@ -99,6 +104,7 @@ export default class ReportTemplate extends Component {
   static defaultProps = {
     autoQuery: false,
     didMountQuery: true,
+    needAutoRefresh: true,
     needClearBtn: true,
     hideFloatable: true,
     needCount: false,
@@ -255,7 +261,7 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      onQueryData, sortIgnores, needSort, needClearBtn
+      onQueryData, sortIgnores, needSort, needClearBtn, needAutoRefresh
     } = this.props;
 
     const hasConditionOptions = conditionOptions.length > 0;
@@ -329,6 +335,19 @@ export default class ReportTemplate extends Component {
           className="mr10"
           loading={querying}
           onClick={e => this.handleQueryData()}/>
+        {/* {
+          needAutoRefresh && (
+            <DropdownMenu
+              values={{
+                'auto': '自动',
+                15: '15秒',
+                30: '30秒',
+                45: '45秒',
+                60: '60秒',
+              }}
+              onChange={changeRefreshTime} />
+          )
+        } */}
         {
           needClearBtn && hasConditionOptions && (
             <Button
