@@ -6,6 +6,7 @@ route: /Template-Engin
 ---
 
 import { Playground, PropsTable } from 'docz'
+import { State, Toggle } from 'react-powerplug'
 import { FormRender, ReportTemplate, GeneralReportRender } from './';
 
 # 模版引擎
@@ -77,24 +78,39 @@ import { FormRender, ReportTemplate, GeneralReportRender } from './';
         },
       ]
       return (
-        <ReportTemplate
-          querying={false}
-          needAutoRefresh
-          height={240}
-          conditionOptions={[
-            {
-              type: 'input',
-              ref: 'input'
-            }
-          ]}
-          onQueryData={data => {
-            console.log(data)
-            setTimeout(() => {
-              data.callback && data.callback()
-            }, 1000)
-          }}
-          keyMapper={keyMapper}
-          records={mockData} />
+        <State initial={{
+          dataForDemo: [...mockData],
+        }}>
+        {
+          ({ state, setState }) => {
+            return (
+              <ReportTemplate
+                querying={false}
+                needAutoRefresh
+                height={240}
+                conditionOptions={[
+                  {
+                    type: 'input',
+                    ref: 'input'
+                  }
+                ]}
+                onQueryData={data => {
+                  console.log(data)
+                  setTimeout(() => {
+                    // 需要等待请求结束后再执行自动查询操作
+                    // 模拟请求
+                    data.callback && data.callback()
+                    setState({
+                      dataForDemo: [...state.dataForDemo, ...mockData]
+                    })
+                  }, 1000)
+                }}
+                keyMapper={keyMapper}
+                records={state.dataForDemo} />
+            )
+          }
+        }
+        </State>
       )
     }
   }

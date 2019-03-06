@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.17
+
+- 添加声音提示
+
 ## v0.16.16
 
 - 调整表格生成器的按钮过滤机制

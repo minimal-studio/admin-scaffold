@@ -92,6 +92,8 @@ export default class ReportTemplate extends Component {
     // hasErr: PropTypes.bool,
     /** 数据查询的返回描述 */
     resDesc: PropTypes.string,
+    /** 声音的 url */
+    soundUrl: PropTypes.string,
     
     /** 忽略的排序字段 */
     sortIgnores: PropTypes.array,
@@ -117,9 +119,11 @@ export default class ReportTemplate extends Component {
   }
   defaultPagin = {};
   templateDOM = null;
-  refreshMask = true;
+  audioMask = true;
   refreshTime = 15;
   refreshTimer = null;
+  soundUrl = null;
+  soundType = null;
   constructor(props) {
     super(props);
 
@@ -127,6 +131,9 @@ export default class ReportTemplate extends Component {
       displayFloat: GetFloatLen() != 0,
       tableHeight: props.height || 200
     };
+
+    const { soundUrl } = props;
+    if(soundUrl) this.setSoundUrl(soundUrl);
   }
 
   componentDidMount() {
@@ -143,6 +150,19 @@ export default class ReportTemplate extends Component {
     this.__unmount = true;
     this.didMountQueried = false;
     this.clearAutoRefreshTimer();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.audioMask && nextProps.records != this.props.records) {
+      this.soundRef.play();
+    }
+    return true;
+  }
+
+  setSoundUrl = (nextUrl) => {
+    this.soundUrl = nextUrl;
+    const soundSplit = nextUrl.split('.');
+    this.soundType = soundSplit[soundSplit.length - 1];
   }
 
   setAutoRefreshTimer = () => {
@@ -278,6 +298,10 @@ export default class ReportTemplate extends Component {
     });
   }
 
+  saveWarnRef = (e) => {
+    this.soundRef = e;
+  }
+
   render() {
     const {
       records = [], pagingInfo = {}, querying, children, template,
@@ -393,14 +417,6 @@ export default class ReportTemplate extends Component {
         {
           needAutoRefresh && (
             <span className="mr10 layout a-i-c">
-              <span className="mr10">自动刷新</span>
-              <Switch
-                onChange={val => {
-                  this.refreshMask = val;
-                  val ? this.setAutoRefreshTimer() : this.clearAutoRefreshTimer();
-                }}
-                defaultChecked={this.refreshMask}
-              />
               <span className="mr10" />
               <DropdownMenu
                 needAction={false}
@@ -415,6 +431,20 @@ export default class ReportTemplate extends Component {
                   60: '60秒',
                 }}
                 onChange={this.changeRefreshTime} />
+              <span className="ms10">声音</span>
+              <Switch
+                onChange={val => {
+                  this.audioMask = val;
+                  if(!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url')
+                  if(!val) this.soundRef.pause();
+                }}
+                defaultChecked={this.audioMask}
+              />
+              <audio id="soundRef" ref={this.saveWarnRef}>
+                {
+                  this.soundUrl && <source src={this.soundUrl} type={`audio/${this.soundType}`} />
+                }
+              </audio>
             </span>
           )
         }
