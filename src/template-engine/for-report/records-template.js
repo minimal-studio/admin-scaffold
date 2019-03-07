@@ -153,7 +153,7 @@ export default class ReportTemplate extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.audioMask && nextProps.records != this.props.records) {
+    if(this.props.needAutoRefresh && this.audioMask && nextProps.records != this.props.records) {
       this.soundRef.play();
     }
     return true;

@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.18
+
+- 修复自动刷新的错误
+
 ## v0.16.17
 
 - 添加声音提示
