@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.19
+
+- 修复传参情况下pageName匹配问题
+
 ## v0.16.18
 
 - 修复自动刷新的错误
