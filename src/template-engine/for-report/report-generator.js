@@ -29,7 +29,8 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
     powerFilterForBtn(btnId) {
       const { powerMapper } = this.props;
       if(!powerMapper) return true;
-      const pageName = window.location.hash.replace(/[^a-zA-Z]/g, '');
+      const pageNameMatch = window.location.hash.match(/#\/([a-zA-Z]+)/);
+      const pageName = pageNameMatch ? pageNameMatch[1] : '';
       return powerMapper.indexOf(`${pageName}_${btnId}`) > -1;
     }
     reportBtnFilter() {
