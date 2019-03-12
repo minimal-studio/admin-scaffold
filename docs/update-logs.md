@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.20
+
+- 添加回车提交查询
+
 ## v0.16.19
 
 - 修复传参情况下pageName匹配问题

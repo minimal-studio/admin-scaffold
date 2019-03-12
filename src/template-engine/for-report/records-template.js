@@ -379,9 +379,10 @@ export default class ReportTemplate extends Component {
       <div className="action-area layout">
         <Button
           text={gm("查询")}
+          type="submit"
           className="mr10"
           loading={querying}
-          onClick={e => this.handleQueryData()}/>
+          onClick={e => this.handleQueryData()} />
         {
           needClearBtn && hasConditionOptions && (
             <Button
@@ -455,8 +456,12 @@ export default class ReportTemplate extends Component {
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
         <div className={"report-fix-con" + (showCondition ? '' : ' hide')}>
+        <form onSubmit={e => {
+          e.preventDefault();
+        }}>
           {conditionHelper}
           {actionArea}
+        </form>
           {children}
         </div>
         <div>
