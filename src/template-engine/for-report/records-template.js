@@ -45,7 +45,7 @@ export default class ReportTemplate extends Component {
     children: PropTypes.any,
     /** 是否需要分页 */
     needPaging: PropTypes.bool,
-    /** 是否需要分页 */
+    /** 是否需要清除按钮 */
     needClearBtn: PropTypes.bool,
     /** 是否需要隐藏小数点按钮 */
     hideFloatable: PropTypes.bool,
