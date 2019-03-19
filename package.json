@@ -15,7 +15,7 @@
     "build:copy-files": "NODE_ENV=production babel-node ./scripts/copy-files.js",
     "push": "npm publish; git add -A; git commit -m 'update'; git push origin master",
     "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "docz:build": "NODE_ENV=production docz build"
   },
   "repository": {
     "type": "git",
@@ -43,7 +43,8 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "basic-helper": "^1.4.10",
+    "basic-helper": "^1.4.11",
+    "buble": "0.19.4",
     "docz": "^0.13.5",
     "docz-plugin-netlify": "^1.1.4",
     "docz-theme-default": "^0.13.5",
