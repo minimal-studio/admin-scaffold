@@ -24,6 +24,9 @@ export default {
           #root > div > div:first-of-type > div:first-of-type > div:last-of-type {
             display: none;
           }
+          #root > div > div:first-of-type {
+            z-index: 101;
+          }
           ul ul {
             padding-left: 30px !important;
           }

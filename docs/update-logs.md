@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.22
+
+- 优化版本信息以及交互
+
 ## v0.16.21
 
 - 升级 UI 库，完善表头的选择器的改变缓存

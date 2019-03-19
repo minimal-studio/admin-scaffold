@@ -19,7 +19,7 @@ import LeftmenuLayout from './leftmenu';
 import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
 import DashBoardWrapper from './dash-board';
-import VersionComponent from './version-com';
+import VersionComponent, { VersionChecker } from './version-com';
 import DefaultStatusbar from './statusbar';
 import FooterContainer from './footer';
 // import MiniNav from './mini-nav';
@@ -32,7 +32,7 @@ export default class ScaffoldLayout extends RouterHelper {
   }
   static propTypes = {
     /** 用户登录后的信息，会传递给每一个页面 */
-    userInfo: PropTypes.object,
+    userInfo: PropTypes.shape({}),
     /** 用户名，用于在左菜单显示 */
     username: PropTypes.string.isRequired,
     /** 退出登录 */
@@ -67,19 +67,19 @@ export default class ScaffoldLayout extends RouterHelper {
     }),
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
-    pageComponents: PropTypes.object,
+    pageComponents: PropTypes.shape({}),
     /** 传给所有页面的 props */
-    pageProps: PropTypes.object,
+    pageProps: PropTypes.shape({}),
     /** 国际化配置 */
-    i18nConfig: PropTypes.object,
+    i18nConfig: PropTypes.shape({}),
     /** 最大存在的 tab 路由 */
     maxRouters: PropTypes.number,
     /** 顶级 tab 是否在 statusbar 中 */
     tabInStatusbar: PropTypes.bool,
     /** 背景 */
-    bgStyle: PropTypes.object,
+    bgStyle: PropTypes.shape({}),
     /** 所有菜单的配置 */
-    menuStore: PropTypes.arrayOf(PropTypes.object),
+    menuStore: PropTypes.arrayOf(PropTypes.shape({})),
     /** 菜单的字段映射 */
     menuMappers: PropTypes.shape({
       child: PropTypes.string.isRequired,
@@ -246,18 +246,18 @@ export default class ScaffoldLayout extends RouterHelper {
     return P;
   }
   statusbarConfigFilter = () => {
-    const { statusbarConfig, i18nConfig } = this.props;
+    const { statusbarConfig, i18nConfig, Footer, versionInfo } = this.props;
     const { lang } = this.state;
     return [
       ...statusbarConfig,
       ...(i18nConfig ? [{
         component: (
           <DropdownMenu 
+            key="i18nConfig"
             needAction={false}
             menuWrapper={() => (
               <div>
                 <Icon n="globe" classNames={["mr5"]} />
-                {lang}
               </div>
             )}
             onChange={val => this.changeLang(val)}
@@ -265,8 +265,35 @@ export default class ScaffoldLayout extends RouterHelper {
             value={lang}
             values={i18nConfig}/>
         )
-      }] : [])
-    ]
+      }] : []),
+      {
+        icon: "ellipsis-v",
+        action: () => {
+          ShowModal({
+            type: 'side',
+            position: 'right',
+            title: '系统信息',
+            children: (
+              <FooterContainer>
+                {
+                  Footer && this.loadPlugin(Footer, {
+                    gm: this.gm,
+                  })
+                }
+                {
+                  versionInfo ? (
+                    <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+                  ) : null
+                }
+              </FooterContainer>
+            )
+          });
+        }
+        // component: (
+        //   <Icon key="more-options" n="ellipsis-v" classNames={["mr5"]} />
+        // )
+      }
+    ];
   }
   render() {
     const {
@@ -364,7 +391,7 @@ export default class ScaffoldLayout extends RouterHelper {
                               </span>
                               {!isLastest && <span className="divide">|</span>}
                             </span>
-                          )
+                          );
                         })
                       }
                     </div>
@@ -422,18 +449,6 @@ export default class ScaffoldLayout extends RouterHelper {
                     }
                   </Tabs>
                 </div>
-                <FooterContainer>
-                  {
-                    Footer && this.loadPlugin(Footer, {
-                      gm: this.gm,
-                    })
-                  }
-                  {
-                    versionInfo ? (
-                      <VersionComponent gm={this.gm} versionInfo={versionInfo} />
-                    ) : null
-                  }
-                </FooterContainer>
               </div>
             )
           }
@@ -442,6 +457,7 @@ export default class ScaffoldLayout extends RouterHelper {
           ...bgStyle,
           zIndex: -1
         }} />
+        <VersionChecker versionInfo={versionInfo} />
       </div>
     );
   }

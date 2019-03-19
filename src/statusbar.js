@@ -12,7 +12,7 @@ const DisplayDOM = ({ onClick, pureIcon, icon, title }) => {
         title && <span className="ml5">{title}</span>
       }
     </span>
-  )
+  );
 };
 
 const Statusbar = (props) => {
@@ -24,35 +24,35 @@ const Statusbar = (props) => {
           const { title, icon, pureIcon, children, component, action } = item;
           let con;
           switch (true) {
-            case !!component:
-              con = component;
-              break;
-            case !!children:
-              con = (
-                <DropdownWrapper position="right" menuWrapper={() => (
-                  <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
-                )}>
-                  {(options) => children({
-                    ...otherProps,
-                    ...options,
-                  })}
-                </DropdownWrapper>
-              );
-              break;
-            case !!action:
-              con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />
-              break;
+          case !!component:
+            con = component;
+            break;
+          case !!children:
+            con = (
+              <DropdownWrapper position="right" menuWrapper={() => (
+                <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
+              )}>
+                {(options) => children({
+                  ...otherProps,
+                  ...options,
+                })}
+              </DropdownWrapper>
+            );
+            break;
+          case !!action:
+            con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />;
+            break;
           }
           return (
-            <span className="item" key={icon + title}>
+            <span className="item" key={icon + '_' + title}>
               {con}
             </span>
-          )
+          );
         })
       }
     </div>
-  )
-}
+  );
+};
 
 Statusbar.propTypes = {
   statusbarConfig: PropTypes.arrayOf(
@@ -71,6 +71,6 @@ Statusbar.propTypes = {
       action: PropTypes.any,
     })
   )
-}
+};
 
 export default Statusbar;

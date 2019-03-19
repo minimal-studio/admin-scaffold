@@ -1,10 +1,11 @@
+/* eslint-disable react/no-multi-comp */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tip, ShowModal, TipPanel } from './ui-refs';
+import { Tip, ShowModal, TipPanel, Notify } from './ui-refs';
 
-export default class VersionDisplayer extends Component {
+class VersionChecker extends Component {
   static propTypes = {
-    gm: PropTypes.func.isRequired,
     /** 版本内容 */
     versionInfo: PropTypes.shape({
       numberVersion: PropTypes.string,
@@ -24,7 +25,6 @@ export default class VersionDisplayer extends Component {
       lastVersion: numberVersion,
     };
   }
-
   componentDidMount() {
     this.getVersion();
     this.timer = setInterval(this.getVersion, 30 * 60 * 1000);
@@ -48,6 +48,18 @@ export default class VersionDisplayer extends Component {
         numberVersion = numberVersion.trim();
         if (numberVersion != this.state.lastVersion) {
           this._clear();
+          Notify({
+            config: {
+              text: '有新的系统版本可以更新',
+              title: '系统通知',
+              type: 'success',
+              lifecycle: 0,
+              onClickTip: e => {
+                this.reload();
+              },
+              actionText: '更新',
+            }
+          });
           !this.__unmount && this.setState({
             lastVersion: numberVersion,
             updateLog
@@ -82,34 +94,38 @@ export default class VersionDisplayer extends Component {
           location.reload();
         }
       },
-    })
+    });
   }
-
   render() {
-    const { currVersion, lastVersion, updateLog } = this.state;
-    const { gm } = this.props;
-    const hasNewVersion = lastVersion != currVersion;
-    return (
-      <span className={"version-container" + (hasNewVersion ? ' active' : '')}>
-        {
-          hasNewVersion ? (
-            <div>
-              <Tip/>
-              <sup
-                className="new-app-version"
-                onClick={this.reload}
-                title={gm("有新版本")}>
-                {gm('新版本')}
-                {lastVersion}
-              </sup>
-            </div>
-          ) : null
-        }
-        <span>
-          {gm('当前版本')} 
-          {currVersion}
-        </span>
-      </span>
-    );
+    return <span />;
   }
 }
+
+const VersionDisplayer = (props) => {
+  const { versionInfo, gm } = props;
+  return (
+    <div className="version-container">
+      <div>
+        {gm('当前版本')} {versionInfo.numberVersion}
+      </div>
+      <div>
+        © 2018 - {(new Date()).getFullYear()}
+      </div>
+    </div>
+  );
+};
+
+VersionDisplayer.propTypes = {
+  gm: PropTypes.func.isRequired,
+  /** 版本内容 */
+  versionInfo: PropTypes.shape({
+    numberVersion: PropTypes.string,
+    updateLog: PropTypes.string,
+  }).isRequired,
+};
+
+export {
+  VersionChecker
+};
+
+export default VersionDisplayer;
