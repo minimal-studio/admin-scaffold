@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.23
+
+- 调整 uke-status-bar 的最小高度
+
 ## v0.16.22
 
 - 优化版本信息以及交互
