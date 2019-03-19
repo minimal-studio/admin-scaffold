@@ -343,6 +343,14 @@ export default class ReportTemplate extends Component {
             <Loading loading={querying} inrow>
               <Table
                 height={_tableH}
+                onChange={(emitVal, config) => {
+                  switch (config.type) {
+                    case 'selector':
+                      // 为 selector 修改 conditionHelper 的值，做缓存
+                      this.conditionHelper.changeValues(emitVal);
+                      break;
+                  }
+                }}
                 ref={e => this._tableRef = e}
                 keyMapper={keyMapper}
                 needCheck={needCheck}
