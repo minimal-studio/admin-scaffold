@@ -39,6 +39,10 @@ export default class ReportTemplate extends Component {
       PropTypes.number,
       PropTypes.string,
     ]),
+    /** 传入 Table 的 props */
+    propsForTable: PropTypes.shape({
+
+    }),
     /** 是否自动计算并填充表格的高度 */
     calculateHeight: PropTypes.bool,
     /** children */
@@ -47,6 +51,10 @@ export default class ReportTemplate extends Component {
     needPaging: PropTypes.bool,
     /** 是否需要清除按钮 */
     needClearBtn: PropTypes.bool,
+    /** 是否需要自动刷新数据 */
+    needAutoRefresh: PropTypes.bool,
+    /** 是否需要表格排序 */
+    needSort: PropTypes.bool,
     /** 是否需要隐藏小数点按钮 */
     hideFloatable: PropTypes.bool,
     /** 是否需要表格的选择器 */
@@ -308,7 +316,7 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
-      sortIgnores, needSort, needClearBtn, needAutoRefresh
+      sortIgnores, needSort, needClearBtn, needAutoRefresh, propsForTable
     } = this.props;
 
     const hasConditionOptions = conditionOptions.length > 0;
@@ -333,6 +341,17 @@ export default class ReportTemplate extends Component {
       break;
     case 'Table':
     default:
+      const _propsForTable = {
+        ...propsForTable,
+        needCheck,
+        keyMapper,
+        whenCheckAction,
+        sortIgnores,
+        needSort,
+        needCount,
+        records,
+        height: _tableH,
+      };
       this.templateDOM = (
         <div className="table-container" ref={e => {
           if(!calculateHeight || height || !e || records.length === 0) return;
@@ -342,26 +361,19 @@ export default class ReportTemplate extends Component {
           <div className="table-scroll">
             <Loading loading={querying} inrow>
               <Table
-                height={_tableH}
+                {..._propsForTable}
                 onChange={(emitVal, config) => {
                   switch (config.type) {
-                    case 'selector':
-                      // 为 selector 修改 conditionHelper 的值，做缓存
-                      this.conditionHelper.changeValues(emitVal);
-                      break;
+                  case 'selector':
+                    // 为 selector 修改 conditionHelper 的值，做缓存
+                    this.conditionHelper.changeValues(emitVal);
+                    break;
                   }
                 }}
                 ref={e => this._tableRef = e}
-                keyMapper={keyMapper}
-                needCheck={needCheck}
-                whenCheckAction={whenCheckAction}
                 onCheck={nextItems => {
                   this.checkedItems = nextItems;
-                }}
-                sortIgnores={sortIgnores}
-                needSort={needSort}
-                records={records}
-                needCount={needCount}/>
+                }} />
             </Loading>
           </div>
         </div>
@@ -444,11 +456,10 @@ export default class ReportTemplate extends Component {
               <Switch
                 onChange={val => {
                   this.audioMask = val;
-                  if(!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url')
+                  if(!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
                   if(!val) this.soundRef.pause();
                 }}
-                defaultChecked={this.audioMask}
-              />
+                defaultChecked={this.audioMask}/>
               <audio id="soundRef" ref={this.saveWarnRef}>
                 {
                   this.soundUrl && <source src={this.soundUrl} type={`audio/${this.soundType}`} />
@@ -464,12 +475,12 @@ export default class ReportTemplate extends Component {
       <div className="report-table-layout">
         <Toast ref={toast => this.toast = toast}/>
         <div className={"report-fix-con" + (showCondition ? '' : ' hide')}>
-        <form onSubmit={e => {
-          e.preventDefault();
-        }}>
-          {conditionHelper}
-          {actionArea}
-        </form>
+          <form onSubmit={e => {
+            e.preventDefault();
+          }}>
+            {conditionHelper}
+            {actionArea}
+          </form>
           {children}
         </div>
         <div>

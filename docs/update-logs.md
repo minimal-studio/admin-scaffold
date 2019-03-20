@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.24
+
+- 新增 propsForTable 的 props，用于统一给 Table 传入 props 的方式
+- 去除内置的 table 样式
+
 ## v0.16.23
 
 - 调整 uke-status-bar 的最小高度
