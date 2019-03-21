@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.25
+
+- 调整 UI 的样式
+
 ## v0.16.24
 
 - 新增 propsForTable 的 props，用于统一给 Table 传入 props 的方式
