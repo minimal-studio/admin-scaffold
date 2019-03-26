@@ -17,6 +17,8 @@ class VersionChecker extends Component {
 
     let { numberVersion } = props.versionInfo;
 
+    window.__VERSION = props.versionInfo;
+
     numberVersion = numberVersion.trim();
     this.errorCount = 0;
 

@@ -40,11 +40,11 @@ const Statusbar = (props) => {
             );
             break;
           case !!action:
-            con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />;
+            con = <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />;
             break;
           }
           return (
-            <span className="item" key={icon + '_' + title}>
+            <span className="item" onClick={action} key={icon + '_' + title}>
               {con}
             </span>
           );

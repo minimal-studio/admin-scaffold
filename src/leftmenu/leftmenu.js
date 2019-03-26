@@ -407,20 +407,27 @@ export default class Leftmenu extends Component {
             <h4 className="title">
               <span className="mr5">{title}</span>
             </h4>
-            <span className="flex" />
-            <SearchBox
-              ref={e => this._seatchBox = e}
-              onClickMenu={onClickMenu}
-              onToggleNav={onToggleNav}
-              codeMapper={menuCodeMapper}
-              showLeftMenu={showLeftMenu}/>
-            <ToolTip 
-              position="bottom"
-              title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
-              classNames={['_action-btn']}
-              className="p10"
-              onClick={e => this.changeMenuUIMode(!flowMode)}
-              n={!flowMode ? "align-justify" : "align-left"}/>
+            <hr />
+            <div className="action-group">
+              <SearchBox
+                ref={e => this._seatchBox = e}
+                onClickMenu={onClickMenu}
+                onToggleNav={onToggleNav}
+                codeMapper={menuCodeMapper}
+                showLeftMenu={showLeftMenu}/>
+              <ToolTip 
+                position="bottom"
+                title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
+                classNames={['_action-btn']}
+                className="p10"
+                onClick={e => this.changeMenuUIMode(!flowMode)}
+                n={flowMode ? "bars" : "bolt"}/>
+              <span className="flex" />
+              <ToolTip
+                onClick={e => onToggleNav(!showLeftMenu)}
+                title={gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
+                n={!showLeftMenu ? "greater-than" : "less-than"}/>
+            </div>
           </div>
           {/* <div className="userinfo">
             <Avatar size={40} text={username[0]}/>

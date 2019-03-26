@@ -28,7 +28,7 @@ $hoverBgColor: rgb(140, 190, 234);
     // background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
     // background-color: #EEE;
     .title {
-      color: $themeColor;
+      // color: $themeColor;
       // text-align: center;
       // color: #FFF;
     }
@@ -127,6 +127,7 @@ $hoverBgColor: rgb(140, 190, 234);
   z-index: 101;
   transition: all ease 0.2s;
   overflow-y: auto;
+  overflow-x: hidden;
   &.show {
     width: $leftmenuWidth;
   }
@@ -135,7 +136,8 @@ $hoverBgColor: rgb(140, 190, 234);
     overflow: hidden;
     // padding: 0 10px;
     &:hover {
-      overflow: auto;
+      // overflow: auto;
+      overflow-y: scroll;
       width: $leftmenuWidth;
       background: $leftmenuBgColor;
       box-shadow: 4px 0 20px rgba(#000, 0.1);
@@ -173,15 +175,22 @@ $hoverBgColor: rgb(140, 190, 234);
   }
   .menu-header {
     position: relative;
-    padding: 2px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    padding: 1px 10px 20px;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    // margin-bottom: 20px;
+    border-bottom: 1px solid #EEE;
     .title {
+      margin-top: 20px;
     }
     .icon {
       padding: 0 5px;
+    }
+    .action-group {
+      display: flex;
+      align-items: center;
+      position: relative;
     }
   }
   .menulist-title {
@@ -341,7 +350,7 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .tree-mode {
-  overflow-y: auto;
+  // overflow-y: auto;
   .leftmenu-tree {
     overflow: hidden;
     .fold {

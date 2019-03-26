@@ -77,21 +77,28 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
         }
       });
     }
+    saveReport = e => this.ReportRef = e;
     render() {
+      const scopeProps = Object.assign({}, {
+        keyMapper: this.keyMapper,
+        conditionOptions: this.conditionOptions,
+        needCount: this.needCount,
+        onChangeCondition: this.onChangeCondition,
+        actionBtns: this.reportBtnFilter(),
+        onQueryData: this.queryData.bind(this)
+      });
+      const props = Object.assign({}, 
+        passProps,
+        this.templateOptions,
+        this.state,
+        this.props
+      );
       return (
         <TemplatEngin
-          keyMapper={this.keyMapper}
-          conditionOptions={this.conditionOptions}
-          needCount={this.needCount}
-          actionBtns={this.reportBtnFilter()}
-          ref={e => this.ReportRef = e}
-          onChangeCondition={this.onChangeCondition}
+          {...scopeProps}
+          {...props}
 
-          {...passProps}
-          {...this.templateOptions}
-          {...this.state}
-          {...this.props}
-          onQueryData={this.queryData.bind(this)}/>
+          ref={this.saveReport} />
       );
     }
   };

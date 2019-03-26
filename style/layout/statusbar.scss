@@ -1,23 +1,51 @@
+@include scrollBar(5px, 5px, '.tabs-in-statusbar');
+@include scrollBar(5px, 5px, '.leftmenu-wrapper');
 .tabs-in-statusbar {
   max-width: 70%;
+  // width: 50%;
   // display: flex;
   // flex-wrap: nowrap;
-  overflow-x: auto;
-  padding: 5px 0;
+  // overflow-x: scroll;
+  // overflow: hidden;
+  // padding: 5px 0;
+  // margin-bottom: -5px;
+  position: relative;
+  z-index: 1;
+  // height: 40px;
+  // &.hover {
+  //   width: 70%;
+  //   .tabs-items {
+  //     height: auto;
+  //     background-color: #fafafa;
+  //     box-shadow: 0 12px 12px rgba(#000, 0.2);
+  //   }
+  // }
   .divide {
     color: #c7c7c7;
   }
+  // .tabs-items {
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   top: 0;
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   overflow: hidden;
+  //   height: 40px;
+  // }
   .tab-item {
     display: inline-block;
-    padding: 4px 15px;
-    border-radius: 3px;
+    padding: 6px 15px;
+    border-radius: 3px 3px 0 0;
     position: relative;
+    border-right: 1px solid #DDD;
     // .indicator {
     //   font-size: 12px;
     // }
     .text {
       display: inline-block;
       transition: transform ease 0.2s;
+      white-space: nowrap;
     }
     &:hover {
       // background-color: #FFF;
@@ -33,6 +61,7 @@
     &.active {
       // background-color: $themeColor;
       color: $themeColor;
+      background-color: #FFF;
       .text {
         color: $themeColor;
       }
@@ -58,15 +87,17 @@
   // box-shadow: 0 2px 2px rgba(#000, 0.1);
   display: flex;
   align-items: center;
-  min-height: 40px;
+  padding-left: 10px;
+  // min-height: 40px;
   // justify-content: space-between;
   .status-container {
-    .icon {
-      color: #777;
-      &:hover {
-        color: $themeColor;
-      }
-    }
+    margin-right: 10px;
+    // .icon {
+    //   color: #777;
+    //   &:hover {
+    //     color: $themeColor;
+    //   }
+    // }
   }
   // .lang-selector {
   //   .uke-dropdown-menu {
@@ -90,7 +121,13 @@
     }
   }
   .item {
-    margin: 0 10px;
+    padding: 0 10px;
+    &:hover {
+      color: $themeColor;
+      .icon {
+        color: $themeColor;
+      }
+    }
   }
 
   .sub-menu {

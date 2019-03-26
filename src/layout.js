@@ -16,12 +16,13 @@ import {
 import ShortcutHelp from './shortcut';
 import LeftmenuLayout from './leftmenu';
 // import Posts from './posts';
-import Notfound from './notfound';
 import { RouterHelper } from './router-multiple';
-import DashBoardWrapper from './dash-board';
 import VersionComponent, { VersionChecker } from './version-com';
+import Notfound from './notfound';
+import DashBoardWrapper from './dash-board';
 import DefaultStatusbar from './statusbar';
 import FooterContainer from './footer';
+import TabForNavBar from './tab-for-nav';
 // import MiniNav from './mini-nav';
 
 let i18nMapperUrl = './i18n/';
@@ -324,7 +325,6 @@ export default class ScaffoldLayout extends RouterHelper {
     } = this.state;
     const {
       Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
-      Footer
     } = pluginComponent;
     const routersLen = routers.length;
     const hasRouter = routersLen > 0;
@@ -359,42 +359,17 @@ export default class ScaffoldLayout extends RouterHelper {
                     'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
                   }>
                   <div className="uke-status-bar" id="statusBar">
-                    <div className="menu-actions">
-                      <span
-                        className="_action-btn mr10"
-                        onClick={e => this.toggleLeftMenu(!showLeftMenu)}>
-                        <ToolTip
-                          title={this.gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
-                          n={showLeftMenu ? "angle-double-left" : "angle-double-right"}/>
-                      </span>
-                    </div>
-                    <div className="tabs-in-statusbar">
-                      {
-                        tabInStatusbar && hasRouter && routers.map((route, idx) => {
-                          const isActive = activeRouteIdx === idx;
-                          const isLastest = idx === routersLen - 1;
-                          const currInfo = routerInfo[route];
-                          const { params } = currInfo;
-                          const text = this.gm(menuCodeMapper[route] || route);
-                          return (
-                            <span key={route}>
-                              <span className={"tab-item" + (isActive ? ' active' : '')}>
-                                <span
-                                  onClick={e => this.changeRoute(route, params)}
-                                  className="_btn text">
-                                  {/* {
-                                    isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
-                                  } */}
-                                  {text}
-                                </span>
-                                <span className="_btn close" onClick={e => this.closeTab(idx, routerInfo)}>x</span>
-                              </span>
-                              {!isLastest && <span className="divide">|</span>}
-                            </span>
-                          );
-                        })
-                      }
-                    </div>
+                    {tabInStatusbar && hasRouter && (
+                      <TabForNavBar
+                        changeRoute={this.changeRoute}
+                        closeTab={this.closeTab}
+                        gm={this.gm}
+                        menuCodeMapper={menuCodeMapper}
+                        routerInfo={routerInfo}
+                        routers={routers}
+                        activeRouteIdx={activeRouteIdx}
+                        routersLen={routersLen} />
+                    )}
                     <span className="flex" />
                     {
                       Statusbar && this.loadPlugin(Statusbar, {

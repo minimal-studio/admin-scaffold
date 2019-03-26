@@ -93,13 +93,13 @@ export default class SearchBox extends Component {
         this.hide();
         // this.shouldBeHidden = false;
       }}>
-        <div>
+        <React.Fragment>
           <ToolTip 
             position="bottom"
             title={(
               <ShortcutTipDesc />
             )}
-            classNames={['_action-btn mr10']}
+            classNames={['_action-btn']}
             className="p10"
             onClick={() => this.show()}
             n="search"/>
@@ -145,7 +145,7 @@ export default class SearchBox extends Component {
               }
             </div>
           </div>
-        </div>
+        </React.Fragment>
       </ClickAway>
     );
   }

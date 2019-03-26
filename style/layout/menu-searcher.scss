@@ -2,14 +2,19 @@
   position: relative;
   // margin: 0 10px 10px;
   @include fill();
-  transform: translateY(-100px);
+  transform: translateY(-10px);
   transition: all ease 0.3s;
+  opacity: 0;
+  pointer-events: none;
   z-index: 111;
+  height: 32px;
   // bottom: auto;
   // padding: 3px;
 
   &.show-content {
     transform: translateY(0);
+    pointer-events: all;
+    opacity: 1;
     .hide-content {
       // border: 1px solid $themeColor;
       box-shadow: 0 12px 24px rgba(#000, 0.2);

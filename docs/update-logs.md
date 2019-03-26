@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.26
+
+- 优化布局，优化顶部的标签导航
+
 ## v0.16.25
 
 - 调整 UI 的样式
