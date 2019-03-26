@@ -175,14 +175,17 @@ $hoverBgColor: rgb(140, 190, 234);
   }
   .menu-header {
     position: relative;
-    padding: 1px 10px 20px;
+    padding: 1px 10px 10px;
     // display: flex;
     // justify-content: space-between;
     // align-items: center;
     // margin-bottom: 20px;
     border-bottom: 1px solid #EEE;
+    hr {
+      margin: 10px 0;
+    }
     .title {
-      margin-top: 20px;
+      margin-top: 10px;
     }
     .icon {
       padding: 0 5px;
