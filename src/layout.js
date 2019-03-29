@@ -77,6 +77,8 @@ export default class ScaffoldLayout extends RouterHelper {
     maxRouters: PropTypes.number,
     /** 顶级 tab 是否在 statusbar 中 */
     tabInStatusbar: PropTypes.bool,
+    /** 是否缓存 state */
+    cacheState: PropTypes.bool,
     /** 背景 */
     bgStyle: PropTypes.shape({}),
     /** 所有菜单的配置 */
@@ -97,6 +99,7 @@ export default class ScaffoldLayout extends RouterHelper {
     maxRouters: 10,
     statusbarConfig: [],
     tabInStatusbar: true,
+    cacheState: true,
   }
 
   state = {
@@ -187,6 +190,7 @@ export default class ScaffoldLayout extends RouterHelper {
 
   componentWillUnmount() {
     Mousetrap.unbind(['alt+k', 'alt alt']);
+    this.resetState();
   }
 
   handleCloseFormShortcut = () => {

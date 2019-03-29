@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.30
+
+- 完善 state 的缓存机制
+
 ## v0.16.29
 
 - 完善导航机制

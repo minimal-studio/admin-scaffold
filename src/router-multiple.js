@@ -78,11 +78,13 @@ class RouterHelper extends Component {
   wrapPushUrl = wrapPushUrl;
   pushToHistory = pushToHistory;
   onNavigate = onNavigate;
-  state = cacheState;
   constructor(props) {
     super(props);
 
+    const { cacheState } = props;
     history.listen(this.handleHistory);
+
+    this.state = cacheState ? cacheState : defaultState;
   }
   componentDidMount() {
     this.initRoute();
