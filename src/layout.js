@@ -363,6 +363,7 @@ export default class ScaffoldLayout extends RouterHelper {
                       <TabForNavBar
                         changeRoute={this.changeRoute}
                         closeTab={this.closeTab}
+                        closeAll={this.closeAll}
                         gm={this.gm}
                         menuCodeMapper={menuCodeMapper}
                         routerInfo={routerInfo}

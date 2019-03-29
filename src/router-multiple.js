@@ -7,15 +7,21 @@ import { RemoveArrayItem, CallFunc } from 'basic-helper';
 
 const history = createBrowserHistory();
 
-let cacheState = {
+const defaultState = {
   routers: [],
   routerInfo: {},
   activeRouteIdx: -1,
   activeRoute: '',
 };
 
+let cacheState = Object.assign({}, defaultState);
+
 const pushToHistory = (url, params) => {
   history.push(url.replace(/\/\//g, '/'), params);
+};
+
+const replaceHistory = (url, params) => {
+  history.replace(url.replace(/\/\//g, '/'), params);
 };
 
 const wrapPushUrl = (pushConfig) => {
@@ -95,6 +101,15 @@ class RouterHelper extends Component {
     const nextRouterState = state.nextRouters;
     this.selectTab(activeRoute, nextRouterState);
   };
+  closeAll = () => {
+    replaceHistory('/');
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        ...defaultState
+      };
+    });
+  }
   closeTab = (idx, routeInfo) => {
     const { routers, routerInfo, activeRouteIdx } = this.state;
 

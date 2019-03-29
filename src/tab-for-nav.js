@@ -1,42 +1,44 @@
 import React from 'react';
+import { Icon, ToolTip } from './ui-refs';
 
-export default class TabForNav extends React.PureComponent {
-  changeRoute = (route, params) => {
-    this.props.changeRoute(route, params);
-  }
-  render() {
-    const {
-      routers, routersLen, activeRouteIdx,
-      routerInfo, menuCodeMapper, gm, closeTab
-    } = this.props;
-    return (
-      <div className="tabs-in-statusbar">
-        <div className="tabs-items">
-          {
-            routers.map((route, idx) => {
-              const isActive = activeRouteIdx === idx;
-              const currInfo = routerInfo[route];
-              const { params } = currInfo;
-              const text = gm(menuCodeMapper[route] || route);
-              return (
-                <span key={route} className={"tab-item" + (isActive ? ' active' : '')}>
-                  <span
-                    onClick={e => this.changeRoute(route, params)}
-                    className="_btn text">
-                    {/* {
-                      isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
-                    } */}
-                    {text}
-                  </span>
-                  <span className="_btn close" onClick={e => closeTab(idx, routerInfo)}>x</span>
+const TabForNav = (props) => {
+  const {
+    routers, routersLen, activeRouteIdx, closeAll,
+    routerInfo, menuCodeMapper, gm, closeTab, changeRoute
+  } = props;
+  return (
+    <div className="tabs-in-statusbar">
+      <div className="tabs-items">
+        <span className="tab-item close-all-btn">
+          <span
+            onClick={e => closeAll()}>
+            <ToolTip n="window-close" title="关闭所有标签" />
+          </span>
+        </span>
+        {
+          routers.map((route, idx) => {
+            const isActive = activeRouteIdx === idx;
+            const currInfo = routerInfo[route];
+            const { params } = currInfo;
+            const text = gm(menuCodeMapper[route] || route);
+            return (
+              <span key={route} className={"tab-item" + (isActive ? ' active' : '')}>
+                <span
+                  onClick={e => changeRoute(route, params)}
+                  className="_btn text">
+                  {/* {
+                    isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
+                  } */}
+                  {text}
                 </span>
-              );
-            })
-          }
-        </div>
+                <span className="_btn close" onClick={e => closeTab(idx, routerInfo)}>x</span>
+              </span>
+            );
+          })
+        }
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-  
+export default TabForNav;

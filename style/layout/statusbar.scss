@@ -16,6 +16,12 @@
     // .indicator {
     //   font-size: 12px;
     // }
+    &.close-all-btn {
+      color: #999;
+      .close {
+        opacity: 1;
+      }
+    }
     .text {
       display: inline-block;
       transition: transform ease 0.2s;
