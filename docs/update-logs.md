@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.32
+
+- 删除多余 console
+
 ## v0.16.31
 
 - 修复一些问题
