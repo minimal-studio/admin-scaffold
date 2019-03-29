@@ -190,7 +190,6 @@ export default class ScaffoldLayout extends RouterHelper {
 
   componentWillUnmount() {
     Mousetrap.unbind(['alt+k', 'alt alt']);
-    this.resetState();
   }
 
   handleCloseFormShortcut = () => {
@@ -327,6 +326,7 @@ export default class ScaffoldLayout extends RouterHelper {
       ready,
       routers
     } = this.state;
+    console.log(routers)
     const {
       Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
     } = pluginComponent;

@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.31
+
+- 修复一些问题
+
 ## v0.16.30
 
 - 完善 state 的缓存机制

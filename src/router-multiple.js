@@ -14,7 +14,7 @@ const defaultState = {
   activeRoute: '',
 };
 
-let cacheState = Object.assign({}, defaultState);
+let cachedState = Object.assign({}, defaultState);
 
 const pushToHistory = (url, params) => {
   history.push(url.replace(/\/\//g, '/'), params);
@@ -84,7 +84,7 @@ class RouterHelper extends Component {
     const { cacheState } = props;
     history.listen(this.handleHistory);
 
-    this.state = cacheState ? cacheState : defaultState;
+    this.state = cacheState ? cachedState : defaultState;
   }
   componentDidMount() {
     this.initRoute();
@@ -169,7 +169,7 @@ class RouterHelper extends Component {
         routers: nextRouters,
         routerInfo: nextRouterInfo
       };
-      cacheState = nextState;
+      cachedState = nextState;
       return nextState;
     });
   }
