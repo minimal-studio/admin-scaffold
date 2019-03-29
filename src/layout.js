@@ -359,17 +359,21 @@ export default class ScaffoldLayout extends RouterHelper {
                     'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
                   }>
                   <div className="uke-status-bar" id="statusBar">
-                    {tabInStatusbar && hasRouter && (
+                    {tabInStatusbar && (
                       <TabForNavBar
                         changeRoute={this.changeRoute}
                         closeTab={this.closeTab}
                         closeAll={this.closeAll}
                         gm={this.gm}
                         menuCodeMapper={menuCodeMapper}
+                        hasRouter={hasRouter}
                         routerInfo={routerInfo}
                         routers={routers}
                         activeRouteIdx={activeRouteIdx}
-                        routersLen={routersLen} />
+                        routersLen={routersLen}
+                        defaultTitle={e => {
+                          return this.gm("仪表盘");
+                        }} />
                     )}
                     <span className="flex" />
                     {

@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.16.29
+
+- 完善导航机制
+
 ## v0.16.28
 
 - 新增删除全部 Tab 的接口
