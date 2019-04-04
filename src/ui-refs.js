@@ -11,6 +11,7 @@ import DropdownWrapper from 'ukelli-ui/core/selector/dropdown-wrapper';
 import { ToolTip } from 'ukelli-ui/core/tooltip';
 import { TipPanel } from 'ukelli-ui/core/tip-panel';
 import { Loading } from 'ukelli-ui/core/loading';
+import { Menus } from 'ukelli-ui/core/menu';
 import { Pagination } from 'ukelli-ui/core/pagin';
 import { Tabs, Tab } from 'ukelli-ui/core/tabs';
 import { Table, CardTable } from 'ukelli-ui/core/record-render';
@@ -21,7 +22,7 @@ import { getElementOffset } from 'ukelli-ui/core/set-dom';
 
 export {
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar, Switch,
-  FormLayout, Pagination, ConditionGenerator, TipPanel,
+  FormLayout, Pagination, ConditionGenerator, TipPanel, Menus,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,
   Icon, PureIcon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,
   setUkelliConfig, setUkeLang, getElementOffset

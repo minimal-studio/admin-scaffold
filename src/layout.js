@@ -7,22 +7,29 @@ import PropTypes from 'prop-types';
 
 import Mousetrap from 'mousetrap';
 import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
+import classnames from 'classnames';
 
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
   Loading, setUkelliConfig, setUkeLang, Icon
 } from './ui-refs';
 
-import ShortcutHelp from './shortcut';
-import LeftmenuLayout from './leftmenu';
+import { showShortcut, ShortcutDesc } from './shortcut';
+import NavMenu from './nav-menu';
 // import Posts from './posts';
 import { RouterHelper } from './router-multiple';
-import VersionComponent, { VersionChecker } from './version-com';
-import Notfound from './notfound';
-import DashBoardWrapper from './dash-board';
-import DefaultStatusbar from './statusbar';
-import FooterContainer from './footer';
-import TabForNavBar from './tab-for-nav';
+import VersionComponent, { VersionChecker } from './plugins/version-com';
+import {
+  Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
+} from './plugins';
+import {
+  getThemeConfig, setTheme, setLayout, setDarkMode
+} from './plugins/theme';
+// import Notfound from './plugins/notfound';
+// import DashBoardWrapper from './plugins/dash-board';
+// import DefaultStatusbar from './plugins/statusbar';
+// import FooterContainer from './plugins/footer';
+// import TabForNavBar from './plugins/tab-for-nav';
 // import MiniNav from './mini-nav';
 
 let i18nMapperUrl = './i18n/';
@@ -66,6 +73,16 @@ export default class ScaffoldLayout extends RouterHelper {
       /** Footer 插件 */
       Footer: PropTypes.any,
     }),
+    /** 默认主题 */
+    defaultTheme: PropTypes.oneOf([
+      'blue', 'red', 'green', 'yellow', 'light-p', 'gold', 'orange', 'wine'
+    ]),
+    /** 默认布局方式 */
+    defaultLayout: PropTypes.oneOf([
+      'vertical', 'horizontal'
+    ]),
+    /** 是否黑夜模式 */
+    defaultDarkMode: PropTypes.bool,
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
     pageComponents: PropTypes.shape({}),
@@ -97,22 +114,13 @@ export default class ScaffoldLayout extends RouterHelper {
   static defaultProps = {
     bgStyle: {},
     maxRouters: 10,
+    defaultTheme: 'blue',
+    defaultLayout: 'horizontal',
+    defaultDarkMode: false,
     statusbarConfig: [],
     tabInStatusbar: true,
     cacheState: true,
   }
-
-  state = {
-    ...this.state,
-    menuCodeMapper: {},
-    showLeftMenu: true,
-    activeMenu: '',
-    displayFloat: true,
-    menuData: this.props.menuStore || [],
-    lang: navigator.language,
-    ready: false,
-    langMapper: {}
-  };
 
   constructor(props) {
     super(props);
@@ -123,6 +131,29 @@ export default class ScaffoldLayout extends RouterHelper {
       this.changeMenuData(resMenuData);
     });
     this.initApp();
+
+    this.state = {
+      ...this.state,
+      ...this.initThemeConfig(),
+      menuCodeMapper: {},
+      showNavMenu: true,
+      activeMenu: '',
+      displayFloat: true,
+      menuData: this.props.menuStore || [],
+      lang: navigator.language,
+      ready: false,
+      langMapper: {}
+    };
+  }
+
+  initThemeConfig = () => {
+    // const THEME = Storage.getItem()
+    const themeConfig = getThemeConfig();
+    return Object.assign({}, {
+      theme: this.props.defaultTheme,
+      darkMode: this.props.defaultDarkMode,
+      layout: this.props.defaultLayout,
+    }, themeConfig);
   }
 
   async initApp() {
@@ -144,6 +175,27 @@ export default class ScaffoldLayout extends RouterHelper {
       lang,
       langMapper
     });
+  }
+
+  changeTheme = (nextTheme) => {
+    this.setState({
+      theme: nextTheme,
+    });
+    setTheme(nextTheme);
+  }
+
+  changeDarkMode = (nextDarkMode) => {
+    this.setState({
+      darkMode: nextDarkMode,
+    });
+    setDarkMode(nextDarkMode);
+  }
+
+  changeLayout = (nextLayout) => {
+    this.setState({
+      layout: nextLayout,
+    });
+    setLayout(nextLayout);
   }
 
   fetchLangMapper = async (lang) => {
@@ -180,10 +232,10 @@ export default class ScaffoldLayout extends RouterHelper {
 
   componentDidMount() {
     Mousetrap.bind(['alt alt'], e => {
-      this.toggleLeftMenu(!this.state.showLeftMenu);
+      this.toggleNavMenu(!this.state.showNavMenu);
       return false;
     });
-    Mousetrap.bind(['alt+k'], e => this.showShortcut());
+    Mousetrap.bind(['alt+k'], e => showShortcut());
     Mousetrap.bind(['alt+w'], e => this.handleCloseFormShortcut());
     this.initRoute();
   }
@@ -215,18 +267,11 @@ export default class ScaffoldLayout extends RouterHelper {
     });
     window.MenuCodeMapper = menuCodeMapper;
   }
-  toggleLeftMenu = (showLeftMenu) => {
+  toggleNavMenu = (showNavMenu) => {
     this.setState({
-      showLeftMenu
+      showNavMenu
     });
     this.triggerResize();
-  }
-  showShortcut = () => {
-    ShowModal({
-      children: <ShortcutHelp/>,
-      title: '键盘快捷键说明',
-      width: 640
-    });
   }
   getRouteProps(isActive) {
     const { userInfo, username, pageProps } = this.props;
@@ -250,54 +295,71 @@ export default class ScaffoldLayout extends RouterHelper {
     return P;
   }
   statusbarConfigFilter = () => {
-    const { statusbarConfig, i18nConfig, Footer, versionInfo } = this.props;
-    const { lang } = this.state;
+    const { statusbarConfig, i18nConfig } = this.props;
     return [
       ...statusbarConfig,
-      ...(i18nConfig ? [{
-        component: (
-          <DropdownMenu 
-            key="i18nConfig"
-            needAction={false}
-            menuWrapper={() => (
-              <div>
-                <Icon n="globe" classNames={["mr5"]} />
-              </div>
-            )}
-            onChange={val => this.changeLang(val)}
-            position="right"
-            value={lang}
-            values={i18nConfig}/>
-        )
-      }] : []),
-      {
-        icon: "ellipsis-v",
-        action: () => {
-          ShowModal({
-            type: 'side',
-            position: 'right',
-            title: '系统信息',
-            children: (
-              <FooterContainer>
-                {
-                  Footer && this.loadPlugin(Footer, {
-                    gm: this.gm,
-                  })
-                }
-                {
-                  versionInfo ? (
-                    <VersionComponent gm={this.gm} versionInfo={versionInfo} />
-                  ) : null
-                }
-              </FooterContainer>
-            )
-          });
-        }
-        // component: (
-        //   <Icon key="more-options" n="ellipsis-v" classNames={["mr5"]} />
-        // )
-      }
+      ...(i18nConfig ? [this.getI18nConfig()] : []),
+      this.getSystemInfoConfig()
     ];
+  }
+  getI18nConfig = () => {
+    const { i18nConfig } = this.props;
+    const { lang } = this.state;
+    return {
+      component: (
+        <DropdownMenu 
+          key="i18nConfig"
+          needAction={false}
+          menuWrapper={() => (
+            <div>
+              <Icon n="globe" classNames={["mr5"]} />
+            </div>
+          )}
+          onChange={val => this.changeLang(val)}
+          position="right"
+          value={lang}
+          values={i18nConfig}/>
+      )
+    };
+  }
+  getSystemInfoConfig = () => {
+    return {
+      icon: "ellipsis-v",
+      action: this.handleSystemInfo
+    };
+  }
+  handleSystemInfo = () => {
+    const { Footer, versionInfo } = this.props;
+    const { theme, darkMode, layout } = this.state;
+    ShowModal({
+      type: 'side',
+      position: 'right',
+      title: '系统设置',
+      children: (
+        <React.Fragment>
+          <ShortcutDesc />
+          <Theme
+            onChangeDarkMode={this.changeDarkMode}
+            onChangeTheme={this.changeTheme}
+            onChangeLayout={this.changeLayout}
+            layout={layout}
+            darkMode={darkMode}
+            activeTheme={theme} />
+          <FooterContainer>
+            {
+              Footer && this.loadPlugin(Footer, {
+                gm: this.gm,
+              })
+            }
+            {
+              versionInfo ? (
+                <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+              ) : null
+            }
+          </FooterContainer>
+        </React.Fragment>
+      )
+    });
   }
   render() {
     const {
@@ -316,7 +378,7 @@ export default class ScaffoldLayout extends RouterHelper {
     } = this.props;
     const {
       menuCodeMapper,
-      showLeftMenu,
+      showNavMenu,
       menuData,
       activeMenu,
       displayFloat,
@@ -324,7 +386,10 @@ export default class ScaffoldLayout extends RouterHelper {
       routerInfo,
       lang,
       ready,
-      routers
+      layout,
+      theme,
+      routers,
+      darkMode,
     } = this.state;
     const {
       Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
@@ -334,12 +399,12 @@ export default class ScaffoldLayout extends RouterHelper {
     const statusbarConfig = this.statusbarConfigFilter();
 
     return (
-      <div id="managerApp" className="fill main-container fixbg">
+      <div id="managerApp" className={`fill main-container fixbg ${theme} ${layout} ${darkMode ? 'dark' : 'light'}`}>
         <Loading loading={!ready}>
           {
             ready && (
-              <div>
-                <LeftmenuLayout
+              <React.Fragment>
+                <NavMenu
                   onDidMount={this.onGetMenuCodeMapper}
                   menuData={menuData}
                   title={title}
@@ -353,13 +418,13 @@ export default class ScaffoldLayout extends RouterHelper {
                   lang={lang}
                   defaultFlowMode={false}
                   changeLang={this.changeLang}
-                  showLeftMenu={showLeftMenu}
+                  show={showNavMenu}
                   gm={this.gm}
-                  onToggleNav={this.toggleLeftMenu}
+                  onToggleNav={this.toggleNavMenu}
                   activeMenu={activeMenu}/>
                 <div
                   className={
-                    'pages-container ' + (showLeftMenu ? 'show-menu' : 'hide-menu')
+                    'pages-container ' + (showNavMenu ? 'show-menu' : 'hide-menu')
                   }>
                   <div className="uke-status-bar" id="statusBar">
                     {tabInStatusbar && (
@@ -382,7 +447,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     {
                       Statusbar && this.loadPlugin(Statusbar, {
                         onLogout: logout,
-                        showShortcut: this.showShortcut,
+                        showShortcut: showShortcut,
                         displayFloat: displayFloat,
                         gm: this.gm,
                         toggleFloat: this.toggleFloat,
@@ -432,7 +497,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     }
                   </Tabs>
                 </div>
-              </div>
+              </React.Fragment>
             )
           }
         </Loading>

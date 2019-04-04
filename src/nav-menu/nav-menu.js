@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass, Call } from 'basic-helper';
-import { ToolTip, Icon, Avatar } from '../ui-refs';
+import { ToolTip, Icon } from '../ui-refs';
 
 import { storageHelper } from '../config';
 
@@ -74,7 +74,7 @@ const MenuItem = ({ icon = 'angle-right', title, gm }) => {
  *   ]
  * }
  */
-export default class Leftmenu extends Component {
+export default class NavMenu extends Component {
   static propTypes = {
     onDidMount: PropTypes.func,
     menuMappers: PropTypes.shape({
@@ -207,7 +207,7 @@ export default class Leftmenu extends Component {
         key={key}
         className="menu"
         to={to}
-        onClick={e => Call(onClick, key, code)}>
+        onClick={() => Call(onClick, key, code)}>
         {
           !icon ? (
             <span className="menu-tip">-</span>
@@ -227,8 +227,8 @@ export default class Leftmenu extends Component {
     const flowMenuDOM = (
       <div
         className={"flow-menu-container" + (isShow ? ' show' : '')}
-        onMouseEnter={e => delayExec.cancel()}
-        onMouseLeave={e => this.hideFlowMenu()}
+        onMouseEnter={() => delayExec.cancel()}
+        onMouseLeave={() => this.hideFlowMenu()}
         style={{
           left: offset.left
         }}
@@ -237,7 +237,7 @@ export default class Leftmenu extends Component {
             this.flowMenuContainer = flowMenuContainer;
 
             let flowContainerHeight = flowMenuContainer.offsetHeight;
-            let flowContainerScrollTop = this.leftmenuDOM ? this.leftmenuDOM.scrollTop : 0;
+            let flowContainerScrollTop = this.navMenuDOM ? this.navMenuDOM.scrollTop : 0;
             let expectedOffsetTop = offset.top - flowContainerScrollTop;
             let parentHeight = offset.height;
             let offsetBottom = expectedOffsetTop + flowContainerHeight;
@@ -270,7 +270,7 @@ export default class Leftmenu extends Component {
       return isFold ? (
         <div
           key={idx}
-          onMouseEnter={e => {
+          onMouseEnter={(e) => {
             delayExec.cancel();
             this.setFlowMenu({
               targetElem: e.target,
@@ -278,7 +278,7 @@ export default class Leftmenu extends Component {
               idx
             });
           }}
-          onMouseLeave={e => {
+          onMouseLeave={() => {
             this.hideFlowMenu();
           }}
           className={'fold' + (isHovering ? ' hover' : '')}>
@@ -299,7 +299,7 @@ export default class Leftmenu extends Component {
     });
 
     return (
-      <div className="leftmenu-tree">
+      <div className="nav-menu-tree">
         {allSet}
         {flowMenuDOM}
       </div>
@@ -379,7 +379,7 @@ export default class Leftmenu extends Component {
       username,
       logout,
       gm,
-      showLeftMenu
+      show
     } = this.props;
 
     const { flowMode } = this.state;
@@ -387,20 +387,20 @@ export default class Leftmenu extends Component {
     const menuTree = flowMode ? (
       this.getFlowModeDOM(menuData)
     ) : (
-      <div className="leftmenu-tree">
+      <div className="nav-menu-tree">
         {this.getNormalMenuChildren(menuData)}
       </div>
     );
 
     const renderRes = (
-      <div className={'leftmenu-wrapper ' + (showLeftMenu ? 'show' : 'collapse')}>
+      <div className={'nav-menu-wrapper ' + (show ? 'show' : 'collapse')}>
         <div
-          ref={leftmenuDOM => {
-            if(leftmenuDOM) this.leftmenuDOM = leftmenuDOM;
+          ref={navMenuDOM => {
+            if(navMenuDOM) this.navMenuDOM = navMenuDOM;
           }}
-          // style={showLeftMenu ? {} : {zIndex: -1}}
+          // style={show ? {} : {zIndex: -1}}
           className={
-            'leftmenu-response ' +
+            'nav-menu-response ' +
             (flowMode ? 'flow-mode ' : 'tree-mode ')
           }>
           <div className="menu-header">
@@ -414,19 +414,19 @@ export default class Leftmenu extends Component {
                 onClickMenu={onClickMenu}
                 onToggleNav={onToggleNav}
                 codeMapper={menuCodeMapper}
-                showLeftMenu={showLeftMenu}/>
+                showMenu={show}/>
               <ToolTip 
                 position="bottom"
                 title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
                 classNames={['_action-btn']}
                 className="p10"
-                onClick={e => this.changeMenuUIMode(!flowMode)}
+                onClick={() => this.changeMenuUIMode(!flowMode)}
                 n={flowMode ? "bars" : "bolt"}/>
               <span className="flex" />
               <ToolTip
-                onClick={e => onToggleNav(!showLeftMenu)}
-                title={gm(showLeftMenu ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
-                n={!showLeftMenu ? "greater-than" : "less-than"}/>
+                onClick={() => onToggleNav(!show)}
+                title={gm(show ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
+                n={!show ? "greater-than" : "less-than"}/>
             </div>
           </div>
           {/* <div className="userinfo">

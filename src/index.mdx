@@ -123,7 +123,21 @@ import ActionAgentPage from './action-agent/demo'
           title: '',
           icon: 'user',
           children: () => {
-            return <div className="p20">any...</div>
+            return <Menus data={[
+              {
+                text: 'MenuItem1',
+              },
+              {
+                text: 'MenuItem2',
+              },
+              {
+                text: 'MenuItem3',
+              },
+              'hr',
+              {
+                text: 'MenuItem4',
+              },
+            ]} />
           }
         },
         {

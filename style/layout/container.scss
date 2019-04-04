@@ -1,3 +1,5 @@
+@import '../mixin/theme.scss';
+
 $userInfoItemOverBgColor: #f7f7f7;
 
 .table-render-container {
@@ -22,6 +24,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 .main-container {
   background-color: rgba($mainBgColor, 0.5);
   border-top: 2px solid $themeColor;
+  @include themeGen();
 }
 
 .manager-container {
@@ -48,14 +51,14 @@ $userInfoItemOverBgColor: #f7f7f7;
 .pages-container {
   overflow-y: auto;
   @include fill();
-  left: $leftmenuWidth;
+  left: $navMenuWidth;
   transition: all 0.2s ease;
   // background-color: $mainBgColor;
   // background-color: #e4e7ea;
   border-radius: 0 0 0 4px;
 
   &.hide-menu {
-    left: $leftmenuCollapseWidth;
+    left: $navMenuCollapseWidth;
   }
   .top-tab-wrapper {
     >.tab-content {
@@ -179,6 +182,21 @@ $userInfoItemOverBgColor: #f7f7f7;
 
   .FEDEPLOY .icon-input {
     width: 480px;
+  }
+}
+
+.theme-changer {
+  padding: 8px 20px;
+  .item {
+    display: inline-block;
+    // border: 1px solid #EEE;
+    box-shadow: 0 2px 3px rgba(#000, 0.1);
+    margin-right: 5px;
+    border-radius: 3px;
+    &.active {
+      box-shadow: 0 3px 4px rgba(#000, 0.2);
+      // padding: 12px;
+    }
   }
 }
 

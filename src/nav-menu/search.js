@@ -28,7 +28,7 @@ export default class SearchBox extends Component {
   static propTypes = {
     onChangeMenu: PropTypes.func,
     onToggleNav: PropTypes.func,
-    showLeftMenu: PropTypes.bool,
+    showMenu: PropTypes.bool,
     codeMapper: PropTypes.object,
   };
   constructor(props) {
@@ -43,7 +43,7 @@ export default class SearchBox extends Component {
   componentDidMount() {
     Mousetrap.bind(['alt+s'], e => {
       this.show();
-      if (!this.props.showLeftMenu) {
+      if (!this.props.showMenu) {
         // this.shouldBeHidden = true;
         this.props.onToggleNav(true);
       }

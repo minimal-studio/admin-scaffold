@@ -6,7 +6,7 @@ const Foooter = (props) => {
     <div className="footer-container">
       {children}
     </div>
-  )
-}
+  );
+};
 
 export default Foooter;

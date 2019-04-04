@@ -1,0 +1,123 @@
+$colorsMap: (
+  (name: 'theme', color: $themeColor),
+  (name: 'red', color: $colorRed),
+  (name: 'yellow', color: $colorYellow),
+  (name: 'gold', color: $colorGold),
+  (name: 'blue', color: $colorBlue),
+  (name: 'green', color: $colorGreen),
+  (name: 'light-p', color: $colorPurpleLight),
+  (name: 'primary', color: $colorBlue),
+  (name: 'default', color: $defaultColor),
+  (name: 'white', color: $whiteColor),
+  (name: 'important', color: $importantColor),
+  (name: 'warn', color: $warmColor),
+  (name: 'black', color: $colorBlack),
+  (name: 'grey', color: $greyColor),
+  (name: 'orange', color: $colorOrange),
+  (name: 'wine', color: $wineColor),
+);
+
+$darkBgColor: #33404e;
+$darkTextColor: #EEE;
+
+@mixin themeGen() {
+  &.vertical {
+    
+  }
+  &.dark {
+    .nav-menu-wrapper {
+      background-color: $darkBgColor;
+    }
+    .uke-status-bar {
+      background-color: $darkBgColor;
+      color: $darkTextColor;
+    }
+    .nav-menu-tree {
+      .fold {
+        color: $darkTextColor;
+        &.active, &.hover, &:hover {
+          color: $darkTextColor;
+        }
+      }
+    }
+    .menu-header {
+      color: $darkTextColor;
+      border-color: darken($darkBgColor, 5%);
+      hr {
+        border-color: darken($darkBgColor, 5%);
+      }
+      .action-group,.title {
+        color: $darkTextColor;
+      }
+    }
+    .tabs-in-statusbar .tab-item {
+      border-color: darken($darkBgColor, 10%);
+    }
+  }
+  // &.light {
+
+  // }
+  @for $i from 1 through length($colorsMap) {
+    $item: nth($colorsMap, $i);
+    
+    &.#{map-get($item, name)} {
+      @include mixinTheme(map-get($item, color));
+    }
+  }
+}
+@mixin mixinTheme($basicBgColor, $basicTextColor: #777) {
+  border-top-color: $basicBgColor;
+  .nav-menu-tree {
+    .menu {
+      &.active {
+        background-color: $basicBgColor;
+        background: linear-gradient(-45deg, $basicBgColor, darken($basicBgColor, 5%));
+      }
+    }
+  }
+  .tabs-in-statusbar .tab-item {
+    &.active, &:hover {
+      .text {
+        color: $basicBgColor;
+      }
+    }
+  }
+  // .nav-menu-response {
+  //   // background-color: $basicBgColor;
+  //   .menu-header,
+  //   .toggle-left-menu-btn {
+  //     color: $basicTextColor;
+  //   }
+  //   .navigation-list {
+  //     .fold {
+  //       color: lighten($basicTextColor, 5%);
+  //       // border-bottom-color: darken($basicBgColor, 5%);
+  //       &:hover {
+  //         color: lighten($basicTextColor, 10%);
+  //         background-color: darken($basicBgColor, 5%);
+  //       }
+  //       &.active {
+  //         color: lighten($basicTextColor, 20%);
+  //         background-color: rgba(0, 0, 0, 0.05);
+  //         border-left-color: #fff;
+  //       }
+  //     }
+  //   }
+  // }
+  // .pages-container {
+  //   // background-color: $basicBgColor;
+  // }
+  // .login-panel {
+  //   // background-color: $basicBgColor;
+  //   .form-layout {
+  //     .title {
+  //       color: $basicTextColor;
+  //     }
+  //     .form-control {
+  //       background-color: rgba(255, 255, 255, 0);
+  //       border-color: darken($basicBgColor, 10%);
+  //       color: lighten($basicTextColor, 10%);
+  //     }
+  //   }
+  // }
+}

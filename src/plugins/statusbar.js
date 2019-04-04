@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, PureIcon, DropdownWrapper } from './ui-refs';
+import { Icon, PureIcon, DropdownWrapper } from '../ui-refs';
 
 const DisplayDOM = ({ onClick, pureIcon, icon, title }) => {
   const I = pureIcon ? <PureIcon n={pureIcon} /> : <Icon n={icon} />;

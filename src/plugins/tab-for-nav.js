@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, ToolTip } from './ui-refs';
+import { Icon, ToolTip } from '../ui-refs';
 
 const TabForNav = (props) => {
   const {

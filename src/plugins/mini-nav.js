@@ -7,11 +7,10 @@ export default class MiniNav extends React.PureComponent {
   state = {};
   render() {
     const { activeRouteIdx, routers } = this.props;
-    console.log(activeRouteIdx, routers)
     return (
       <div className="mini-nav">
         {routers[activeRouteIdx]}
       </div>
-    )
+    );
   }
 }

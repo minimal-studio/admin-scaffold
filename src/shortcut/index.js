@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from '../ui-refs';
+import { Table, Menus, ShowModal } from '../ui-refs';
 import records from './data';
 
 const keyMapper = [
@@ -13,6 +13,32 @@ const keyMapper = [
   }
 ];
 
-export default () => {
+const ShortcutHelp = () => {
   return <Table keyMapper={keyMapper} records={records} />;
 };
+
+const showShortcut = () => {
+  ShowModal({
+    children: <ShortcutHelp />,
+    title: '键盘快捷键说明',
+    width: 640
+  });
+};
+
+const ShortcutDesc = () => {
+  return (
+    <Menus
+      data={[
+        {
+          text: '快捷键说明',
+          action: () => showShortcut()
+        },
+      ]} />
+  );
+};
+
+export {
+  showShortcut, ShortcutDesc
+};
+
+export default ShortcutHelp;

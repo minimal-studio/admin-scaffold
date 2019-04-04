@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tip, ShowModal, TipPanel, Notify } from './ui-refs';
+import { Tip, ShowModal, TipPanel, Notify } from '../ui-refs';
 
 class VersionChecker extends Component {
   static propTypes = {

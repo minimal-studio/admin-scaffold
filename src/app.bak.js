@@ -8,7 +8,7 @@ const themeStrong = 'THEME_STORAGE';
 export default class AdminWebScaffold extends Component {
   static propTypes = {
     /** 用户登录后的信息，会传递给每一个页面 */
-    userInfo: PropTypes.object,
+    userInfo: PropTypes.shape({}),
     /** 用户名，用于在左菜单显示 */
     username: PropTypes.string.isRequired,
     /** 退出登录 */
@@ -19,9 +19,9 @@ export default class AdminWebScaffold extends Component {
     }),
     // iframeMode: PropTypes.bool,
     /** 所有的页面的 mapper 引用 */
-    pageComponents: PropTypes.object,
+    pageComponents: PropTypes.shape({}),
     /** 国际化配置 */
-    i18nConfig: PropTypes.object,
+    i18nConfig: PropTypes.shape({}),
     /** 所有菜单的配置 */
     menuStore: PropTypes.arrayOf(PropTypes.object),
   };
@@ -31,7 +31,7 @@ export default class AdminWebScaffold extends Component {
       theme: window.Storage.getItem(themeStrong) || 'blue'
     };
   }
-  changeTheme(theme) {
+  changeTheme = (theme) => {
     this.setState({
       theme
     });
@@ -42,7 +42,7 @@ export default class AdminWebScaffold extends Component {
 
     return (
       <div className={'top-lv-layout theme-' + theme}>
-        <ScaffoldLayout {...this.props} changeTheme={this.changeTheme.bind(this)}/>
+        <ScaffoldLayout {...this.props} changeTheme={this.changeTheme}/>
       </div>
     );
   }
