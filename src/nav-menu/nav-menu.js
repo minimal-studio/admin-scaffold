@@ -210,7 +210,7 @@ export default class NavMenu extends Component {
         onClick={() => Call(onClick, key, code)}>
         {
           !icon ? (
-            <span className="menu-tip"></span>
+            <span className="menu-tip">-</span>
           ) : (
             <Icon n={icon} classNames={['mr10']}/>
           )
