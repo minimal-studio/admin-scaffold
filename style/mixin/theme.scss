@@ -70,6 +70,10 @@ $darkTextColor: #EEE;
 }
 @mixin mixinTheme($basicBgColor, $basicTextColor: #777) {
   border-top-color: $basicBgColor;
+  .btn {
+    background-color: $basicBgColor;
+    border-color: $basicBgColor;
+  }
   .menu-header {
     border-top-color: $basicBgColor;
   }

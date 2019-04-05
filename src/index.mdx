@@ -51,7 +51,10 @@ import ActionAgentPage from './action-agent/demo'
       }
       const TestPage = (text = 'Test Page') => () => {
         return (
-          <div>{text}</div>
+          <div className="p20">
+            {text}
+            <span className="btn theme">按钮</span>
+          </div>
         )
       }
       const pageComponents = {
