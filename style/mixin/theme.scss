@@ -70,7 +70,7 @@ $darkTextColor: #EEE;
 }
 @mixin mixinTheme($basicBgColor, $basicTextColor: #777) {
   border-top-color: $basicBgColor;
-  .btn {
+  .btn.theme {
     background-color: $basicBgColor;
     border-color: $basicBgColor;
   }
