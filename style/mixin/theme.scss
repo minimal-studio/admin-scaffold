@@ -33,6 +33,9 @@ $darkTextColor: #EEE;
       color: $darkTextColor;
     }
     .nav-menu-tree {
+      .menu {
+        color: $darkTextColor;
+      }
       .fold {
         color: $darkTextColor;
         &.active, &.hover, &:hover {
