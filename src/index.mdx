@@ -17,6 +17,7 @@ import { PureIcon } from 'ukelli-ui/core/icon'
 import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold } from './';
 import ActionAgentPage from './action-agent/demo'
+import ReportDemo from './template-engine/demo'
 
 <Playground style={{
   height: 600
@@ -59,6 +60,7 @@ import ActionAgentPage from './action-agent/demo'
       }
       const pageComponents = {
         ActionAgentPage: ActionAgentPage,
+        ReportDemo: ReportDemo,
         'TEST1': TestPage('TEST1'),
         'TEST2': TestPage('TEST2'),
         'TEST3': TestPage('TEST3'),
@@ -79,8 +81,8 @@ import ActionAgentPage from './action-agent/demo'
         'en-US': 'English',
       };
       const menuStore = [{
-        title: '外层菜单',
-        code: 'OUTSIDE'
+        title: '表格',
+        code: 'ReportDemo'
       }, {
         title: '一级菜单',
         icon: 'bong',

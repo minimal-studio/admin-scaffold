@@ -429,7 +429,8 @@ export default class ReportTemplate extends Component {
               <Button
                 key={text}
                 text={text}
-                className={"ml10 " + color}
+                color={color}
+                className="ml10"
                 onClick={action}/>
             );
           })

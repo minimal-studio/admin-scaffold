@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.17.6
+
+- 修复表格内置按钮的样式问题
+
 ## v0.17.5
 
 - 修复一些问题
