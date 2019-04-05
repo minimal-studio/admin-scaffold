@@ -210,7 +210,7 @@ export default class NavMenu extends Component {
         onClick={() => Call(onClick, key, code)}>
         {
           !icon ? (
-            <span className="menu-tip">-</span>
+            <span className="menu-tip"></span>
           ) : (
             <Icon n={icon} classNames={['mr10']}/>
           )
@@ -405,7 +405,7 @@ export default class NavMenu extends Component {
           }>
           <div className="menu-header">
             <h4 className="title">
-              <span className="mr5">{title}</span>
+              {title}
             </h4>
             <hr />
             <div className="action-group">

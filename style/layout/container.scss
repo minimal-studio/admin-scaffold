@@ -23,7 +23,7 @@ $userInfoItemOverBgColor: #f7f7f7;
 }
 .main-container {
   background-color: rgba($mainBgColor, 0.5);
-  border-top: 2px solid $themeColor;
+  // border-top: 2px solid $themeColor;
   @include themeGen();
 }
 

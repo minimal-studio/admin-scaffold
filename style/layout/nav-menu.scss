@@ -12,7 +12,8 @@ $hoverBgColor: rgb(140, 190, 234);
 
 /** 设置颜色 */
 .nav-menu-wrapper {
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05)
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  background-color: rgba(#FFF, 0.9);
 }
 .nav-menu-response {
   color: $textColor;
@@ -139,7 +140,7 @@ $hoverBgColor: rgb(140, 190, 234);
       // overflow: auto;
       overflow-y: scroll;
       width: $navMenuWidth;
-      background: $navMenuBgColor;
+      // background: $navMenuBgColor;
       box-shadow: 4px 0 20px rgba(#000, 0.1);
     }
   }
@@ -181,11 +182,16 @@ $hoverBgColor: rgb(140, 190, 234);
     // align-items: center;
     // margin-bottom: 20px;
     border-bottom: 1px solid #EEE;
+    border-top: 1px solid #EEE;
     hr {
       margin: 10px 0;
     }
     .title {
-      margin-top: 10px;
+      margin: 10px 0 0 0;
+      background-color: #f9f9f9;
+      border-radius: 3px;
+      padding: 5px 15px;
+      display: inline-block;
     }
     .icon {
       padding: 0 5px;
