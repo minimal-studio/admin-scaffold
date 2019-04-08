@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.17.7
+
+- 优化浮动模式下的导航菜单的背景
+
 ## v0.17.6
 
 - 修复表格内置按钮的样式问题
