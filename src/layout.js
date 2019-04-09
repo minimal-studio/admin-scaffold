@@ -17,7 +17,7 @@ import {
 import { showShortcut, ShortcutDesc } from './shortcut';
 import NavMenu from './nav-menu';
 // import Posts from './posts';
-import { RouterHelper } from './router-multiple';
+import { RouterHelper, history } from './router-multiple';
 import VersionComponent, { VersionChecker } from './plugins/version-com';
 import {
   Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
@@ -242,6 +242,7 @@ export default class ScaffoldLayout extends RouterHelper {
 
   componentWillUnmount() {
     Mousetrap.unbind(['alt+k', 'alt alt']);
+    this.unlisten();
   }
 
   handleCloseFormShortcut = () => {

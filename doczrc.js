@@ -117,11 +117,11 @@ export default {
   },
   themeConfig: themeConfig,
   menu: [
-    'Getting Started',
-    'Scroffold / 脚手架',
-    'ActionAgent',
+    'Getting Started / 开始',
+    'Scroffold / 脚手架应用',
     'Template-Engin / 模版引擎',
     'HOC-Engin / 高阶模版',
+    'ActionAgent / 请求代理',
     'Other',
   ],
   modifyBundlerConfig: (config) => {

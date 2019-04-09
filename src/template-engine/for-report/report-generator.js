@@ -44,14 +44,14 @@ function getRecordBtns(...args) {
 }
 
 /** 
- * GeneralReportRender 接受 3 个参数
+ * HOCReportRender 接受 3 个参数
  * 
  * @param {class} Action 具体业务 action
  * @param {object} [passProps={}] 传给模版引擎的 props
  * @param {class} [TemplatEngin=ReportTemplate] 自定义的模版引擎
  * @return {class} 返回用于 react 的类
  */
-export function GeneralReportRender(Action, passProps = {}, TemplatEngin = ReportTemplate) {
+function HOCReportRender(Action, passProps = {}, TemplatEngin = ReportTemplate) {
   // console.log(Action.name)
   // __btns[Action.name] = {};
   return class C extends Action {
@@ -121,3 +121,12 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
     }
   };
 }
+
+function GeneralReportRender(...args) {
+  renameTip('GeneralReportRender', 'HOCReportRender');
+  HOCReportRender(...args);
+}
+
+export {
+  GeneralReportRender, HOCReportRender
+};

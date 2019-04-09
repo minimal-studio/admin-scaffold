@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import createBrowserHistory from "history/createBrowserHistory";
-import { getUrlParams } from 'uke-request';
+import { getUrlParams, wrapReqHashUrl } from 'uke-request';
 import { RemoveArrayItem, CallFunc } from 'basic-helper';
 
 const history = createBrowserHistory();
+
+const ROUTE_KEY = '_router_';
 
 const defaultState = {
   routers: [],
@@ -25,18 +27,26 @@ const replaceHistory = (url, params) => {
 };
 
 const wrapPushUrl = (pushConfig) => {
+  const { href, hash } = window.location;
+  const targetHash = hash.replace('#/', '').split('?')[0];
   const { component, route, params } = pushConfig;
   let paramsObj = typeof params == 'string' ? {id: params} : {...params};
-  let paramsStr = '';
-  let {id = '', ...other} = paramsObj;
-  let otherParams = {...other};
-  for (const key in otherParams) {
-    const val = otherParams[key];
-    paramsStr += `${key}=${val}&&`;
-  }
-  let result = `/${route || component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
+  // let paramsStr = '';
+  // let otherParams = {...paramsObj};
+  // for (const key in otherParams) {
+  //   const val = otherParams[key];
+  //   paramsStr += `${key}=${val}&&`;
+  // }
+  let result = wrapReqHashUrl({
+    params: {
+      [ROUTE_KEY]: route || component,
+      ...paramsObj
+    },
+    toBase64: false
+  });
+  // let result = `${ROUTE_KEY}=${route || component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
   // let result = `/${route}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
-  result = result.replace(/&&$/g, '');
+  result = `${targetHash}${result.replace(/&&$/g, '')}`;
   return result;
 };
 
@@ -82,7 +92,9 @@ class RouterHelper extends Component {
     super(props);
 
     const { cacheState } = props;
-    history.listen(this.handleHistory);
+
+    if(this.unlisten) this.unlisten();
+    this.unlisten = history.listen(this.handleHistory);
 
     this.state = cacheState ? cachedState : defaultState;
   }
@@ -99,7 +111,8 @@ class RouterHelper extends Component {
   };
   handleHistory = (location, action) => {
     const { hash, state = {} } = location;
-    const activeRoute = resolvePath(hash)[0];
+    // const activeRoute = resolvePath(hash)[0];
+    const activeRoute = getUrlParams()[ROUTE_KEY];
     const nextRouterState = state.nextRouters;
     this.selectTab(activeRoute, nextRouterState);
   };
@@ -121,7 +134,11 @@ class RouterHelper extends Component {
     delete nextRouterInfo[targetRoute];
     let nextRoutersLen = nextRouters.length - 1;
     let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-    let nextActiveRoute = nextRouters[nextActiveIdx] || '/';
+    let nextActiveRoute = nextRouters[nextActiveIdx];
+
+    if(!nextActiveRoute) return this.closeAll();
+    
+    let nextRouterParams = nextRouterInfo[nextActiveRoute] || {};
 
     const nextState = {
       routers: nextRouters,
@@ -130,12 +147,20 @@ class RouterHelper extends Component {
       activeRouteIdx: nextActiveIdx,
     };
 
-    pushToHistory(`#/${nextActiveRoute}`, {
-      type: 'CLOSE',
+    // pushToHistory(`#/${nextActiveRoute}`, {
+    //   type: 'CLOSE',
+    //   component: nextActiveRoute,
+    //   params: nextRouterInfo,
+    //   nextRouters: nextState
+    // });
+    const config = {
+      type: 'PUSH',
       component: nextActiveRoute,
-      params: nextRouterInfo,
+      params: nextRouterParams.params,
       nextRouters: nextState
-    });
+    };
+    // pushToHistory(wrapPushUrl(config), config);
+    onNavigate(config);
     
     return nextState;
   }
@@ -174,7 +199,8 @@ class RouterHelper extends Component {
     });
   }
   initRoute = () => {
-    let initRoute = resolvePath(location.hash)[0];
+    // let initRoute = resolvePath(location.hash)[0];
+    let initRoute = getUrlParams()[ROUTE_KEY];
     initRoute && this.selectTab(initRoute);
   }
 }
@@ -185,9 +211,10 @@ class RouterHelper extends Component {
  * @TODO: 完善是否激活的判定
  */
 const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
-  const { location } = history;
-  const { hash } = location;
-  const isActive = hash != '/' && hash.split('/')[1] === to;
+  // const { location } = history;
+  // const { hash } = location;
+  const activeRoute = getUrlParams()[ROUTE_KEY];
+  const isActive = activeRoute === to;
 
   return (
     <span 

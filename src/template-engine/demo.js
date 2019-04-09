@@ -1,14 +1,14 @@
 /**
  * 这个是设置更多操作的示例
  * 1. 通过继承 Action 的获取业务数据的接口
- * 2. 如果需要更多操作，可以通过定义 getActionBtn 来生成操作按钮
+ * 2. 如果需要更多操作，可以通过定义 getRecordBtns 来生成操作按钮
  * 3. 这里都是编写 page 的业务逻辑的，更专注于模版
  */
 
 import React from 'react';
 
 import { ShowModal, CloseModal, DescHelper } from 'ukelli-ui';
-import { GeneralReportRender } from '.';
+import { HOCReportRender } from '.';
 import { getTestData, keyFieldsForReport, conditionData } from './report-data';
 import ActionAgent from '../action-agent';
 
@@ -73,7 +73,7 @@ class TestReportClass extends ActionAgent {
       }
     }
   ]
-  // 与 GeneralReportRender 模版对接的查询接口
+  // 与 HOCReportRender 模版对接的查询接口
   queryData = async (reportData) => {
     const postData = {};
     const agentOptions = {
@@ -97,6 +97,6 @@ class TestReportClass extends ActionAgent {
   }
 }
 
-const TestReport = GeneralReportRender(TestReportClass);
+const TestReport = HOCReportRender(TestReportClass);
 
 export default TestReport;

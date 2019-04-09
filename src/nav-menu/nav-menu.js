@@ -44,7 +44,7 @@ const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
-const MenuItem = ({ icon = 'angle-right', title, gm }) => {
+const MenuItem = ({ icon = 'bars', title, gm }) => {
   return (
     <div className="layout a-i-c">
       <Icon n={icon} classNames={['item-icon mr10']}/>

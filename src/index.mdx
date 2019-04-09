@@ -1,21 +1,21 @@
 ---
-name: Scroffold / 脚手架
+name: Scroffold / 脚手架应用
 route: /Scroffold
 # order: -1
 # sidebar: true
 ---
 
-# Scroffold
+# Scroffold 脚手架应用
 
-> 快速搭建管理功能，专注业务开发。
+> 快速开启前后端分离的管理功能前端开发。
 
-[业务页面功能开发，请看 uke-dashboard](https://github.com/SANGET/uke-dashboard.git)
+[具体业务功能开发，请看 uke-dashboard](https://github.com/SANGET/uke-dashboard.git)
 
 import { Playground, PropsTable } from 'docz'
 import { DateFormat } from 'basic-helper'
 import { PureIcon } from 'ukelli-ui/core/icon'
 import { Menus } from 'ukelli-ui/core/menu'
-import { AdminWebScaffold } from './';
+import { AdminWebScaffold, Link } from './';
 import ActionAgentPage from './action-agent/demo'
 import ReportDemo from './template-engine/demo'
 
@@ -54,7 +54,12 @@ import ReportDemo from './template-engine/demo'
         return (
           <div className="p20">
             {text}
-            <span className="btn theme">按钮</span>
+            <Link
+              params={{
+                ID: 'testID',
+                data: '123'
+              }}
+              className="btn theme" to="TEST2">跳转到 TEST2</Link>
           </div>
         )
       }
@@ -85,7 +90,6 @@ import ReportDemo from './template-engine/demo'
         code: 'ReportDemo'
       }, {
         title: '一级菜单',
-        icon: 'bong',
         child: [
           {
             title: 'ActionAgent',

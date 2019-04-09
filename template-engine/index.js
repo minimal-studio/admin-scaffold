@@ -1,8 +1,8 @@
 import { FormRender } from './for-form';
-import { GeneralReportRender, ReportTemplate } from './for-report';
+import { GeneralReportRender, ReportTemplate, HOCReportRender } from './for-report';
 
 export {
   FormRender,
   ReportTemplate,
-  GeneralReportRender
+  GeneralReportRender, HOCReportRender
 };

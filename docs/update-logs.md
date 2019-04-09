@@ -1,5 +1,14 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.1
+
+- 调整路由策略为参数形式
+- 调整导航菜单的默认 icon
+
+### 重命名
+
+- GeneralReportRender -> HOCReportRender
+
 ## v0.18.0
 
 ### API 调整

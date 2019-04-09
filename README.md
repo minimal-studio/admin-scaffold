@@ -2,7 +2,7 @@
 
 - [在线文档](https://scaffold.ukelli.com/)
 
-uke-admin-web-scaffold 是一个基于 React 的管理后台前端脚手架，提供快速以及完善的管理后台的通用功能，包括
+uke-admin-web-scaffold 是基于 React 的管理后台前端脚手架，提供完善的功能，包括
 
 - 多标签页共存
 - 前端路由导航
@@ -10,10 +10,10 @@ uke-admin-web-scaffold 是一个基于 React 的管理后台前端脚手架，�
 - 各种可自定义的插件接口
   - 状态栏 Statusabar
   - 脚注 Footer
-- 完善的模版引擎
+- 模版引擎
   - 表格引擎 ReportTemplateEngin
   - 表单引擎 FormTemplateEngin
-- 请求状态与 React state 的代理接口封装 (ActionAgent)
+- 异步请求状态与 React state 的数据绑定封装 (ActionAgent)
 - 前端资源发布模块
 
 ## Usage
@@ -77,14 +77,29 @@ ReactDOM.render(LoginFilter, document.querySelector('#Main'));
 - [uke-dashboard Github](https://github.com/SANGET/uke-admin-seed.git)
 - [uke-dashboard 在线事例](https://admin.ukelli.com/)
 
-## 模版和高阶模版
+## 通用模版和高阶模版
 
 ```js
-// 表格模版
+// 通用模版
 import { ReportTemplate } from 'uke-admin-web-scaffold/template-engine';
 
-// 高阶模版函数
-import { FormRender, GeneralReportRender } from 'uke-admin-web-scaffold/template-engine';
+// 高阶模版 HOC
+import { FormRender, HOCReportRender } from 'uke-admin-web-scaffold/template-engine';
+
+// 通用模版
+const GenernalTMPL = () => {
+  const templateOptions = {};
+  return (
+    <ReportTemplate {...templateOptions} />
+  )
+}
+
+// 高阶模版 HOC
+const HOC_TMPL_REPORT = () => {
+  return (
+    <HOCReportRender />
+  )
+}
 ```
 
 ## 请求代理机制 ActionAgent
