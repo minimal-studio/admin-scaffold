@@ -274,13 +274,14 @@ export default class ScaffoldLayout extends RouterHelper {
     });
     this.triggerResize();
   }
-  getRouteProps(isActive) {
+  getRouteProps(isActive, pageName) {
     const { userInfo, username, pageProps } = this.props;
     return {
       ...pageProps,
       userInfo,
       username,
       isActive,
+      pageName,
       gm: this.gm,
       onNavigate: this.onNavigate,
       history: this.history,
@@ -479,7 +480,7 @@ export default class ScaffoldLayout extends RouterHelper {
                             onChange={e => this.changeRoute(route, params)}>
                             {
                               C ? (
-                                <C {...this.getRouteProps(isActive)}/>
+                                <C {...this.getRouteProps(isActive, route)}/>
                               ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
                                 <Notfound key={route + '404'}/>
                               )

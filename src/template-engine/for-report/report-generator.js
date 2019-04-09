@@ -57,10 +57,8 @@ function HOCReportRender(Action, passProps = {}, TemplatEngin = ReportTemplate) 
   return class C extends Action {
     /** 用于记录所有的按钮 */
     powerFilterForBtn = (btnId) => {
-      const { powerMapper } = this.props;
-      if(!powerMapper) return true;
-      const pageNameMatch = window.location.hash.match(/#\/([a-zA-Z]+)/);
-      const pageName = pageNameMatch ? pageNameMatch[1] : '';
+      const { powerMapper, pageName } = this.props;
+      if(!powerMapper || !pageName) return true;
       return powerMapper.indexOf(`${pageName}_${btnId}`) > -1;
     }
     reportBtnFilter = () => {

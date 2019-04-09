@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.2
+
+- 修复按钮权限的判断
+
 ## v0.18.1
 
 - 调整路由策略为参数形式
