@@ -14,6 +14,7 @@ import ActionAgent from '../action-agent';
 
 class TestReportClass extends ActionAgent {
   state = {
+    records: [],
     propsForTable: {
       rowKey: record => record.ID
     }
@@ -31,8 +32,38 @@ class TestReportClass extends ActionAgent {
 
     this.conditionOptions = conditionData;
 
-    this.keyMapper = keyFieldsForReport;
+    this.keyMapper = [
+      ...keyFieldsForReport,
+      {
+        key: 'action',
+        fixed: 'right',
+        filter: (...args) => this.getRecordBtns(...args)
+      }
+    ];
   }
+  recordActionBtns = [
+    {
+      text: '详情',
+      id: 'detail',
+      enable: () => {
+        // 返回是否
+        return true;
+      },
+      action: (...args) => {
+        this.showDetail(...args);
+      }
+    },
+    {
+      text: '单行显示',
+      id: 'test',
+      enable: (str, item, mapper, idx) => {
+        return idx % 2 === 0;
+      },
+      action: (...args) => {
+        this.showDetail(...args);
+      }
+    },
+  ]
   reportActionBtns = [
     {
       text: 'ForTest',
@@ -64,16 +95,6 @@ class TestReportClass extends ActionAgent {
       )
     });
   }
-  // 与 GeneralReportRender 模版对接的按钮接口
-  actionBtnConfig = [
-    {
-      text: '详情',
-      id: 'detail',
-      action: (...args) => {
-        this.showDetail(...args);
-      }
-    }
-  ];
 }
 
 const TestReport = GeneralReportRender(TestReportClass);

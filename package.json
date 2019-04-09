@@ -31,7 +31,7 @@
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
     "uke-request": "^0.13.x",
-    "ukelli-ui": "^2.14.x"
+    "ukelli-ui": "^2.15.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

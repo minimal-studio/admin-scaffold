@@ -1,5 +1,35 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.0
+
+### API 调整
+
+1. actionBtnConfig -> recordActionBtns
+2. getActionBtn -> getRecordBtns
+
+### API 优化
+
+- recordActionBtns 新增一个 enable 的接口，用于判断是否显示
+
+```js
+const recordActionBtns = [
+  {
+    ...options,
+    enable: (str, item, mapper, idx) => {
+      // 根据返回值控制是否显示
+      return boolean;
+    }
+  }
+]
+```
+
+### 问题修复
+
+- 让 API 接口名字更符合阅读习惯
+- 避免操作按钮过滤时返回 undefined 导致不可控结果
+
+-------------
+
 ## v0.17.9
 
 - 修复一些问题

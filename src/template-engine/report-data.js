@@ -179,7 +179,6 @@ const getTestData = () => {
 };
 
 const keyFieldsForReport = [
-  'username_for_user',
   {
     key: 'Address',
     labels: {
@@ -225,20 +224,20 @@ const keyFieldsForReport = [
       return !isDesc;
     }
   },
-  'Phone',
-  'Nickname',
-  'Gender',
-  'Expenditure',
-  'EducationLevel',
-  'Jobs',
-  'Hobby',
-  'Placeholder1',
-  'Placeholder2',
-  'Placeholder3',
-  'Placeholder4',
-  'Placeholder5',
-  'Placeholder6',
-  'Placeholder7',
+  {key: 'Phone'},
+  {key: 'Nickname'},
+  {key: 'Gender'},
+  {key: 'Expenditure'},
+  {key: 'EducationLevel'},
+  {key: 'Jobs'},
+  {key: 'Hobby'},
+  {key: 'Placeholder1'},
+  {key: 'Placeholder2'},
+  {key: 'Placeholder3'},
+  {key: 'Placeholder4'},
+  {key: 'Placeholder5'},
+  {key: 'Placeholder6'},
+  {key: 'Placeholder7'},
   {
     key: 'Weight',
     filter: (str, item, mapper, idx) => {
