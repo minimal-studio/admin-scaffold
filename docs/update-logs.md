@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.17.9
+
+- 修复一些问题
+
 ## v0.17.8
 
 - 修复 ReportRender 的作用域问题

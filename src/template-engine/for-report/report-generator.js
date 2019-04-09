@@ -26,14 +26,14 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
   __btns[Action.name] = {};
   return class C extends Action {
     /** 用于记录所有的按钮 */
-    powerFilterForBtn(btnId) {
+    powerFilterForBtn = (btnId) => {
       const { powerMapper } = this.props;
       if(!powerMapper) return true;
       const pageNameMatch = window.location.hash.match(/#\/([a-zA-Z]+)/);
       const pageName = pageNameMatch ? pageNameMatch[1] : '';
       return powerMapper.indexOf(`${pageName}_${btnId}`) > -1;
     }
-    reportBtnFilter() {
+    reportBtnFilter = () => {
       if(!Array.isArray(this.reportActionBtns) || this.reportActionBtns.length === 0) return;
       let res = [];
       for (const btn of this.reportActionBtns) {
@@ -47,7 +47,7 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
       }
       return res;
     }
-    getActionBtn(item) {
+    getActionBtn = (item) => {
       const {actionBtnConfig} = this;
       if(!actionBtnConfig) return '-';
       return actionBtnConfig.map((config, idx) => {
@@ -66,7 +66,7 @@ export function GeneralReportRender(Action, passProps = {}, TemplatEngin = Repor
       });
     }
 
-    showDesc({title = '消息提示', msg, type = 'error'}) {
+    showDesc = ({title = '消息提示', msg, type = 'error'}) => {
       if(!msg) return;
       Notify({
         config: {
