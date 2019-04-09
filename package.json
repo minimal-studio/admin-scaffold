@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "main": "./index.js",
   "files": [
     "*"
