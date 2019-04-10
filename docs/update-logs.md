@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.3
+
+- 修复国际化语言包初始化加载失败的问题
+
 ## v0.18.2
 
 - 修复按钮权限的判断

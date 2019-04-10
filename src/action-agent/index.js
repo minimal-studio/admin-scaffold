@@ -17,9 +17,9 @@ class ActionAgent extends Component {
   agents = [];
   componentWillUnmount() {
     this.__unmount = true;
-    setTimeout(() => {
-      console.log(this.reqInstance);
-    }, 100);
+    // setTimeout(() => {
+    //   console.log(this.reqInstance);
+    // }, 100);
   }
   /**
    * 请求过程的 state 状态代理

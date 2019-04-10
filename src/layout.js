@@ -130,7 +130,6 @@ export default class ScaffoldLayout extends RouterHelper {
     EventEmitter.on('QUERY_MENU', (resMenuData) => {
       this.changeMenuData(resMenuData);
     });
-    this.initApp();
 
     this.state = {
       ...this.state,
@@ -144,6 +143,7 @@ export default class ScaffoldLayout extends RouterHelper {
       ready: false,
       langMapper: {}
     };
+    this.initApp();
   }
 
   initThemeConfig = () => {
