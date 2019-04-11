@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.4
+
+- 调整 closeBtn 的样式
+
 ## v0.18.3
 
 - 修复国际化语言包初始化加载失败的问题
