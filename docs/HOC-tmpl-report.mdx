@@ -1,17 +1,14 @@
 ---
-name: HOC-Engin / 高阶模版
-route: /High-Order-Engin
+name: HOC-Report / HOC 表格
+route: /HOC-Report-Engin
+menu: Template-Engin / 模版引擎
 # order: -1
 # sidebar: true
 ---
 
-# 高阶模版
+# 表格高阶模版
 
-## 参考
-
-- [HOC](https://react.docschina.org/docs/higher-order-components.html)
-
-## 表格高阶模版
+## Usage
 
 ```js
 import { HOCReportRender, ReportTemplate } from 'uke-admin-web-scaffold/template-engine'
@@ -24,6 +21,10 @@ const Report = HOCReportRender(PageAction);
 
 ReactDOM.render(Report, document.querySelector('#APP'));
 ```
+
+<!-- ## 图解 -->
+
+<!-- ![](./assets/images/report-tmpl.png) -->
 
 ## APIs
 
@@ -151,27 +152,6 @@ const Report = HOCReportRender(DemoReportPageAction, propsForTMPLEngin, Customer
 <Report />
 ```
 
-## 表单高阶模版
+## 参考
 
-```js
-import { FormRender } from 'uke-admin-web-scaffold/template-engine'
-
-class DemoPage extends React.Component {
-  formOptions = [{
-    type: 'input',
-    ref: 'input',
-    title: '实例输入框'
-  }]
-  state = {
-    loading: false,
-  },
-  btnConfig = [{
-    text: '提交',
-    action: () => {}
-  }]
-}
-
-const FormTMPL = FormRender(DemoPage);
-
-<FormTMPL />
-```
+- [HOC](https://react.docschina.org/docs/higher-order-components.html)

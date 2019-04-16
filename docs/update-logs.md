@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.5
+
+- 新增可以更改 url 标识符的接口
+
 ## v0.18.4
 
 - 调整 closeBtn 的样式

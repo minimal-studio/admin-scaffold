@@ -1,0 +1,38 @@
+---
+name: HOC-Form / HOC 表单
+route: /HOC-Form-Engin
+menu: Template-Engin / 模版引擎
+# order: -1
+# sidebar: true
+---
+
+# 表单高阶模版
+
+## Usage
+
+```js
+import { FormRender } from 'uke-admin-web-scaffold/template-engine'
+
+class DemoPage extends React.Component {
+  formOptions = [{
+    type: 'input',
+    ref: 'input',
+    title: '实例输入框'
+  }]
+  state = {
+    loading: false,
+  },
+  btnConfig = [{
+    text: '提交',
+    action: () => {}
+  }]
+}
+
+const FormTMPL = FormRender(DemoPage);
+
+<FormTMPL />
+```
+
+## 参考
+
+- [HOC](https://react.docschina.org/docs/higher-order-components.html)

@@ -1,6 +1,7 @@
 ---
 name: ActionAgent / 请求代理
 route: /action-agent
+menu: Template-Engin / 模版引擎
 ---
 
 # ActionAgent 请求代理
@@ -47,12 +48,14 @@ class Page extends ActionAgent {
 }
 ```
 
-### _ 前缀的函数为内部生命周期函数，可以通过 this._xx 重写，周期顺序如下
+## 请求的生命周期
 
-- reqAgent()
-- _before
-- before
-- _checkRes // 在
-- _after
-- resStatus
-- after
+> _ 前缀的函数为内部生命周期函数，可以通过 this._xx 重写，周期顺序如下
+
+1. reqAgent()
+2. _before
+3. before
+4. _checkRes
+5. _after
+6. resStatus
+7. after

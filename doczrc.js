@@ -119,9 +119,8 @@ export default {
   menu: [
     'Getting Started / 开始',
     'Scroffold / 脚手架应用',
+    'Navigator / 导航器',
     'Template-Engin / 模版引擎',
-    'HOC-Engin / 高阶模版',
-    'ActionAgent / 请求代理',
     'Other',
   ],
   modifyBundlerConfig: (config) => {

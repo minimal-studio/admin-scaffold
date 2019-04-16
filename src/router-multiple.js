@@ -7,7 +7,10 @@ import { RemoveArrayItem, CallFunc } from 'basic-helper';
 
 const history = createBrowserHistory();
 
-const ROUTE_KEY = '_router_';
+let ROUTE_KEY = '_router_';
+const changeRouteKey = (routeKey) => {
+  ROUTE_KEY = routeKey;
+};
 
 const defaultState = {
   routers: [],
@@ -223,7 +226,7 @@ const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
         CallFunc(onClick)(e);
         onNavigate({
           type: 'PUSH',
-          component: to,
+          route: to,
           params
         });
       }}>
@@ -236,11 +239,13 @@ Link.defaultProps = {
   params: {}
 };
 Link.propTypes = {
+  /** 将要导航到的路由 */
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  /** 作为 query string 的导航参数，例如 { ID: 123, name: alex } -> ID=123&name=alex */
   params: PropTypes.shape({
-    type: PropTypes.string,
+    // type: PropTypes.string,
   }),
 };
 
@@ -250,5 +255,6 @@ export {
   history,
   wrapPushUrl,
   pushToHistory,
+  changeRouteKey,
   onNavigate,
 };
