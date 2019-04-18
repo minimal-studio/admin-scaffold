@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.8
+
+- 调整样式
+
 ## v0.18.7
 
 - 导航菜单新增 pureIcon 支持
