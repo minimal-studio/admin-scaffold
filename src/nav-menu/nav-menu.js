@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { DebounceClass, Call } from 'basic-helper';
-import { ToolTip, Icon } from '../ui-refs';
+import { ToolTip, Icon, PureIcon } from '../ui-refs';
 
 import { storageHelper } from '../config';
 
@@ -39,15 +39,21 @@ function getElementTop(element) {
   return actualTop;
 }
 
+const iconComFilter = ({ icon, pureIcon }, props, other) => {
+  if(!icon && !pureIcon) return other;
+  let I = pureIcon ? PureIcon : Icon;
+  return <I {...props} n={pureIcon ? pureIcon : icon} />;
+};
 
 const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
-const MenuItem = ({ icon = 'bars', title, gm }) => {
+const MenuItem = (props) => {
+  const { icon = 'bars', pureIcon, title, gm } = props;
   return (
     <div className="layout a-i-c">
-      <Icon n={icon} classNames={['item-icon mr10']}/>
+      {iconComFilter({ icon, pureIcon }, {classNames: ['item-icon mr10']})}
       <span>{gm(title)}</span>
       <span className="flex" />
       <Icon n="angle-right" classNames={['direct']}/>
@@ -136,8 +142,8 @@ export default class NavMenu extends Component {
       let currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
         if(!item) return;
-        let _item = this.getMenuItem(item);
-        let { child, title, code, icon, path } = _item;
+        let _item = this.menuItemFilter(item);
+        let { child, title, code } = _item;
         let key = code + title;
         let to = this.wrapLink(_item);
 
@@ -176,10 +182,9 @@ export default class NavMenu extends Component {
           );
         } else {
           dom = this.getMenuLinkerDOM({
+            ..._item,
             key,
             to,
-            code,
-            icon,
             onClick: onClickMenu,
             menuText: title
           });
@@ -198,7 +203,8 @@ export default class NavMenu extends Component {
       });
     }, 200);
   }
-  getMenuLinkerDOM = ({ code, key, to, onClick, menuText, icon }) => {
+  getMenuLinkerDOM = (options) => {
+    const { code, key, to, onClick, menuText, icon, pureIcon } = options;
     const { gm } = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
@@ -209,11 +215,9 @@ export default class NavMenu extends Component {
         to={to}
         onClick={() => Call(onClick, key, code)}>
         {
-          !icon ? (
+          iconComFilter(options, {classNames: ['mr10']}, (
             <span className="menu-tip">-</span>
-          ) : (
-            <Icon n={icon} classNames={['mr10']}/>
-          )
+          ))
         }
         {gm(menuText)}
       </Link>
@@ -261,8 +265,8 @@ export default class NavMenu extends Component {
 
     const allSet = initDataList.map((item, idx) => {
       if(!item) return;
-      let _item = this.getMenuItem(item);
-      let { child, title, code, icon } = _item;
+      let _item = this.menuItemFilter(item);
+      let { child, title, code } = _item;
       let to = this.wrapLink(_item);
       let isFold = !code || (child && child.length > 0);
       let key = code + title;
@@ -290,10 +294,9 @@ export default class NavMenu extends Component {
         </div>
       ) : (
         this.getMenuLinkerDOM({
+          ..._item,
           key,
           to,
-          icon,
-          code,
           onClick: onClickMenu,
           menuText: title
         })
@@ -307,7 +310,7 @@ export default class NavMenu extends Component {
       </div>
     );
   };
-  getMenuItem = (item) => {
+  menuItemFilter = (item) => {
     const { menuMappers } = this.props;
     const { child, code, title, icon } = menuMappers;
     return {
@@ -377,7 +380,7 @@ export default class NavMenu extends Component {
       menuData,
       onClickMenu,
       onToggleNav,
-      title = 'UKE管理系统',
+      title = 'UKE-Dashboard',
       username,
       logout,
       gm,

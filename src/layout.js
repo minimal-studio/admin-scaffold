@@ -106,6 +106,7 @@ export default class ScaffoldLayout extends RouterHelper {
       code: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       icon: PropTypes.string,
+      pureIcon: PropTypes.string,
     }),
     /** DashBoard 插件 */
     // DashBoard: PropTypes.any,
@@ -138,7 +139,7 @@ export default class ScaffoldLayout extends RouterHelper {
       showNavMenu: true,
       activeMenu: '',
       displayFloat: true,
-      menuData: this.props.menuStore || [],
+      menuData: props.menuStore || [],
       lang: navigator.language,
       ready: false,
       langMapper: {}

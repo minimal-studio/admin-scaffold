@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.7
+
+- 导航菜单新增 pureIcon 支持
+
 ## v0.18.6
 
 - 修改默认路由标识符

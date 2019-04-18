@@ -97,8 +97,15 @@ import ReportDemo from './template-engine/demo'
       };
       const menuStore = [{
         title: '表格',
+        icon: 'table',
         code: 'ReportDemo'
-      }, {
+      }, 
+      {
+        title: 'UI 库',
+        pureIcon: 'fab fa-uikit',
+        code: 'https://ui.ukelli.com/#/',
+      },
+      {
         title: '一级菜单',
         child: [
           {
@@ -110,8 +117,8 @@ import ReportDemo from './template-engine/demo'
             code: 'TEST2',
           },
           {
-            title: 'UI 库',
-            code: 'https://ui.ukelli.com/#/',
+            title: '测试页面3',
+            code: 'TEST3',
           },
           {
             title: '测试页面4',
