@@ -77,6 +77,9 @@ $darkTextColor: #EEE;
     background-color: $basicBgColor;
     border-color: $basicBgColor;
   }
+  .link,.link-btn,.tab-item.active {
+    color: $basicBgColor;
+  }
   .menu-header {
     border-top-color: $basicBgColor;
   }

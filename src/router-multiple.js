@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import createBrowserHistory from "history/createBrowserHistory";
 import { getUrlParams, wrapReqHashUrl } from 'uke-request';
-import { RemoveArrayItem, CallFunc } from 'basic-helper';
+import { RemoveArrayItem, CallFunc, IsUrl } from 'basic-helper';
 
 const history = createBrowserHistory();
 
-let ROUTE_KEY = '_router_';
+let ROUTE_KEY = '_R';
 const changeRouteKey = (routeKey) => {
   ROUTE_KEY = routeKey;
 };
@@ -224,6 +224,7 @@ const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
       className={className + (isActive ? ' active' : '')}
       onClick={e => {
         CallFunc(onClick)(e);
+        if(IsUrl(to)) return window.open(to);
         onNavigate({
           type: 'PUSH',
           route: to,

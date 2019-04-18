@@ -2,7 +2,7 @@
 
 - [在线文档](https://scaffold.ukelli.com/)
 
-uke-admin-web-scaffold 是基于 React 的管理后台前端脚手架，提供完善的功能，包括
+uke-admin-web-scaffold 是基于 React 的管理后台前端脚手架系统
 
 - 多标签页共存
 - 前端路由导航

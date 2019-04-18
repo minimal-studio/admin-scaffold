@@ -1,5 +1,11 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.6
+
+- 修改默认路由标识符
+- 导航支持 url 形式
+- 优化主题的样式
+
 ## v0.18.5
 
 - 新增可以更改 url 标识符的接口

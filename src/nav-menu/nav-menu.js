@@ -272,8 +272,10 @@ export default class NavMenu extends Component {
           key={idx}
           onMouseEnter={(e) => {
             delayExec.cancel();
+            const target = e.target;
+            if (e.currentTarget !== target) return;
             this.setFlowMenu({
-              targetElem: e.target,
+              targetElem: target,
               activeItem: _item,
               idx
             });
