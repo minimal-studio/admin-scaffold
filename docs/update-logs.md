@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.18.9
+
+- 调整 Dashboard 的结构
+
 ## v0.18.8
 
 - 调整样式
