@@ -128,10 +128,6 @@ const conditionData = [{
   "type": "switch",
   "title": "开关",
   "defaultValue": true
-}, {
-  "type": "datetimeRange",
-  "refs": ["startData", "endDate"],
-  "range": ["2019-04-05T00:00:00+08:00", "2019-04-05T23:59:59+08:00"]
 }];
 
 const getTestData = () => {

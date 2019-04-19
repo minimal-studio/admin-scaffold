@@ -306,9 +306,8 @@ export default class ReportTemplate extends Component {
     });
   }
 
-  saveWarnRef = (e) => {
-    this.soundRef = e;
-  }
+  saveWarnRef = (e) => this.soundRef = e
+  saveToast = toast => this.toast = toast
 
   render() {
     const {
@@ -402,7 +401,10 @@ export default class ReportTemplate extends Component {
           type="submit"
           className="mr10"
           loading={querying}
-          onClick={e => this.handleQueryData()} />
+          onClick={e => {
+            this.handleQueryData();
+          }} 
+        />
         {
           needClearBtn && hasConditionOptions && (
             <Button
@@ -474,7 +476,7 @@ export default class ReportTemplate extends Component {
 
     return (
       <div className="report-table-layout">
-        <Toast ref={toast => this.toast = toast}/>
+        <Toast ref={this.saveToast}/>
         <div className={"report-fix-con" + (showCondition ? '' : ' hide')}>
           <form onSubmit={e => {
             e.preventDefault();
