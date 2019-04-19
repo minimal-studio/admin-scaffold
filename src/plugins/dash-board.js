@@ -24,21 +24,17 @@ export default class DashBoard extends React.PureComponent {
   }
   render() {
     const { loadPlugin, CustomerComponent, ...other } = this.props;
-    return (
+    return CustomerComponent ? loadPlugin(CustomerComponent, other) : (
       <div className="card-content">
-        {
-          CustomerComponent ? loadPlugin(CustomerComponent, other) : (
-            <TipPanel title="DashBoard 使用说明"
-              texts={[
-                '当所有页面关闭后，会出现这个页面',
-                '主要作用为展示页面数据，并且不会有空白的页面出现',
-                '在最顶层传入 DashBoard 即可，以下为代码示例',
-                (
-                  <pre key="desc">{desc}</pre>
-                )
-              ]}/>
-          )
-        }
+        <TipPanel title="DashBoard 使用说明"
+          texts={[
+            '当所有页面关闭后，会出现这个页面',
+            '主要作用为展示页面数据，并且不会有空白的页面出现',
+            '在最顶层传入 DashBoard 即可，以下为代码示例',
+            (
+              <pre key="desc">{desc}</pre>
+            )
+          ]}/>
       </div>
     );
   }
