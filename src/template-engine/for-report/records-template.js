@@ -95,6 +95,8 @@ export default class ReportTemplate extends Component {
     pagingInfo: PropTypes.object,
     /** 数据是否查询中 */
     querying: PropTypes.bool,
+    /** 是否默认展开查询条件 */
+    defaultExpandCon: PropTypes.bool,
     /** 数据渲染组件 */
     template: PropTypes.oneOf(['Table', 'CardTable']),
     // hasErr: PropTypes.bool,
@@ -108,6 +110,7 @@ export default class ReportTemplate extends Component {
   };
   static defaultProps = {
     autoQuery: false,
+    defaultExpandCon: false,
     didMountQuery: true,
     needAutoRefresh: false,
     needClearBtn: true,
@@ -137,7 +140,8 @@ export default class ReportTemplate extends Component {
 
     this.state = {
       displayFloat: GetFloatLen() != 0,
-      tableHeight: props.height || 200
+      tableHeight: props.height || 200,
+      expandCon: props.defaultExpandCon
     };
 
     const { soundUrl } = props;
@@ -306,6 +310,14 @@ export default class ReportTemplate extends Component {
     });
   }
 
+  toggleCondition = (isExpand) => {
+    this.setState({
+      expandCon: isExpand
+    });
+    this.__setHeight = false;
+    setTimeout(() => this.setTableContainerHeight(), 200);
+  }
+
   saveWarnRef = (e) => this.soundRef = e
   saveToast = toast => this.toast = toast
 
@@ -319,7 +331,7 @@ export default class ReportTemplate extends Component {
     } = this.props;
 
     const hasConditionOptions = conditionOptions.length > 0;
-    const { displayFloat, tableHeight } = this.state;
+    const { displayFloat, tableHeight, expandCon } = this.state;
 
     // let _thumbKeyMapper = !isMobile ? keyMapper : keyMapper.filter(item => {
     //   const itemKey = item.key;
@@ -403,8 +415,7 @@ export default class ReportTemplate extends Component {
           loading={querying}
           onClick={e => {
             this.handleQueryData();
-          }} 
-        />
+          }}/>
         {
           needClearBtn && hasConditionOptions && (
             <Button
@@ -438,6 +449,12 @@ export default class ReportTemplate extends Component {
           })
         }
         <span className="flex" />
+        <Button 
+          icon={expandCon ? "angle-double-up" : "angle-double-down"}
+          color="default"
+          onClick={e => this.toggleCondition(!expandCon)}>
+          高级搜索
+        </Button>
         {
           needAutoRefresh && (
             <span className="mr10 layout a-i-c">
@@ -477,7 +494,7 @@ export default class ReportTemplate extends Component {
     return (
       <div className="report-table-layout">
         <Toast ref={this.saveToast}/>
-        <div className={"report-fix-con" + (showCondition ? '' : ' hide')}>
+        <div className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
           <form onSubmit={e => {
             e.preventDefault();
           }}>

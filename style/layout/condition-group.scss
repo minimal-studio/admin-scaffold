@@ -2,6 +2,15 @@
   @include card();
   padding: 8px 10px;
   margin: 0;
+  &.expand {
+
+  }
+  &.collapse {
+    .condition-group {
+      height: 40px;
+      overflow: hidden;
+    }
+  }
 }
 
 .extend-container {
