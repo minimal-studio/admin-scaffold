@@ -1,4 +1,6 @@
 import React from 'react';
+import Storage from 'basic-helper/storage';
+
 import { Switch } from '../ui-refs';
 
 const _themes = ['blue', 'red', 'green', 'yellow', 'light-p', 'gold', 'orange', 'wine'];
