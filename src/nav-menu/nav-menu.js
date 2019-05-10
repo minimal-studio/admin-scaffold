@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Storage from 'basic-helper/storage';
 import { DebounceClass, Call } from 'basic-helper';
 import { ToolTip, Icon, PureIcon } from '../ui-refs';
 
@@ -102,7 +103,7 @@ export default class NavMenu extends Component {
   flowModeKey = 'IS_FLOW_MODA';
   constructor(props) {
     super(props);
-    let showMenuMapper = window.Storage.getItem(MENU_ACTIVE_STORAGE) || '';
+    let showMenuMapper = Storage.getItem(MENU_ACTIVE_STORAGE) || '';
     try {
       showMenuMapper = JSON.parse(showMenuMapper);
     } catch (e) {
@@ -348,7 +349,7 @@ export default class NavMenu extends Component {
       }
     }
 
-    window.Storage.setItem(MENU_ACTIVE_STORAGE, JSON.stringify(nextState));
+    Storage.setItem(MENU_ACTIVE_STORAGE, JSON.stringify(nextState));
     this.setState({
       showMenuMapper: nextState
     });
