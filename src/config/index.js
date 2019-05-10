@@ -1,5 +1,3 @@
-import { defineGlobalScope } from 'basic-helper';
-
 export const storageHelper = {
   get(name, parseToObj) {
     let res = window.localStorage.getItem(name);
@@ -44,4 +42,4 @@ export function getAdminWebTemplateConfig(name) {
 }
 
 // $3THG third game
-defineGlobalScope('$AWT', adminWebTemplate);
+// defineGlobalScope('$AWT', adminWebTemplate);
