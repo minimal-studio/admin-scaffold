@@ -11,6 +11,7 @@ class VersionChecker extends Component {
       numberVersion: PropTypes.string,
       updateLog: PropTypes.string,
     }).isRequired,
+    versionUrl: PropTypes.string
   }
   constructor(props) {
     super(props);
@@ -42,8 +43,10 @@ class VersionChecker extends Component {
   };
 
   getVersion = () => {
+    const { versionUrl } = this.props;
+    if(!versionUrl) return console.log('请设置版本文件地址 versionUrl');
     if (this.errorCount === 5) return this._clear();
-    fetch(window.$AWT.versionUrl + '?t=' + Date.now())
+    fetch(versionUrl + '?t=' + Date.now())
       .then(res => res.json())
       .then(remoteVersion => {
         let { numberVersion, updateLog } = remoteVersion;

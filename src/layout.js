@@ -43,6 +43,8 @@ export default class ScaffoldLayout extends RouterHelper {
     userInfo: PropTypes.shape({}),
     /** 用户名，用于在左菜单显示 */
     username: PropTypes.string.isRequired,
+    /** 版本号文件的路径 */
+    versionUrl: PropTypes.string,
     /** 退出登录 */
     onLogout: PropTypes.func,
     /** 导航栏的配置 */
@@ -117,6 +119,7 @@ export default class ScaffoldLayout extends RouterHelper {
     maxRouters: 10,
     defaultTheme: 'blue',
     defaultLayout: 'horizontal',
+    versionUrl: './js/version.json',
     defaultDarkMode: false,
     statusbarConfig: [],
     tabInStatusbar: true,
@@ -373,6 +376,7 @@ export default class ScaffoldLayout extends RouterHelper {
       menuMappers,
       versionInfo,
       iframeMode,
+      versionUrl,
       i18nConfig,
       // DashBoard,
       bgStyle,
@@ -508,7 +512,7 @@ export default class ScaffoldLayout extends RouterHelper {
           ...bgStyle,
           zIndex: -1
         }} />
-        <VersionChecker versionInfo={versionInfo} />
+        <VersionChecker versionUrl={versionUrl} versionInfo={versionInfo} />
       </div>
     );
   }
