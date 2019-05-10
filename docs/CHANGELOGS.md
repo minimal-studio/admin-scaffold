@@ -1,5 +1,14 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.19.1
+
+- 优化样式
+
+## v0.19.0
+
+- 升级到 basic-helper v2.0
+- 新增可以收起展开查询条件的功能
+
 ## v0.18.9
 
 - 调整 Dashboard 的结构
