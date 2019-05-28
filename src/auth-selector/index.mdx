@@ -28,7 +28,6 @@ import 'uke-admin-web-scaffold/style/layout/login.scss';
         logging: false
       })
       const login = (loginData) => {
-        console.log(loginData)
         setLoginInfo({
           ...loginInfo,
           logging: true
@@ -67,6 +66,7 @@ import 'uke-admin-web-scaffold/style/layout/login.scss';
       ];
       return (
         <AuthSelector login={login} {...loginInfo}
+          btnColor="green"
           fixed={false}
           formOptions={formOptions}>
           {

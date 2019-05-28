@@ -18,6 +18,8 @@ export default class LoginPanel extends Component {
     logo: PropTypes.func,
     /** didMount 回调 */
     didMount: PropTypes.func,
+    /** 按钮的颜色，请参考 UI 库 Button 的配色方案 */
+    btnColor: PropTypes.string,
     /** 是否沾满屏幕 */
     fixed: PropTypes.bool,
     /** FormOptions, 参考 ukelli-ui 的 formOptions 配置 */
@@ -28,6 +30,7 @@ export default class LoginPanel extends Component {
   static defaultProps = {
     logging: false,
     autoLoging: false,
+    btnColor: 'theme',
     fixed: true,
     logo: () => <h3 className="title">管理系统</h3>
   }
@@ -39,7 +42,7 @@ export default class LoginPanel extends Component {
   };
   render() {
     const {
-      logging, login, backgroundImage, 
+      logging, login, backgroundImage, btnColor,
       autoLoging, formOptions, logo, fixed
     } = this.props;
     const submitable = !autoLoging && !logging;
@@ -69,6 +72,7 @@ export default class LoginPanel extends Component {
                 type: 'submit',
                 text: btnTxt,
                 className: 'res',
+                color: btnColor,
                 action: submitable ? () => {
                   login(this.formHelper.value);
                 } : null

@@ -421,6 +421,7 @@ export default class ReportTemplate extends Component {
             <Button
               text={gm("清空")}
               color="red"
+              className="mr10"
               onClick={e => {
                 if(!this.conditionHelper.clearValue) return console.log('请升级 UI 库到 2.14.34 以上');
                 this.conditionHelper.clearValue();
@@ -431,7 +432,7 @@ export default class ReportTemplate extends Component {
           !hideFloatable && (
             <Button
               text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
-              className="default ml10"
+              className="default mr10"
               onClick={e => this.toggleFloat()}/>
           )
         }
@@ -443,15 +444,16 @@ export default class ReportTemplate extends Component {
                 key={text}
                 text={text}
                 color={color}
-                className="ml10"
+                className="mr10"
                 onClick={action}/>
             );
           })
         }
-        <span className="flex" />
+        {/* <span className="flex" /> */}
         <Button 
           icon={expandCon ? "angle-double-up" : "angle-double-down"}
           color="default"
+          className="mr10"
           onClick={e => this.toggleCondition(!expandCon)}>
           高级搜索
         </Button>

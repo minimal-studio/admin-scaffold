@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.20.4
+
+- 调整表格模版引擎的按钮样式
+- 调整 LoginPanel 的按钮的样式
+
 ## v0.20.3
 
 - 修复登陆框的样式问题
