@@ -1,0 +1,89 @@
+---
+name: Auth-Selector / 验证
+route: /Auth-Selector
+---
+
+# Auth-Selector
+
+提供满足基本验证需求的登陆选择器，包含登陆框、自动登陆提示等等。
+
+import { Playground, PropsTable } from 'docz'
+import { AuthSelector } from '.';
+import { useState } from 'react';
+
+```js
+import { AuthSelector } from 'uke-admin-web-scaffold/auth-selector';
+
+// 导入样式
+import 'uke-admin-web-scaffold/style/layout/login.scss';
+```
+
+<Playground>
+  {
+    () => {
+      const [loginInfo, setLoginInfo] = useState({
+        isLogin: false,
+        logging: false
+      })
+      const login = (loginData) => {
+        console.log(loginData)
+        setLoginInfo({
+          ...loginInfo,
+          logging: true
+        })
+        // 模拟登陆
+        setTimeout(() => {
+          setLoginInfo({
+            ...loginInfo,
+            logging: false,
+            isLogin: true,
+          })
+        }, 1000)
+      };
+      const formOptions = [
+        {
+          ref: 'Username',
+          type: 'input',
+          title: '账号',
+          iconName: 'account',
+          required: true
+        },
+        {
+          ref: 'Password',
+          type: 'password',
+          title: '密码',
+          iconName: 'lock',
+          required: true
+        },
+        {
+          ref: 'GooglePassword',
+          type: 'input',
+          iconName: 'security',
+          title: 'Google认证码',
+          required: true
+        }
+      ];
+      return (
+        <AuthSelector login={login} {...loginInfo}
+          formOptions={formOptions}>
+          {
+            (props) => {
+              console.log(props)
+              return (
+                <div>
+                  登陆成功, 
+                  <span className="link"
+                    onClick={e => setLoginInfo({
+                      isLogin: false
+                    })}>
+                    点击退出登陆
+                  </span>
+                </div>
+              )
+            }
+          }
+        </AuthSelector>
+      )
+    }
+  }
+</Playground>

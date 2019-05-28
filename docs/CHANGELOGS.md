@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.20.2
+
+- 新增通用的登陆验证选择器
+
 ## v0.20.1
 
 - 优化国际化按钮的显示问题

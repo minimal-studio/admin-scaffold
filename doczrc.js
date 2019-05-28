@@ -120,6 +120,7 @@ export default {
     'Getting Started / 开始',
     'Scroffold / 脚手架应用',
     'Navigator / 导航器',
+    'Auth-Selector / 验证',
     'Template-Engin / 模版引擎',
     'Other',
   ],
