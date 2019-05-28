@@ -316,15 +316,18 @@ export default class ScaffoldLayout extends RouterHelper {
         <DropdownMenu 
           key="i18nConfig"
           needAction={false}
-          menuWrapper={() => (
-            <div>
-              <Icon n="globe" classNames={["mr5"]} />
-            </div>
-          )}
           onChange={val => this.changeLang(val)}
           position="right"
           value={lang}
-          values={i18nConfig}/>
+          values={i18nConfig}>
+          {
+            () => (
+              <div>
+                <Icon n="globe" classNames={["mr5"]} />
+              </div>
+            )
+          }
+        </DropdownMenu>
       )
     };
   }

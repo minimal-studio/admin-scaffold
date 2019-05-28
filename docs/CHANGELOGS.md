@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.20.1
+
+- 优化国际化按钮的显示问题
+
 ## v0.20.0
 
 - 升级到最新 UI 库，同步 DropdownWrapper 的用法
