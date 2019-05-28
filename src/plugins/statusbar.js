@@ -21,21 +21,20 @@ const Statusbar = (props) => {
     <div className="status-container">
       {
         statusbarConfig.map((item) => {
-          const { title, icon, pureIcon, children, component, action } = item;
+          const { title, icon, pureIcon, overlay, component, action } = item;
           let con;
           switch (true) {
           case !!component:
             con = component;
             break;
-          case !!children:
+          case !!overlay:
             con = (
-              <DropdownWrapper position="right" menuWrapper={() => (
-                <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
-              )}>
-                {(options) => children({
+              <DropdownWrapper position="right"
+                overlay={(options) => overlay({
                   ...otherProps,
                   ...options,
-                })}
+                })}>
+                <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
               </DropdownWrapper>
             );
             break;
@@ -63,8 +62,8 @@ Statusbar.propTypes = {
       icon: PropTypes.string,
       /** PureIcon */
       pureIcon: PropTypes.string,
-      /** 传入 DropdownWrapper 的 children */
-      children: PropTypes.func,
+      /** 传入 DropdownWrapper 的 overlay */
+      overlay: PropTypes.func,
       /** 如果有 component，则直接替换 DropdownWrapper */
       component: PropTypes.any,
       /** 如果有 action，则直接显示内容，并且触发 action */

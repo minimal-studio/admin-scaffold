@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "main": "./index.js",
   "files": [
     "*"
@@ -31,7 +31,7 @@
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
     "uke-request": "^0.13.x",
-    "ukelli-ui": "^2.15.x"
+    "ukelli-ui": "^2.16.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -66,7 +66,7 @@
     "react-transition-group": "^2.5.0",
     "regenerator-runtime": "^0.12.1",
     "uke-request": "^0.13.6",
-    "ukelli-ui": "^2.15.57",
+    "ukelli-ui": "^2.16.1",
     "unistore": "^3.1.0",
     "webpack": "4.28.4",
     "webpack-blocks": "^1.0.0",

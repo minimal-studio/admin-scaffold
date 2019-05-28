@@ -149,7 +149,7 @@ import ReportDemo from './template-engine/demo'
         {
           title: '',
           icon: 'user',
-          children: () => {
+          overlay: () => {
             return <Menus data={[
               {
                 text: 'MenuItem1',
@@ -170,14 +170,14 @@ import ReportDemo from './template-engine/demo'
         {
           title: '',
           icon: 'comment',
-          children: () => {
+          overlay: () => {
             return <div className="p20">any...</div>
           }
         },
         {
           title: '',
           icon: 'tasks',
-          children: () => {
+          overlay: () => {
             return <div className="p20">any...</div>
           }
         },

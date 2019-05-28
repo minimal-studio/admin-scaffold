@@ -1,5 +1,10 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.20.0
+
+- 升级到最新 UI 库，同步 DropdownWrapper 的用法
+- statusbarConfig 的配置改变: children -> overlay
+
 ## v0.19.1
 
 - 优化样式
