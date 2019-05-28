@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.20.3
+
+- 修复登陆框的样式问题
+
 ## v0.20.2
 
 - 新增通用的登陆验证选择器

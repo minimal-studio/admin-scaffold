@@ -8,7 +8,7 @@ route: /Auth-Selector
 提供满足基本验证需求的登陆选择器，包含登陆框、自动登陆提示等等。
 
 import { Playground, PropsTable } from 'docz'
-import { AuthSelector } from '.';
+import { AuthSelector, LoginPanel } from '.';
 import { useState } from 'react';
 
 ```js
@@ -18,7 +18,9 @@ import { AuthSelector } from 'uke-admin-web-scaffold/auth-selector';
 import 'uke-admin-web-scaffold/style/layout/login.scss';
 ```
 
-<Playground>
+## Usage
+
+<Playground className="relative" style={{height: 400}}>
   {
     () => {
       const [loginInfo, setLoginInfo] = useState({
@@ -65,6 +67,7 @@ import 'uke-admin-web-scaffold/style/layout/login.scss';
       ];
       return (
         <AuthSelector login={login} {...loginInfo}
+          fixed={false}
           formOptions={formOptions}>
           {
             (props) => {
@@ -87,3 +90,7 @@ import 'uke-admin-web-scaffold/style/layout/login.scss';
     }
   }
 </Playground>
+
+## LoginPanel 的 props
+
+<PropsTable of={LoginPanel} />

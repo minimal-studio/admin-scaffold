@@ -14,8 +14,12 @@ export default class LoginPanel extends Component {
     login: PropTypes.func.isRequired,
     /** 登陆框的背景图 */
     backgroundImage: PropTypes.string,
+    /** 登陆的 logo */
+    logo: PropTypes.func,
     /** didMount 回调 */
     didMount: PropTypes.func,
+    /** 是否沾满屏幕 */
+    fixed: PropTypes.bool,
     /** FormOptions, 参考 ukelli-ui 的 formOptions 配置 */
     formOptions: PropTypes.arrayOf(
       PropTypes.shape({})
@@ -24,6 +28,8 @@ export default class LoginPanel extends Component {
   static defaultProps = {
     logging: false,
     autoLoging: false,
+    fixed: true,
+    logo: () => <h3 className="title">管理系统</h3>
   }
   componentDidMount() {
     Call(this.props.didMount);
@@ -32,7 +38,10 @@ export default class LoginPanel extends Component {
     if(e && e.formHelper) this.formHelper = e.formHelper;
   };
   render() {
-    const { logging, login, backgroundImage, autoLoging, formOptions } = this.props;
+    const {
+      logging, login, backgroundImage, 
+      autoLoging, formOptions, logo, fixed
+    } = this.props;
     const submitable = !autoLoging && !logging;
     let btnTxt;
     switch (true) {
@@ -47,12 +56,12 @@ export default class LoginPanel extends Component {
       break;
     }
     return (
-      <div className="login-panel fixbg"
+      <div className={"login-panel fixbg " + (fixed ? 'fixed' : '')}
         style={{
           backgroundImage
         }}>
-        <div className="form-layout">
-          <h3 className="title">管理系统</h3>
+        <div className="login-layout">
+          {logo()}
           <FormLayout
             // className="login"
             btnConfig={[

@@ -8,12 +8,14 @@
 }
 .login-panel {
   @include fill();
-  position: fixed;
   background-size: cover;
+  &.fixed {
+    position: fixed;
+  }
   .panel-tip {
     margin: 0;
   }
-  .form-layout {
+  .login-layout {
     position: absolute;
     top: 50%;
     left: 50%;
