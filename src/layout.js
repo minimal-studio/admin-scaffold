@@ -188,7 +188,7 @@ export default class ScaffoldLayout extends RouterHelper {
     // setLangTranslate({
     //   [lang]: LANG_MAPPER[lang]
     // });
-    CURR_LANG_MAPPER = LANG_MAPPER[lang];
+    CURR_LANG_MAPPER = LANG_MAPPER[lang] || {};
     setLangTranslate(LANG_MAPPER);
     setUkeLang(lang);
   }
