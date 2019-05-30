@@ -51,11 +51,11 @@ const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
 const MenuItem = (props) => {
-  const { icon = 'bars', pureIcon, title, gm } = props;
+  const { icon = 'bars', pureIcon, title, $T } = props;
   return (
     <div className="layout a-i-c">
       {iconComFilter({ icon, pureIcon }, {classNames: ['item-icon mr10']})}
-      <span>{gm(title)}</span>
+      <span>{$T(title)}</span>
       <span className="flex" />
       <Icon n="angle-right" classNames={['direct']}/>
     </div>
@@ -92,12 +92,12 @@ export default class NavMenu extends Component {
     }),
     /* 是否悬浮模式的菜单模式 */
     flowMode: PropTypes.bool,
-    gm: PropTypes.func,
+    $T: PropTypes.func,
     changeLang: PropTypes.func,
     logout: PropTypes.func,
-    lang: PropTypes.any,
+    // lang: PropTypes.any,
+    // i18nConfig: PropTypes.object,
     menuData: PropTypes.any.isRequired,
-    i18nConfig: PropTypes.object,
     onClickMenu: PropTypes.func
   };
   flowModeKey = 'IS_FLOW_MODA';
@@ -135,7 +135,7 @@ export default class NavMenu extends Component {
   getNormalMenuChildren = initDataList => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
-    const { onClickMenu, gm } = this.props;
+    const { onClickMenu, $T } = this.props;
     const { showMenuMapper, flowMode } = this.state;
     let allSet = [];
     let foldIdx = 0;
@@ -174,9 +174,7 @@ export default class NavMenu extends Component {
                 onClick={e => {
                   !flowMode && this.toggleFold(e, currFoldIdx);
                 }}>
-                <MenuItem {..._item} gm={gm}/>
-                {/* <span className="caret" />
-                {gm(title)} */}
+                <MenuItem {..._item} $T={$T}/>
               </div>
               <div className="children">{childDOM}</div>
             </div>
@@ -206,7 +204,7 @@ export default class NavMenu extends Component {
   }
   getMenuLinkerDOM = (options) => {
     const { code, key, to, onClick, menuText, icon, pureIcon } = options;
-    const { gm } = this.props;
+    const { $T } = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
@@ -220,13 +218,13 @@ export default class NavMenu extends Component {
             <span className="menu-tip">-</span>
           ))
         }
-        {gm(menuText)}
+        {$T(menuText)}
       </Link>
     );
   };
   getFlowModeDOM = initDataList => {
     const { flowMenuConfig } = this.state;
-    const { gm, onClickMenu } = this.props;
+    const { $T, onClickMenu } = this.props;
     const { offset, activeItem = {}, activeIdx, isShow } = flowMenuConfig;
 
     const flowMenuDOM = (
@@ -289,9 +287,7 @@ export default class NavMenu extends Component {
             this.hideFlowMenu();
           }}
           className={'fold' + (isHovering ? ' hover' : '')}>
-          <MenuItem {..._item} gm={gm}/>
-          {/* <span className="caret" />
-          {gm(title)} */}
+          <MenuItem {..._item} $T={$T}/>
         </div>
       ) : (
         this.getMenuLinkerDOM({
@@ -382,9 +378,9 @@ export default class NavMenu extends Component {
       onClickMenu,
       onToggleNav,
       title = 'UKE-Dashboard',
-      username,
-      logout,
-      gm,
+      // username,
+      // logout,
+      $T,
       show
     } = this.props;
 
@@ -404,7 +400,6 @@ export default class NavMenu extends Component {
           ref={navMenuDOM => {
             if(navMenuDOM) this.navMenuDOM = navMenuDOM;
           }}
-          // style={show ? {} : {zIndex: -1}}
           className={
             'nav-menu-response ' +
             (flowMode ? 'flow-mode ' : 'tree-mode ')
@@ -417,13 +412,14 @@ export default class NavMenu extends Component {
             <div className="action-group">
               <SearchBox
                 ref={e => this._seatchBox = e}
+                $T={$T}
                 onClickMenu={onClickMenu}
                 onToggleNav={onToggleNav}
                 codeMapper={menuCodeMapper}
                 showMenu={show}/>
               <ToolTip 
                 position="bottom"
-                title={'切换到' + (!flowMode ? '悬浮' : '传统') + '模式'}
+                title={$T('切换到') + $T(!flowMode ? '悬浮' : '传统') + $T('模式')}
                 classNames={['_action-btn']}
                 className="p10"
                 onClick={() => this.changeMenuUIMode(!flowMode)}
@@ -431,23 +427,10 @@ export default class NavMenu extends Component {
               <span className="flex" />
               <ToolTip
                 onClick={() => onToggleNav(!show)}
-                title={gm(show ? "收起" : "展开") + '菜单（快捷键：alt + alt）'}
+                title={`${$T(show ? "收起" : "展开")}${$T('菜单')}（${$T('快捷键')}：alt + alt）'`}
                 n={!show ? "greater-than" : "less-than"}/>
             </div>
           </div>
-          {/* <div className="userinfo">
-            <Avatar size={40} text={username[0]}/>
-            <span>
-              <div>{username}</div>
-              <div>{gm('在线')}</div>
-            </span>
-            <span className="flex" />
-            {
-              logout && (
-                <span className="_btn" onClick={e => logout()}>退出登录</span>
-              )
-            }
-          </div> */}
           {menuTree}
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Icon, ToolTip } from '../ui-refs';
 const TabForNav = (props) => {
   const {
     routers, routersLen, activeRouteIdx, closeAll, hasRouter,
-    routerInfo, menuCodeMapper, gm, closeTab, changeRoute, defaultTitle
+    routerInfo, menuCodeMapper, $T, closeTab, changeRoute, defaultTitle
   } = props;
   return (
     <div className="tabs-in-statusbar">
@@ -23,7 +23,7 @@ const TabForNav = (props) => {
                   const isActive = activeRouteIdx === idx;
                   const currInfo = routerInfo[route];
                   const { params } = currInfo;
-                  const text = gm(menuCodeMapper[route] || route);
+                  const text = $T(menuCodeMapper[route] || route);
                   return (
                     <span key={route} className={"tab-item" + (isActive ? ' active' : '')}>
                       <span

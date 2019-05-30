@@ -10,16 +10,23 @@ import { Link } from '../router-multiple';
 
 const ESC_KEY = 27;
 
-const ShortcutTipDesc = () => {
+// const Highlight = ({ children, color = 'red' }) => (
+//   <strong className={`t_${color}`}>{children}</strong>
+// );
+
+const ShortcutTipDesc = ({ $T }) => {
   return (
-    <div style={{maxWidth: 240}}>
-      快捷键：alt + s
-      <br />
-      小贴士：输入首字母快速查找; 比如
-      <strong>账号管理</strong> 
-      （<strong style={{color: '#449cea'}}>z</strong>hang<strong style={{color: '#449cea'}}>h</strong>ao
-      <strong style={{color: '#449cea'}}>g</strong>uan<strong style={{color: '#449cea'}}>l</strong>i），输入 
-      <strong style={{color: '#449cea'}}>zhgl</strong>（或者zhg）
+    <div style={{width: 240}}>
+      <h5>{$T('菜单搜索')}</h5>
+      {$T('快捷键')}：alt + s
+      {/* <br />
+      {$T('输入菜单名首字母快速查找')}
+      <br/>
+      {$T('例如')}<strong>{$T('账号管理')}</strong> 
+      <Highlight>Z</Highlight>hang
+      <Highlight>H</Highlight>ao
+      <Highlight>G</Highlight>uan
+      <Highlight>L</Highlight>i */}
     </div>
   );
 };
@@ -28,6 +35,7 @@ export default class SearchBox extends Component {
   static propTypes = {
     onChangeMenu: PropTypes.func,
     onToggleNav: PropTypes.func,
+    $T: PropTypes.func,
     showMenu: PropTypes.bool,
     codeMapper: PropTypes.object,
   };
@@ -97,7 +105,7 @@ export default class SearchBox extends Component {
           <ToolTip 
             position="bottom"
             title={(
-              <ShortcutTipDesc />
+              <ShortcutTipDesc $T={this.props.$T} />
             )}
             classNames={['_action-btn']}
             className="p10"
@@ -108,7 +116,7 @@ export default class SearchBox extends Component {
             <input
               ref={c => this._input = c}
               type="text"
-              placeholder="搜索菜单，首字母组合更快哦"
+              placeholder="菜单搜索"
               className="form-control input-sm"
               value={searchMap}
               onChange={e => this.searchMenu(e.target.value)}

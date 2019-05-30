@@ -29,7 +29,7 @@ export default class ReportTemplate extends Component {
     /** 当查询条件改变时 */
     onChangeCondition: PropTypes.func,
     /** getKeyMapper 获取 i18n */
-    gm: PropTypes.func,
+    $T: PropTypes.func,
     /** 是否显示查询条件 */
     showCondition: PropTypes.bool,
     /** 是否正在获取查询条件 */
@@ -125,7 +125,7 @@ export default class ReportTemplate extends Component {
     needPaging: true,
     template: 'Table',
     conditionOptions: [],
-    gm: str => str,
+    $T: str => str,
     resDesc: '',
   }
   defaultPagin = {};
@@ -326,7 +326,7 @@ export default class ReportTemplate extends Component {
       records = [], pagingInfo = {}, querying, children, template,
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
-      conditionOptions, gm, keyMapper, hideFloatable, calculateHeight,
+      conditionOptions, $T, keyMapper, hideFloatable, calculateHeight,
       sortIgnores, needSort, needClearBtn, needAutoRefresh, propsForTable
     } = this.props;
 
@@ -392,7 +392,7 @@ export default class ReportTemplate extends Component {
       break;
     }
     if(!this.templateDOM) return (
-      <span>{gm('没有对应的模板')}</span>
+      <span>{$T('没有对应的模板')}</span>
     );
     const pagingDOM = needPaging ? (
       <Pagination
@@ -409,7 +409,7 @@ export default class ReportTemplate extends Component {
     const actionArea = (
       <div className="action-area layout">
         <Button
-          text={gm("查询")}
+          text={$T('查询')}
           type="submit"
           className="mr10"
           loading={querying}
@@ -419,7 +419,7 @@ export default class ReportTemplate extends Component {
         {
           needClearBtn && hasConditionOptions && (
             <Button
-              text={gm("清空")}
+              text={$T('清空')}
               color="red"
               className="mr10"
               onClick={e => {
@@ -431,7 +431,7 @@ export default class ReportTemplate extends Component {
         {
           !hideFloatable && (
             <Button
-              text={gm(displayFloat ? '隐藏小数点' : '显示小数点')}
+              text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
               className="default mr10"
               onClick={e => this.toggleFloat()}/>
           )
@@ -455,7 +455,7 @@ export default class ReportTemplate extends Component {
           color="default"
           className="mr10"
           onClick={e => this.toggleCondition(!expandCon)}>
-          高级搜索
+          {$T('高级搜索')}
         </Button>
         {
           needAutoRefresh && (

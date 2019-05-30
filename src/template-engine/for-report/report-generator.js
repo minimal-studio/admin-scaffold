@@ -35,7 +35,7 @@ function getRecordBtns(...args) {
         <span className={"link-btn mr5 t_" + color} key={text} onClick={e => {
           action(...args);
         }}>
-          {this.props.gm(text)}
+          {this.props.$T(text)}
         </span>
       );
     }

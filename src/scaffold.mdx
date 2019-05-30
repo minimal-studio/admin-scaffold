@@ -18,6 +18,8 @@ import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold, Link } from './';
 import ActionAgentPage from './action-agent/demo'
 import ReportDemo from './template-engine/demo'
+import zhCH from './i18n/zh-CN'
+import enUS from './i18n/en-US'
 
 ## Usage
 
@@ -33,8 +35,11 @@ import ReportDemo from './template-engine/demo'
   {
     () => {
       const githubLink = 'https://github.com/SANGET/uke-admin-web-scaffold';
-      const i18nUrl = '';
       AdminWebScaffold.setI18nUrl('/public/i18n/');
+      const i18nMapper = {
+        'zh-CN': zhCH,
+        'en-US': enUS,
+      }
       const Status = () => {
         return (
           <div></div>
@@ -197,6 +202,7 @@ import ReportDemo from './template-engine/demo'
           // 必须填写的
           username={userInfo.username}
           versionInfo={VersionInfo}
+          i18nMapper={i18nMapper}
           menuMappers={{
             child: 'child',
             code: 'code',
@@ -223,6 +229,8 @@ import ReportDemo from './template-engine/demo'
 
 ## 国际化
 
+### 原理
+
 uke-admin-web-scaffold 的国际化策略为：通过用户浏览器默认语言，以及右上角提供的选择器确定目标语言，获取指定目录 json 文件，包装成符合 ukelli-ui 国际化策略的方式实现。
 
 例如
@@ -233,11 +241,34 @@ uke-admin-web-scaffold 的国际化策略为：通过用户浏览器默认语言
 2. 如果自定义了国际化目录，则需要通过 `AdminWebScaffold.setI18nUrl` 接口设置国际化文件目录路径。
 3. 脚手架尝试获取国际化目录下的国际化配置文件，并且导入项目当中，配合 ukelli-ui 的国际化策略。
 
+### 国际化选项配置
+
+```js
+import zhCN from 'uke-admin-web-scaffold/i18n/zh-CN';
+import enUS from 'uke-admin-web-scaffold/i18n/en-US';
+
+<AdminWebScaffold {...props}
+  // 内置的国际化文件
+  i18nMapper={{
+    'zh-CN': zhCN,
+    'en-US': enUS,
+  }}
+  // 内置的国际化文件
+  i18nConfig={{
+    'zh-CN': '中文',
+    'en-US': 'English',
+  }} />
+```
+
+### 设置国际化配置路径
+
 ```js
 import { AdminWebScaffold } from 'uke-admin-web-scaffold'
 
 AdminWebScaffold.setI18nUrl('/public/i18n/');
 ```
+
+### 国际化文件事例
 
 `/public/i18n/zh-CN.json` 文件
 

@@ -17,7 +17,7 @@ import {
 import { showShortcut, ShortcutDesc } from './shortcut';
 import NavMenu from './nav-menu';
 // import Posts from './posts';
-import { RouterHelper, history } from './router-multiple';
+import { RouterHelper } from './router-multiple';
 import VersionComponent, { VersionChecker } from './plugins/version-com';
 import {
   Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
@@ -27,6 +27,8 @@ import {
 } from './plugins/theme';
 
 let i18nMapperUrl = './i18n/';
+let LANG_MAPPER = {};
+let CURR_LANG_MAPPER = {};
 
 export default class ScaffoldLayout extends RouterHelper {
   static setI18nUrl = (nextUrl) => {
@@ -86,6 +88,8 @@ export default class ScaffoldLayout extends RouterHelper {
     pageProps: PropTypes.shape({}),
     /** 国际化配置 */
     i18nConfig: PropTypes.shape({}),
+    /** 国际化 Mapper */
+    i18nMapper: PropTypes.shape({}),
     /** 最大存在的 tab 路由 */
     maxRouters: PropTypes.number,
     /** 顶级 tab 是否在 statusbar 中 */
@@ -123,11 +127,11 @@ export default class ScaffoldLayout extends RouterHelper {
   constructor(props) {
     super(props);
 
-    const { pageComponents, iframeMode } = props;
-    this.pageRoutes = iframeMode ? ['Posts'] : Object.keys(pageComponents);
-    EventEmitter.on('QUERY_MENU', (resMenuData) => {
-      this.changeMenuData(resMenuData);
-    });
+    // const { pageComponents, iframeMode } = props;
+    // this.pageRoutes = iframeMode ? ['Posts'] : Object.keys(pageComponents);
+    // EventEmitter.on('QUERY_MENU', (resMenuData) => {
+    //   this.changeMenuData(resMenuData);
+    // });
 
     this.state = {
       ...this.state,
@@ -139,7 +143,6 @@ export default class ScaffoldLayout extends RouterHelper {
       menuData: props.menuStore || [],
       lang: navigator.language,
       ready: false,
-      langMapper: {}
     };
     this.initApp();
   }
@@ -159,30 +162,34 @@ export default class ScaffoldLayout extends RouterHelper {
   }
 
   async initApp() {
+    const { i18nMapper } = this.props;
     const { lang } = this.state;
-    let langMapper = await this.fetchLangMapper(lang);
-    this.setUILang(lang, langMapper);
+    if(i18nMapper) {
+      LANG_MAPPER = {...i18nMapper};
+    }
+    await this.fetchLangMapper(lang);
+    this.setUILang(lang);
     this.setState({
-      langMapper,
       ready: true
     });
   }
 
   changeLang = async (lang) => {
     if(!lang) return;
-    const langMapper = await this.fetchLangMapper(lang);
-    this.setUILang(lang, langMapper);
+    await this.fetchLangMapper(lang);
+    this.setUILang(lang);
     this.setState({
       lang,
-      langMapper
     });
   }
 
-  setUILang = (lang, langMapper) => {
+  setUILang = (lang) => {
     /** 设置 UI 库的国际化 */
-    setLangTranslate({
-      [lang]: langMapper
-    });
+    // setLangTranslate({
+    //   [lang]: LANG_MAPPER[lang]
+    // });
+    CURR_LANG_MAPPER = LANG_MAPPER[lang];
+    setLangTranslate(LANG_MAPPER);
     setUkeLang(lang);
   }
 
@@ -211,20 +218,20 @@ export default class ScaffoldLayout extends RouterHelper {
     let url = this.geti18nUrl(lang);
     try {
       let mapper = await (await fetch(url)).json();
+      Object.assign(LANG_MAPPER[lang], mapper);
       return mapper;
     } catch(e) {
       console.log('please set the correct i18n url');
       return {};
     }
     // setState && this.setState({
-    //   langMapper: mapper
+    //   LANG_MAPPER: mapper
     // });
     // 设置 UI 库的 keyMapper
   }
 
-  gm = (key) => {
-    let keyMapper = this.state.langMapper;
-    return key === 'all' ? keyMapper : keyMapper[key] || key || '';
+  $T = (key) => {
+    return key === 'all' ? CURR_LANG_MAPPER : CURR_LANG_MAPPER[key] || key || '';
   }
 
   triggerResize() {
@@ -246,7 +253,7 @@ export default class ScaffoldLayout extends RouterHelper {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind(['alt+k', 'alt alt']);
+    Mousetrap.unbind(['alt+k', 'alt alt', 'alt+w']);
     this.unlisten();
   }
 
@@ -287,7 +294,7 @@ export default class ScaffoldLayout extends RouterHelper {
       username,
       isActive,
       pageName,
-      gm: this.gm,
+      $T: this.$T,
       onNavigate: this.onNavigate,
       history: this.history,
     };
@@ -335,10 +342,10 @@ export default class ScaffoldLayout extends RouterHelper {
   getSystemInfoConfig = () => {
     return {
       icon: "ellipsis-v",
-      action: this.handleSystemInfo
+      action: this.renderSystemInfo
     };
   }
-  handleSystemInfo = () => {
+  renderSystemInfo = () => {
     const { Footer, versionInfo } = this.props;
     const { theme, darkMode, layout } = this.state;
     ShowModal({
@@ -358,12 +365,12 @@ export default class ScaffoldLayout extends RouterHelper {
           <FooterContainer>
             {
               Footer && this.loadPlugin(Footer, {
-                gm: this.gm,
+                $T: this.$T,
               })
             }
             {
               versionInfo ? (
-                <VersionComponent gm={this.gm} versionInfo={versionInfo} />
+                <VersionComponent $T={this.$T} versionInfo={versionInfo} />
               ) : null
             }
           </FooterContainer>
@@ -373,15 +380,15 @@ export default class ScaffoldLayout extends RouterHelper {
   }
   render() {
     const {
-      username = 'U',
+      username,
       logout,
       pageComponents,
       pluginComponent = {},
       menuMappers,
       versionInfo,
-      iframeMode,
       versionUrl,
-      i18nConfig,
+      // iframeMode,
+      // i18nConfig,
       // DashBoard,
       bgStyle,
       tabInStatusbar,
@@ -395,7 +402,7 @@ export default class ScaffoldLayout extends RouterHelper {
       displayFloat,
       activeRouteIdx,
       routerInfo,
-      lang,
+      // lang,
       ready,
       layout,
       theme,
@@ -423,14 +430,14 @@ export default class ScaffoldLayout extends RouterHelper {
                   // onClickMenu={code => {
                   //   // this.pushRoute(code)
                   // }}
-                  i18nConfig={i18nConfig}
+                  // i18nConfig={i18nConfig}
+                  // lang={lang}
                   menuMappers={menuMappers}
                   username={username}
-                  lang={lang}
                   defaultFlowMode={false}
                   changeLang={this.changeLang}
                   show={showNavMenu}
-                  gm={this.gm}
+                  $T={this.$T}
                   onToggleNav={this.toggleNavMenu}
                   activeMenu={activeMenu}/>
                 <div
@@ -443,16 +450,14 @@ export default class ScaffoldLayout extends RouterHelper {
                         changeRoute={this.changeRoute}
                         closeTab={this.closeTab}
                         closeAll={this.closeAll}
-                        gm={this.gm}
+                        $T={this.$T}
                         menuCodeMapper={menuCodeMapper}
                         hasRouter={hasRouter}
                         routerInfo={routerInfo}
                         routers={routers}
                         activeRouteIdx={activeRouteIdx}
                         routersLen={routersLen}
-                        defaultTitle={e => {
-                          return this.gm("仪表盘");
-                        }} />
+                        defaultTitle={e => this.$T('仪表盘')} />
                     )}
                     <span className="flex" />
                     {
@@ -460,7 +465,7 @@ export default class ScaffoldLayout extends RouterHelper {
                         onLogout: logout,
                         showShortcut: showShortcut,
                         displayFloat: displayFloat,
-                        gm: this.gm,
+                        $T: this.$T,
                         toggleFloat: this.toggleFloat,
                       })
                     }
@@ -470,7 +475,7 @@ export default class ScaffoldLayout extends RouterHelper {
                     withContent 
                     onlyContent={tabInStatusbar}
                     closeable={hasRouter}
-                    closeTip={this.gm("快捷键") + ": alt + w"}
+                    closeTip={this.$T('快捷键') + ": alt + w"}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
                     onClose={idx => this.closeTab(idx, routerInfo)}>
@@ -484,7 +489,7 @@ export default class ScaffoldLayout extends RouterHelper {
                         return (
                           <Tab 
                             contentClass={route}
-                            label={this.gm(menuCodeMapper[route] || route)} 
+                            label={this.$T(menuCodeMapper[route] || route)} 
                             key={key} 
                             onChange={e => this.changeRoute(route, params)}>
                             {
@@ -499,7 +504,7 @@ export default class ScaffoldLayout extends RouterHelper {
                       }) : (
                         <Tab
                           contentClass="dash-board"
-                          label={this.gm("仪表盘")}
+                          label={this.$T('仪表盘')}
                           key="dash-board">
                           <DashBoardWrapper
                             CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true)} />

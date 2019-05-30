@@ -107,11 +107,11 @@ class VersionChecker extends Component {
 }
 
 const VersionDisplayer = (props) => {
-  const { versionInfo, gm } = props;
+  const { versionInfo, $T } = props;
   return (
     <div className="version-container">
       <div>
-        {gm('当前版本')} {versionInfo.numberVersion}
+        {$T('当前版本')} {versionInfo.numberVersion}
       </div>
       <div>
         © 2018 - {(new Date()).getFullYear()}
@@ -121,7 +121,7 @@ const VersionDisplayer = (props) => {
 };
 
 VersionDisplayer.propTypes = {
-  gm: PropTypes.func.isRequired,
+  $T: PropTypes.func.isRequired,
   /** 版本内容 */
   versionInfo: PropTypes.shape({
     numberVersion: PropTypes.string,
