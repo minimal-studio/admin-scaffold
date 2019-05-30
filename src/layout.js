@@ -221,7 +221,7 @@ export default class ScaffoldLayout extends RouterHelper {
       Object.assign(LANG_MAPPER[lang], mapper);
       return mapper;
     } catch(e) {
-      console.log('please set the correct i18n url');
+      console.log(e);
       return {};
     }
     // setState && this.setState({
