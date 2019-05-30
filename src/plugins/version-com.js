@@ -55,7 +55,7 @@ class VersionChecker extends Component {
           this._clear();
           Notify({
             config: {
-              text: '有新的系统版本可以更新',
+              text: '有新的系统版本',
               title: '系统通知',
               type: 'success',
               lifecycle: 0,

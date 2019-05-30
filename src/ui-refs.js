@@ -16,7 +16,7 @@ import { Pagination } from 'ukelli-ui/core/pagin';
 import { Tabs, Tab } from 'ukelli-ui/core/tabs';
 import { Table, CardTable } from 'ukelli-ui/core/record-render';
 import { Notify } from 'ukelli-ui/core/notification';
-import { setUkelliConfig, setUkeLang } from 'ukelli-ui/core/config';
+import { setUkelliConfig, setUkeLang, setLangTranslate } from 'ukelli-ui/core/config';
 import ClickAway from 'ukelli-ui/core/uke-utils/click-away';
 import { getElementOffset } from 'ukelli-ui/core/set-dom';
 
@@ -24,6 +24,6 @@ export {
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar, Switch,
   FormLayout, Pagination, ConditionGenerator, TipPanel, Menus,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,
-  Icon, PureIcon, Table, CardTable, Button, Toast, Notify, DropdownWrapper,
+  Icon, PureIcon, Table, CardTable, Button, Toast, Notify, DropdownWrapper, setLangTranslate,
   setUkelliConfig, setUkeLang, getElementOffset
 };

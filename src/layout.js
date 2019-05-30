@@ -11,7 +11,7 @@ import classnames from 'classnames';
 
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
-  Loading, setUkelliConfig, setUkeLang, Icon
+  Loading, setUkeLang, Icon, setLangTranslate
 } from './ui-refs';
 
 import { showShortcut, ShortcutDesc } from './shortcut';
@@ -25,12 +25,6 @@ import {
 import {
   getThemeConfig, setTheme, setLayout, setDarkMode
 } from './plugins/theme';
-// import Notfound from './plugins/notfound';
-// import DashBoardWrapper from './plugins/dash-board';
-// import DefaultStatusbar from './plugins/statusbar';
-// import FooterContainer from './plugins/footer';
-// import TabForNavBar from './plugins/tab-for-nav';
-// import MiniNav from './mini-nav';
 
 let i18nMapperUrl = './i18n/';
 
@@ -160,25 +154,36 @@ export default class ScaffoldLayout extends RouterHelper {
     }, themeConfig);
   }
 
+  geti18nUrl(lang) {
+    return i18nMapperUrl + lang + '.json';
+  }
+
   async initApp() {
-    let langMapper = await this.fetchLangMapper(this.state.lang);
+    const { lang } = this.state;
+    let langMapper = await this.fetchLangMapper(lang);
+    this.setUILang(lang, langMapper);
     this.setState({
       langMapper,
       ready: true
     });
   }
 
-  geti18nUrl(lang) {
-    return i18nMapperUrl + lang + '.json';
-  }
-
   changeLang = async (lang) => {
     if(!lang) return;
-    let langMapper = await this.fetchLangMapper(lang);
+    const langMapper = await this.fetchLangMapper(lang);
+    this.setUILang(lang, langMapper);
     this.setState({
       lang,
       langMapper
     });
+  }
+
+  setUILang = (lang, langMapper) => {
+    /** 设置 UI 库的国际化 */
+    setLangTranslate({
+      [lang]: langMapper
+    });
+    setUkeLang(lang);
   }
 
   changeTheme = (nextTheme) => {
@@ -206,10 +211,6 @@ export default class ScaffoldLayout extends RouterHelper {
     let url = this.geti18nUrl(lang);
     try {
       let mapper = await (await fetch(url)).json();
-      setUkelliConfig({
-        getKeyMap: this.gm,
-      });
-      setUkeLang(lang);
       return mapper;
     } catch(e) {
       console.log('please set the correct i18n url');

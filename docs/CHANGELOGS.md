@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.0
+
+- 优化国际化策略
+
 ## v0.20.4
 
 - 调整表格模版引擎的按钮样式
