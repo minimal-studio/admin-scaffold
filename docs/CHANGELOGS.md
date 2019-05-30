@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.2
+
+- 修复内部国际化文件的问题
+
 ## v0.21.1
 
 - 修复国际化的问题

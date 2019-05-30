@@ -1,4 +1,4 @@
-{
+export default {
   "仪表盘": "Dashboard",
   "快捷键": "Shortcut",
   "当前版本": "Current Version",
@@ -13,4 +13,4 @@
   "模式": "Mode",
   "高级搜索": "More",
   "清空": "Clear"
-}
+};
