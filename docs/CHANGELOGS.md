@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.5
+
+- 修改快捷键说明
+
 ## v0.21.4
 
 - 修复国际化赋值的问题
