@@ -218,6 +218,7 @@ export default class ScaffoldLayout extends RouterHelper {
     let url = this.geti18nUrl(lang);
     try {
       let mapper = await (await fetch(url)).json();
+      if(!LANG_MAPPER[lang]) LANG_MAPPER[lang] = {};
       Object.assign(LANG_MAPPER[lang], mapper);
       return mapper;
     } catch(e) {

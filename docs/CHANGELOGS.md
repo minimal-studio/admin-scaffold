@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.4
+
+- 修复国际化赋值的问题
+
 ## v0.21.3
 
 - 新增错误打印
