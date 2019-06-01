@@ -50,6 +50,7 @@
         display: none;
       }
       .form-control {
+        min-height: 36px;
         // width: 100%;
         // background-color: rgba(255,255,255,0);
         // color: #FFF;
@@ -59,6 +60,9 @@
         right: 4px;
       }
     }
+    .animate-input-title .input-control .title {
+      bottom: auto !important;
+    }
     .login-btn {
       $btnColor: #f16a6a;
       color: #FFF;
@@ -66,8 +70,9 @@
       width: 100%;
       background-color: $btnColor;
       border-color: $btnColor;
-      background: linear-gradient(45deg, $colorCyan, $colorBlue);
       border: none;
+      padding: 10px 0;
+      box-shadow: 0 6px 12px rgba(#000, 0.2);
       &:hover {
         background-color: darken($btnColor, 5%);
       }

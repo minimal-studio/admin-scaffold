@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.6
+
+- 优化登陆框的样式
+
 ## v0.21.5
 
 - 修改快捷键说明
