@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { createBrowserHistory } from "history";
-import { getUrlParams, wrapReqHashUrl } from 'uke-request';
+import { getUrlParams, wrapReqHashUrl } from 'uke-request/url-resolve';
 import { RemoveArrayItem, CallFunc, IsUrl } from 'basic-helper';
 
 const history = createBrowserHistory();

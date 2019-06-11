@@ -66,7 +66,7 @@ class TestReportClass extends ActionAgent {
   ]
   reportActionBtns = [
     {
-      text: 'ForTest',
+      text: '测试按钮',
       id: 'testing',
       action: () => {
         console.log('for test');

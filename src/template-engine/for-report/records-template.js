@@ -442,7 +442,7 @@ export default class ReportTemplate extends Component {
             return (
               <Button
                 key={text}
-                text={text}
+                text={$T(text)}
                 color={color}
                 className="mr10"
                 onClick={action}/>

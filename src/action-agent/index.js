@@ -6,7 +6,7 @@
 import React, {Component, PureComponent} from 'react';
 
 import { Call, CallFunc, IsFunc, DebounceClass } from 'basic-helper';
-import { getUrlParams } from 'uke-request';
+import { getUrlParams } from 'uke-request/url-resolve';
 
 import * as paginHelper from '../utils/pagination-helper';
 
