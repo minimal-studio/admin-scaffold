@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.21.7
+
+- 完善国际化，完善路由解析
+
 ## v0.21.6
 
 - 优化登陆框的样式
