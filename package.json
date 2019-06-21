@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "0.21.7",
+  "version": "0.22.0",
   "main": "./index.js",
   "files": [
     "*"
@@ -23,14 +23,14 @@
   },
   "description": "管理后台脚手架",
   "peerDependencies": {
-    "basic-helper": "^2.0.x",
+    "basic-helper": "^3.0.x",
     "cross-env": "^5.1.6",
     "mousetrap": "^1.6.1",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
-    "uke-request": "^0.13.x",
+    "uke-request": "^1.0.x",
     "ukelli-ui": "^2.17.x"
   },
   "devDependencies": {
@@ -43,7 +43,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
-    "basic-helper": "^2.0.0",
+    "basic-helper": "^3.0.4",
     "docz": "^0.13.7",
     "docz-plugin-netlify": "^1.1.4",
     "docz-theme-default": "^0.13.7",
@@ -65,7 +65,7 @@
     "react-powerplug": "^1.0.0",
     "react-transition-group": "^2.5.0",
     "regenerator-runtime": "^0.12.1",
-    "uke-request": "^0.13.8",
+    "uke-request": "^1.0.0",
     "ukelli-ui": "^2.17.9",
     "unistore": "^3.1.0",
     "webpack": "4.28.4",

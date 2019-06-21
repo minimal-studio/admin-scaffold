@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v0.22.0
+
+- 升级 `basic-helper` 和 `uke-request`，并支持最新的 api
+
 ## v0.21.7
 
 - 完善国际化，完善路由解析

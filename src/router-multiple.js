@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { createBrowserHistory } from "history";
-import { getUrlParams, wrapReqHashUrl } from 'uke-request/url-resolve';
+import { getUrlParams, urlParamsToQuery } from 'uke-request/url-resolve';
 import { RemoveArrayItem, CallFunc, IsUrl } from 'basic-helper';
 
 const history = createBrowserHistory();
@@ -40,7 +40,7 @@ const wrapPushUrl = (pushConfig) => {
   //   const val = otherParams[key];
   //   paramsStr += `${key}=${val}&&`;
   // }
-  let result = wrapReqHashUrl({
+  let result = urlParamsToQuery({
     params: {
       [ROUTE_KEY]: route || component,
       ...paramsObj

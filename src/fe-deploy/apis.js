@@ -2,7 +2,7 @@
  * 与 uke web server 通讯的 api 接口
  */
 
-import { RequestClass, wrapReqHashUrl } from 'uke-request';
+import { RequestClass, urlParamsToQuery } from 'uke-request';
 
 let $R = new RequestClass();
 
@@ -229,7 +229,7 @@ export async function getSSHHost() {
 //     },
 //     toBase64: false,
 //   };
-//   return await fetch(apiUrl + wrapReqHashUrl(config));
+//   return await fetch(apiUrl + urlParamsToQuery(config));
 // }
 export function downloadAsset(assetId) {
   let config = {
@@ -239,6 +239,6 @@ export function downloadAsset(assetId) {
     },
     toBase64: false,
   };
-  return apiUrl + wrapReqHashUrl(config);
-  // return await fetch(apiUrl + wrapReqHashUrl(config));
+  return apiUrl + urlParamsToQuery(config);
+  // return await fetch(apiUrl + urlParamsToQuery(config));
 }
