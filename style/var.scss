@@ -4,33 +4,7 @@
  * color config
  */
 
-$colorGold: #fcd477;
-$colorRed: #f86270;
-$colorGreen: #05af9a;
-$colorGrey: rgba(40, 44, 52, 0.95);
-$colorCyan: #03b7aa;
-$colorYellow: #ffa200;
-$colorBlue: #449cea;
-$colorBlueLight: #23b1ed;
-$colorPurple: #7375e5;
-$colorPurpleLight: #a974e4;
-$colorOrange: #ff9800;
-$colorRedDark: #b1147a;
-
-$colorBlackPrue: #322f28;
-$colorBlack: #2e2e2f;
-
-$themeColor: $colorBlue;
-
-$defaultColor: #fafafa;
-$warmColor: #ff9800;
-$dangerColor: #ff5252;
-$importantColor: #027bf5;
-
-// $tableHeaderBgColor: #f7f7f7;
-// $tableHeaderTextColor: #333;
-// $tableBodyBgColor: #fff;
-// $tableBodyTextColor: #333;
+$themeColor: $blue;
 
 $mainBgColor: #f7f7f7;
 
@@ -61,7 +35,7 @@ $lightThemeScrollThumb: rgba(0, 0, 0, 0.3);
 $lightThemeScrollThumbHover: $themeColor;
 $lightThemeScrollThumbActive: darken($themeColor, 5%);
 
-$darkThemeScrollBg: $colorGrey;
+$darkThemeScrollBg: $gray;
 $darkThemeScrollThumb: rgba(80, 80, 80, 0.8);
 $darkThemeScrollThumbHover: darken($darkThemeScrollThumb, 3%);
 $darkThemeScrollThumbActive: darken($darkThemeScrollThumb, 5%);

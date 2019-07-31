@@ -40,10 +40,10 @@ $hoverBgColor: rgb(140, 190, 234);
   .menulist-title {
     color: #fff;
     &.flow {
-      background: linear-gradient(45deg, $colorCyan, darken($themeColor, 5%));
+      background: linear-gradient(45deg, $cyan, darken($themeColor, 5%));
     }
     &.tree {
-      background: linear-gradient(45deg, $colorOrange, $colorRed);
+      background: linear-gradient(45deg, $orange, $red);
     }
   }
   // ._action-btn {

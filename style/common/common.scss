@@ -2,7 +2,7 @@ $borderColor: #ddd;
 $lotHelperOffsetTop: 112px;
 
 .highlight {
-  color: $colorOrange;
+  color: $orange;
   font-size: 16px;
 
   &.slim {
@@ -43,15 +43,15 @@ $lotHelperOffsetTop: 112px;
 }
 
 .t-g {
-  color: $colorGreen !important;
+  color: $green !important;
 }
 
 .t-r {
-  color: $colorRed !important;
+  color: $red !important;
 }
 
 .t-b {
-  color: $colorBlue !important;
+  color: $blue !important;
 }
 
 .text-overflow {
