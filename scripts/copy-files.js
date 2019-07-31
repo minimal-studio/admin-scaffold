@@ -21,7 +21,7 @@ module.exports = (dir, packageOptions = {}) => {
     );
     const newPackageData = {
       ...packageDataOther,
-      main: './core/index.js',
+      main: './index.js',
       private: false,
       ...packageOptions,
     };
