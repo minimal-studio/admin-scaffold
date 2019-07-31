@@ -9,9 +9,9 @@ $avatarMiniScale: 24px;
   .form-group {
     &.input,&.password {
       .input-control {
-        border: 1px solid #EEE;
+        // border: 1px solid #EEE;
         border-radius: 3px;
-        background-color: #fafafa;
+        // background-color: #fafafa;
         padding: 0 8px;
         &.forcing {
           border-color: $themeColor;
