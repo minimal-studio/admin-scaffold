@@ -19,7 +19,7 @@
     "type": "git",
     "url": "https://github.com/SANGET/uke-admin-web-scaffold.git"
   },
-  "description": "管理后台脚手架",
+  "description": "Base on React's Admin Manager Scaffold.",
   "peerDependencies": {
     "basic-helper": "^3.0.x",
     "cross-env": "^5.1.6",
