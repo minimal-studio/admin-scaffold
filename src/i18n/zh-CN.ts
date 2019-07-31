@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 export default {
   "仪表盘": "仪表盘",
   "快捷键": "快捷键",

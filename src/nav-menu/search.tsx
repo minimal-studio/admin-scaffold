@@ -8,6 +8,14 @@ import { ClickAway, ToolTip } from '../ui-refs';
 
 import { Link } from '../router-multiple';
 
+export interface SearchBoxProps {
+  onChangeMenu: (route: string) => void;
+  onToggleNav: (nextShow: boolean) => void;
+  $T?: (srcStr: string) => string;
+  showMenu: boolean;
+  codeMapper: {};
+}
+
 const ESC_KEY = 27;
 
 // const Highlight = ({ children, color = 'red' }) => (
@@ -16,13 +24,13 @@ const ESC_KEY = 27;
 
 const ShortcutTipDesc = ({ $T }) => {
   return (
-    <div style={{width: 240}}>
+    <div style={{ width: 240 }}>
       <h5>{$T('菜单搜索')}</h5>
       {$T('快捷键')}：alt + s
       {/* <br />
       {$T('输入菜单名首字母快速查找')}
       <br/>
-      {$T('例如')}<strong>{$T('账号管理')}</strong> 
+      {$T('例如')}<strong>{$T('账号管理')}</strong>
       <Highlight>Z</Highlight>hang
       <Highlight>H</Highlight>ao
       <Highlight>G</Highlight>uan
@@ -31,14 +39,7 @@ const ShortcutTipDesc = ({ $T }) => {
   );
 };
 
-export default class SearchBox extends Component {
-  static propTypes = {
-    onChangeMenu: PropTypes.func,
-    onToggleNav: PropTypes.func,
-    $T: PropTypes.func,
-    showMenu: PropTypes.bool,
-    codeMapper: PropTypes.object,
-  };
+export default class SearchBox extends Component<SearchBoxProps> {
   constructor(props) {
     super(props);
 
@@ -49,7 +50,7 @@ export default class SearchBox extends Component {
   }
 
   componentDidMount() {
-    Mousetrap.bind(['alt+s'], e => {
+    Mousetrap.bind(['alt+s'], (e) => {
       this.show();
       if (!this.props.showMenu) {
         // this.shouldBeHidden = true;
@@ -59,7 +60,7 @@ export default class SearchBox extends Component {
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     Mousetrap.unbind(['alt+s']);
   }
 
@@ -69,20 +70,23 @@ export default class SearchBox extends Component {
       searchMap: isShow ? this.state.searchMap : ''
     });
   }
+
   searchMenu(val) {
     this.setState({
       searchMap: val
     });
   }
+
   show() {
     this.setSearchCon(true);
     this._input.focus();
   }
+
   hide() {
     this.setSearchCon(false);
   }
 
-  handleEsc = e => {
+  handleEsc = (e) => {
     if (e.keyCode === ESC_KEY) {
       // this._input.blur();
       this.hide();
@@ -92,17 +96,18 @@ export default class SearchBox extends Component {
       }
     }
   }
+
   render() {
     const { searchMap, isShow } = this.state;
     const { codeMapper, onChangeMenu } = this.props;
     const allCode = Object.keys(codeMapper) || [];
     return (
-      <ClickAway onClickAway={e => {
+      <ClickAway onClickAway={(e) => {
         this.hide();
         // this.shouldBeHidden = false;
       }}>
         <React.Fragment>
-          <ToolTip 
+          <ToolTip
             position="bottom"
             title={(
               <ShortcutTipDesc $T={this.props.$T} />
@@ -112,9 +117,9 @@ export default class SearchBox extends Component {
             onClick={() => this.show()}
             n="search"/>
           <div
-            className={'search-container' + (isShow ? ' show-content' : '')}>
+            className={`search-container${isShow ? ' show-content' : ''}`}>
             <input
-              ref={c => this._input = c}
+              ref={(c) => { this._input = c; }}
               type="text"
               placeholder="菜单搜索"
               className="form-control input-sm"
@@ -131,8 +136,8 @@ export default class SearchBox extends Component {
               {
                 allCode
                   .filter(
-                    code => {
-                      let item = codeMapper[code] || '';
+                    (code) => {
+                      const item = codeMapper[code] || '';
                       return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
                     }
                   )
@@ -142,7 +147,7 @@ export default class SearchBox extends Component {
                         className="result-item"
                         key={code}
                         to={code}
-                        onClick={e => {
+                        onClick={(e) => {
                           Call(onChangeMenu, code);
                           this.hide();
                         }}>

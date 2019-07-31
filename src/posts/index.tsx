@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {DebounceClass} from 'basic-helper';
+import React, { Component } from 'react';
+import { DebounceClass } from 'basic-helper';
 
-let delayExec = new DebounceClass();
+const delayExec = new DebounceClass();
 
 const wrapUrl = (str) => {
-  if(!str) return null;
-  let strArr = str.replace('?', '');
-  return './posts/' + strArr + '.html';
+  if (!str) return null;
+  const strArr = str.replace('?', '');
+  return `./posts/${strArr}.html`;
 };
 
 export default class Posts extends Component {
@@ -14,12 +14,14 @@ export default class Posts extends Component {
     markdownHTML: '',
     iframeSrc: ''
   }
+
   async fetchPostData(fileHashName) {
-    let res = await (await fetch(fileHashName)).text();
+    const res = await (await fetch(fileHashName)).text();
     this.setState({
       markdownHTML: res
     });
   }
+
   componentWillReceiveProps(nextProps) {
     delayExec.exec(() => {
       this.fetchPostData(wrapUrl(nextProps.location.search));
@@ -28,19 +30,22 @@ export default class Posts extends Component {
     //   iframeSrc: nextProps.location.search
     // });
   }
+
   componentDidMount() {
     this.fetchPostData(wrapUrl(this.props.location.search));
     // this.setState({
     //   iframeSrc: this.props.location.search
     // });
   }
+
   createMarkup() {
     return {
       __html: this.state.markdownHTML
     };
   }
+
   render() {
-    const {iframeSrc} = this.state;
+    const { iframeSrc } = this.state;
     // return iframeSrc ? (
     //   // <iframe src={wrapUrl(iframeSrc)} frameBorder="0" width="100%" height="100%"></iframe>
     //   <div className="markdown-body" dangerouslySetInnerHTML={this.createMarkup()}></div>

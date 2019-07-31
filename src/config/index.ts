@@ -1,15 +1,15 @@
 export const storageHelper = {
-  get(name, parseToObj) {
+  get(name, parseToObj?) {
     let res = window.localStorage.getItem(name);
-    if(!parseToObj) return res;
+    if (!parseToObj) return res;
     try {
       res = JSON.parse(res);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
     return res;
   },
-  set(name, item, toString) {
+  set(name, item, toString?) {
     window.localStorage.setItem(name, toString ? JSON.stringify(item) : item);
   }
 };
@@ -18,13 +18,13 @@ export function toJson(objStr) {
   let res = null;
   try {
     res = JSON.parse(objStr);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
   return res;
 }
 
-let adminWebTemplate = {
+const adminWebTemplate = {
   versionUrl: './js/version.json',
   $request: {},
   toJson,
@@ -37,7 +37,7 @@ export function setAdminWebTemplateConfig(config) {
 }
 
 export function getAdminWebTemplateConfig(name) {
-  let _adminWebTemplate = Object.assign({}, adminWebTemplate);
+  const _adminWebTemplate = Object.assign({}, adminWebTemplate);
   return name ? (_adminWebTemplate[name] || false) : _adminWebTemplate;
 }
 

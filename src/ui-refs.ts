@@ -17,8 +17,8 @@ import { Tabs, Tab } from 'ukelli-ui/core/tabs';
 import { Table, CardTable } from 'ukelli-ui/core/record-render';
 import { Notify } from 'ukelli-ui/core/notification';
 import { setUkelliConfig, setUkeLang, setLangTranslate } from 'ukelli-ui/core/config';
-import ClickAway from 'ukelli-ui/core/uke-utils/click-away';
-import { getElementOffset } from 'ukelli-ui/core/set-dom';
+import ClickAway from 'ukelli-ui/core/click-away/click-away';
+import { getElementOffset } from 'ukelli-ui/core/utils';
 
 export {
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar, Switch,

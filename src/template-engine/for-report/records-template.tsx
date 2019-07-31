@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /**
  * 组件名    通用报表布局
  * 作者      Alex
@@ -5,109 +6,37 @@
  */
 
 import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
-import { GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call } from 'basic-helper';
+import {
+  GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call
+} from 'basic-helper';
+
+// import { getDefPagin } from '../../utils/pagination-helper';
+import { getScreenInfo } from '../../utils/dom';
 import {
   Pagination, CardTable,
   Loading, Button, Toast,
   Table, ConditionGenerator,
   getElementOffset, DropdownMenu, Switch
 } from '../../ui-refs';
-
-// import { getDefPagin } from '../../utils/pagination-helper';
-import { getScreenInfo } from '../../utils/dom';
+import { ReportTemplateProps } from './types';
 
 const delayExec = new DebounceClass();
 
 const offsetBottom = 70;
 
-export default class ReportTemplate extends Component {
-  static propTypes = {
-    /** 查询数据接口 */
-    onQueryData: PropTypes.func.isRequired,
-    /** 当查询条件改变时 */
-    onChangeCondition: PropTypes.func,
-    /** getKeyMapper 获取 i18n */
-    $T: PropTypes.func,
-    /** 是否显示查询条件 */
-    showCondition: PropTypes.bool,
-    /** 是否正在获取查询条件 */
-    loadingCondition: PropTypes.bool,
-    /** 表格的高度 */
-    height: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    /** 传入 Table 的 props */
-    propsForTable: PropTypes.shape({
+const autoRefreshOptions = {
+  0: '关闭',
+  2: '自动',
+  15: '15秒',
+  30: '30秒',
+  45: '45秒',
+  60: '60秒',
+};
 
-    }),
-    /** 是否自动计算并填充表格的高度 */
-    calculateHeight: PropTypes.bool,
-    /** children */
-    children: PropTypes.any,
-    /** 是否需要分页 */
-    needPaging: PropTypes.bool,
-    /** 是否需要清除按钮 */
-    needClearBtn: PropTypes.bool,
-    /** 是否需要自动刷新数据 */
-    needAutoRefresh: PropTypes.bool,
-    /** 是否需要表格排序 */
-    needSort: PropTypes.bool,
-    /** 是否需要隐藏小数点按钮 */
-    hideFloatable: PropTypes.bool,
-    /** 是否需要表格的选择器 */
-    needCheck: PropTypes.bool,
-    /** 当有表格的细项被选中后出现的 DOM */
-    whenCheckAction: PropTypes.any,
-    /** 是否改变查询条件后自动执行查询 */
-    autoQuery: PropTypes.bool,
-    /** 是否移动端 */
-    isMobile: PropTypes.bool,
-    /** 是否需要页面加载完后自动触发一次查询条件 */
-    didMountQuery: PropTypes.bool,
-    /** 是否需要表格统计 */
-    needCount: PropTypes.bool,
-    
-    /** Ukelli UI 的表格渲染组件需要的配置 */
-    keyMapper: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string,
-    })).isRequired,
-    /** Ukelli UI 查询生成器需要的配置 */
-    conditionOptions: PropTypes.arrayOf(PropTypes.shape({
-      key: PropTypes.string,
-    })),
-
-    /** 在查询条件的按钮们 */
-    actionBtns: PropTypes.arrayOf(PropTypes.shape({
-      action: PropTypes.func,
-      text: PropTypes.string,
-      color: PropTypes.string,
-    })),
-
-    /** 由于不确定远端分页数据具体字段，所以有分页数据的字段映射 */
-    infoMapper: PropTypes.shape({}),
-  
-    /** 表格渲染记录数据 */
-    records: PropTypes.array.isRequired,
-    /** 分页数据 */
-    pagingInfo: PropTypes.object,
-    /** 数据是否查询中 */
-    querying: PropTypes.bool,
-    /** 是否默认展开查询条件 */
-    defaultExpandCon: PropTypes.bool,
-    /** 数据渲染组件 */
-    template: PropTypes.oneOf(['Table', 'CardTable']),
-    // hasErr: PropTypes.bool,
-    /** 数据查询的返回描述 */
-    resDesc: PropTypes.string,
-    /** 声音的 url */
-    soundUrl: PropTypes.string,
-    
-    /** 忽略的排序字段 */
-    sortIgnores: PropTypes.array,
-  };
+export default class ReportTemplate<
+  P extends ReportTemplateProps = ReportTemplateProps
+> extends Component<P & ReportTemplateProps> {
   static defaultProps = {
     autoQuery: false,
     defaultExpandCon: false,
@@ -128,13 +57,39 @@ export default class ReportTemplate extends Component {
     $T: str => str,
     resDesc: '',
   }
+
   defaultPagin = {};
-  templateDOM = null;
+
   audioMask = true;
+
   refreshTime = 15;
-  refreshTimer = null;
-  soundUrl = null;
-  soundType = null;
+
+  templateDOM;
+
+  refreshTimer;
+
+  soundUrl;
+
+  soundType;
+
+  soundRef
+
+  toast
+
+  conditionHelper
+
+  didMountQueried
+
+  tableContainerRef
+
+  __unmount
+
+  __setHeight
+
+  _tableRef
+
+  checkedItems
+
   constructor(props) {
     super(props);
 
@@ -145,7 +100,7 @@ export default class ReportTemplate extends Component {
     };
 
     const { soundUrl } = props;
-    if(soundUrl) this.setSoundUrl(soundUrl);
+    if (soundUrl) this.setSoundUrl(soundUrl);
   }
 
   componentDidMount() {
@@ -165,7 +120,8 @@ export default class ReportTemplate extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.props.needAutoRefresh && this.audioMask && nextProps.records != this.props.records) {
+    const { needAutoRefresh = false, records } = this.props;
+    if (needAutoRefresh && this.audioMask && nextProps.records != records) {
       this.soundRef.play();
     }
     return true;
@@ -178,18 +134,19 @@ export default class ReportTemplate extends Component {
   }
 
   setAutoRefreshTimer = () => {
-    if(!this.props.needAutoRefresh) return;
-    if(this.refreshTime == 0) {
-      return this.clearAutoRefreshTimer();
+    if (!this.props.needAutoRefresh) return;
+    if (this.refreshTime == 0) {
+      this.clearAutoRefreshTimer();
+    } else {
+      this.clearAutoRefreshTimer();
+      this.refreshTimer = setTimeout(() => {
+        this.handleQueryData(null, this.setAutoRefreshTimer);
+      }, this.refreshTime * 1000);
     }
-    this.clearAutoRefreshTimer();
-    this.refreshTimer = setTimeout(() => {
-      this.handleQueryData(null, this.setAutoRefreshTimer);
-    }, this.refreshTime * 1000);
   }
 
   clearAutoRefreshTimer = () => {
-    if(this.refreshTimer) {
+    if (this.refreshTimer) {
       clearInterval(this.refreshTimer);
       this.refreshTimer = null;
     }
@@ -204,12 +161,12 @@ export default class ReportTemplate extends Component {
     this._tableRef.clearCheckeds();
   }
 
-  handleRes = ({resDesc, hasErr}) => {
+  handleRes = ({ resDesc, hasErr }) => {
     hasErr && this.toast.show(resDesc, hasErr ? 'error' : 'success');
   }
 
   whenMountedQuery = (data) => {
-    if(this.didMountQueried) return;
+    if (this.didMountQueried) return;
     delayExec.exec(() => {
       this.handleQueryData(data);
       this.didMountQueried = true;
@@ -227,8 +184,10 @@ export default class ReportTemplate extends Component {
    * @param {boolean} [merge=true] 是否把 conditionData 合并到 this.conditionHelper.value 之中
    * @memberof ReportTemplate
    */
-  getQueryData = (conditionData, nextPagin, merge = true) => {
-    const _conditionData = merge ? Object.assign({}, this.conditionHelper.value, conditionData) : conditionData || this.conditionHelper.value;
+  getQueryData = (conditionData?, nextPagin?, merge = true): GetQueryDataResult => {
+    const _conditionData = merge
+      ? Object.assign({}, this.conditionHelper.value, conditionData)
+      : conditionData || this.conditionHelper.value;
     return {
       nextPagin: nextPagin || this.props.pagingInfo,
       conditionData: _conditionData,
@@ -238,16 +197,16 @@ export default class ReportTemplate extends Component {
 
   setTableContainerHeight = () => {
     const tableContainer = this.tableContainerRef;
-    if(this.__setHeight || !tableContainer) return;
+    if (this.__setHeight || !tableContainer) return;
     delayExec.exec(() => {
       if (this.__unmount) return;
       const tableContainerOffsetTop = getElementOffset(tableContainer).offsetTop;
       /** 高度调整策略，如果该页面被隐藏，则在下一次 update 的时候更新此高度，保证高度的正确性 */
-      if(tableContainerOffsetTop === 0) {
+      if (tableContainerOffsetTop === 0) {
         this.__setHeight = false;
         return;
       }
-      
+
       const tableContainerHeight = getScreenInfo().screenHeight - tableContainerOffsetTop - offsetBottom;
       this.setState({
         tableHeight: tableContainerHeight
@@ -257,7 +216,7 @@ export default class ReportTemplate extends Component {
   }
 
   restoreBasicFloatLen = () => {
-    if(GetFloatLen() == 0) {
+    if (GetFloatLen() == 0) {
       ToggleBasicFloatLen();
     }
   }
@@ -267,13 +226,13 @@ export default class ReportTemplate extends Component {
    * 在管理中心的时候可以用，但是关闭管理中心后必须设置回去
    */
   toggleFloat = () => {
-    let isDisplay = ToggleBasicFloatLen();
+    const isDisplay = ToggleBasicFloatLen();
     this.setState({
       displayFloat: isDisplay
     });
   }
 
-  handleQueryData = (val, callback) => {
+  handleQueryData = (val?, callback?) => {
     /** TODO: 观察，点击查询的时候，默认返回第一页 */
     const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
       onGetResInfo: this.handleRes, callback
@@ -288,7 +247,7 @@ export default class ReportTemplate extends Component {
       Call(onChangeCondition, val, ref);
     }, 200);
 
-    if(!autoQuery || !HasValue(val[ref])) return;
+    if (!autoQuery || !HasValue(val[ref])) return;
 
     delayExec.exec(() => {
       this.handleQueryData(val);
@@ -296,14 +255,14 @@ export default class ReportTemplate extends Component {
     }, 200);
   }
 
-  saveConditionRef = e => {
-    if(e) {
+  saveConditionRef = (e) => {
+    if (e) {
       this.conditionHelper = e;
-      if(this.props.didMountQuery) this.whenMountedQuery(e.value);
+      if (this.props.didMountQuery) this.whenMountedQuery(e.value);
     }
   }
 
-  handlePagin = nextPagin => {
+  handlePagin = (nextPagin) => {
     this.props.onQueryData({
       nextPagin,
       conditionData: this.conditionHelper.value,
@@ -318,8 +277,9 @@ export default class ReportTemplate extends Component {
     setTimeout(() => this.setTableContainerHeight(), 200);
   }
 
-  saveWarnRef = (e) => this.soundRef = e
-  saveToast = toast => this.toast = toast
+  saveWarnRef = (e) => { this.soundRef = e; }
+
+  saveToast = (toast) => { this.toast = toast; }
 
   render() {
     const {
@@ -327,7 +287,7 @@ export default class ReportTemplate extends Component {
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, $T, keyMapper, hideFloatable, calculateHeight,
-      sortIgnores, needSort, needClearBtn, needAutoRefresh, propsForTable
+      sortIgnores, needInnerSort, needClearBtn, needAutoRefresh, propsForTable
     } = this.props;
 
     const hasConditionOptions = conditionOptions.length > 0;
@@ -340,60 +300,62 @@ export default class ReportTemplate extends Component {
     //          && !item.date;
     // });
 
-    let _tableH = height ? height : tableHeight;
+    const _tableH = height || tableHeight;
 
     switch (template) {
-    case 'CardTable':
-      this.templateDOM = (
-        <Loading loading={querying} inrow>
-          <CardTable keyMapper={keyMapper} records={records}/>
-        </Loading>
-      );
-      break;
-    case 'Table':
-    default:
-      const _propsForTable = {
-        ...propsForTable,
-        needCheck,
-        keyMapper,
-        whenCheckAction,
-        sortIgnores,
-        needSort,
-        needCount,
-        records,
-        height: _tableH,
-      };
-      this.templateDOM = (
-        <div className="table-container" ref={e => {
-          if(!calculateHeight || height || !e || records.length === 0) return;
-          this.tableContainerRef = e;
-          this.setTableContainerHeight();
-        }}>
-          <div className="table-scroll">
-            <Loading loading={querying} inrow>
-              <Table
-                {..._propsForTable}
-                onChange={(emitVal, config) => {
-                  switch (config.type) {
-                  case 'selector':
-                    // 为 selector 修改 conditionHelper 的值，做缓存
-                    this.conditionHelper.changeValues(emitVal);
-                    break;
-                  }
-                }}
-                ref={e => this._tableRef = e}
-                onCheck={nextItems => {
-                  this.checkedItems = nextItems;
-                }} />
-            </Loading>
+      case 'CardTable':
+        this.templateDOM = (
+          <Loading loading={!!querying} inrow>
+            <CardTable keyMapper={keyMapper} records={records}/>
+          </Loading>
+        );
+        break;
+      case 'Table':
+      default:
+        const _propsForTable = {
+          ...propsForTable,
+          needCheck,
+          keyMapper,
+          whenCheckAction,
+          sortIgnores,
+          needInnerSort,
+          needCount,
+          records,
+          height: _tableH,
+        };
+        this.templateDOM = (
+          <div className="table-container" ref={(e) => {
+            if (!calculateHeight || height || !e || records.length === 0) return;
+            this.tableContainerRef = e;
+            this.setTableContainerHeight();
+          }}>
+            <div className="table-scroll">
+              <Loading loading={!!querying} inrow>
+                <Table
+                  {..._propsForTable}
+                  onChange={(emitVal, config) => {
+                    switch (config.type) {
+                      case 'selector':
+                        // 为 selector 修改 conditionHelper 的值，做缓存
+                        this.conditionHelper.changeValues(emitVal);
+                        break;
+                    }
+                  }}
+                  ref={(e) => { this._tableRef = e; }}
+                  onCheck={(nextItems) => {
+                    this.checkedItems = nextItems;
+                  }} />
+              </Loading>
+            </div>
           </div>
-        </div>
-      );
-      break;
+        );
+        break;
     }
-    if(!this.templateDOM) return (
-      <span>{$T('没有对应的模板')}</span>
-    );
+    if (!this.templateDOM) {
+      return (
+        <span>{$T('没有对应的模板')}</span>
+      );
+    }
     const pagingDOM = needPaging ? (
       <Pagination
         pagingInfo={pagingInfo}
@@ -413,7 +375,7 @@ export default class ReportTemplate extends Component {
           type="submit"
           className="mr10"
           loading={querying}
-          onClick={e => {
+          onClick={(e) => {
             this.handleQueryData();
           }}/>
         {
@@ -422,8 +384,7 @@ export default class ReportTemplate extends Component {
               text={$T('清空')}
               color="red"
               className="mr10"
-              onClick={e => {
-                if(!this.conditionHelper.clearValue) return console.log('请升级 UI 库到 2.14.34 以上');
+              onClick={(e) => {
                 this.conditionHelper.clearValue();
               }}/>
           )
@@ -437,7 +398,7 @@ export default class ReportTemplate extends Component {
           )
         }
         {
-          actionBtns && actionBtns.map(btn => {
+          actionBtns && actionBtns.map((btn) => {
             const { text, action, color = 'default' } = btn;
             return (
               <Button
@@ -450,7 +411,7 @@ export default class ReportTemplate extends Component {
           })
         }
         {/* <span className="flex" /> */}
-        <Button 
+        <Button
           icon={expandCon ? "angle-double-up" : "angle-double-down"}
           color="default"
           className="mr10"
@@ -465,21 +426,14 @@ export default class ReportTemplate extends Component {
                 needAction={false}
                 position="right"
                 defaultValue={this.refreshTime}
-                values={{
-                  0: '关闭',
-                  2: '自动',
-                  15: '15秒',
-                  30: '30秒',
-                  45: '45秒',
-                  60: '60秒',
-                }}
+                values={autoRefreshOptions}
                 onChange={this.changeRefreshTime} />
               <span className="ms10">声音</span>
               <Switch
-                onChange={val => {
+                onChange={(val) => {
                   this.audioMask = val;
-                  if(!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
-                  if(!val) this.soundRef.pause();
+                  if (!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
+                  if (!val) this.soundRef.pause();
                 }}
                 defaultChecked={this.audioMask}/>
               <audio id="soundRef" ref={this.saveWarnRef}>
@@ -497,7 +451,7 @@ export default class ReportTemplate extends Component {
       <div className="report-table-layout">
         <Toast ref={this.saveToast}/>
         <div className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
-          <form onSubmit={e => {
+          <form onSubmit={(e) => {
             e.preventDefault();
           }}>
             {conditionHelper}

@@ -7,8 +7,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LoginPanel from './login-panel';
 
 const removeLoadingBG = () => {
-  let loaderDOM = document.querySelector('#loadingBg');
-  if(!loaderDOM || !loaderDOM.parentNode) return;
+  const loaderDOM = document.querySelector('#loadingBg');
+  if (!loaderDOM || !loaderDOM.parentNode) return;
   loaderDOM.classList.add('loaded');
   loaderDOM.parentNode.removeChild(loaderDOM);
   // setTimeout(() => {
@@ -20,19 +20,19 @@ const LoginSelector = (props) => {
 
   let container;
   switch (true) {
-  case isLogin:
-    container = IsFunc(children) ? children(props) : children;
-    break;
-  // case autoLoging:
-  //   container = (
-  //     <div className="auto-loging-tip">自动登陆中，请稍后...</div>
-  //   );
-  //   break;
-  default:
-    container = (
-      <LoginPanel
-        {...props}/>
-    );
+    case isLogin:
+      container = IsFunc(children) ? children(props) : children;
+      break;
+      // case autoLoging:
+      //   container = (
+      //     <div className="auto-loging-tip">自动登陆中，请稍后...</div>
+      //   );
+      //   break;
+    default:
+      container = (
+        <LoginPanel
+          {...props}/>
+      );
   }
   return (
     <TransitionGroup component={null}>

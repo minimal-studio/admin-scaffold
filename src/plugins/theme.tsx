@@ -1,9 +1,10 @@
 import React from 'react';
 import Storage from 'basic-helper/storage';
 
+import { NatureColors } from 'ukelli-ui/core/utils';
 import { Switch } from '../ui-refs';
 
-const _themes = ['blue', 'red', 'green', 'yellow', 'light-p', 'gold', 'orange', 'wine'];
+const _themes = NatureColors;
 const _layout = ['vertical', 'horizontal'];
 
 const themeDefined = '_THEME_';
@@ -16,7 +17,7 @@ const getThemeConfig = () => {
   const darkMode = Storage.getItem(darkModeDefined);
 
   return {
-    theme, layout, darkMode: darkMode == 'true' ? true : false
+    theme, layout, darkMode: darkMode == 'true'
   };
 };
 
@@ -41,7 +42,7 @@ const Theme = ({
       <div>
         <h5>主题选择</h5>
         {
-          _themes.map(color => {
+          _themes.map((color) => {
             const isActive = activeTheme === color;
             return (
               <span

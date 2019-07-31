@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, SFC } from 'react';
 import PropTypes from 'prop-types';
 
 import { createBrowserHistory } from "history";
@@ -33,7 +33,7 @@ const wrapPushUrl = (pushConfig) => {
   const { href, hash } = window.location;
   const targetHash = hash.replace('#/', '').split('?')[0];
   const { component, route, params } = pushConfig;
-  let paramsObj = typeof params == 'string' ? {id: params} : {...params};
+  const paramsObj = typeof params == 'string' ? { id: params } : { ...params };
   // let paramsStr = '';
   // let otherParams = {...paramsObj};
   // for (const key in otherParams) {
@@ -54,56 +54,64 @@ const wrapPushUrl = (pushConfig) => {
 };
 
 /**
- * 
+ *
  * @param {object} config { type: 'PUSH | GO_BACK | LINK', component: route, params: {} }
  */
-const onNavigate = config => {
-  if(!config) return console.log('Not config');
+const onNavigate = (config) => {
+  if (!config) return console.log('Not config');
   const { location } = history;
-  config["from"] = location;
+  config.from = location;
   switch (config.type) {
-  case "PUSH":
-    var pushUrl = wrapPushUrl(config);
-    pushToHistory(`#/${pushUrl}`, config);
-    break;
-  case "LINK":
-    break;
+    case "PUSH":
+      var pushUrl = wrapPushUrl(config);
+      pushToHistory(`#/${pushUrl}`, config);
+      break;
+    case "LINK":
+      break;
     // case "MODAL":
     //   ShowModal({
     //     ...config,
     //     showFuncBtn: false
     //   })
     //   break;
-  case "GO_BACK":
-    history.goBack();
-    break;
+    case "GO_BACK":
+      history.goBack();
+      break;
   }
 };
 
 const resolvePath = (path) => {
-  let result = path.split('?')[0].replace(/#/g, '');
-  let pathArr = result.split('/').filter(item => !!item);
+  const result = path.split('?')[0].replace(/#/g, '');
+  const pathArr = result.split('/').filter(item => !!item);
   return pathArr;
 };
 
-class RouterHelper extends Component {
+class RouterHelper<P, S = {}> extends Component<P, S> {
   history = history;
+
   wrapPushUrl = wrapPushUrl;
+
   pushToHistory = pushToHistory;
+
   onNavigate = onNavigate;
+
+  unlisten
+
   constructor(props) {
     super(props);
 
     const { cacheState } = props;
 
-    if(this.unlisten) this.unlisten();
+    if (this.unlisten) this.unlisten();
     this.unlisten = history.listen(this.handleHistory);
 
     this.state = cacheState ? cachedState : defaultState;
   }
+
   componentDidMount() {
     this.initRoute();
   }
+
   changeRoute = (route, params) => {
     onNavigate({
       type: 'PUSH',
@@ -112,6 +120,7 @@ class RouterHelper extends Component {
       params
     });
   };
+
   handleHistory = (location, action) => {
     const { hash, state = {} } = location;
     // const activeRoute = resolvePath(hash)[0];
@@ -119,29 +128,31 @@ class RouterHelper extends Component {
     const nextRouterState = state.nextRouters;
     this.selectTab(activeRoute, nextRouterState);
   };
+
   closeAll = () => {
     replaceHistory('/');
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
         ...prevState,
         ...defaultState
       };
     });
   }
+
   closeTab = (idx, routeInfo) => {
     const { routers, routerInfo, activeRouteIdx } = this.state;
 
-    let targetRoute = routers[idx];
-    let nextRouters = RemoveArrayItem(routers, targetRoute);
-    let nextRouterInfo = {...routerInfo};
+    const targetRoute = routers[idx];
+    const nextRouters = RemoveArrayItem(routers, targetRoute);
+    const nextRouterInfo = { ...routerInfo };
     delete nextRouterInfo[targetRoute];
-    let nextRoutersLen = nextRouters.length - 1;
-    let nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
-    let nextActiveRoute = nextRouters[nextActiveIdx];
+    const nextRoutersLen = nextRouters.length - 1;
+    const nextActiveIdx = activeRouteIdx > nextRoutersLen ? nextRoutersLen : activeRouteIdx;
+    const nextActiveRoute = nextRouters[nextActiveIdx];
 
-    if(!nextActiveRoute) return this.closeAll();
-    
-    let nextRouterParams = nextRouterInfo[nextActiveRoute] || {};
+    if (!nextActiveRoute) return this.closeAll();
+
+    const nextRouterParams = nextRouterInfo[nextActiveRoute] || {};
 
     const nextState = {
       routers: nextRouters,
@@ -164,35 +175,36 @@ class RouterHelper extends Component {
     };
     // pushToHistory(wrapPushUrl(config), config);
     onNavigate(config);
-    
+
     return nextState;
   }
+
   selectTab = (activeRoute, nextRouterState) => {
-    if(nextRouterState) return this.setState(nextRouterState);
-    if(!activeRoute) return;
+    if (nextRouterState) return this.setState(nextRouterState);
+    if (!activeRoute) return;
 
     this.setState(({ routers, routerInfo }) => {
       const { maxRouters } = this.props;
-      let currComIdx = routers.indexOf(activeRoute);
+      const currComIdx = routers.indexOf(activeRoute);
       let nextRouters = [...routers];
-      let nextRouterInfo = {...routerInfo};
+      const nextRouterInfo = { ...routerInfo };
       nextRouterInfo[activeRoute] = {
         ...(nextRouterInfo[activeRoute] || {}),
         params: getUrlParams()
       };
       let activeIdx = currComIdx;
-      if(currComIdx == -1) {
+      if (currComIdx == -1) {
         nextRouters = [...routers, activeRoute];
         /** 做最大路由控制 */
-        if(nextRouters.length > maxRouters) {
+        if (nextRouters.length > maxRouters) {
           const [target, ...other] = nextRouters;
           nextRouters = other;
           delete nextRouterInfo[target];
         }
         activeIdx = nextRouters.length - 1;
       }
-      let nextState = {
-        activeRoute: activeRoute,
+      const nextState = {
+        activeRoute,
         activeRouteIdx: activeIdx,
         routers: nextRouters,
         routerInfo: nextRouterInfo
@@ -201,35 +213,51 @@ class RouterHelper extends Component {
       return nextState;
     });
   }
+
   initRoute = () => {
     // let initRoute = resolvePath(location.hash)[0];
-    let initRoute = getUrlParams()[ROUTE_KEY];
+    const initRoute = getUrlParams()[ROUTE_KEY];
     initRoute && this.selectTab(initRoute);
   }
+}
+
+export interface LinkProps {
+  /** 将要导航到的路由 */
+  to: string;
+  className?: string;
+  onClick?: (event) => void;
+  /** 作为 query string 的导航参数，例如 { ID: 123, name: alex } -> ID=123&name=alex */
+  params?: {};
+  isActive?: boolean;
 }
 
 /**
  * 用于导航到另外页面的组件
  * @param {object} options 参数
- * @TODO: 完善是否激活的判定
  */
-const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
+const Link: SFC<LinkProps> = (props) => {
+  const {
+    to, className = 'link-btn', children, onClick, params, isActive
+  } = props;
   // const { location } = history;
   // const { hash } = location;
   const activeRoute = getUrlParams()[ROUTE_KEY];
-  const isActive = activeRoute === to;
+  const _isActive = typeof isActive == 'undefined' ? activeRoute === to : isActive;
 
   return (
-    <span 
-      className={className + (isActive ? ' active' : '')}
-      onClick={e => {
+    <span
+      className={className + (_isActive ? ' active' : '')}
+      onClick={(e) => {
         CallFunc(onClick)(e);
-        if(IsUrl(to)) return window.open(to);
-        onNavigate({
-          type: 'PUSH',
-          route: to,
-          params
-        });
+        if (IsUrl(to)) {
+          window.open(to);
+        } else {
+          onNavigate({
+            type: 'PUSH',
+            route: to,
+            params
+          });
+        }
       }}>
       {children}
     </span>
@@ -238,16 +266,6 @@ const Link = ({ to, className = 'link-btn', children, onClick, params }) => {
 Link.defaultProps = {
   className: 'link-btn',
   params: {}
-};
-Link.propTypes = {
-  /** 将要导航到的路由 */
-  to: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  /** 作为 query string 的导航参数，例如 { ID: 123, name: alex } -> ID=123&name=alex */
-  params: PropTypes.shape({
-    // type: PropTypes.string,
-  }),
 };
 
 export {

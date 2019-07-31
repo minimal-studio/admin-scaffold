@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,9 +10,9 @@ import { ToolTip, Icon, PureIcon } from '../ui-refs';
 import { storageHelper } from '../config';
 
 import { Link } from '../router-multiple';
-import SearchBox from './search';
+import SearchBox, { SearchBoxProps } from './search';
 
-let delayExec = new DebounceClass();
+const delayExec = new DebounceClass();
 
 const MENU_ACTIVE_STORAGE = 'MENU_ACTIVE_STORAGE';
 
@@ -19,9 +21,9 @@ function getScreenHeight() {
 }
 
 function getElementLeft(element) {
-  if(!element) return;
-  var actualLeft = element.offsetLeft;
-  var current = element.offsetParent;
+  if (!element) return null;
+  let actualLeft = element.offsetLeft;
+  let current = element.offsetParent;
   while (current !== null) {
     actualLeft += (current.offsetLeft + current.clientLeft);
     current = current.offsetParent;
@@ -30,9 +32,9 @@ function getElementLeft(element) {
 }
 
 function getElementTop(element) {
-  if(!element) return;
-  var actualTop = element.offsetTop;
-  var current = element.offsetParent;
+  if (!element) return null;
+  let actualTop = element.offsetTop;
+  let current = element.offsetParent;
   while (current !== null) {
     actualTop += (current.offsetTop + current.clientTop);
     current = current.offsetParent;
@@ -40,27 +42,48 @@ function getElementTop(element) {
   return actualTop;
 }
 
-const iconComFilter = ({ icon, pureIcon }, props, other) => {
-  if(!icon && !pureIcon) return other;
-  let I = pureIcon ? PureIcon : Icon;
-  return <I {...props} n={pureIcon ? pureIcon : icon} />;
+const iconComFilter = ({ icon, pureIcon }, props, other?) => {
+  if (!icon && !pureIcon) return other;
+  const I = pureIcon ? PureIcon : Icon;
+  return <I {...props} n={pureIcon || icon} />;
 };
 
 const MENU_CODE_MAPPER = 'MENU_CODE_MAPPER';
 
-let menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
+const menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
 const MenuItem = (props) => {
-  const { icon = 'bars', pureIcon, title, $T } = props;
+  const {
+    icon = 'bars', pureIcon, title, $T
+  } = props;
   return (
     <div className="layout a-i-c">
-      {iconComFilter({ icon, pureIcon }, {classNames: ['item-icon mr10']})}
+      {iconComFilter({ icon, pureIcon }, { classNames: ['item-icon mr10'] })}
       <span>{$T(title)}</span>
       <span className="flex" />
       <Icon n="angle-right" classNames={['direct']}/>
     </div>
   );
 };
+
+export interface NavMenuProps {
+  menuData: any;
+  $T: (srcStr: string) => string;
+  onDidMount?: (menuCodeMapper) => void;
+  menuMappers: {
+    child: string;
+    code: string;
+    title: string;
+    icon?: string;
+  };
+  /* 是否悬浮模式的菜单模式 */
+  flowMode?: boolean;
+  show?: boolean;
+  /** 标题 */
+  title?: string;
+  onToggleNav?: SearchBoxProps['onToggleNav'];
+  onClickMenu?: () => void;
+}
 
 /**
  * 左菜单控件
@@ -81,26 +104,23 @@ const MenuItem = (props) => {
  *   ]
  * }
  */
-export default class NavMenu extends Component {
-  static propTypes = {
-    onDidMount: PropTypes.func,
-    menuMappers: PropTypes.shape({
-      child: PropTypes.string.isRequired,
-      code: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      icon: PropTypes.string,
-    }),
-    /* 是否悬浮模式的菜单模式 */
-    flowMode: PropTypes.bool,
-    $T: PropTypes.func,
-    changeLang: PropTypes.func,
-    logout: PropTypes.func,
-    // lang: PropTypes.any,
-    // i18nConfig: PropTypes.object,
-    menuData: PropTypes.any.isRequired,
-    onClickMenu: PropTypes.func
+export default class NavMenu extends Component<NavMenuProps, {
+  showMenuMapper: {};
+  flowMenuConfig: {
+    activeItem: {};
+    activeIdx: any;
+    isShow: boolean;
+    offset: {
+      top: number;
+      left: number;
+    };
   };
+  flowMode: boolean;
+}> {
   flowModeKey = 'IS_FLOW_MODA';
+
+  flowMenuContainer
+
   constructor(props) {
     super(props);
     let showMenuMapper = Storage.getItem(MENU_ACTIVE_STORAGE) || '';
@@ -128,11 +148,12 @@ export default class NavMenu extends Component {
       flowMode: storageMode ? (!!+storageMode) : defaultFlowMode
     };
   }
+
   componentDidMount() {
     Call(this.props.onDidMount, menuCodeMapper);
   }
 
-  getNormalMenuChildren = initDataList => {
+  getNormalMenuChildren = (initDataList) => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
     const { onClickMenu, $T } = this.props;
@@ -140,24 +161,24 @@ export default class NavMenu extends Component {
     let allSet = [];
     let foldIdx = 0;
     const recursive = (dataList) => {
-      let currDOMSets = [];
+      const currDOMSets = [];
       dataList.forEach((item, currItemIdx) => {
-        if(!item) return;
-        let _item = this.menuItemFilter(item);
-        let { child, title, code } = _item;
-        let key = code + title;
-        let to = this.wrapLink(_item);
+        if (!item) return;
+        const _item = this.menuItemFilter(item);
+        const { child, title, code } = _item;
+        const key = code + title;
+        const to = this.wrapLink(_item);
 
-        let hasChildren = child && child.length > 0;
-        let isFold = !code || hasChildren;
+        const hasChildren = child && child.length > 0;
+        const isFold = !code || hasChildren;
 
-        let currFoldIdx = foldIdx;
+        const currFoldIdx = foldIdx;
 
         ++foldIdx;
-        let isActive = showMenuMapper.hasOwnProperty(currFoldIdx);
-        let dom = null;
+        const isActive = showMenuMapper.hasOwnProperty(currFoldIdx);
+        let dom;
         if (isFold) {
-          let childDOM = null;
+          let childDOM;
           if (hasChildren) {
             childDOM = recursive.call(this, child);
           }
@@ -165,13 +186,13 @@ export default class NavMenu extends Component {
             <div
               key={foldIdx}
               className={
-                'fold fold-' +
-                currFoldIdx +
-                (flowMode ? '' : isActive ? ' active' : ' hide-fold')
+                `fold fold-${
+                  currFoldIdx
+                }${flowMode ? '' : (isActive ? ' active' : ' hide-fold')}`
               }>
               <div
                 className="fold-title"
-                onClick={e => {
+                onClick={(e) => {
                   !flowMode && this.toggleFold(e, currFoldIdx);
                 }}>
                 <MenuItem {..._item} $T={$T}/>
@@ -195,6 +216,7 @@ export default class NavMenu extends Component {
     allSet = recursive.call(this, initDataList);
     return allSet;
   };
+
   hideFlowMenu = () => {
     delayExec.exec(() => {
       this.setFlowMenu({
@@ -202,8 +224,11 @@ export default class NavMenu extends Component {
       });
     }, 200);
   }
+
   getMenuLinkerDOM = (options) => {
-    const { code, key, to, onClick, menuText, icon, pureIcon } = options;
+    const {
+      code, key, to, onClick, menuText, icon, pureIcon
+    } = options;
     const { $T } = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
@@ -214,7 +239,7 @@ export default class NavMenu extends Component {
         to={to}
         onClick={() => Call(onClick, key, code)}>
         {
-          iconComFilter(options, {classNames: ['mr10']}, (
+          iconComFilter(options, { classNames: ['mr10'] }, (
             <span className="menu-tip">-</span>
           ))
         }
@@ -222,32 +247,35 @@ export default class NavMenu extends Component {
       </Link>
     );
   };
-  getFlowModeDOM = initDataList => {
+
+  getFlowModeDOM = (initDataList) => {
     const { flowMenuConfig } = this.state;
     const { $T, onClickMenu } = this.props;
-    const { offset, activeItem = {}, activeIdx, isShow } = flowMenuConfig;
+    const {
+      offset, activeItem = {}, activeIdx, isShow
+    } = flowMenuConfig;
 
     const flowMenuDOM = (
       <div
-        className={"flow-menu-container" + (isShow ? ' show' : '')}
+        className={`flow-menu-container${isShow ? ' show' : ''}`}
         onMouseEnter={() => delayExec.cancel()}
         onMouseLeave={() => this.hideFlowMenu()}
         style={{
           left: offset.left
         }}
-        ref={flowMenuContainer => {
+        ref={(flowMenuContainer) => {
           if (flowMenuContainer) {
             this.flowMenuContainer = flowMenuContainer;
 
-            let flowContainerHeight = flowMenuContainer.offsetHeight;
-            let flowContainerScrollTop = this.navMenuDOM ? this.navMenuDOM.scrollTop : 0;
-            let expectedOffsetTop = offset.top - flowContainerScrollTop;
-            let parentHeight = offset.height;
-            let offsetBottom = expectedOffsetTop + flowContainerHeight;
+            const flowContainerHeight = flowMenuContainer.offsetHeight;
+            const flowContainerScrollTop = this.navMenuDOM ? this.navMenuDOM.scrollTop : 0;
+            const expectedOffsetTop = offset.top - flowContainerScrollTop;
+            const parentHeight = offset.height;
+            const offsetBottom = expectedOffsetTop + flowContainerHeight;
 
-            let overBottom = getScreenHeight() - offsetBottom;
+            const overBottom = getScreenHeight() - offsetBottom;
             let finalOffsetTop = expectedOffsetTop;
-            let flowMenuOffsetTopPx = parentHeight == flowContainerHeight ? 0 : parentHeight;
+            const flowMenuOffsetTopPx = parentHeight == flowContainerHeight ? 0 : parentHeight;
 
             if (overBottom < 0) {
               /**
@@ -255,7 +283,7 @@ export default class NavMenu extends Component {
                */
               finalOffsetTop = expectedOffsetTop + overBottom;
             }
-            flowMenuContainer.style.top = (finalOffsetTop - flowMenuOffsetTopPx) + 'px';
+            flowMenuContainer.style.top = `${finalOffsetTop - flowMenuOffsetTopPx}px`;
           }
         }}>
         {this.getNormalMenuChildren(activeItem.child)}
@@ -263,19 +291,19 @@ export default class NavMenu extends Component {
     );
 
     const allSet = initDataList.map((item, idx) => {
-      if(!item) return;
-      let _item = this.menuItemFilter(item);
-      let { child, title, code } = _item;
-      let to = this.wrapLink(_item);
-      let isFold = !code || (child && child.length > 0);
-      let key = code + title;
-      let isHovering = activeIdx == idx;
+      if (!item) return null;
+      const _item = this.menuItemFilter(item);
+      const { child, title, code } = _item;
+      const to = this.wrapLink(_item);
+      const isFold = !code || (child && child.length > 0);
+      const key = code + title;
+      const isHovering = activeIdx == idx;
       return isFold ? (
         <div
           key={idx}
           onMouseEnter={(e) => {
             delayExec.cancel();
-            const target = e.target;
+            const { target } = e;
             if (e.currentTarget !== target) return;
             this.setFlowMenu({
               targetElem: target,
@@ -286,7 +314,7 @@ export default class NavMenu extends Component {
           onMouseLeave={() => {
             this.hideFlowMenu();
           }}
-          className={'fold' + (isHovering ? ' hover' : '')}>
+          className={`fold${isHovering ? ' hover' : ''}`}>
           <MenuItem {..._item} $T={$T}/>
         </div>
       ) : (
@@ -307,9 +335,12 @@ export default class NavMenu extends Component {
       </div>
     );
   };
+
   menuItemFilter = (item) => {
     const { menuMappers } = this.props;
-    const { child, code, title, icon } = menuMappers;
+    const {
+      child, code, title, icon = ''
+    } = menuMappers;
     return {
       ...item,
       child: item[child],
@@ -318,31 +349,33 @@ export default class NavMenu extends Component {
       icon: item[icon],
     };
   }
+
   showSearch = () => {
 
   }
-  wrapLink = ({path, code}) => {
-    return path ? code + '?' + path : code;
+
+  wrapLink = ({ path, code }) => {
+    return path ? `${code}?${path}` : code;
   }
+
   changeMenuUIMode = (isFlowMode) => {
     this.setState({
       flowMode: isFlowMode
     });
     storageHelper.set(this.flowModeKey, isFlowMode ? '1' : '0');
   }
-  toggleFold = (e, idx, isShow) => {
+
+  toggleFold = (e, idx, isShow?) => {
     e.stopPropagation();
     const { showMenuMapper } = this.state;
-    let nextState = Object.assign({}, showMenuMapper);
+    const nextState = Object.assign({}, showMenuMapper);
 
     if (typeof isShow != 'undefined') {
       isShow ? (nextState[idx] = true) : delete nextState[idx];
+    } else if (nextState.hasOwnProperty(idx)) {
+      delete nextState[idx];
     } else {
-      if (nextState.hasOwnProperty(idx)) {
-        delete nextState[idx];
-      } else {
-        nextState[idx] = true;
-      }
+      nextState[idx] = true;
     }
 
     Storage.setItem(MENU_ACTIVE_STORAGE, JSON.stringify(nextState));
@@ -350,13 +383,16 @@ export default class NavMenu extends Component {
       showMenuMapper: nextState
     });
   }
+
   setFlowMenu = (options) => {
     const { flowMenuConfig } = this.state;
-    const { targetElem, activeItem, isShow = true, idx } = options;
+    const {
+      targetElem, activeItem, isShow = true, idx
+    } = options;
     let nextOffset = flowMenuConfig.offset;
 
     if (targetElem) {
-      let { offsetWidth, offsetHeight } = targetElem;
+      const { offsetWidth, offsetHeight } = targetElem;
       nextOffset = {
         top: getElementTop(targetElem),
         left: getElementLeft(targetElem) + offsetWidth,
@@ -372,6 +408,7 @@ export default class NavMenu extends Component {
       }
     });
   }
+
   render() {
     const {
       menuData,
@@ -395,14 +432,14 @@ export default class NavMenu extends Component {
     );
 
     const renderRes = (
-      <div className={'nav-menu-wrapper ' + (show ? 'show' : 'collapse')}>
+      <div className={`nav-menu-wrapper ${show ? 'show' : 'collapse'}`}>
         <div
-          ref={navMenuDOM => {
-            if(navMenuDOM) this.navMenuDOM = navMenuDOM;
+          ref={(navMenuDOM) => {
+            if (navMenuDOM) this.navMenuDOM = navMenuDOM;
           }}
           className={
-            'nav-menu-response ' +
-            (flowMode ? 'flow-mode ' : 'tree-mode ')
+            `nav-menu-response ${
+              flowMode ? 'flow-mode ' : 'tree-mode '}`
           }>
           <div className="menu-header">
             <h4 className="title">
@@ -411,13 +448,13 @@ export default class NavMenu extends Component {
             <hr />
             <div className="action-group">
               <SearchBox
-                ref={e => this._seatchBox = e}
+                ref={(e) => { this._seatchBox = e; }}
                 $T={$T}
                 onClickMenu={onClickMenu}
                 onToggleNav={onToggleNav}
                 codeMapper={menuCodeMapper}
                 showMenu={show}/>
-              <ToolTip 
+              <ToolTip
                 position="bottom"
                 title={$T('切换到') + $T(!flowMode ? '悬浮' : '传统') + $T('模式')}
                 classNames={['_action-btn']}

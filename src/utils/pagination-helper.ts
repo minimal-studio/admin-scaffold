@@ -16,11 +16,11 @@ const paginTransfer = {
 };
 
 export function getDefPagin() {
-  return {...defaultPagin};
+  return { ...defaultPagin };
 }
 
 export function getPaginMapper() {
-  return {...paginTransfer};
+  return { ...paginTransfer };
 }
 
 export function setDefPagin(nextState) {
@@ -32,7 +32,9 @@ export function setPaginMapper(nextState) {
 }
 
 export function paginHelper(config = defaultPagin) {
-  const { active, total, idx, size } = config;
+  const {
+    active, total, idx, size
+  } = config;
 
   return {
     active,

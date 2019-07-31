@@ -9,6 +9,7 @@ import Mousetrap from 'mousetrap';
 import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
 import classnames from 'classnames';
 
+import { Color } from 'ukelli-ui/core/utils/props';
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
   Loading, setUkeLang, Icon, setLangTranslate
@@ -18,100 +19,86 @@ import { showShortcut, ShortcutDesc } from './shortcut';
 import NavMenu from './nav-menu';
 // import Posts from './posts';
 import { RouterHelper } from './router-multiple';
-import VersionComponent, { VersionChecker } from './plugins/version-com';
+import VersionComponent, { VersionChecker, VersionCheckerProps } from './plugins/version-com';
 import {
   Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
 } from './plugins';
 import {
   getThemeConfig, setTheme, setLayout, setDarkMode
 } from './plugins/theme';
+import { StatusbarConfigItem } from './plugins/statusbar';
+import { NavMenuProps } from './nav-menu/nav-menu';
+
+export interface ScaffoldLayoutProps {
+  /** 用户名，用于在左菜单显示 */
+  username: string;
+  /** 用户登录后的信息，会传递给每一个页面 */
+  userInfo?: {};
+  /** 版本号文件的路径 */
+  versionUrl?: string;
+  /** 退出登录 */
+  logout?: () => void;
+  /** 导航栏的配置 */
+  statusbarConfig?: StatusbarConfigItem[];
+  /** 插件管理 */
+  pluginComponent?: {
+    /** 顶部状态栏插件 */
+    Statusbar?: any;
+    /** DashBoard 插件 */
+    DashBoard?: any;
+    /** 404 页面插件 */
+    NotfoundPage?: any;
+    /** Footer 插件 */
+    Footer?: any;
+  };
+  /** 默认主题 */
+  defaultTheme?: Color;
+  /** 默认布局方式 */
+  defaultLayout?: 'vertical' | 'horizontal';
+  /** 是否黑夜模式 */
+  defaultDarkMode?: boolean;
+  // iframeMode?: boolean,
+  /** 所有的页面的 mapper 引用 */
+  pageComponents?: {};
+  /** 传给所有页面的 props */
+  pageProps?: React.Props<{}>;
+  /** 国际化配置 */
+  i18nConfig?: {};
+  /** 国际化 Mapper */
+  i18nMapper?: {};
+  /** 最大存在的 tab 路由 */
+  maxRouters?: number;
+  /** 顶级 tab 是否在 statusbar 中 */
+  tabInStatusbar?: boolean;
+  /** 是否缓存 state */
+  cacheState?: boolean;
+  /** 背景 */
+  bgStyle?: React.CSSProperties;
+  /** 所有菜单的配置 */
+  menuStore?: {}[];
+  /** 菜单的字段映射 */
+  menuMappers?: {
+    child: string;
+    code: string;
+    title: string;
+    icon?: string;
+    pureIcon?: string;
+  };
+  title?: NavMenuProps['title'];
+  versionInfo?: VersionCheckerProps['versionInfo'];
+  /** DashBoard 插件 */
+  // DashBoard: PropTypes.any,
+}
 
 let i18nMapperUrl = './i18n/';
 let LANG_MAPPER = {};
 let CURR_LANG_MAPPER = {};
 
-export default class ScaffoldLayout extends RouterHelper {
+export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
   static setI18nUrl = (nextUrl) => {
     i18nMapperUrl = nextUrl;
   }
-  static propTypes = {
-    /** 用户登录后的信息，会传递给每一个页面 */
-    userInfo: PropTypes.shape({}),
-    /** 用户名，用于在左菜单显示 */
-    username: PropTypes.string.isRequired,
-    /** 版本号文件的路径 */
-    versionUrl: PropTypes.string,
-    /** 退出登录 */
-    onLogout: PropTypes.func,
-    /** 导航栏的配置 */
-    statusbarConfig: PropTypes.arrayOf(
-      PropTypes.shape({
-        /** 显示的 title */
-        title: PropTypes.string,
-        /** icon */
-        icon: PropTypes.string,
-        /** PureIcon */
-        pureIcon: PropTypes.string,
-        /** 传入 DropdownWrapper 的 children */
-        children: PropTypes.func,
-        /** 如果有 component，则直接替换 DropdownWrapper */
-        component: PropTypes.any,
-        /** 如果有 action，则直接显示内容，并且触发 action */
-        action: PropTypes.any,
-      })
-    ),
-    /** 插件管理 */
-    pluginComponent: PropTypes.shape({
-      /** 顶部状态栏插件 */
-      Statusbar: PropTypes.any,
-      /** DashBoard 插件 */
-      DashBoard: PropTypes.any,
-      /** 404 页面插件 */
-      NotfoundPage: PropTypes.any,
-      /** Footer 插件 */
-      Footer: PropTypes.any,
-    }),
-    /** 默认主题 */
-    defaultTheme: PropTypes.oneOf([
-      'blue', 'red', 'green', 'yellow', 'light-p', 'gold', 'orange', 'wine'
-    ]),
-    /** 默认布局方式 */
-    defaultLayout: PropTypes.oneOf([
-      'vertical', 'horizontal'
-    ]),
-    /** 是否黑夜模式 */
-    defaultDarkMode: PropTypes.bool,
-    // iframeMode: PropTypes.bool,
-    /** 所有的页面的 mapper 引用 */
-    pageComponents: PropTypes.shape({}),
-    /** 传给所有页面的 props */
-    pageProps: PropTypes.shape({}),
-    /** 国际化配置 */
-    i18nConfig: PropTypes.shape({}),
-    /** 国际化 Mapper */
-    i18nMapper: PropTypes.shape({}),
-    /** 最大存在的 tab 路由 */
-    maxRouters: PropTypes.number,
-    /** 顶级 tab 是否在 statusbar 中 */
-    tabInStatusbar: PropTypes.bool,
-    /** 是否缓存 state */
-    cacheState: PropTypes.bool,
-    /** 背景 */
-    bgStyle: PropTypes.shape({}),
-    /** 所有菜单的配置 */
-    menuStore: PropTypes.arrayOf(PropTypes.shape({})),
-    /** 菜单的字段映射 */
-    menuMappers: PropTypes.shape({
-      child: PropTypes.string.isRequired,
-      code: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      icon: PropTypes.string,
-      pureIcon: PropTypes.string,
-    }),
-    /** DashBoard 插件 */
-    // DashBoard: PropTypes.any,
-  };
-  
+
   static defaultProps = {
     bgStyle: {},
     maxRouters: 10,
@@ -157,15 +144,15 @@ export default class ScaffoldLayout extends RouterHelper {
     }, themeConfig);
   }
 
-  geti18nUrl(lang) {
-    return i18nMapperUrl + lang + '.json';
+  geti18nUrl = (lang) => {
+    return `${i18nMapperUrl + lang}.json`;
   }
 
   async initApp() {
     const { i18nMapper } = this.props;
     const { lang } = this.state;
-    if(i18nMapper) {
-      LANG_MAPPER = {...i18nMapper};
+    if (i18nMapper) {
+      LANG_MAPPER = { ...i18nMapper };
     }
     await this.fetchLangMapper(lang);
     this.setUILang(lang);
@@ -175,7 +162,7 @@ export default class ScaffoldLayout extends RouterHelper {
   }
 
   changeLang = async (lang) => {
-    if(!lang) return;
+    if (!lang) return;
     await this.fetchLangMapper(lang);
     this.setUILang(lang);
     this.setState({
@@ -215,13 +202,13 @@ export default class ScaffoldLayout extends RouterHelper {
   }
 
   fetchLangMapper = async (lang) => {
-    let url = this.geti18nUrl(lang);
+    const url = this.geti18nUrl(lang);
     try {
-      let mapper = await (await fetch(url)).json();
-      if(!LANG_MAPPER[lang]) LANG_MAPPER[lang] = {};
+      const mapper = await (await fetch(url)).json();
+      if (!LANG_MAPPER[lang]) LANG_MAPPER[lang] = {};
       Object.assign(LANG_MAPPER[lang], mapper);
       return mapper;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return {};
     }
@@ -235,16 +222,16 @@ export default class ScaffoldLayout extends RouterHelper {
     return key === 'all' ? CURR_LANG_MAPPER : CURR_LANG_MAPPER[key] || key || '';
   }
 
-  triggerResize() {
+  triggerResize = () => {
     setTimeout(() => {
-      var evt = window.document.createEvent('UIEvents');
+      const evt = window.document.createEvent('UIEvents');
       evt.initUIEvent('resize', true, false, window, 0);
       window.dispatchEvent(evt);
     }, 50);
   }
 
   componentDidMount() {
-    Mousetrap.bind(['alt alt'], e => {
+    Mousetrap.bind(['alt alt'], (e) => {
       this.toggleNavMenu(!this.state.showNavMenu);
       return false;
     });
@@ -264,7 +251,7 @@ export default class ScaffoldLayout extends RouterHelper {
   }
 
   toggleFloat = () => {
-    let isDisplay = ToggleBasicFloatLen();
+    const isDisplay = ToggleBasicFloatLen();
     this.setState(({ displayFloat }) => ({
       displayFloat: !displayFloat
     }));
@@ -275,18 +262,21 @@ export default class ScaffoldLayout extends RouterHelper {
       menuData
     });
   }
+
   onGetMenuCodeMapper = (menuCodeMapper) => {
     this.setState({
       menuCodeMapper
     });
     window.MenuCodeMapper = menuCodeMapper;
   }
+
   toggleNavMenu = (showNavMenu) => {
     this.setState({
       showNavMenu
     });
     this.triggerResize();
   }
+
   getRouteProps(isActive, pageName) {
     const { userInfo, username, pageProps } = this.props;
     return {
@@ -300,6 +290,7 @@ export default class ScaffoldLayout extends RouterHelper {
       history: this.history,
     };
   }
+
   loadPlugin = (Plugin, props) => {
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
@@ -309,20 +300,22 @@ export default class ScaffoldLayout extends RouterHelper {
 
     return P;
   }
+
   statusbarConfigFilter = () => {
-    const { statusbarConfig, i18nConfig } = this.props;
+    const { statusbarConfig = [], i18nConfig } = this.props;
     return [
       ...statusbarConfig,
       ...(i18nConfig ? [this.getI18nConfig()] : []),
       this.getSystemInfoConfig()
     ];
   }
+
   getI18nConfig = () => {
     const { i18nConfig } = this.props;
     const { lang } = this.state;
     return {
       component: (
-        <DropdownMenu 
+        <DropdownMenu
           key="i18nConfig"
           needAction={false}
           onChange={val => this.changeLang(val)}
@@ -340,12 +333,14 @@ export default class ScaffoldLayout extends RouterHelper {
       )
     };
   }
+
   getSystemInfoConfig = () => {
     return {
       icon: "ellipsis-v",
       action: this.renderSystemInfo
     };
   }
+
   renderSystemInfo = () => {
     const { Footer, versionInfo } = this.props;
     const { theme, darkMode, layout } = this.state;
@@ -379,6 +374,7 @@ export default class ScaffoldLayout extends RouterHelper {
       )
     });
   }
+
   render() {
     const {
       username,
@@ -443,7 +439,7 @@ export default class ScaffoldLayout extends RouterHelper {
                   activeMenu={activeMenu}/>
                 <div
                   className={
-                    'pages-container ' + (showNavMenu ? 'show-menu' : 'hide-menu')
+                    `pages-container ${showNavMenu ? 'show-menu' : 'hide-menu'}`
                   }>
                   <div className="uke-status-bar" id="statusBar">
                     {tabInStatusbar && (
@@ -464,19 +460,19 @@ export default class ScaffoldLayout extends RouterHelper {
                     {
                       Statusbar && this.loadPlugin(Statusbar, {
                         onLogout: logout,
-                        showShortcut: showShortcut,
-                        displayFloat: displayFloat,
+                        showShortcut,
+                        displayFloat,
                         $T: this.$T,
                         toggleFloat: this.toggleFloat,
                       })
                     }
                     <DefaultStatusbar {...this.props} statusbarConfig={statusbarConfig} />
                   </div>
-                  <Tabs 
-                    withContent 
+                  <Tabs
+                    withContent
                     onlyContent={tabInStatusbar}
                     closeable={hasRouter}
-                    closeTip={this.$T('快捷键') + ": alt + w"}
+                    closeTip={`${this.$T('快捷键')}: alt + w`}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
                     onClose={idx => this.closeTab(idx, routerInfo)}>
@@ -488,16 +484,16 @@ export default class ScaffoldLayout extends RouterHelper {
                         const key = route + JSON.stringify(params);
                         const isActive = activeRouteIdx === idx;
                         return (
-                          <Tab 
+                          <Tab
                             contentClass={route}
-                            label={this.$T(menuCodeMapper[route] || route)} 
-                            key={key} 
+                            label={this.$T(menuCodeMapper[route] || route)}
+                            key={key}
                             onChange={e => this.changeRoute(route, params)}>
                             {
                               C ? (
                                 <C {...this.getRouteProps(isActive, route)}/>
                               ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
-                                <Notfound key={route + '404'}/>
+                                <Notfound key={`${route}404`}/>
                               )
                             }
                           </Tab>

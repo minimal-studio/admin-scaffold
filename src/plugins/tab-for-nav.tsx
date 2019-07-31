@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { Icon, ToolTip } from '../ui-refs';
 
-const TabForNav = (props) => {
+export interface TabForNavProps {
+  routers;
+  routersLen;
+  activeRouteIdx;
+  closeAll;
+  hasRouter;
+  routerInfo;
+  menuCodeMapper;
+  $T;
+  closeTab;
+  changeRoute;
+  defaultTitle;
+}
+
+const TabForNav: SFC<TabForNavProps> = (props) => {
   const {
     routers, routersLen, activeRouteIdx, closeAll, hasRouter,
     routerInfo, menuCodeMapper, $T, closeTab, changeRoute, defaultTitle
@@ -25,7 +39,7 @@ const TabForNav = (props) => {
                   const { params } = currInfo;
                   const text = $T(menuCodeMapper[route] || route);
                   return (
-                    <span key={route} className={"tab-item" + (isActive ? ' active' : '')}>
+                    <span key={route} className={`tab-item${isActive ? ' active' : ''}`}>
                       <span
                         onClick={e => changeRoute(route, params)}
                         className="_btn text">

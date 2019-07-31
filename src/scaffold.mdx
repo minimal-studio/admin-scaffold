@@ -1,5 +1,5 @@
 ---
-name: Scroffold / 脚手架应用
+name: Scroffold 脚手架应用
 route: /Scroffold
 # order: -1
 # sidebar: true
@@ -11,13 +11,13 @@ route: /Scroffold
 
 [具体业务功能开发，请看 uke-dashboard](https://github.com/SANGET/uke-dashboard.git)
 
-import { Playground, PropsTable } from 'docz'
+import { Playground, Props } from 'docz'
 import { DateFormat } from 'basic-helper'
 import { PureIcon } from 'ukelli-ui/core/icon'
 import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold, Link } from './';
 import ActionAgentPage from './action-agent/demo'
-import ReportDemo from './template-engine/demo'
+import ReportDemo from './template-engine/for-report/demo'
 import zhCH from './i18n/zh-CN'
 import enUS from './i18n/en-US'
 
@@ -225,7 +225,7 @@ import enUS from './i18n/en-US'
 
 ## Props
 
-<PropsTable of={AdminWebScaffold} />
+<Props of={AdminWebScaffold} />
 
 ## 国际化
 

@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 export default {
   "仪表盘": "Dashboard",
   "快捷键": "Shortcut",

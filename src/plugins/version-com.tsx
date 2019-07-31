@@ -2,17 +2,25 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tip, ShowModal, TipPanel, Notify } from '../ui-refs';
+import {
+  Tip, ShowModal, TipPanel, Notify
+} from '../ui-refs';
 
-class VersionChecker extends Component {
-  static propTypes = {
-    /** 版本内容 */
-    versionInfo: PropTypes.shape({
-      numberVersion: PropTypes.string,
-      updateLog: PropTypes.string,
-    }).isRequired,
-    versionUrl: PropTypes.string
-  }
+export interface VersionCheckerProps {
+  versionInfo: {
+    numberVersion: string;
+    updateLog: string;
+  };
+  versionUrl: string;
+}
+
+class VersionChecker extends Component<VersionCheckerProps> {
+  __unmount
+
+  timer
+
+  errorCount
+
   constructor(props) {
     super(props);
 
@@ -28,6 +36,7 @@ class VersionChecker extends Component {
       lastVersion: numberVersion,
     };
   }
+
   componentDidMount() {
     this.getVersion();
     this.timer = setInterval(this.getVersion, 30 * 60 * 1000);
@@ -44,11 +53,11 @@ class VersionChecker extends Component {
 
   getVersion = () => {
     const { versionUrl } = this.props;
-    if(!versionUrl) return console.log('请设置版本文件地址 versionUrl');
+    if (!versionUrl) return console.log('请设置版本文件地址 versionUrl');
     if (this.errorCount === 5) return this._clear();
-    fetch(versionUrl + '?t=' + Date.now())
+    fetch(`${versionUrl}?t=${Date.now()}`)
       .then(res => res.json())
-      .then(remoteVersion => {
+      .then((remoteVersion) => {
         let { numberVersion, updateLog } = remoteVersion;
         numberVersion = numberVersion.trim();
         if (numberVersion != this.state.lastVersion) {
@@ -58,8 +67,8 @@ class VersionChecker extends Component {
               text: '有新的系统版本',
               title: '系统通知',
               type: 'success',
-              lifecycle: 0,
-              onClickTip: e => {
+              timer: 0,
+              onClickTip: (e) => {
                 this.reload();
               },
               actionText: '更新',
@@ -71,7 +80,7 @@ class VersionChecker extends Component {
           });
         }
       })
-      .catch(e => {
+      .catch((e) => {
         this.errorCount++;
       });
   };
@@ -94,14 +103,15 @@ class VersionChecker extends Component {
             text="请确保已保存工作内容，页面即将刷新" />
         </div>
       ),
-      onConfirm: isSure => {
-        if(isSure) {
+      onConfirm: (isSure) => {
+        if (isSure) {
           location.reload();
         }
       },
     });
   }
-  render() {
+
+  render = () => {
     return <span />;
   }
 }

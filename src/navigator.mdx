@@ -1,5 +1,5 @@
 ---
-name: Navigator / 导航器
+name: Navigator 导航器
 route: /Navigator
 ---
 
@@ -7,7 +7,7 @@ route: /Navigator
 
 脚手架通过监听 url 中的 query string `_route_` 的变化，实现页面之间的导航
 
-import { Playground, PropsTable } from 'docz'
+import { Playground, Props } from 'docz'
 import { Link, onNavigate, changeRouteKey } from './router-multiple'
 
 ```js
@@ -29,7 +29,7 @@ Link 上层应用组件
   </Link>
 </Playground>
 
-<PropsTable of={Link} />
+<Props of={Link} />
 
 ## onNavigate
 

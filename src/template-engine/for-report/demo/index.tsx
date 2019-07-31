@@ -8,9 +8,9 @@
 import React from 'react';
 
 import { ShowModal, CloseModal, DescHelper } from 'ukelli-ui';
-import { HOCReportRender } from '.';
-import { getTestData, keyFieldsForReport, conditionData } from './report-data';
-import ActionAgent from '../action-agent';
+import { HOCReportRender } from '..';
+import { getTestData, keyFieldsForReport, conditionData } from '../../report-data';
+import ActionAgent from '../../../action-agent';
 
 class TestReportClass extends ActionAgent {
   state = {
@@ -19,14 +19,7 @@ class TestReportClass extends ActionAgent {
       rowKey: record => record.ID
     }
   }
-  templateOptions = {
-    needCheck: true,
-    whenCheckAction: (
-      <div>
-        <span className="btn theme">批量操作逻辑</span>
-      </div>
-    )
-  }
+
   constructor(props) {
     super(props);
 
@@ -40,30 +33,52 @@ class TestReportClass extends ActionAgent {
         filter: (...args) => this.getRecordBtns(...args)
       }
     ];
+
+    this.recordActionBtns = [
+      {
+        text: 'sasd',
+        id: 'strin',
+        action: () => {
+
+        }
+      }
+    ];
+
+
+    this.templateOptions = {
+      needCheck: true,
+      checkedOverlay: (
+        <div>
+          <span className="btn theme">批量操作逻辑</span>
+        </div>
+      )
+    };
   }
-  recordActionBtns = [
-    {
-      text: '详情',
-      id: 'detail',
-      enable: () => {
-        // 返回是否
-        return true;
-      },
-      action: (...args) => {
-        this.showDetail(...args);
-      }
-    },
-    {
-      text: '单行显示',
-      id: 'test',
-      enable: (str, item, mapper, idx) => {
-        return idx % 2 === 0;
-      },
-      action: (...args) => {
-        this.showDetail(...args);
-      }
-    },
-  ]
+
+  // recordActionBtns = [
+  //   {
+  //     text: '详情',
+  //     id: 'detail',
+  //     enable: () => {
+  //       // 返回是否
+  //       return true;
+  //     },
+  //     action: (...args) => {
+  //       this.showDetail(...args);
+  //     }
+  //   },
+  //   {
+  //     text: '单行显示',
+  //     id: 'test',
+  //     enable: (str, item, mapper, idx) => {
+  //       return idx % 2 === 0;
+  //     },
+  //     action: (...args) => {
+  //       this.showDetail(...args);
+  //     }
+  //   },
+  // ]
+
   reportActionBtns = [
     {
       text: '测试按钮',
@@ -73,6 +88,7 @@ class TestReportClass extends ActionAgent {
       }
     }
   ]
+
   // 与 HOCReportRender 模版对接的查询接口
   queryData = async (reportData) => {
     const postData = {};
@@ -86,8 +102,9 @@ class TestReportClass extends ActionAgent {
     };
     await this.reqAgent(getTestData, agentOptions)(postData);
   }
+
   showDetail(item) {
-    let ModalId = ShowModal({
+    const ModalId = ShowModal({
       title: '详情',
       width: 700,
       children: (
