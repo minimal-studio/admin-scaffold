@@ -85,7 +85,6 @@ $darkTextColor: #EEE;
     .menu {
       &.active {
         background-color: $basicBgColor;
-        background: linear-gradient(-45deg, $basicBgColor, darken($basicBgColor, 5%));
       }
     }
   }

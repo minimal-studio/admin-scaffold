@@ -81,11 +81,6 @@ $hoverBgColor: rgb(140, 190, 234);
     }
     &.active {
       background-color: $activeBorderColor;
-      background: linear-gradient(
-        -45deg,
-        $activeBorderColor,
-        darken($activeBorderColor, 10%),
-      );
       color: #FFF;
       .menu-tip {
         // margin-right: 10px;
