@@ -1,5 +1,14 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v1.0.0
+
+### 新特性
+
+- 全面支持 typescript
+- 同步升级底层 UI
+
+-------------
+
 ## v0.22.0
 
 - 升级 `basic-helper` 和 `uke-request`，并支持最新的 api
