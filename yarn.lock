@@ -13638,19 +13638,19 @@ uglifyjs-webpack-plugin@^1.2.7, uglifyjs-webpack-plugin@^1.3.0:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-uke-request@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/uke-request/-/uke-request-1.0.5.tgz#8a892bd519974569f07bd2c454a628492978aa36"
-  integrity sha512-sXaNHpVcQEo8jwwBMV+XzodjOkheNXTWA9YJGuGz5H6BK6rnFqjB9ryzofbIWVsPXpTbfOVSCadE7PRIQ+ufdA==
+uke-request@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/uke-request/-/uke-request-1.0.8.tgz#f71dff75e22ee433a559e4a21668172e15defd49"
+  integrity sha512-3AIrn88jqaFAZu0lqZYRLNkO05QMXb1d3dG3lfLFavgBXy1iIO1ZdfozxeQrgaT2qtR0lflqVu3AW2h0gf7cGw==
   dependencies:
     lzma "^2.3.2"
     rc4-ts "^2.0.0"
     whatwg-fetch "^3.0.0"
 
-ukelli-ui@^3.0.0-rc.4:
-  version "3.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/ukelli-ui/-/ukelli-ui-3.0.0-rc.4.tgz#17c2e140f6dec24aee463e2cc5490074f8acdfbd"
-  integrity sha512-LEUlYwW3Qwb0sRumiCHK4CDVNU11zXGvuOYPvpGyr3NQJfcLT7u5D53DZ+zoPGaKjuq+zZ21DS4wJmSquHfP1Q==
+ukelli-ui@^3.0.0-rc.10:
+  version "3.0.0-rc.10"
+  resolved "https://registry.yarnpkg.com/ukelli-ui/-/ukelli-ui-3.0.0-rc.10.tgz#38b914608ac9cd097c64a7824610e30f32da4921"
+  integrity sha512-qG/i5I6mgs5+6NF9cezTSo84FJ4boJY2PeOWRwDFdQSHG3y2U0k5oK4XnrWxaqPfeXZOjwEuXtGiIMRZASvWxQ==
   dependencies:
     classnames "^2.2.6"
     flatpickr "^4.6.1"
