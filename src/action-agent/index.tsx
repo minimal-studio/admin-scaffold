@@ -9,6 +9,7 @@ import {
 } from 'basic-helper';
 import { getUrlParams } from 'uke-request/url-resolve';
 import { Children } from 'ukelli-ui/core/utils';
+import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';
 import * as paginHelper from '../utils/pagination-helper';
 import {
   ReportTemplateProps, ReportActionBtnItem, TemplateOptions,
@@ -29,8 +30,14 @@ export interface ReqAgentReturn {
   err?: any;
 }
 
+export interface ReqAgentAPI extends Function {}
+
 class ActionAgent extends Component {
   T
+
+  btnConfig!: FormLayoutProps['btnConfig']
+
+  formOptions!: FormLayoutProps['formOptions']
 
   templateOptions!: TemplateOptions
 
@@ -71,10 +78,12 @@ class ActionAgent extends Component {
    * @param {agentOptions} object 此方法的配置项
    * @return {async function} 返回传入的第一个参数的包装方法，在此过程插入一些生命周期函数
    */
-  reqAgent = (reqFunc, agentOptions: AgentOptions) => {
+  reqAgent<APIRetrue = {}>(
+    reqFunc: ReqAgentAPI, agentOptions: AgentOptions
+  ) {
     if (!IsFunc(reqFunc)) {
       const errMsg = 'should pass func at arguments[0]';
-      return console.warn(errMsg);
+      throw Error(errMsg);
     }
     const {
       id = 'reqAction',
@@ -86,24 +95,27 @@ class ActionAgent extends Component {
 
     this.stateSetter(this._before(Call(before), actingRef));
 
-    return async (...args) => {
-      let res: ReqAgentReturn = {};
-      try {
-        res = await reqFunc(...args);
-      } catch (e) {
-        console.log(e);
-        res.err = e;
-      }
-      this.stateSetter(
-        Object.assign({},
-          {
-            [actingRef]: false
-          },
-          this._after(res),
-          this._checkRes(res) ? await CallFunc(after)(res) : {})
-      );
-      this.resStatus(res, id);
-      return IsFunc(resFilter) ? resFilter(res) : res;
+    return (...args): Promise<APIRetrue> => {
+      return new Promise(async (resolve, reject) => {
+        let res: ReqAgentReturn = {};
+        try {
+          res = await reqFunc(...args);
+        } catch (e) {
+          console.log(e);
+          res.err = e;
+        }
+        this.stateSetter(
+          Object.assign({},
+            {
+              [actingRef]: false
+            },
+            this._after(res),
+            this._checkRes(res) ? await CallFunc(after)(res) : {})
+        );
+        this.resStatus(res, id);
+        const result = IsFunc(resFilter) ? resFilter(res) : res;
+        resolve(result);
+      });
     };
   }
 
