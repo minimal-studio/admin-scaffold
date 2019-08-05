@@ -70,8 +70,8 @@ export default class CreateAsset extends ActionAgent {
         // this.setState({
         //   uploading: true
         // });
-        
-        let res = await this.reqAgent(uploadFile, {
+
+        const res = await this.reqAgent(uploadFile, {
           actingRef
         })(formData);
 
@@ -80,8 +80,8 @@ export default class CreateAsset extends ActionAgent {
         // });
 
         let isSuccess = false;
-        if(!res) return;
-        if(!res.err && !!res.data) {
+        if (!res) return;
+        if (!res.err && !!res.data) {
           onSuccess(res.data);
           isSuccess = true;
         }
@@ -93,7 +93,7 @@ export default class CreateAsset extends ActionAgent {
 
   render() {
     return (
-      <FormLayout formOptions={this.formOptions} 
+      <FormLayout formOptions={this.formOptions}
         {...this.state}
         btnConfig={this.btnConfig}
         childrenBeforeBtn={(
@@ -103,8 +103,7 @@ export default class CreateAsset extends ActionAgent {
               type="file"
               accept="application/zip"
               name="zip"
-              ref={c => (this._zip = c)}
-            />
+              ref={c => (this._zip = c)}/>
           </div>
         )}
         ref={e => this.formHelper = e}/>

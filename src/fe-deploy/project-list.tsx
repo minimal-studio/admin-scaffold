@@ -14,124 +14,6 @@ import ConfigGenerator from './config-generator';
 import Manual from './manual';
 
 export default class ProjectList extends ActionAgent {
-  keyMapper = [
-    {
-      key: 'projName',
-      title: '项目名',
-      filter: (str, item, _, idx) => {
-        return (
-          <span className="link-btn" onClick={() => {
-            this.showProjectDetail(item, idx, 'edit');
-          }}>
-            {str}
-          </span>
-        );
-      }
-    },
-    {
-      key: 'actions',
-      title: '操作',
-      filter: (_, item, __, idx) => {
-        return (
-          <div>
-            <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'asset-list')}>资源列表</span>
-            <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'upload')}>上传新资源</span>
-            {/* <span className="link-btn" onClick={e => this.showProjectDetail(item, idx, 'edit')}>编辑项目</span><br/> */}
-          </div>
-        );
-      }
-    },
-    {
-      key: 'projCode',
-      title: '项目编码'
-    },
-    {
-      key: 'founder',
-      title: '创建人'
-    },
-    {
-      key: 'collaborators',
-      title: '协作者',
-      filter: (collaboratorsObj) => {
-        let collaborators = Object.keys(collaboratorsObj);
-        let hasCollaborators = collaborators.length > 0;
-        let collaboratorsDOM = hasCollaborators ? collaborators.join(',') : '-';
-        return collaboratorsDOM;
-      }
-    },
-    {
-      key: 'collaboratorApplies',
-      title: '申请协作者',
-      filter: (applicants = [], item) => {
-        let applicantDOM = applicants.map(applicant => {
-          return (
-            <p key={applicant}>
-              <span className="link-btn" onClick={e => {
-                let ModalId = ShowModal({
-                  title: `同意 ${applicant} 加入协作`,
-                  width: 500,
-                  showFuncBtn: false,
-                  children: (
-                    <ApprovePanel 
-                      {...this.passProps()}
-                      projId={item.id}
-                      applicant={applicant}
-                      onUpdated={e => {
-                        this.queryData();
-                        CloseGlobalModal(ModalId);
-                      }}/>
-                  )
-                });
-              }}>
-                {applicant}
-              </span>
-            </p>
-          );
-        });
-        return applicantDOM;
-      }
-    },
-    {
-      key: 'createdDate',
-      title: '创建日期',
-      datetime: true
-    },
-    // {
-    //   key: 'host',
-    //   title: '地址',
-    //   filter: (str, item) => {
-    //     let { host, projCode }
-    //     return 
-    //   }
-    // },
-    // {
-    //   key: 'version',
-    //   title: '当前版本'
-    // },
-  ];
-
-  conditionOptions = [
-    {
-      type: 'radio',
-      ref: 'range',
-      defaultValue: 'me',
-      title: '项目',
-      values: {
-        'me': '我的',
-        'join': '我参与的',
-        'all': '全部',
-      }
-    },
-    {
-      refu: {
-        'projName': '项目名',
-        'projCode': '项目编码',
-        'founder': '创建者',
-      },
-      type: 'input-selector',
-    },
-  ];
-
   state = {
     ...this.state,
     records: [],
@@ -140,6 +22,124 @@ export default class ProjectList extends ActionAgent {
 
   constructor(props) {
     super(props);
+
+    this.conditionOptions = [
+      {
+        type: 'radio',
+        ref: 'range',
+        defaultValue: 'me',
+        title: '项目',
+        values: {
+          me: '我的',
+          join: '我参与的',
+          all: '全部',
+        }
+      },
+      {
+        refu: {
+          projName: '项目名',
+          projCode: '项目编码',
+          founder: '创建者',
+        },
+        type: 'input-selector',
+      },
+    ];
+
+    this.keyMapper = [
+      {
+        key: 'projName',
+        title: '项目名',
+        filter: (str, item, _, idx) => {
+          return (
+            <span className="link-btn" onClick={() => {
+              this.showProjectDetail(item, idx, 'edit');
+            }}>
+              {str}
+            </span>
+          );
+        }
+      },
+      {
+        key: 'actions',
+        title: '操作',
+        filter: (_, item, __, idx) => {
+          return (
+            <div>
+              <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'asset-list')}>资源列表</span>
+              <span className="link-btn mr10" onClick={e => this.showProjectDetail(item, idx, 'upload')}>上传新资源</span>
+              {/* <span className="link-btn" onClick={e => this.showProjectDetail(item, idx, 'edit')}>编辑项目</span><br/> */}
+            </div>
+          );
+        }
+      },
+      {
+        key: 'projCode',
+        title: '项目编码'
+      },
+      {
+        key: 'founder',
+        title: '创建人'
+      },
+      {
+        key: 'collaborators',
+        title: '协作者',
+        filter: (collaboratorsObj) => {
+          const collaborators = Object.keys(collaboratorsObj);
+          const hasCollaborators = collaborators.length > 0;
+          const collaboratorsDOM = hasCollaborators ? collaborators.join(',') : '-';
+          return collaboratorsDOM;
+        }
+      },
+      {
+        key: 'collaboratorApplies',
+        title: '申请协作者',
+        filter: (applicants = [], item) => {
+          const applicantDOM = applicants.map((applicant) => {
+            return (
+              <p key={applicant}>
+                <span className="link-btn" onClick={(e) => {
+                  const ModalId = ShowModal({
+                    title: `同意 ${applicant} 加入协作`,
+                    width: 500,
+                    showFuncBtn: false,
+                    children: (
+                      <ApprovePanel
+                        {...this.passProps()}
+                        projId={item.id}
+                        applicant={applicant}
+                        onUpdated={(e) => {
+                          this.queryData();
+                          CloseGlobalModal(ModalId);
+                        }}/>
+                    )
+                  });
+                }}>
+                  {applicant}
+                </span>
+              </p>
+            );
+          });
+          return applicantDOM;
+        }
+      },
+      {
+        key: 'createdDate',
+        title: '创建日期',
+        datetime: true
+      },
+      // {
+      //   key: 'host',
+      //   title: '地址',
+      //   filter: (str, item) => {
+      //     let { host, projCode }
+      //     return
+      //   }
+      // },
+      // {
+      //   key: 'version',
+      //   title: '当前版本'
+      // },
+    ];
   }
 
   componentDidMount() {
@@ -155,16 +155,16 @@ export default class ProjectList extends ActionAgent {
     const postData = { range };
     const agentOptions = {
       actingRef: 'querying',
-      after: (res) => ({
+      after: res => ({
         records: res.data
       }),
-      resFilter: (res) => res.data
+      resFilter: res => res.data
     };
     const resData = await this.reqAgent(getProjects, agentOptions)(postData);
     return this.projRecordSearch(resData);
   };
 
-  handleSearch = e => {
+  handleSearch = (e) => {
     this.setState({
       searchValue: e.target.value
     });
@@ -175,9 +175,9 @@ export default class ProjectList extends ActionAgent {
   }
 
   pathFilter = (str) => {
-    let defaultPath = '/assets';
-    let [start, end] = str.split(defaultPath);
-    return end ? '~' + defaultPath + end : start;
+    const defaultPath = '/assets';
+    const [start, end] = str.split(defaultPath);
+    return end ? `~${defaultPath}${end}` : start;
   }
 
   notify = (title, isSuccess, text) => {
@@ -194,8 +194,8 @@ export default class ProjectList extends ActionAgent {
 
   showProjectDetail(targetItem, idx, type = 'edit') {
     const { projName } = targetItem;
-    let ModalId = ShowModal({
-      title: '项目 ' + projName + ' 管理',
+    const ModalId = ShowModal({
+      title: `项目 ${projName} 管理`,
       width: 900,
       // draggable: true,
       showFuncBtn: false,
@@ -219,7 +219,7 @@ export default class ProjectList extends ActionAgent {
   }
 
   create() {
-    let ModalId = ShowModal({
+    const ModalId = ShowModal({
       title: '创建项目',
       width: 900,
       showFuncBtn: false,
@@ -239,16 +239,16 @@ export default class ProjectList extends ActionAgent {
    * 根据 input-selector 的输入来过滤结果
    */
   projRecordSearch(records) {
-    if(!records) return [];
-    const {founder, projCode, projName} = this.conditionRef.value;
-    const filterArr = {founder, projCode, projName};
+    if (!records) return [];
+    const { founder, projCode, projName } = this.conditionRef.value;
+    const filterArr = { founder, projCode, projName };
     let nextRecords = [...records];
-    if(!!founder || !!projCode || !!projName) {
-      nextRecords = nextRecords.filter(item => {
+    if (!!founder || !!projCode || !!projName) {
+      nextRecords = nextRecords.filter((item) => {
         let isActive = false;
         Object.keys(filterArr).forEach((filterName) => {
-          let searchProj = filterArr[filterName];
-          if(!searchProj) return;
+          const searchProj = filterArr[filterName];
+          if (!searchProj) return;
           isActive = item[filterName].indexOf(searchProj) != -1;
         });
         return isActive;
@@ -275,7 +275,7 @@ export default class ProjectList extends ActionAgent {
                 icon="plus"
                 className="mr10"
                 onClick={() => this.create()}/>
-              <span 
+              <span
                 className="btn red mr10"
                 onClick={e => ShowModal({
                   width: 800,
@@ -284,9 +284,9 @@ export default class ProjectList extends ActionAgent {
                 })}>
                 查看使用手册
               </span>
-              <span 
+              <span
                 className="btn green mr10"
-                onClick={e => {
+                onClick={(e) => {
                   this.props.onNavigate({
                     type: 'PUSH',
                     route: 'DeployManager'

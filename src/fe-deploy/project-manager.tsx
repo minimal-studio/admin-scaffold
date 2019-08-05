@@ -20,24 +20,29 @@ class ProjectManager extends Component {
     queryProject: PropTypes.func.isRequired,
     defaultTab: PropTypes.string,
   }
+
   static defaultProps = {
     defaultTab: '0'
   }
+
   constructor(props) {
     super(props);
 
     this.authFilter();
   }
+
   onCreatedAsset() {
     this.tabRef._onChangeTab(0);
   }
+
   onUpdateProject() {
     this.props.queryProject();
   }
+
   authFilter() {
     const { username } = this.props;
     const { collaborators, founder } = this.props.getProject();
-    let collaboratorConfig = collaborators[username] || {};
+    const collaboratorConfig = collaborators[username] || {};
 
     this.isFounder = username === founder;
     this.updatable = this.isFounder || collaboratorConfig.updatable;
@@ -45,23 +50,25 @@ class ProjectManager extends Component {
     this.releasable = this.isFounder || collaboratorConfig.releasable;
     this.canOperate = this.isFounder || collaborators.hasOwnProperty(username);
   }
+
   async applyToJoin(projId) {
     const { username, notify, onApplied } = this.props;
-    let applyRes = await applyToJoinInProject({projId, username});
-    let isSuccess = !applyRes.err;
-    if(isSuccess) {
+    const applyRes = await applyToJoinInProject({ projId, username });
+    const isSuccess = !applyRes.err;
+    if (isSuccess) {
       Call(onApplied);
     }
     notify('申请', isSuccess, applyRes.err);
   }
+
   render() {
     const targetProject = this.props.getProject() || {};
     const { defaultTab } = this.props;
     const projId = targetProject.id;
     const _defaultTab = {
-      'edit': 2,
+      edit: 2,
       'asset-list': 0,
-      'upload': 1,
+      upload: 1,
     };
 
     const container = (

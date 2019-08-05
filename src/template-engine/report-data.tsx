@@ -8,6 +8,7 @@ import {
   SetFloatLen,
   SetBasicUnit
 } from 'basic-helper';
+import { TableKeyMapper } from 'ukelli-ui/core/record-render/table-body';
 
 /** 设置金钱的浮动小数位数 */
 SetFloatLen(2);
@@ -174,7 +175,7 @@ const getTestData = () => {
   });
 };
 
-const keyFieldsForReport = [
+const keyFieldsForReport: TableKeyMapper = [
   {
     key: 'Address',
     labels: {
@@ -186,7 +187,7 @@ const keyFieldsForReport = [
       gd: '广东',
       hk: '香港',
       moc: '澳门',
-    }
+    },
   },
   {
     key: 'Status',

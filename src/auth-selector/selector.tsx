@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import PropTypes from 'prop-types';
 import { Call, IsFunc } from 'basic-helper';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import LoginPanel from './login-panel';
+import { Children } from 'ukelli-ui/core/utils';
+import LoginPanel, { LoginPanelProps } from './login-panel';
 
-const removeLoadingBG = () => {
-  const loaderDOM = document.querySelector('#loadingBg');
-  if (!loaderDOM || !loaderDOM.parentNode) return;
-  loaderDOM.classList.add('loaded');
-  loaderDOM.parentNode.removeChild(loaderDOM);
-  // setTimeout(() => {
-  // }, 100);
-};
+export interface LoginSelectorProps extends LoginPanelProps {
+  isLogin: boolean;
+  didMount: () => void;
+  children: Children;
+}
 
-const LoginSelector = (props) => {
+const LoginSelector: SFC<LoginSelectorProps> = (props) => {
   const { children, isLogin } = props;
 
   let container;
@@ -23,11 +21,6 @@ const LoginSelector = (props) => {
     case isLogin:
       container = IsFunc(children) ? children(props) : children;
       break;
-      // case autoLoging:
-      //   container = (
-      //     <div className="auto-loging-tip">自动登陆中，请稍后...</div>
-      //   );
-      //   break;
     default:
       container = (
         <LoginPanel
@@ -44,15 +37,6 @@ const LoginSelector = (props) => {
       </CSSTransition>
     </TransitionGroup>
   );
-};
-
-LoginSelector.propTypes = {
-  isLogin: PropTypes.bool,
-  didMount: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node,
-  ]),
 };
 
 export default LoginSelector;

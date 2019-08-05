@@ -1,13 +1,13 @@
 import { getSSHHost, getSShConfig } from './apis';
 
 const wrapFormOptions = async (project = {}) => {
-  let hostRes = await getSSHHost();
+  const hostRes = await getSSHHost();
   // let hostList = hostRes.data || [];
-  let hostMapper = hostRes.mapper || {};
+  const hostMapper = hostRes.mapper || {};
   // let targetHostList = {};
   // hostList.forEach(item => targetHostList[item] = item);
 
-  let formOptions = [
+  const formOptions = [
     {
       type: 'select',
       required: true,
@@ -39,7 +39,7 @@ const wrapFormOptions = async (project = {}) => {
       defaultValue: project.deployPath,
     },
   ];
-  console.log(formOptions)
+  console.log(formOptions);
 
   return formOptions;
 };

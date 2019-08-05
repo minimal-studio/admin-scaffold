@@ -1,6 +1,6 @@
 
 const versionFilter = (version) => {
-  return `v${(version + '').split('').join('.')}`;
+  return `v${(`${version}`).split('').join('.')}`;
 };
 
 export {

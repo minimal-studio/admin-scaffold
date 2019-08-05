@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Table, ShowModal, CloseGlobalModal, Loading
 } from 'ukelli-ui';
-import { getAssets, getProjects, downloadAsset, delAsset } from './apis';
+import {
+  getAssets, getProjects, downloadAsset, delAsset
+} from './apis';
 import ReleaseComfirm from './release-comfirm';
 import { versionFilter } from './filter';
 import ActionAgent from "../action-agent";
@@ -17,9 +19,11 @@ class AssetsManager extends ActionAgent {
     username: PropTypes.string,
     releasable: PropTypes.bool
   }
+
   static defaultProps = {
     releasable: false
   }
+
   keyMapper = [
     {
       key: 'version',
@@ -41,34 +45,36 @@ class AssetsManager extends ActionAgent {
       key: 'rollbackMark',
       title: '回滚原因',
       filter: (str) => {
-        return str ? str : '-';
+        return str || '-';
       }
     },
     {
       key: 'action',
       title: '操作',
       filter: (str, item, keyMap, idx) => {
-        let { notify, username, releasable } = this.props;
-        if(!releasable) return '-';
-        let { id, belongto, isRollback, isReleased } = item;
-        let { currProject } = this.state;
-        let { releaseRef } = currProject;
-        let isCurrReleased = isReleased && releaseRef == id;
-        let canRollback = isReleased && !isCurrReleased;
+        const { notify, username, releasable } = this.props;
+        if (!releasable) return '-';
+        const {
+          id, belongto, isRollback, isReleased
+        } = item;
+        const { currProject } = this.state;
+        const { releaseRef } = currProject;
+        const isCurrReleased = isReleased && releaseRef == id;
+        const canRollback = isReleased && !isCurrReleased;
         let releasText = '发布';
-        let options = {
+        const options = {
           releasText, canRollback, item,
         };
         switch (true) {
-        case isCurrReleased:
-          releasText = '已发布';
-          break;
-        case canRollback:
-          releasText = '回滚';
-          break;
-        case isRollback:
-          releasText = '已回滚';
-          break;
+          case isCurrReleased:
+            releasText = '已发布';
+            break;
+          case canRollback:
+            releasText = '回滚';
+            break;
+          case isRollback:
+            releasText = '已回滚';
+            break;
         }
         return (
           <React.Fragment>
@@ -85,7 +91,7 @@ class AssetsManager extends ActionAgent {
               className="red btn ml10"
               type="submit"
               onClick={() => {
-                let ModalId = ShowModal({
+                const ModalId = ShowModal({
                   title: '删除',
                   type: 'confirm',
                   confirmText: (
@@ -96,10 +102,10 @@ class AssetsManager extends ActionAgent {
                   ),
                   width: 340,
                   onConfirm: async (isDel) => {
-                    if(!isDel) return;
-                    let delRes = await delAsset({assetId: id, projId: belongto});
-                    let isSuccess = !delRes.err;
-                    if(isSuccess) {
+                    if (!isDel) return;
+                    const delRes = await delAsset({ assetId: id, projId: belongto });
+                    const isSuccess = !delRes.err;
+                    if (isSuccess) {
                       CloseGlobalModal(ModalId);
                       this.onReleased();
                     }
@@ -116,7 +122,7 @@ class AssetsManager extends ActionAgent {
       }
     }
   ]
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -134,7 +140,7 @@ class AssetsManager extends ActionAgent {
     const { notify, username, getProject } = this.props;
     const { releasText, canRollback, item } = options;
     const project = getProject();
-    let ModalId = ShowModal({
+    const ModalId = ShowModal({
       title: releasText,
       showFuncBtn: false,
       width: 560,
@@ -142,7 +148,7 @@ class AssetsManager extends ActionAgent {
         <ReleaseComfirm
           canRollback={canRollback}
           onCancel={e => CloseGlobalModal(ModalId)}
-          onReleased={isSuccess => {
+          onReleased={(isSuccess) => {
             CloseGlobalModal(ModalId);
             // this.props.notify(releasText, isSuccess);
             isSuccess && this.queryData();
@@ -158,7 +164,7 @@ class AssetsManager extends ActionAgent {
       querying: true,
     });
     const assetRecord = (await getAssets(projId)).data || [];
-    const projectData = (await getProjects({projId})).data || [];
+    const projectData = (await getProjects({ projId })).data || [];
     prevRecords = assetRecord;
     this.setState({
       records: assetRecord,

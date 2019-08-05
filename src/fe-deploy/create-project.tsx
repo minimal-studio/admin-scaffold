@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Loading, FormLayout, Tabs, Tab, TipPanel, Steps, GlobalPopover, Radio } from 'ukelli-ui';
+import {
+  Loading, FormLayout, Tabs, Tab, TipPanel, Steps, GlobalPopover, Radio
+} from 'ukelli-ui';
 
 import { Call } from 'basic-helper';
 import CreateAsset from './create-asset';
@@ -46,7 +48,7 @@ export default class CreateProject extends ActionAgent {
       actingRef,
       after: (res) => {
         const { err } = res;
-        if(!err) {
+        if (!err) {
           Call(onCreatedProject);
         } else {
           notify('创建项目', false, err);
@@ -74,8 +76,8 @@ export default class CreateProject extends ActionAgent {
   btnConfig = [
     {
       action: (formRef, actingRef) => {
-        let checkRes = formRef.checkForm();
-        if(checkRes.isPass) this.onCreateProj(formRef.value, actingRef);
+        const checkRes = formRef.checkForm();
+        if (checkRes.isPass) this.onCreateProj(formRef.value, actingRef);
       },
       actingRef: 'creating',
       text: '新增',
@@ -83,7 +85,9 @@ export default class CreateProject extends ActionAgent {
   ]
 
   render() {
-    const { activeIdx, createdProj, querying, sshConfig } = this.state;
+    const {
+      activeIdx, createdProj, querying, sshConfig
+    } = this.state;
     return (
       <div>
         <TipPanel
@@ -103,25 +107,25 @@ export default class CreateProject extends ActionAgent {
               <Tab label="创建项目">
                 <FormLayout
                   formOptions={this.formOptions}
-                  ref={e => {
-                    if(!e) return;
+                  ref={(e) => {
+                    if (!e) return;
                     this.formRef = e.formHelper;
                   }}
                   onChange={(values, ref, val) => {
                     let targetDOM = '';
-                    if(ref !== 'scpTargetHost') return;
+                    if (ref !== 'scpTargetHost') return;
                     try {
                       targetDOM = this.formRef._refs.scpTargetDir.iconInput;
-                    } catch(e) {
+                    } catch (e) {
                       console.log(e);
                     }
                     const targetValues = [...sshConfig].filter(item => item.sshHost === val);
-                    let ideaTip = {};
+                    const ideaTip = {};
                     for (const item of targetValues) {
-                      ideaTip[item.deployPath] = item.desc + '~' + item.deployPath;
+                      ideaTip[item.deployPath] = `${item.desc}~${item.deployPath}`;
                     }
-                    let hasIdea = targetValues.length > 0;
-                    if(hasIdea) {
+                    const hasIdea = targetValues.length > 0;
+                    if (hasIdea) {
                       GlobalPopover.show({
                         elem: targetDOM,
                         props: {
@@ -138,7 +142,7 @@ export default class CreateProject extends ActionAgent {
                                 onChange={val => this.selectedDeploy = val} />
                             </div>
                             <span className="btn theme"
-                              onClick={e => {
+                              onClick={(e) => {
                                 GlobalPopover.close();
                                 this.formRef.changeValues({
                                   scpTargetDir: this.selectedDeploy
@@ -161,8 +165,8 @@ export default class CreateProject extends ActionAgent {
                   btnConfig={this.btnConfig}/>
               </Tab>
               <Tab label="上传资源文件">
-                <CreateAsset {...this.props} 
-                  projId={createdProj.id} 
+                <CreateAsset {...this.props}
+                  projId={createdProj.id}
                   onSuccess={assetData => this.onCreatedAsset(assetData)}/>
               </Tab>
               <Tab label="资源管理">

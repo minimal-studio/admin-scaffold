@@ -13,7 +13,7 @@ import DeployManager from './deploy-config-manager';
 import { setFEDeployConfig, setApiUrl, setDefaultUser } from './apis';
 
 const FEDEPLOY = ({ username, onNavigate }) => (
-  <div className="card-content" style={{minHeight: 400}}>
+  <div className="card-content" style={{ minHeight: 400 }}>
     <ProjectList username={username} onNavigate={onNavigate} />
   </div>
 );

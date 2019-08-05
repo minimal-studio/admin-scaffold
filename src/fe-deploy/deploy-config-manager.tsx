@@ -5,7 +5,9 @@ import {
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 import ActionAgent from "../action-agent";
-import { getSShConfig, addSShConfig, updateSShConfig, delSShConfig } from './apis';
+import {
+  getSShConfig, addSShConfig, updateSShConfig, delSShConfig
+} from './apis';
 import RecordRender from '../template-engine/for-report/records-template';
 import WrapDeployForms from './deploy-forms';
 
@@ -15,6 +17,7 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
     ready: false,
     formOptions: []
   }
+
   btnConfig = [
     {
       text: title,
@@ -23,13 +26,15 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
         const isSuccess = this.reqAgent(api, {
           actingRef
         })(formRef.value);
-        if(isSuccess) this.props.onSuccessed();
+        if (isSuccess) this.props.onSuccessed();
       }
     }
   ]
+
   componentDidMount() {
     this.getFormOptions();
   }
+
   async getFormOptions() {
     const formOptions = await WrapDeployForms(this.props.target);
     this.setState({
@@ -37,6 +42,7 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
       ready: true,
     });
   }
+
   render() {
     const { ready, formOptions } = this.state;
     return (
@@ -58,6 +64,7 @@ export default class DeployConfigManager extends ActionAgent {
     records: [],
     querying: true
   }
+
   keyMapper = [
     {
       key: 'sshHost',
@@ -81,12 +88,12 @@ export default class DeployConfigManager extends ActionAgent {
       filter: (_, item) => {
         return (
           <React.Fragment>
-            <span className="link-btn mr10" onClick={e => {
+            <span className="link-btn mr10" onClick={(e) => {
               const ModalId = ShowModal({
                 showFuncBtn: false,
                 title: '编辑',
                 children: (
-                  <EditConfig target={item} onSuccessed={e => {
+                  <EditConfig target={item} onSuccessed={(e) => {
                     this.queryData();
                     CloseGlobalModal(ModalId);
                   }} />
@@ -95,14 +102,14 @@ export default class DeployConfigManager extends ActionAgent {
             }}>
               编辑
             </span>
-            <span className="link-btn" onClick={e => {
+            <span className="link-btn" onClick={(e) => {
               const ModalId = ShowModal({
                 title: '删除',
                 type: 'confirm',
                 width: 300,
                 confirmText: '确定删除？',
                 onConfirm: async (isSure) => {
-                  if(!isSure) return;
+                  if (!isSure) return;
                   const { err } = await delSShConfig(item);
                   !err && CloseGlobalModal(ModalId);
                   this.queryData();
@@ -116,6 +123,7 @@ export default class DeployConfigManager extends ActionAgent {
       }
     },
   ]
+
   actionsBtns = [
     {
       action: () => {
@@ -123,7 +131,7 @@ export default class DeployConfigManager extends ActionAgent {
           showFuncBtn: false,
           title: '新增配置',
           children: (
-            <AddConfig onSuccessed={e => {
+            <AddConfig onSuccessed={(e) => {
               this.queryData();
               CloseGlobalModal(ModalId);
             }} />
@@ -134,6 +142,7 @@ export default class DeployConfigManager extends ActionAgent {
       color: 'green'
     }
   ]
+
   queryData = () => {
     this.reqAgent(getSShConfig, {
       actingRef: 'querying',
@@ -144,6 +153,7 @@ export default class DeployConfigManager extends ActionAgent {
       }
     })();
   }
+
   // componentDidMount() {
   //   this.queryData();
   // }

@@ -36,13 +36,6 @@ async function parseToJson(fetchRes) {
   return res;
 }
 
-/**
- * 设置 F-E-Deployment 模块的配置
- */
-export function setFEDeployConfig({ username, apiUrl }) {
-  setDefaultUser(username);
-  setApiUrl(apiUrl);
-}
 
 /**
  * 设置默认的操作者的用户名
@@ -59,6 +52,14 @@ export function setApiUrl(url) {
   $R.setConfig({
     baseUrl: apiUrl
   });
+}
+
+/**
+ * 设置 F-E-Deployment 模块的配置
+ */
+export function setFEDeployConfig({ username, apiUrl }) {
+  setDefaultUser(username);
+  setApiUrl(apiUrl);
 }
 
 /**

@@ -10,14 +10,14 @@ import ActionAgent from "../action-agent";
 
 const getReleaseFormOptions = (project, asset, canRollback = false) => {
   const { webhook, scpTargetHost } = project;
-  let formOptions = [
+  const formOptions = [
     webhook ? {
       ref: 'isCallHook',
       type: 'radio',
       defaultValue: webhook ? 1 : 0,
       isNum: true,
       title: '触发 webhook',
-      desc: 'web hook ' + webhook,
+      desc: `web hook ${webhook}`,
       values: {
         0: '否',
         1: '是',
@@ -29,7 +29,7 @@ const getReleaseFormOptions = (project, asset, canRollback = false) => {
       defaultValue: scpTargetHost ? 1 : 0,
       isNum: true,
       title: '触发 SCP',
-      desc: 'scp target ' + scpTargetHost,
+      desc: `scp target ${scpTargetHost}`,
       values: {
         0: '否',
         1: '是',
@@ -56,12 +56,15 @@ export default class ReleaseComfirm extends ActionAgent {
   state = {
     releasing: false
   }
+
   constructor(props) {
     super(props);
 
-    const { project, asset, canRollback, username } = props;
-    let { id, belongto } = asset;
-    let { releaseRef } = project;
+    const {
+      project, asset, canRollback, username
+    } = props;
+    const { id, belongto } = asset;
+    const { releaseRef } = project;
 
     this.formOptions = getReleaseFormOptions(project, asset, canRollback);
 
@@ -70,14 +73,18 @@ export default class ReleaseComfirm extends ActionAgent {
         action: async (formRef, actingRef) => {
           let isSuccess;
           let releaseRes = {};
-          let formValue = formRef.value;
+          const formValue = formRef.value;
 
-          if(formValue.isExecScp) Notify({config: {
-            title: 'SCP 同步中，完成后系统会在通知大家的.',
-            id: '1'
-          }});
+          if (formValue.isExecScp) {
+            Notify({
+              config: {
+                title: 'SCP 同步中，完成后系统会在通知大家的.',
+                id: '1'
+              }
+            });
+          }
 
-          if(canRollback) {
+          if (canRollback) {
             releaseRes = await this.reqAgent(rollback, {
               actingRef
             })({
@@ -112,6 +119,7 @@ export default class ReleaseComfirm extends ActionAgent {
       },
     ];
   }
+
   render() {
     const { asset } = this.props;
     return (

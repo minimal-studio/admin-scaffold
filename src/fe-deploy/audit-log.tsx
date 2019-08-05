@@ -13,6 +13,7 @@ class AuditLog extends ActionAgent {
   static propTypes = {
     projId: PropTypes.string
   }
+
   keyMapper = [
     {
       key: 'operator',
@@ -44,21 +45,25 @@ class AuditLog extends ActionAgent {
       title: '发布内容'
     }
   ];
+
   state = {
     loading: true,
     records: []
   };
+
   componentDidMount() {
     this.queryData();
   }
+
   async queryData() {
-    let auditRes = await this.reqAgent(getAudit, {
+    const auditRes = await this.reqAgent(getAudit, {
       actingRef: 'loading',
       after: ({ data }) => ({
         records: data
       })
     })(this.props.projId);
   }
+
   render() {
     const { records, loading } = this.state;
     return (

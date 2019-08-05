@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormLayout, Loading, ShowModal, Button } from 'ukelli-ui';
+import {
+  FormLayout, Loading, ShowModal, Button
+} from 'ukelli-ui';
 
 import { updatePropject, delPropject } from './apis';
 import wrapProjectFormOptions from './project-form';
@@ -13,9 +15,11 @@ export default class EditProject extends ActionAgent {
     onClose: PropTypes.func.isRequired,
     notify: PropTypes.func.isRequired,
   }
+
   static defaultProps = {
     onUpdated: () => {}
   }
+
   state = {
     ...this.state,
     querying: true
@@ -26,8 +30,8 @@ export default class EditProject extends ActionAgent {
       text: '更新',
       actingRef: 'updating',
       action: (formRef, actingRef) => {
-        let {isPass} = formRef.checkForm();
-        if(isPass) {
+        const { isPass } = formRef.checkForm();
+        if (isPass) {
           this.updateProject(formRef.value, actingRef);
         }
       }
@@ -60,23 +64,25 @@ export default class EditProject extends ActionAgent {
     const updateRes = await this.reqAgent(updatePropject, agentOptions)(postData);
     const resErr = updateRes.err;
     this.props.notify('更新项目', !resErr, resErr);
-    if(!resErr) {
+    if (!resErr) {
       this.props.onUpdated();
     }
   }
 
   deleteProject = async (actingRef) => {
-    const { username, project, onClose, queryProject } = this.props;
+    const {
+      username, project, onClose, queryProject
+    } = this.props;
 
     ShowModal({
       title: '确定删除项目？',
       type: 'confirm',
       width: 300,
       confirmText: '一旦删除，不可恢复, 同时删除相关的所有资源.',
-      onConfirm: async isSure => {
-        if(!isSure) return;
+      onConfirm: async (isSure) => {
+        if (!isSure) return;
 
-        let delRes = await this.reqAgent(delPropject, {
+        const delRes = await this.reqAgent(delPropject, {
           actingRef
         })({
           username,
@@ -85,7 +91,7 @@ export default class EditProject extends ActionAgent {
 
         this.props.notify('删除', !delRes.err, delRes.err);
 
-        if(!delRes.err) {
+        if (!delRes.err) {
           onClose();
           queryProject();
         }

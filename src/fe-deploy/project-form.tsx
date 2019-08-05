@@ -1,15 +1,15 @@
 import { getSSHHost, getSShConfig } from './apis';
 
 const wrapProjectFormOptions = async (project = {}) => {
-  let hostRes = await getSSHHost();
-  let hostConfigRes = await getSShConfig();
-  console.log(hostRes, hostConfigRes)
+  const hostRes = await getSSHHost();
+  const hostConfigRes = await getSShConfig();
+  console.log(hostRes, hostConfigRes);
   // let hostList = hostRes.data || [];
-  let hostMapper = hostRes.mapper || {};
+  const hostMapper = hostRes.mapper || {};
   // let targetHostList = {};
   // hostList.forEach(item => targetHostList[item] = item);
 
-  let formOptions = [
+  const formOptions = [
     {
       type: 'input',
       required: true,
@@ -90,6 +90,6 @@ const wrapProjectFormOptions = async (project = {}) => {
   ];
 
   return formOptions;
-}
+};
 
 export default wrapProjectFormOptions;
