@@ -4,12 +4,12 @@
 
 import { RequestClass, urlParamsToQuery } from 'uke-request';
 
-let $R = new RequestClass();
+const $R = new RequestClass();
 
 let apiUrl = '';
 let defaultUsername = '';
 
-let APIs = {
+const APIs = {
   project: '/project',
   asset: '/assets',
   upload: '/upload',
@@ -30,7 +30,7 @@ async function parseToJson(fetchRes) {
   let res = null;
   try {
     res = await fetchRes.json();
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
   return res;
@@ -39,7 +39,7 @@ async function parseToJson(fetchRes) {
 /**
  * 设置 F-E-Deployment 模块的配置
  */
-export function setFEDeployConfig({username, apiUrl}) {
+export function setFEDeployConfig({ username, apiUrl }) {
   setDefaultUser(username);
   setApiUrl(apiUrl);
 }
@@ -65,11 +65,11 @@ export function setApiUrl(url) {
  * 获取资源
  */
 export async function getAssets(projId, user = defaultUsername) {
-  let getConfig = {
+  const getConfig = {
     // url: APIs.asset,
     params: {
       user,
-      projId: projId
+      projId
     }
   };
   return await $R.get(APIs.asset, getConfig);
@@ -114,8 +114,8 @@ export async function delSShConfig(data) {
 /**
  * 删除资源
  */
-export async function delAsset({username = defaultUsername, ...other}) {
-  let postData = {...other, username};
+export async function delAsset({ username = defaultUsername, ...other }) {
+  const postData = { ...other, username };
   return await $R.del(APIs.asset, postData);
 }
 
@@ -123,8 +123,8 @@ export async function delAsset({username = defaultUsername, ...other}) {
  * 获取项目列表
  */
 export async function getProjects(options) {
-  let {projId, range, user = defaultUsername} = options;
-  let getConfig = {
+  const { projId, range, user = defaultUsername } = options;
+  const getConfig = {
     url: APIs.project,
     params: {
       user,
@@ -138,55 +138,55 @@ export async function getProjects(options) {
 /**
  * 创建项目
  */
-export async function createProject({username = defaultUsername, ...other}) {
-  let postData = {...other, username};
+export async function createProject({ username = defaultUsername, ...other }) {
+  const postData = { ...other, username };
   return await $R.post(APIs.project, postData);
 }
 
 /**
  * 更新项目
  */
-export async function updatePropject({username = defaultUsername, ...other}) {
-  let postData = {...other, username};
+export async function updatePropject({ username = defaultUsername, ...other }) {
+  const postData = { ...other, username };
   return await $R.put(APIs.project, postData);
 }
 
 /**
  * 删除项目
  */
-export async function delPropject({username = defaultUsername, ...other}) {
-  return await $R.del(APIs.project, {...other, username});
+export async function delPropject({ username = defaultUsername, ...other }) {
+  return await $R.del(APIs.project, { ...other, username });
 }
 
 /**
  * 发布
  */
-export async function release({username = defaultUsername, ...other}) {
-  let postData = {...other, username};
+export async function release({ username = defaultUsername, ...other }) {
+  const postData = { ...other, username };
   return await $R.post(APIs.release, postData);
 }
 
 /**
  * 回滚
  */
-export async function rollback({username = defaultUsername, ...other}) {
-  let postData = {...other, username};
+export async function rollback({ username = defaultUsername, ...other }) {
+  const postData = { ...other, username };
   return await $R.post(APIs.rollback, postData);
 }
 
 /**
  * 申请加入协作
  */
-export async function applyToJoinInProject({projId, username = defaultUsername}) {
-  let postData = {username, projId};
+export async function applyToJoinInProject({ projId, username = defaultUsername }) {
+  const postData = { username, projId };
   return await $R.post(APIs.joinIn, postData);
 }
 
 /**
  * 申请加入协作
  */
-export async function approveToJoinInProject({username = defaultUsername, ...other}) {
-  let postData = {username, ...other};
+export async function approveToJoinInProject({ username = defaultUsername, ...other }) {
+  const postData = { username, ...other };
   return await $R.post(APIs.approveIn, postData);
 }
 
@@ -201,7 +201,7 @@ export async function uploadFile(assetData) {
  * 获取审计日志
  */
 export async function getAudit(projId) {
-  let getConfig = {
+  const getConfig = {
     url: APIs.audit,
     params: {
       projId
@@ -214,7 +214,7 @@ export async function getAudit(projId) {
  * 获取审计日志
  */
 export async function getSSHHost() {
-  let url = APIs.getHostList;
+  const url = APIs.getHostList;
   return await $R.get(url);
 }
 
@@ -232,7 +232,7 @@ export async function getSSHHost() {
 //   return await fetch(apiUrl + urlParamsToQuery(config));
 // }
 export function downloadAsset(assetId) {
-  let config = {
+  const config = {
     url: APIs.download,
     params: {
       assetId

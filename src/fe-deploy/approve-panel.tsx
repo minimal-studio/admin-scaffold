@@ -34,20 +34,24 @@ export default class ApprovePanel extends ActionAgent {
       values: activeMapper
     },
   ];
+
   btnConfig = [
     {
       text: '审核',
       actingRef: 'updating',
       action: async (formRef, actingRef) => {
-        let { projId, applicant, notify, onUpdated } = this.props;
-        let approveRes = await this.reqAgent(approveToJoinInProject, {
+        const {
+          projId, applicant, notify, onUpdated
+        } = this.props;
+        const approveRes = await this.reqAgent(approveToJoinInProject, {
           actingRef
-        })({projId, applicant, ...formRef.value});
+        })({ projId, applicant, ...formRef.value });
         notify('审核', !approveRes.err, approveRes.err);
         Call(onUpdated);
       }
     }
   ]
+
   render() {
     return (
       <div className="approve-panel">
