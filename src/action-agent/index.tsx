@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /**
  * 基础 Action 组件, 主要实现了请求方式, 包含表单验证的方式
  */
@@ -119,13 +120,13 @@ class ActionAgent extends Component {
     };
   }
 
-  _before = (params, actingRef) => {
+  _before(params, actingRef) {
     return Object.assign({}, {
       [actingRef]: true,
     }, params);
   }
 
-  _after = (res) => {
+  _after(res) {
     return { };
   }
 
@@ -134,11 +135,11 @@ class ActionAgent extends Component {
    * @param {response} res 系统传入的 res 对象
    * @return {boolean}
    */
-  _checkRes = (res) => {
+  _checkRes(res) {
     return true;
   }
 
-  resStatus = (res, id) => {
+  resStatus(res, id) {
 
   }
 
