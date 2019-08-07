@@ -100,6 +100,7 @@ export default class LoginPanel extends Component<LoginPanelProps> {
             // onSubmit={e => {
             //   login(this.formHelper.value);
             // }}
+            isMobile
             formOptions={formOptions}
             ref={this.saveForm} />
         </div>
