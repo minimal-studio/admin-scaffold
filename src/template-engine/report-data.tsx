@@ -133,44 +133,51 @@ const conditionData = [{
 
 const getTestData = () => {
   return new Promise((resolve) => {
+    const resData = [{
+      ID: 1,
+      Username: 'Name1',
+      Address: 'gd',
+      Income: '10000000000',
+      Phone: '1333333333',
+      Status: '在家',
+      Weight: 58,
+    },
+    {
+      ID: 2,
+      Username: 'Name2',
+      Address: 'hk',
+      Income: '20000000000',
+      Phone: '1333333334',
+      Status: '在外',
+      Weight: 58,
+    },
+    {
+      ID: 3,
+      Username: 'Name3',
+      Address: 'moc',
+      Income: '30000000000',
+      Phone: '1333333335',
+      Status: '在内',
+      Weight: 58,
+    },
+    {
+      ID: 4,
+      Username: 'Name4',
+      Address: 'ab',
+      Income: '40000000000',
+      Phone: '1333333336',
+      Status: '没有',
+      Weight: 78,
+    }];
+    const resPagin = {
+      pIdx: 0,
+      total: 100,
+    };
     setTimeout(() => {
-      resolve([{
-        ID: 1,
-        Username: 'Name1',
-        Address: 'gd',
-        Income: '10000000000',
-        Phone: '1333333333',
-        Status: '在家',
-        Weight: 58,
-      },
-      {
-        ID: 2,
-        Username: 'Name2',
-        Address: 'hk',
-        Income: '20000000000',
-        Phone: '1333333334',
-        Status: '在外',
-        Weight: 58,
-      },
-      {
-        ID: 3,
-        Username: 'Name3',
-        Address: 'moc',
-        Income: '30000000000',
-        Phone: '1333333335',
-        Status: '在内',
-        Weight: 58,
-      },
-      {
-        ID: 4,
-        Username: 'Name4',
-        Address: 'ab',
-        Income: '40000000000',
-        Phone: '1333333336',
-        Status: '没有',
-        Weight: 78,
-      },
-      ]);
+      resolve({
+        data: resData,
+        paging: resPagin
+      });
     }, 1000);
   });
 };

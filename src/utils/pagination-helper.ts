@@ -1,8 +1,8 @@
 const defaultPagin = {
   active: true,
   total: 0,
-  idx: 0,
-  size: 10
+  pIdx: 0,
+  pSize: 10
 };
 
 /**
@@ -11,8 +11,8 @@ const defaultPagin = {
 const paginTransfer = {
   active: 'active',
   total: 'total',
-  idx: 'idx',
-  size: 'size'
+  pIdx: 'pIdx',
+  pSize: 'pSize'
 };
 
 export function getDefPagin() {
@@ -33,13 +33,13 @@ export function setPaginMapper(nextState) {
 
 export function paginHelper(config = defaultPagin) {
   const {
-    active, total, idx, size
+    active, total, pIdx, pSize
   } = config;
 
   return {
     active,
     total,
-    idx,
-    size
+    pIdx,
+    pSize
   };
 }

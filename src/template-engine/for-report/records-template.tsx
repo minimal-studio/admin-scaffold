@@ -283,7 +283,7 @@ export default class ReportTemplate<
 
   render() {
     const {
-      records = [], pagingInfo = {}, querying, children, template,
+      records = [], pagingInfo, querying, children, template,
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, $T, keyMapper, hideFloatable, calculateHeight,
@@ -356,7 +356,8 @@ export default class ReportTemplate<
         <span>{$T('没有对应的模板')}</span>
       );
     }
-    const pagingDOM = needPaging ? (
+    console.log(pagingInfo, infoMapper)
+    const pagingDOM = needPaging && pagingInfo ? (
       <Pagination
         pagingInfo={pagingInfo}
         infoMapper={infoMapper}

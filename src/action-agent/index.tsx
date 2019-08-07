@@ -11,7 +11,6 @@ import {
 import { getUrlParams } from 'uke-request/url-resolve';
 import { Children } from 'ukelli-ui/core/utils';
 import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';
-import * as paginHelper from '../utils/pagination-helper';
 import {
   ReportTemplateProps, ReportActionBtnItem, TemplateOptions,
   ReportActionBtn, PowerMapper
@@ -53,8 +52,6 @@ class ActionAgent extends Component {
   powerMapper!: PowerMapper
 
   getUrlParams = getUrlParams;
-
-  paginHelper = paginHelper;
 
   routerParams = getUrlParams();
 
