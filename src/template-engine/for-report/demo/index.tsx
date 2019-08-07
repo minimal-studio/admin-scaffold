@@ -11,7 +11,7 @@ import { ShowModal, CloseModal, DescHelper } from 'ukelli-ui';
 import { HOCReportRender } from '..';
 import { getTestData, keyFieldsForReport, conditionData } from '../../report-data';
 import ActionAgent from '../../../action-agent';
-import * as paginHelper from '../../../utils/pagination-helper'
+import * as paginHelper from '../../../utils/pagination-helper';
 
 class TestReportClass extends ActionAgent {
   state = {

@@ -18,6 +18,7 @@ import { Menus } from 'ukelli-ui/core/menu'
 import { AdminWebScaffold, Link } from './';
 import ActionAgentPage from './action-agent/demo'
 import ReportDemo from './template-engine/for-report/demo'
+import FormDemo from './template-engine/for-form/demo'
 import zhCH from './i18n/zh-CN'
 import enUS from './i18n/en-US'
 
@@ -81,6 +82,7 @@ import enUS from './i18n/en-US'
       const pageComponents = {
         ActionAgentPage: ActionAgentPage,
         ReportDemo: ReportDemo,
+        FormDemo: FormDemo,
         'TEST1': TestPage('TEST1'),
         'TEST2': TestPage('TEST2'),
         'TEST3': TestPage('TEST3'),
@@ -104,6 +106,10 @@ import enUS from './i18n/en-US'
         title: '表格',
         icon: 'table',
         code: 'ReportDemo'
+      }, {
+        title: '表单',
+        icon: 'table',
+        code: 'FormDemo'
       }, 
       {
         title: 'UI 库',
