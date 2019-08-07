@@ -356,7 +356,6 @@ export default class ReportTemplate<
         <span>{$T('没有对应的模板')}</span>
       );
     }
-    console.log(pagingInfo, infoMapper)
     const pagingDOM = needPaging && pagingInfo ? (
       <Pagination
         pagingInfo={pagingInfo}
