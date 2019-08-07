@@ -1,4 +1,4 @@
-@import "../node_modules/ukelli-ui/style/var.scss";
+@import "ukelli-ui/style/var.scss";
 
 /*
  * color config
@@ -7,18 +7,6 @@
 $themeColor: $blue;
 
 $mainBgColor: #f7f7f7;
-
-/*
- * nav-menu
- */
-// $navMenuBgColor: #c38181;
-$containerBgColorRed: #c38181;
-$containerBgColorGreen: #558a83;
-$containerBgColorCyan: #459cab;
-$containerBgColorOrange: #cc874b;
-$containerBgColorBlue: rgba(85, 104, 138, 1);
-$containerBgColorBlack: rgba(40, 44, 52, 0.95);
-$containerBgColorWhile: #e6e6e6;
 
 $navMenuBgColor: #1d2939;
 $containerBgColor: $navMenuBgColor;

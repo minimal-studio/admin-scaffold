@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Storage from 'basic-helper/storage';
 
 import { NatureColors } from 'ukelli-ui/core/utils';
@@ -37,18 +37,22 @@ const Theme = ({
   activeTheme, darkMode, layout,
   onChangeDarkMode, onChangeTheme, onChangeLayout
 }) => {
+  const [_activeTheme, _setTheme] = useState(activeTheme);
   return (
     <div className="theme-changer">
       <div>
         <h5>主题选择</h5>
         {
           _themes.map((color) => {
-            const isActive = activeTheme === color;
+            const isActive = _activeTheme === color;
             return (
               <span
                 className={`item ${isActive ? 'active' : ''} bg_${color} p10`}
                 key={color}
-                onClick={e => onChangeTheme(color)} />
+                onClick={(e) => {
+                  _setTheme(color);
+                  onChangeTheme(color);
+                }} />
             );
           })
         }

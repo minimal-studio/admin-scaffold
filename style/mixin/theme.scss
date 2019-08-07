@@ -1,18 +1,12 @@
 $colorsMap: (
-  (name: 'theme', color: $themeColor),
-  (name: 'red', color: $red),
-  (name: 'yellow', color: $yellow),
-  (name: 'blue', color: $blue),
-  (name: 'green', color: $green),
-  (name: 'light-blue', color: $light-blue),
-  (name: 'primary', color: $blue),
-  (name: 'default', color: $gray),
-  (name: 'white', color: $white),
-  (name: 'important', color: $red),
-  (name: 'warn', color: $warmColor),
-  (name: 'black', color: $black),
-  (name: 'grey', color: $gray),
-  (name: 'orange', color: $orange),
+  (name: 'theme', color: $themeColor, text: #FFF),
+  (name: 'blue', color: $blue, text: #FFF),
+  (name: 'light-blue', color: $light-blue, text: #FFF),
+  (name: 'red', color: $red, text: #FFF),
+  (name: 'green', color: $green-4, text: #FFF),
+  (name: 'cyan', color: $cyan-4, text: #FFF),
+  (name: 'purple', color: $purple, text: #FFF),
+  (name: 'orange', color: $orange, text: #FFF),
 );
 
 $darkBgColor: #33404e;
