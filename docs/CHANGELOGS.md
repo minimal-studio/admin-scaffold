@@ -4,8 +4,7 @@
 
 ### 新特性
 
-- 全面支持 typescript
-- 同步升级底层 UI
+- 支持 Typescript
 
 -------------
 
