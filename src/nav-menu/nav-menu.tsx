@@ -70,11 +70,13 @@ export interface NavMenuProps {
   menuData: any;
   $T: (srcStr: string) => string;
   onDidMount?: (menuCodeMapper) => void;
-  menuMappers: {
+  /** 菜单的字段映射 */
+  menuMappers?: {
     child: string;
     code: string;
     title: string;
     icon?: string;
+    pureIcon?: string;
   };
   /* 是否悬浮模式的菜单模式 */
   flowMode?: boolean;

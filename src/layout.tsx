@@ -77,13 +77,7 @@ export interface ScaffoldLayoutProps {
   /** 所有菜单的配置 */
   menuStore?: {}[];
   /** 菜单的字段映射 */
-  menuMappers?: {
-    child: string;
-    code: string;
-    title: string;
-    icon?: string;
-    pureIcon?: string;
-  };
+  menuMappers?: NavMenuProps['menuMappers'];
   title?: NavMenuProps['title'];
   versionInfo?: VersionCheckerProps['versionInfo'];
   /** DashBoard 插件 */
@@ -105,6 +99,13 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     defaultTheme: 'blue',
     defaultLayout: 'horizontal',
     versionUrl: './js/version.json',
+    menuMappers: {
+      child: 'child',
+      code: 'code',
+      title: 'title',
+      icon: 'icon',
+      pureIcon: 'pureIcon',
+    },
     defaultDarkMode: false,
     statusbarConfig: [],
     tabInStatusbar: true,
