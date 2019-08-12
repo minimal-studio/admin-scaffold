@@ -67,7 +67,7 @@ npm i uke-scripts --save-dev
   - style.scss
 - tsconfig.json
 
-#### 1. 新建 /public/index.html
+#### 1. 添加 /public/index.html
 
 ```html
 <!doctype html>
@@ -87,7 +87,7 @@ npm i uke-scripts --save-dev
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.3.1/css/all.min.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 ```
 
-#### 2. 新增 /src/app.tsx
+#### 2. 添加 /src/app.tsx
 
 ```js
 import React from 'react';
@@ -100,7 +100,7 @@ ReactDOM.render(
 );
 ```
 
-#### 3. 新增 /src/main.tsx
+#### 3. 添加 /src/main.tsx
 
 ```js
 import React from 'react';
@@ -169,7 +169,7 @@ const ScaffoldDemo = () => {
 export default ScaffoldDemo;
 ```
 
-#### 4. 新增 /src/style.scss
+#### 4. 添加 /src/style.scss
 
 ```scss
 // 引入 scss var
