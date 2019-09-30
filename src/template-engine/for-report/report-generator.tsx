@@ -114,6 +114,7 @@ function HOCReportRender<P extends ReportTemplateProps>(
 
     render() {
       const scopeProps = Object.assign({}, {
+        columns: this.columns,
         keyMapper: this.keyMapper,
         conditionOptions: this.conditionOptions,
         needCount: this.needCount,

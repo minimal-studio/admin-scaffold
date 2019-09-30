@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Table, ShowModal, CloseGlobalModal, Loading
 } from 'ukelli-ui';
+import { TableColumns } from 'ukelli-ui/core/record-render/table-body';
 import {
   getAssets, getProjects, downloadAsset, delAsset
 } from './apis';
@@ -24,7 +25,7 @@ class AssetsManager extends ActionAgent {
     releasable: false
   }
 
-  keyMapper = [
+  columns: TableColumns = [
     {
       key: 'version',
       title: '版本',
@@ -191,7 +192,7 @@ class AssetsManager extends ActionAgent {
     const { records, querying } = this.state;
     return (
       <Loading loading={querying} inrow>
-        <Table keyMapper={this.keyMapper} records={records} needCount={false} />
+        <Table columns={this.columns} records={records} needCount={false} />
       </Loading>
     );
   }

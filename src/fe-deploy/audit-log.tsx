@@ -14,7 +14,7 @@ class AuditLog extends ActionAgent {
     projId: PropTypes.string
   }
 
-  keyMapper = [
+  columns = [
     {
       key: 'operator',
       title: '操作者'
@@ -70,7 +70,7 @@ class AuditLog extends ActionAgent {
       <div className="p10">
         <Loading loading={loading} inrow>
           <Table
-            keyMapper={this.keyMapper}
+            columns={this.columns}
             records={records}
             needCount={false}/>
         </Loading>

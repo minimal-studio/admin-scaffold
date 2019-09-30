@@ -45,7 +45,7 @@ export default class ProjectList extends ActionAgent {
       },
     ];
 
-    this.keyMapper = [
+    this.columns = [
       {
         key: 'projName',
         title: '项目名',
@@ -302,7 +302,7 @@ export default class ProjectList extends ActionAgent {
               </span>
             </div>
             <Table
-              keyMapper={this.keyMapper}
+              columns={this.columns}
               records={records}
               needCount={false}/>
           </div>

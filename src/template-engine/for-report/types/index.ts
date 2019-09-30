@@ -21,8 +21,10 @@ export interface GetQueryDataResult {
 export interface ReportTemplateProps {
   // Props for Table
   // ---------------------
-  /** Ukelli UI 的表格渲染组件需要的配置 */
+  /** 将要废弃，需要改名为 columns */
   keyMapper: TableProps['keyMapper'];
+  /** Ukelli UI 的表格渲染组件需要的配置 */
+  columns: TableProps['columns'];
   /** 表格的高度 */
   height?: TableProps['height'];
   /** 是否需要表格统计 */

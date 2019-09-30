@@ -43,6 +43,8 @@ class ActionAgent extends Component {
 
   keyMapper!: ReportTemplateProps['keyMapper']
 
+  columns!: ReportTemplateProps['columns']
+
   conditionOptions!: ReportTemplateProps['conditionOptions']
 
   recordActionBtns!: ReportActionBtnItem[]

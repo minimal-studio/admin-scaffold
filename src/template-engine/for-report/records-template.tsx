@@ -286,19 +286,14 @@ export default class ReportTemplate<
       records = [], pagingInfo, querying, children, template,
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
-      conditionOptions, $T, keyMapper, hideFloatable, calculateHeight,
+      conditionOptions, $T, keyMapper, columns, hideFloatable, calculateHeight,
       sortIgnores, needInnerSort, needClearBtn, needAutoRefresh, propsForTable
     } = this.props;
 
+    const _columns = columns || keyMapper;
+
     const hasConditionOptions = conditionOptions.length > 0;
     const { displayFloat, tableHeight, expandCon } = this.state;
-
-    // let _thumbKeyMapper = !isMobile ? keyMapper : keyMapper.filter(item => {
-    //   const itemKey = item.key;
-    //   return !/Remark|Time|OrderId|Id|Date|Config/.test(itemKey)
-    //          && !item.datetime
-    //          && !item.date;
-    // });
 
     const _tableH = height || tableHeight;
 
@@ -306,7 +301,7 @@ export default class ReportTemplate<
       case 'CardTable':
         this.templateDOM = (
           <Loading loading={!!querying} inrow>
-            <CardTable keyMapper={keyMapper} records={records}/>
+            <CardTable columns={_columns} records={records}/>
           </Loading>
         );
         break;
@@ -315,7 +310,7 @@ export default class ReportTemplate<
         const _propsForTable = {
           ...propsForTable,
           needCheck,
-          keyMapper,
+          columns: _columns,
           whenCheckAction,
           sortIgnores,
           needInnerSort,

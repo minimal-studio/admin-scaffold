@@ -10,6 +10,7 @@ import {
 } from './apis';
 import RecordRender from '../template-engine/for-report/records-template';
 import WrapDeployForms from './deploy-forms';
+import { TableRecords } from 'ukelli-ui/core/record-render/table-body';
 
 const ConfigFac = (api, title) => class C extends ActionAgent {
   state = {
@@ -65,7 +66,7 @@ export default class DeployConfigManager extends ActionAgent {
     querying: true
   }
 
-  keyMapper = [
+  columns: TableRecords = [
     {
       key: 'sshHost',
       title: 'SSH Host',
@@ -177,7 +178,7 @@ export default class DeployConfigManager extends ActionAgent {
           querying={querying}
           actionBtns={this.actionsBtns}
           hideFloatable
-          keyMapper={this.keyMapper}
+          columns={this.columns}
           records={records}/>
         {/* <Tabs>
           <Tab label="新增配置">

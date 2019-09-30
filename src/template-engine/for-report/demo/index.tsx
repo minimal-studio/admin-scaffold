@@ -28,7 +28,7 @@ class TestReportClass extends ActionAgent {
 
     this.conditionOptions = conditionData;
 
-    this.keyMapper = [
+    this.columns = [
       ...keyFieldsForReport,
       {
         key: 'action',
@@ -115,7 +115,7 @@ class TestReportClass extends ActionAgent {
       title: '详情',
       width: 700,
       children: (
-        <DescHelper keyMapper={this.keyMapper} record={item} />
+        <DescHelper columns={this.columns} record={item} />
       )
     });
   }

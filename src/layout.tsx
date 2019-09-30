@@ -216,7 +216,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     // setState && this.setState({
     //   LANG_MAPPER: mapper
     // });
-    // 设置 UI 库的 keyMapper
+    // 设置 UI 库的 columns
   }
 
   $T = (key) => {

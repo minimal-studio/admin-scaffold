@@ -1,5 +1,4 @@
 import React, { SFC } from 'react';
-import PropTypes from 'prop-types';
 import { Call, IsFunc } from 'basic-helper';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';

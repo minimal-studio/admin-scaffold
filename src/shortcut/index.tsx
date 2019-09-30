@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { TableColumns } from 'ukelli-ui/core/record-render/table-body';
 import { Table, Menus, ShowModal } from '../ui-refs';
 import records from './data';
 
-const keyMapper = [
+const columns: TableColumns = [
   {
     key: 'shortcut',
     title: '快捷键'
@@ -14,7 +15,7 @@ const keyMapper = [
 ];
 
 const ShortcutHelp = () => {
-  return <Table keyMapper={keyMapper} records={records} />;
+  return <Table columns={columns} records={records} />;
 };
 
 const showShortcut = () => {
