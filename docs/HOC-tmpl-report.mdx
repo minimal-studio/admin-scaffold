@@ -1,6 +1,6 @@
 ---
-name: HOC-Report / HOC 表格
-route: /HOC-Report-Engin
+name: HOC-Table / HOC 表格
+route: /HOC-Table
 menu: Template-Engin 模版引擎
 # order: -1
 # sidebar: true
@@ -22,7 +22,7 @@ const Report = HOCReportRender(PageAction);
 ReactDOM.render(Report, document.querySelector('#APP'));
 ```
 
-## 图解
+<!-- ## 图解 -->
 
 <!-- ![](/public/assets/images/report-tmpl.png) -->
 
@@ -83,7 +83,7 @@ class DemoReportPageAction extends React.Component {
     action: () => {}
   }],
   // Ukelli-UI 的渲染 Table 通用配置
-  keyMapper = [];
+  columns = [];
   // 是否需要统计表格
   needCount = boolean;
   // 查询条件的定义
@@ -94,7 +94,7 @@ class DemoReportPageAction extends React.Component {
   }]
   state = {
     loading: false,
-    // 远端的数据，需要对应 keyMapper
+    // 远端的数据，需要对应 columns
     records: [],
     // 传入 ukelli-UI 的 Table 组件的参数聚合
     propsForTable: {
@@ -105,7 +105,7 @@ class DemoReportPageAction extends React.Component {
   constructor(props) {
     super(props);
 
-    this.keyMapper = [
+    this.columns = [
       {
         key: 'action',
         // this.getRecordBtns 通过 HOCReportRender HOC 获取

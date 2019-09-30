@@ -5,6 +5,7 @@
 ### 新特性
 
 - 支持 Typescript
+- 配合新的 UI 库的 Table 参数传入，将 keyMapper 重命名为 columns
 
 -------------
 
@@ -551,7 +552,7 @@ const recordActionBtns = [
 
 ## v0.13.12
 
-- 新增表格的按钮拓展接口
+- 新增表格的按钮扩展接口
 
 ## v0.13.9
 
