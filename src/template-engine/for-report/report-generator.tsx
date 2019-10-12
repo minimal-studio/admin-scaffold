@@ -9,7 +9,8 @@ import { UUID, IsFunc } from 'basic-helper';
 
 import { NotifyConfig } from 'ukelli-ui/core/notification/notification';
 import { Notify } from '../../ui-refs';
-import ReportTemplate, { ReportTemplateProps } from './records-template';
+import ReportTemplate from './records-template';
+import { ReportTemplateProps } from './types';
 
 /**
  * 用于记录所有页面的按钮
@@ -41,6 +42,12 @@ function HOCReportRender<P extends ReportTemplateProps>(
   // __btns[Action.name] = {};
   return class C extends Action {
     ReportRef;
+
+    actionBtnConfig
+
+    recordActionBtns
+    
+    reportActionBtns
 
     getRecordBtns = (...args) => {
       const { actionBtnConfig, recordActionBtns } = this;

@@ -5,6 +5,17 @@ import { createBrowserHistory } from "history";
 import { getUrlParams, urlParamsToQuery } from 'uke-request/url-resolve';
 import { RemoveArrayItem, CallFunc, IsUrl } from 'basic-helper';
 
+export interface RouterHelperState {
+  routers: string[];
+  routerInfo: {};
+  activeRouteIdx: number;
+  activeRoute: string;
+}
+
+export interface RouterHelperProps {
+  maxRouters?: number;
+}
+
 const history = createBrowserHistory();
 
 let ROUTE_KEY = '_R';
@@ -12,7 +23,7 @@ const changeRouteKey = (routeKey) => {
   ROUTE_KEY = routeKey;
 };
 
-const defaultState = {
+const defaultState: RouterHelperState = {
   routers: [],
   routerInfo: {},
   activeRouteIdx: -1,
@@ -21,11 +32,11 @@ const defaultState = {
 
 let cachedState = Object.assign({}, defaultState);
 
-const pushToHistory = (url, params) => {
+const pushToHistory = (url, params?) => {
   history.push(url.replace(/\/\//g, '/'), params);
 };
 
-const replaceHistory = (url, params) => {
+const replaceHistory = (url, params?) => {
   history.replace(url.replace(/\/\//g, '/'), params);
 };
 
@@ -34,12 +45,6 @@ const wrapPushUrl = (pushConfig) => {
   const targetHash = hash.replace('#/', '').split('?')[0];
   const { component, route, params } = pushConfig;
   const paramsObj = typeof params == 'string' ? { id: params } : { ...params };
-  // let paramsStr = '';
-  // let otherParams = {...paramsObj};
-  // for (const key in otherParams) {
-  //   const val = otherParams[key];
-  //   paramsStr += `${key}=${val}&&`;
-  // }
   let result = urlParamsToQuery({
     params: {
       [ROUTE_KEY]: route || component,
@@ -47,8 +52,6 @@ const wrapPushUrl = (pushConfig) => {
     },
     toBase64: false
   });
-  // let result = `${ROUTE_KEY}=${route || component}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
-  // let result = `/${route}/${id}${paramsStr ? ('?' + paramsStr) : ''}`;
   result = `${targetHash}${result.replace(/&&$/g, '')}`;
   return result;
 };
@@ -86,7 +89,10 @@ const resolvePath = (path) => {
   return pathArr;
 };
 
-class RouterHelper<P, S = {}> extends Component<P, S> {
+class RouterHelper<
+  P extends RouterHelperProps,
+  S extends RouterHelperState = RouterHelperState
+> extends Component<P, S> {
   history = history;
 
   wrapPushUrl = wrapPushUrl;
@@ -112,7 +118,7 @@ class RouterHelper<P, S = {}> extends Component<P, S> {
     this.initRoute();
   }
 
-  changeRoute = (route, params) => {
+  changeRoute = (route: string, params) => {
     onNavigate({
       type: 'PUSH',
       route,
@@ -123,7 +129,6 @@ class RouterHelper<P, S = {}> extends Component<P, S> {
 
   handleHistory = (location, action) => {
     const { hash, state = {} } = location;
-    // const activeRoute = resolvePath(hash)[0];
     const activeRoute = getUrlParams()[ROUTE_KEY];
     const nextRouterState = state.nextRouters;
     this.selectTab(activeRoute, nextRouterState);
@@ -139,10 +144,10 @@ class RouterHelper<P, S = {}> extends Component<P, S> {
     });
   }
 
-  closeTab = (idx, routeInfo) => {
+  closeTab = (targetIdx: number) => {
     const { routers, routerInfo, activeRouteIdx } = this.state;
 
-    const targetRoute = routers[idx];
+    const targetRoute = routers[targetIdx];
     const nextRouters = RemoveArrayItem(routers, targetRoute);
     const nextRouterInfo = { ...routerInfo };
     delete nextRouterInfo[targetRoute];
@@ -179,7 +184,7 @@ class RouterHelper<P, S = {}> extends Component<P, S> {
     return nextState;
   }
 
-  selectTab = (activeRoute, nextRouterState) => {
+  selectTab = (activeRoute: string, nextRouterState?) => {
     if (nextRouterState) return this.setState(nextRouterState);
     if (!activeRoute) return;
 
@@ -215,7 +220,6 @@ class RouterHelper<P, S = {}> extends Component<P, S> {
   }
 
   initRoute = () => {
-    // let initRoute = resolvePath(location.hash)[0];
     const initRoute = getUrlParams()[ROUTE_KEY];
     initRoute && this.selectTab(initRoute);
   }
@@ -239,8 +243,6 @@ const Link: SFC<LinkProps> = (props) => {
   const {
     to, className = 'link-btn', children, onClick, params, isActive
   } = props;
-  // const { location } = history;
-  // const { hash } = location;
   const activeRoute = getUrlParams()[ROUTE_KEY];
   const _isActive = typeof isActive == 'undefined' ? activeRoute === to : isActive;
 

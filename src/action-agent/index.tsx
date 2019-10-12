@@ -32,7 +32,7 @@ export interface ReqAgentReturn {
 
 export interface ReqAgentAPI extends Function {}
 
-class ActionAgent extends Component {
+class ActionAgent<P = {}, S = {}> extends Component<P, S> {
   T
 
   btnConfig!: FormLayoutProps['btnConfig']
