@@ -1,5 +1,12 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v1.1.0
+
+- 优化 ActionAgent，加入 type props 检查
+- 优化 RecordTemplate 的实现
+- 依赖最新的 UI 库
+- 整理开发环境，移除 babel 配置
+
 ## v1.0.0
 
 ### 新特性
