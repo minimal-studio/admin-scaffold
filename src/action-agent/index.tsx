@@ -32,6 +32,10 @@ export interface ReqAgentReturn {
 
 export interface ReqAgentAPI extends Function {}
 
+export declare type ObjectType<T> = {
+  new (): T;
+} | Function;
+
 class ActionAgent extends Component {
   T
 
@@ -78,7 +82,7 @@ class ActionAgent extends Component {
    * @param {agentOptions} object 此方法的配置项
    * @return {async function} 返回传入的第一个参数的包装方法，在此过程插入一些生命周期函数
    */
-  reqAgent<APIRetrue = {}>(
+  reqAgent<APIRetrue>(
     reqFunc: ReqAgentAPI, agentOptions: AgentOptions
   ) {
     if (!IsFunc(reqFunc)) {
@@ -95,7 +99,7 @@ class ActionAgent extends Component {
 
     this.stateSetter(this._before(Call(before), actingRef));
 
-    return (...args): Promise<APIRetrue> => {
+    return (...args): Promise<ObjectType<APIRetrue>> => {
       return new Promise(async (resolve, reject) => {
         let res: ReqAgentReturn = {};
         try {

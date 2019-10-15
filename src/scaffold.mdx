@@ -36,7 +36,7 @@ import enUS from './i18n/en-US'
   {
     () => {
       const githubLink = 'https://github.com/SANGET/uke-admin-web-scaffold';
-      AdminWebScaffold.setI18nUrl('/public/i18n/');
+      {/* AdminWebScaffold.setI18nUrl('/public/i18n/'); */}
       const i18nMapper = {
         'zh-CN': zhCH,
         'en-US': enUS,
@@ -207,6 +207,7 @@ import enUS from './i18n/en-US'
           // DashBoard={DashBoard}
           // 必须填写的
           username={userInfo.username}
+          i18nMapperUrl='/public/i18n/'
           versionInfo={VersionInfo}
           i18nMapper={i18nMapper}
           menuMappers={{

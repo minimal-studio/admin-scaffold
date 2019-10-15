@@ -36,6 +36,8 @@ export interface ScaffoldLayoutProps {
   userInfo?: {};
   /** 版本号文件的路径 */
   versionUrl?: string;
+  /** 国际化文件存放目录的路径 */
+  i18nMapperUrl?: string;
   /** 退出登录 */
   logout?: () => void;
   /** 导航栏的配置 */
@@ -84,13 +86,13 @@ export interface ScaffoldLayoutProps {
   // DashBoard: PropTypes.any,
 }
 
-let i18nMapperUrl = './i18n/';
 let LANG_MAPPER = {};
 let CURR_LANG_MAPPER = {};
 
 export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
   static setI18nUrl = (nextUrl) => {
-    i18nMapperUrl = nextUrl;
+    // i18nMapperUrl = nextUrl;
+    console.warn('该接口已废弃，请通过传入 i18nMapperUrl 的 prop 指定');
   }
 
   static defaultProps = {
@@ -99,6 +101,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     defaultTheme: 'blue',
     defaultLayout: 'horizontal',
     versionUrl: './js/version.json',
+    i18nMapperUrl: './i18n/',
     menuMappers: {
       child: 'child',
       code: 'code',
@@ -146,6 +149,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
   }
 
   geti18nUrl = (lang) => {
+    const { i18nMapperUrl } = this.props
+    if(!i18nMapperUrl) return null;
     return `${i18nMapperUrl + lang}.json`;
   }
 
@@ -204,6 +209,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
 
   fetchLangMapper = async (lang) => {
     const url = this.geti18nUrl(lang);
+    if(!url) return null;
     try {
       const mapper = await (await fetch(url)).json();
       if (!LANG_MAPPER[lang]) LANG_MAPPER[lang] = {};
