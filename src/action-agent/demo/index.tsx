@@ -3,7 +3,7 @@ import React from 'react';
 import ActionAgent from '..';
 
 export default class ActionAgentPage extends ActionAgent {
-  api = (postDataFromAgent) => {
+  api = (postDataFromAgent): Promise<string> => {
     console.log(postDataFromAgent);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -14,7 +14,7 @@ export default class ActionAgentPage extends ActionAgent {
 
   componentDidMount = async () => {
     const agentOptions = {
-      before: () => {},
+      before: () => ({}),
       after: (res) => {
         console.log('return an object to merge this.state');
         return {};

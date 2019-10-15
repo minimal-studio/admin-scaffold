@@ -19,7 +19,7 @@ import {
   Table, ConditionGenerator,
   getElementOffset, DropdownMenu, Switch
 } from '../../ui-refs';
-import { ReportTemplateProps } from './types';
+import { ReportTemplateProps, GetQueryDataResult, ReportTemplateState } from './types';
 
 const delayExec = new DebounceClass();
 
@@ -36,7 +36,7 @@ const autoRefreshOptions = {
 
 export default class ReportTemplate<
   P extends ReportTemplateProps = ReportTemplateProps
-> extends Component<P & ReportTemplateProps> {
+> extends Component<P & ReportTemplateProps, ReportTemplateState> {
   static defaultProps = {
     autoQuery: false,
     defaultExpandCon: false,
@@ -281,6 +281,61 @@ export default class ReportTemplate<
 
   saveToast = (toast) => { this.toast = toast; }
 
+  renderAutoRefresh = () => {
+    return (
+      <span className="mr10 layout a-i-c">
+        <span className="mr10" />
+        <DropdownMenu
+          needAction={false}
+          position="right"
+          defaultValue={this.refreshTime}
+          values={autoRefreshOptions}
+          onChange={this.changeRefreshTime} />
+        <span className="ms10">声音</span>
+        <Switch
+          onChange={(val) => {
+            this.audioMask = val;
+            if (!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
+            if (!val) this.soundRef.pause();
+          }}
+          defaultChecked={this.audioMask}/>
+        <audio id="soundRef" ref={this.saveWarnRef}>
+          {
+            this.soundUrl && <source src={this.soundUrl} type={`audio/${this.soundType}`} />
+          }
+        </audio>
+      </span>
+    );
+  }
+
+  renderActionBtns = (actionBtns) => {
+    actionBtns.map((btn) => {
+      const { text, action, color = 'default' } = btn;
+      return (
+        <Button
+          key={text}
+          text={this.props.$T(text)}
+          color={color}
+          className="mr10"
+          onClick={action}/>
+      );
+    });
+  }
+
+  renderToggleBtn = () => {
+    const { $T } = this.props;
+    const { expandCon } = this.state;
+    return (
+      <Button
+        icon={expandCon ? "angle-double-up" : "angle-double-down"}
+        color="default"
+        className="mr10"
+        onClick={e => this.toggleCondition(!expandCon)}>
+        {$T('高级搜索')}
+      </Button>
+    );
+  }
+
   render() {
     const {
       records = [], pagingInfo, querying, children, template,
@@ -300,9 +355,10 @@ export default class ReportTemplate<
     switch (template) {
       case 'CardTable':
         this.templateDOM = (
-          <Loading loading={!!querying} inrow>
+          <>
+            <Loading loading={!!querying} inrow />
             <CardTable columns={_columns} records={records}/>
-          </Loading>
+          </>
         );
         break;
       case 'Table':
@@ -325,22 +381,21 @@ export default class ReportTemplate<
             this.setTableContainerHeight();
           }}>
             <div className="table-scroll">
-              <Loading loading={!!querying} inrow>
-                <Table
-                  {..._propsForTable}
-                  onChange={(emitVal, config) => {
-                    switch (config.type) {
-                      case 'selector':
-                        // 为 selector 修改 conditionHelper 的值，做缓存
-                        this.conditionHelper.changeValues(emitVal);
-                        break;
-                    }
-                  }}
-                  ref={(e) => { this._tableRef = e; }}
-                  onCheck={(nextItems) => {
-                    this.checkedItems = nextItems;
-                  }} />
-              </Loading>
+              <Loading loading={!!querying} inrow />
+              <Table
+                {..._propsForTable}
+                onChange={(emitVal, config) => {
+                  switch (config.type) {
+                    case 'selector':
+                      // 为 selector 修改 conditionHelper 的值，做缓存
+                      this.conditionHelper.changeValues(emitVal);
+                      break;
+                  }
+                }}
+                ref={(e) => { this._tableRef = e; }}
+                onCheck={(nextItems) => {
+                  this.checkedItems = nextItems;
+                }} />
             </div>
           </div>
         );
@@ -393,51 +448,13 @@ export default class ReportTemplate<
           )
         }
         {
-          actionBtns && actionBtns.map((btn) => {
-            const { text, action, color = 'default' } = btn;
-            return (
-              <Button
-                key={text}
-                text={$T(text)}
-                color={color}
-                className="mr10"
-                onClick={action}/>
-            );
-          })
+          actionBtns && this.renderActionBtns(actionBtns)
         }
-        {/* <span className="flex" /> */}
-        <Button
-          icon={expandCon ? "angle-double-up" : "angle-double-down"}
-          color="default"
-          className="mr10"
-          onClick={e => this.toggleCondition(!expandCon)}>
-          {$T('高级搜索')}
-        </Button>
         {
-          needAutoRefresh && (
-            <span className="mr10 layout a-i-c">
-              <span className="mr10" />
-              <DropdownMenu
-                needAction={false}
-                position="right"
-                defaultValue={this.refreshTime}
-                values={autoRefreshOptions}
-                onChange={this.changeRefreshTime} />
-              <span className="ms10">声音</span>
-              <Switch
-                onChange={(val) => {
-                  this.audioMask = val;
-                  if (!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
-                  if (!val) this.soundRef.pause();
-                }}
-                defaultChecked={this.audioMask}/>
-              <audio id="soundRef" ref={this.saveWarnRef}>
-                {
-                  this.soundUrl && <source src={this.soundUrl} type={`audio/${this.soundType}`} />
-                }
-              </audio>
-            </span>
-          )
+          this.renderToggleBtn()
+        }
+        {
+          needAutoRefresh && this.renderAutoRefresh()
         }
       </div>
     );
@@ -445,7 +462,13 @@ export default class ReportTemplate<
     return (
       <div className="report-table-layout">
         <Toast ref={this.saveToast}/>
-        <div className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
+        <div
+          ref={(e) => {
+            if (e) {
+              console.log(e.offsetHeight);
+            }
+          }}
+          className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
           <form onSubmit={(e) => {
             e.preventDefault();
           }}>

@@ -32,11 +32,7 @@ export interface ReqAgentReturn {
 
 export interface ReqAgentAPI extends Function {}
 
-export declare type ObjectType<T> = {
-  new (): T;
-} | Function;
-
-class ActionAgent extends Component {
+class ActionAgent<P = {}, S = {}> extends Component<P, S> {
   T
 
   btnConfig!: FormLayoutProps['btnConfig']
@@ -82,8 +78,13 @@ class ActionAgent extends Component {
    * @param {agentOptions} object 此方法的配置项
    * @return {async function} 返回传入的第一个参数的包装方法，在此过程插入一些生命周期函数
    */
+<<<<<<< HEAD
   reqAgent<APIRetrue>(
     reqFunc: ReqAgentAPI, agentOptions: AgentOptions
+=======
+  reqAgent<APIRetrue = any>(
+    reqFunc: Function, agentOptions: AgentOptions
+>>>>>>> d6479bb68cbda6d8aee155cb332a72d7afaa16df
   ) {
     if (!IsFunc(reqFunc)) {
       const errMsg = 'should pass func at arguments[0]';

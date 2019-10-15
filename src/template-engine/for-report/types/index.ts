@@ -18,6 +18,12 @@ export interface GetQueryDataResult {
   selectedItems?: {};
 }
 
+export interface ReportTemplateState {
+  displayFloat: boolean;
+  tableHeight: number | string;
+  expandCon: boolean;
+}
+
 export interface ReportTemplateProps {
   // Props for Table
   // ---------------------
