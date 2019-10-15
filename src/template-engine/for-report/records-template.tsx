@@ -309,7 +309,7 @@ export default class ReportTemplate<
   }
 
   renderActionBtns = (actionBtns) => {
-    actionBtns.map((btn) => {
+    return actionBtns.map((btn) => {
       const { text, action, color = 'default' } = btn;
       return (
         <Button
