@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "1.1.0-rc3",
+  "version": "1.2.0-rc1",
   "main": "./index.js",
   "files": [
     "*"
@@ -30,7 +30,7 @@
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
     "uke-request": "^1.0.x",
-    "ukelli-ui": "^3.1.0-rc11",
+    "ukelli-ui": "^3.1.x",
     "version-helper": "^1.0.3"
   },
   "devDependencies": {

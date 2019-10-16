@@ -1,5 +1,9 @@
 # Update logs of Uke-admin-web-scaffold
 
+## v1.2.0
+
+- 使用 version-helper 渲染版本信息
+
 ## v1.1.0
 
 - 优化 ActionAgent，加入 type props 检查
