@@ -6,12 +6,22 @@ import {
   Tip, ShowModal, TipPanel, Notify
 } from '../ui-refs';
 
+export interface VersionInfo {
+  packageVersion: string;
+  buildVersion: string;
+  version: string;
+  buildDate: string;
+  gitHash: string;
+}
+
 export interface VersionCheckerProps {
-  versionInfo: {
-    numberVersion: string;
-    updateLog: string;
-  };
+  versionInfo: VersionInfo;
   versionUrl: string;
+}
+export interface VersionDisplayerProps {
+  $T: (str: string) => string;
+  /** 版本内容 */
+  versionInfo: VersionInfo;
 }
 
 class VersionChecker extends Component<VersionCheckerProps> {
@@ -56,7 +66,7 @@ class VersionChecker extends Component<VersionCheckerProps> {
     if (!versionUrl) return console.log('请设置版本文件地址 versionUrl');
     if (this.errorCount === 5) return this._clear();
     fetch(`${versionUrl}?t=${Date.now()}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((remoteVersion) => {
         let { numberVersion, updateLog } = remoteVersion;
         numberVersion = numberVersion.trim();
@@ -116,7 +126,7 @@ class VersionChecker extends Component<VersionCheckerProps> {
   }
 }
 
-const VersionDisplayer = (props) => {
+const VersionDisplayer: React.SFC<VersionDisplayerProps> = (props) => {
   const { versionInfo, $T } = props;
   return (
     <div className="version-container">
@@ -128,15 +138,6 @@ const VersionDisplayer = (props) => {
       </div>
     </div>
   );
-};
-
-VersionDisplayer.propTypes = {
-  $T: PropTypes.func.isRequired,
-  /** 版本内容 */
-  versionInfo: PropTypes.shape({
-    numberVersion: PropTypes.string,
-    updateLog: PropTypes.string,
-  }).isRequired,
 };
 
 export {
