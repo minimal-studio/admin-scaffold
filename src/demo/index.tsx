@@ -5,7 +5,7 @@ import { AdminWebScaffold, Link } from 'uke-admin-web-scaffold';
 import { AuthSelector } from 'uke-admin-web-scaffold/auth-selector';
 
 const VersionInfo = {
-  numberVersion: 'v1.0.0'
+  version: 'v1.0.0'
 };
 
 const TestPage = (text = 'Test Page') => () => (
