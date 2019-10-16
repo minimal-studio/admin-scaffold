@@ -13448,10 +13448,10 @@ uke-request@^1.1.0-rc5:
     rc4-ts "^2.0.0"
     whatwg-fetch "^3.0.0"
 
-ukelli-ui@^3.1.0-rc11:
-  version "3.1.0-rc11"
-  resolved "https://registry.yarnpkg.com/ukelli-ui/-/ukelli-ui-3.1.0-rc11.tgz#a68365035cf8e315bd811c2ddd61c07b1737155a"
-  integrity sha512-YplzvhwlHkgkr8crxXfS+3+FZZ0oe6GfE9929mXxbY621hpo0CLTPe7Du89dCGCSV1pTlj3t00xPM5AP06F7/Q==
+ukelli-ui@^3.1.0-rc14:
+  version "3.1.0-rc14"
+  resolved "https://registry.yarnpkg.com/ukelli-ui/-/ukelli-ui-3.1.0-rc14.tgz#e89c48d73496d45a8e3f3356714fcab0a6a47376"
+  integrity sha512-j0d3YGLwUN5T05HS6lktlJTbPPx6g7hXYCJZh5eLACL9IWwkH/uI6M5ht3ICW4oQzplJbPf2WKy8e2S84aOfcA==
   dependencies:
     classnames "^2.2.6"
     flatpickr "^4.6.3"
