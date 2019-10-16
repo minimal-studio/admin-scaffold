@@ -135,7 +135,7 @@ export default class ReportTemplate<
 
   setAutoRefreshTimer = () => {
     if (!this.props.needAutoRefresh) return;
-    if (this.refreshTime == 0) {
+    if (this.refreshTime === 0) {
       this.clearAutoRefreshTimer();
     } else {
       this.clearAutoRefreshTimer();
