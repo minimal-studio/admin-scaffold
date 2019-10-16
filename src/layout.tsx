@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import Mousetrap from 'mousetrap';
 import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
-import classnames from 'classnames';
+import { VersionDisplayer, VersionChecker, VersionCheckerProps } from 'version-helper';
 
 import { Color } from 'ukelli-ui/core/utils/props';
 import {
@@ -19,7 +19,7 @@ import { showShortcut, ShortcutDesc } from './shortcut';
 import NavMenu from './nav-menu';
 // import Posts from './posts';
 import { RouterHelper } from './router-multiple';
-import VersionComponent, { VersionChecker, VersionCheckerProps } from './plugins/version-com';
+// import VersionComponent, { VersionChecker, VersionCheckerProps } from './plugins/version-com';
 import {
   Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
 } from './plugins';
@@ -149,8 +149,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
   }
 
   geti18nUrl = (lang) => {
-    const { i18nMapperUrl } = this.props
-    if(!i18nMapperUrl) return null;
+    const { i18nMapperUrl } = this.props;
+    if (!i18nMapperUrl) return null;
     return `${i18nMapperUrl + lang}.json`;
   }
 
@@ -209,7 +209,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
 
   fetchLangMapper = async (lang) => {
     const url = this.geti18nUrl(lang);
-    if(!url) return null;
+    if (!url) return null;
     try {
       const mapper = await (await fetch(url)).json();
       if (!LANG_MAPPER[lang]) LANG_MAPPER[lang] = {};
@@ -242,8 +242,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
       this.toggleNavMenu(!this.state.showNavMenu);
       return false;
     });
-    Mousetrap.bind(['alt+k'], e => showShortcut());
-    Mousetrap.bind(['alt+w'], e => this.handleCloseFormShortcut());
+    Mousetrap.bind(['alt+k'], (e) => showShortcut());
+    Mousetrap.bind(['alt+w'], (e) => this.handleCloseFormShortcut());
     this.initRoute();
   }
 
@@ -325,7 +325,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
         <DropdownMenu
           key="i18nConfig"
           needAction={false}
-          onChange={val => this.changeLang(val)}
+          onChange={(val) => this.changeLang(val)}
           position="right"
           value={lang}
           values={i18nConfig}>
@@ -373,7 +373,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
             }
             {
               versionInfo ? (
-                <VersionComponent $T={this.$T} versionInfo={versionInfo} />
+                <VersionDisplayer $T={this.$T} versionInfo={versionInfo} />
               ) : null
             }
           </FooterContainer>
@@ -461,7 +461,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                         routers={routers}
                         activeRouteIdx={activeRouteIdx}
                         routersLen={routersLen}
-                        defaultTitle={e => this.$T('仪表盘')} />
+                        defaultTitle={(e) => this.$T('仪表盘')} />
                     )}
                     <span className="flex" />
                     {
@@ -482,7 +482,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                     closeTip={`${this.$T('快捷键')}: alt + w`}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
-                    onClose={idx => this.closeTab(idx, routerInfo)}>
+                    onClose={(idx) => this.closeTab(idx, routerInfo)}>
                     {
                       hasRouter ? routers.map((route, idx) => {
                         const C = pageComponents[route];
@@ -495,7 +495,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                             contentClass={route}
                             label={this.$T(menuCodeMapper[route] || route)}
                             key={key}
-                            onChange={e => this.changeRoute(route, params)}>
+                            onChange={(e) => this.changeRoute(route, params)}>
                             {
                               C ? (
                                 <C {...this.getRouteProps(isActive, route)}/>

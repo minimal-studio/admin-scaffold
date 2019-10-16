@@ -10,6 +10,7 @@
     "release": "npm run build:ts; npm run publish:ts",
     "build:ts": "rm -rf ./dist; tsc; npm run copy-files-ts; npm run copy-style",
     "copy-files-ts": "node ./scripts/copy-files-ts",
+    "gen:version": "vh gen",
     "copy-style": "cp -R ./style ./dist/",
     "test": "jest",
     "docz:dev": "docz dev",
@@ -29,7 +30,8 @@
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
     "uke-request": "^1.0.x",
-    "ukelli-ui": "^3.1.0-rc11"
+    "ukelli-ui": "^3.1.0-rc11",
+    "version-helper": "^1.0.3"
   },
   "devDependencies": {
     "@types/react": "^16.8.17",
@@ -61,7 +63,8 @@
     "typescript": "3.6.4",
     "uke-request": "^1.1.0-rc5",
     "ukelli-ui": "^3.1.0-rc14",
-    "unistore": "^3.1.0"
+    "unistore": "^3.1.0",
+    "version-helper": "^1.0.3"
   },
   "author": "Alex",
   "license": "MIT",
