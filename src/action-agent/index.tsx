@@ -13,7 +13,7 @@ import { Children } from 'ukelli-ui/core/utils';
 import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';
 import {
   ReportTemplateProps, ReportActionBtnItem, TemplateOptions,
-  ReportActionBtn, PowerMapper
+  ReportActionBtn, PowerMapper, RecordActionBtn
 } from '../template-engine/for-report/types';
 
 export interface AgentOptions {
@@ -47,7 +47,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
 
   conditionOptions!: ReportTemplateProps['conditionOptions']
 
-  recordActionBtns!: ReportActionBtnItem[]
+  recordActionBtns!: RecordActionBtn[]
 
   reportActionBtns!: ReportActionBtn[]
 
