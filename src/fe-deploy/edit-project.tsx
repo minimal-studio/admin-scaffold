@@ -25,7 +25,7 @@ export default class EditProject extends ActionAgent {
     querying: true
   }
 
-  btnConfig = [
+  formBtns = [
     {
       text: '更新',
       actingRef: 'updating',
@@ -120,7 +120,7 @@ export default class EditProject extends ActionAgent {
           formOptions={this.formOptions}
           updating={updating}
           childrenAfterForm={deleteBtn}
-          btnConfig={this.btnConfig}/>
+          formBtns={this.formBtns}/>
       </Loading>
     );
   }

@@ -55,7 +55,7 @@ export class TestFormBasic extends ActionAgent {
       }];
   }
 
-  btnConfig = [
+  formBtns = [
     {
       action: async (formRef, actingRef) => {
         if (!this.checkForm(formRef)) return;
@@ -89,9 +89,7 @@ export class TestFormBasic extends ActionAgent {
       className: 'red'
     },
   ];
-}
 
-export default class TestForm extends TestFormBasic {
   render() {
     const { querying = false } = this.state;
 
@@ -105,7 +103,7 @@ export default class TestForm extends TestFormBasic {
           }}
           {...this.state}
           formOptions={this.formOptions}
-          btnConfig={this.btnConfig}/>
+          formBtns={this.formBtns}/>
       </div>
     );
   }

@@ -51,7 +51,7 @@ export default class CreateAsset extends ActionAgent {
   //   });
   // }
 
-  btnConfig = [
+  formBtns = [
     {
       actingRef: 'uploading',
       action: async (formRef, actingRef) => {
@@ -95,7 +95,7 @@ export default class CreateAsset extends ActionAgent {
     return (
       <FormLayout formOptions={this.formOptions}
         {...this.state}
-        btnConfig={this.btnConfig}
+        formBtns={this.formBtns}
         childrenBeforeBtn={(
           <div className="form-group" style={{ position: 'relative' }}>
             <label className="control-label"/>

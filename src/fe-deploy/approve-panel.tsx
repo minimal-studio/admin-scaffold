@@ -38,7 +38,7 @@ export default class ApprovePanel extends ActionAgent {
       },
     ];
 
-    this.btnConfig = [
+    this.formBtns = [
       {
         text: '审核',
         actingRef: 'updating',
@@ -63,7 +63,7 @@ export default class ApprovePanel extends ActionAgent {
         <FormLayout
           {...this.state}
           formOptions={this.formOptions}
-          btnConfig={this.btnConfig}/>
+          formBtns={this.formBtns}/>
       </div>
     );
   }

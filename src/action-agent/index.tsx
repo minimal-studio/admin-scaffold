@@ -12,7 +12,7 @@ import { getUrlParams } from 'uke-request/url-resolve';
 import { Children } from 'ukelli-ui/core/utils';
 import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';
 import {
-  ReportTemplateProps, ReportActionBtnItem, TemplateOptions,
+  ReportTemplateProps, TemplateOptions,
   ReportActionBtn, PowerMapper, RecordActionBtn
 } from '../template-engine/for-report/types';
 
@@ -35,7 +35,9 @@ export interface ReqAgentAPI extends Function {}
 class ActionAgent<P = {}, S = {}> extends Component<P, S> {
   T
 
-  btnConfig!: FormLayoutProps['btnConfig']
+  formBtns!: FormLayoutProps['formBtns']
+
+  btnConfig!: FormLayoutProps['formBtns']
 
   formOptions!: FormLayoutProps['formOptions']
 

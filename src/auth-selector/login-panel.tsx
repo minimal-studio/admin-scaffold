@@ -83,7 +83,7 @@ export default class LoginPanel extends Component<LoginPanelProps> {
           {logo && logo()}
           <FormLayout
             // className="login"
-            btnConfig={[
+            formBtns={[
               {
                 style: btnGColor ? {
                   backgroundImage: gradientColorFilter(btnGColor)

@@ -73,7 +73,7 @@ export default class CreateProject extends ActionAgent {
     });
   }
 
-  btnConfig = [
+  formBtns = [
     {
       action: (formRef, actingRef) => {
         const checkRes = formRef.checkForm();
@@ -162,7 +162,7 @@ export default class CreateProject extends ActionAgent {
                     //   scpTargetDir: targetPath
                     // });
                   }}
-                  btnConfig={this.btnConfig}/>
+                  formBtns={this.formBtns}/>
               </Tab>
               <Tab label="上传资源文件">
                 <CreateAsset {...this.props}

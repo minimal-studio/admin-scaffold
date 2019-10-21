@@ -3,8 +3,35 @@ import { ConditionGeneratorProps } from 'ukelli-ui/core/form-generator/condition
 import { PaginationProps } from 'ukelli-ui/core/pagin/pagin';
 import { ButtonProps } from 'ukelli-ui/core/button/button-basic';
 import { Color } from 'ukelli-ui/core/utils';
+import { RecordItem, Column } from 'ukelli-ui/core/record-render/mapper-filter';
 import { $TFunc } from '../../../props';
 
+export interface TemplateOptions {
+  /** 此接口将要废弃，请使用 checkedOverlay */
+  whenCheckAction?: ReportTemplateProps['checkedOverlay'];
+  checkedOverlay?: ReportTemplateProps['checkedOverlay'];
+  needCheck?: ReportTemplateProps['needCheck'];
+}
+
+export interface RecordActionBtn {
+  text: string;
+  action: (contentResult: any, record: RecordItem, column: Column, rowIdx: number, ...other) => void;
+  id?: string;
+  color?: Color;
+  enable?: boolean | ((params) => boolean);
+}
+
+export interface ReportActionBtn {
+  text: string;
+  action: (params) => void;
+  id: string;
+  color?: Color;
+  enable?: boolean | ((params) => boolean);
+}
+
+export interface PowerMapper {
+  [btnID: string]: any;
+}
 export interface ReportActionBtnItem {
   id?: string;
   action: (clickEvent: any) => void;
@@ -61,7 +88,7 @@ export interface ReportTemplateProps {
   /** 数据渲染组件 */
   template?: 'Table' | 'CardTable';
   /** 在查询条件的按钮们 */
-  actionBtns?: ReportActionBtnItem[];
+  actionBtns?: ReportActionBtn[];
   /** 当查询条件改变时 */
   onChangeCondition?: ConditionGeneratorProps['onChange'];
   /** 数据查询的返回描述 */
@@ -112,31 +139,4 @@ export interface ReportTemplateProps {
   pagingInfo: PaginationProps['pagingInfo'];
   // ---------------------
   // Props for Paginationend
-}
-
-export interface TemplateOptions {
-  /** 此接口将要废弃，请使用 checkedOverlay */
-  whenCheckAction?: ReportTemplateProps['checkedOverlay'];
-  checkedOverlay?: ReportTemplateProps['checkedOverlay'];
-  needCheck?: ReportTemplateProps['needCheck'];
-}
-
-export interface RecordActionBtn {
-  text: string;
-  action: (params) => void;
-  id: string;
-  color?: Color;
-  enable?: boolean | ((params) => boolean);
-}
-
-export interface ReportActionBtn {
-  text: string;
-  action: (params) => void;
-  id: string;
-  color?: Color;
-  enable?: boolean | ((params) => boolean);
-}
-
-export interface PowerMapper {
-  [btnID: string]: any;
 }

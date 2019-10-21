@@ -20,7 +20,7 @@ import {
   getElementOffset, DropdownMenu, Switch
 } from '../../ui-refs';
 import {
-  ReportTemplateProps, GetQueryDataResult, ReportTemplateState, ReportActionBtnItem
+  ReportTemplateProps, GetQueryDataResult, ReportTemplateState
 } from './types';
 
 const delayExec = new DebounceClass();

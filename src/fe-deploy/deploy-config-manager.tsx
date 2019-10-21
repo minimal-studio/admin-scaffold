@@ -19,7 +19,7 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
     formOptions: []
   }
 
-  btnConfig = [
+  formBtns = [
     {
       text: title,
       actingRef: 'adding',
@@ -49,7 +49,7 @@ const ConfigFac = (api, title) => class C extends ActionAgent {
     return (
       <Loading loading={!ready}>
         <FormLayout
-          btnConfig={this.btnConfig}
+          formBtns={this.formBtns}
           formOptions={formOptions} />
       </Loading>
     );

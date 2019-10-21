@@ -68,7 +68,7 @@ export default class ReleaseComfirm extends ActionAgent {
 
     this.formOptions = getReleaseFormOptions(project, asset, canRollback);
 
-    this.btnConfig = [
+    this.formBtns = [
       {
         action: async (formRef, actingRef) => {
           let isSuccess;
@@ -128,7 +128,7 @@ export default class ReleaseComfirm extends ActionAgent {
         <FormLayout
           {...this.state}
           formOptions={this.formOptions}
-          btnConfig={this.btnConfig}/>
+          formBtns={this.formBtns}/>
       </div>
     );
   }
