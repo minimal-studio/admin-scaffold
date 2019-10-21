@@ -12,6 +12,8 @@ import { HOCReportRender } from '..';
 import { getTestData, keyFieldsForReport, conditionData } from '../../report-data';
 import ActionAgent from '../../../action-agent';
 import * as paginHelper from '../../../utils/pagination-helper';
+import { ReportTemplateProps } from '../types';
+import { HOCReportRenderClass } from '../report-generator';
 
 class TestReportClass extends ActionAgent {
   state = {
@@ -47,7 +49,6 @@ class TestReportClass extends ActionAgent {
       }
     ];
 
-
     this.templateOptions = {
       needCheck: true,
       checkedOverlay: (
@@ -56,41 +57,17 @@ class TestReportClass extends ActionAgent {
         </div>
       )
     };
-  }
 
-  // recordActionBtns = [
-  //   {
-  //     text: '详情',
-  //     id: 'detail',
-  //     enable: () => {
-  //       // 返回是否
-  //       return true;
-  //     },
-  //     action: (...args) => {
-  //       this.showDetail(...args);
-  //     }
-  //   },
-  //   {
-  //     text: '单行显示',
-  //     id: 'test',
-  //     enable: (str, item, mapper, idx) => {
-  //       return idx % 2 === 0;
-  //     },
-  //     action: (...args) => {
-  //       this.showDetail(...args);
-  //     }
-  //   },
-  // ]
-
-  reportActionBtns = [
-    {
-      text: '测试按钮',
-      id: 'testing',
-      action: () => {
-        console.log('for test');
+    this.reportActionBtns = [
+      {
+        text: '测试按钮',
+        id: 'testing',
+        action: () => {
+          console.log('for test');
+        }
       }
-    }
-  ]
+    ]
+  }
 
   // 与 HOCReportRender 模版对接的查询接口
   queryData = async (reportData) => {
@@ -121,6 +98,6 @@ class TestReportClass extends ActionAgent {
   }
 }
 
-const TestReport = HOCReportRender(TestReportClass);
+const TestReport = HOCReportRender<HOCReportRenderClass>(TestReportClass);
 
 export default TestReport;

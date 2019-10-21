@@ -7,7 +7,7 @@ import { $TFunc } from '../../../props';
 
 export interface ReportActionBtnItem {
   id?: string;
-  action: () => void;
+  action: (clickEvent: any) => void;
   text: string;
   color?: ButtonProps['color'];
 }

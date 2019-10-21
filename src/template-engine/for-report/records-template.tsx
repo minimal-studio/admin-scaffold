@@ -19,7 +19,9 @@ import {
   Table, ConditionGenerator,
   getElementOffset, DropdownMenu, Switch
 } from '../../ui-refs';
-import { ReportTemplateProps, GetQueryDataResult, ReportTemplateState } from './types';
+import {
+  ReportTemplateProps, GetQueryDataResult, ReportTemplateState, ReportActionBtnItem
+} from './types';
 
 const delayExec = new DebounceClass();
 
@@ -36,7 +38,7 @@ const autoRefreshOptions = {
 
 export default class ReportTemplate<
   P extends ReportTemplateProps = ReportTemplateProps
-> extends Component<P & ReportTemplateProps, ReportTemplateState> {
+> extends Component<P | ReportTemplateProps, ReportTemplateState> {
   static defaultProps = {
     autoQuery: false,
     defaultExpandCon: false,
@@ -54,7 +56,7 @@ export default class ReportTemplate<
     needPaging: true,
     template: 'Table',
     conditionOptions: [],
-    $T: str => str,
+    $T: (str) => str,
     resDesc: '',
   }
 
@@ -330,7 +332,7 @@ export default class ReportTemplate<
         icon={expandCon ? "angle-double-up" : "angle-double-down"}
         color="default"
         className="mr10"
-        onClick={e => this.toggleCondition(!expandCon)}>
+        onClick={(e) => this.toggleCondition(!expandCon)}>
         {$T('高级搜索')}
       </Button>
     );
@@ -444,7 +446,7 @@ export default class ReportTemplate<
             <Button
               text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
               className="default mr10"
-              onClick={e => this.toggleFloat()}/>
+              onClick={(e) => this.toggleFloat()}/>
           )
         }
         {

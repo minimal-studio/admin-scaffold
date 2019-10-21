@@ -10,7 +10,7 @@ import { UUID, IsFunc } from 'basic-helper';
 import { NotifyConfig } from 'ukelli-ui/core/notification/notification';
 import { Notify } from '../../ui-refs';
 import ReportTemplate from './records-template';
-import { ReportTemplateProps } from './types';
+import { ReportTemplateProps, RecordActionBtn, ReportActionBtn } from './types';
 
 /**
  * 用于记录所有页面的按钮
@@ -22,7 +22,13 @@ const renameTip = (before, after) => {
   console.warn(`请把 ${before} 改名为 ${after}`);
 };
 
-export interface TemplateOptions extends ReportTemplateProps {}
+export interface HOCReportRenderClass {
+  /** 数据表的每一项（each row）的操作按钮 */
+  recordActionBtns?: RecordActionBtn;
+
+  /** 表格中的操作按钮 */
+  reportActionBtns?: ReportActionBtn;
+}
 
 /**
  * HOCReportRender 接受 3 个参数
@@ -32,24 +38,23 @@ export interface TemplateOptions extends ReportTemplateProps {}
  * @param {class} [TemplatEngin=ReportTemplate] 自定义的模版引擎
  * @return {class} 返回用于 react 的类
  */
-function HOCReportRender<P extends ReportTemplateProps>(
+function HOCReportRender<P = HOCReportRenderClass>(
   Action: React.ComponentClass<P>,
   passProps = {},
   TemplatEngin = ReportTemplate
 ) {
   if (!Action) return null;
-  // console.log(Action.name)
-  // __btns[Action.name] = {};
   return class C extends Action {
+    /** 对于表格主体的 ref */
     ReportRef;
 
-    actionBtnConfig
-
+    /** 数据表的每一项（each row）的操作按钮 */
     recordActionBtns
-    
+
+    /** 表格中的操作按钮 */
     reportActionBtns
 
-    getRecordBtns = (...args) => {
+    getRecordBtns = (contentResult: any, record: any, mapper: any, rowIdx: any, ...other) => {
       const { actionBtnConfig, recordActionBtns } = this;
       if (actionBtnConfig) renameTip('actionBtnConfig', 'recordActionBtns');
       const _recordActionBtns = recordActionBtns || actionBtnConfig;
@@ -61,12 +66,12 @@ function HOCReportRender<P extends ReportTemplateProps>(
         } = config;
         /** 用于控制权限 */
         const isActive = this.powerFilterForBtn(id);
-        const isEnabled = IsFunc(enable) ? enable(...args) : true;
+        const isEnabled = IsFunc(enable) ? enable(contentResult, record, mapper, rowIdx, ...other) : true;
         if (isActive && isEnabled) {
           // if(!__btns[Action.name][id]) __btns[Action.name][id] = config;
           res.push(
             <span className={`link-btn mr5 t_${color}`} key={text} onClick={(e) => {
-              action(...args);
+              action(contentResult, record, mapper, rowIdx, ...other);
             }}>
               {this.props.$T(text)}
             </span>
