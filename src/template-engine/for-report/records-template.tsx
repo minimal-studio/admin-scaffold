@@ -463,11 +463,11 @@ export default class ReportTemplate<
       <div className="report-table-layout">
         <Toast ref={this.saveToast}/>
         <div
-          ref={(e) => {
-            if (e) {
-              console.log(e.offsetHeight);
-            }
-          }}
+          // ref={(e) => {
+          //   if (e) {
+          //     console.log(e.offsetHeight);
+          //   }
+          // }}
           className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
           <form onSubmit={(e) => {
             e.preventDefault();
