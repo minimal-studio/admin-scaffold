@@ -1,15 +1,19 @@
 import React from 'react';
-
+import { RequestClass } from 'uke-request';
 import ActionAgent from '..';
 
+const $R = new RequestClass<{
+  header: {};
+  data: {};
+}>();
+
+export const TestApi = () => $R.post('/test', {
+  data: {}
+});
+
 export default class ActionAgentPage extends ActionAgent {
-  api = (postDataFromAgent): Promise<string> => {
-    console.log(postDataFromAgent);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('return api res data');
-      }, 800);
-    });
+  api = () => {
+    return TestApi();
   }
 
   componentDidMount = async () => {

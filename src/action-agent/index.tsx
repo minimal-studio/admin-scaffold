@@ -26,7 +26,7 @@ export interface AgentOptions {
   /** 在请求发起前设置组件的 state */
   before?: () => {};
   /** 在请求发起后设置组件的 state */
-  after?: (response: ReqAgentReturn) => {};
+  after?: <T = {}>(response: ReqAgentReturn) => T | {};
   /** response 的过滤器，用于过滤并返回 ActionAgent 的返回值
    *
    * @example
@@ -38,7 +38,7 @@ export interface AgentOptions {
    * })
    * console.log(res) // res = { ...other, isDone: true }
    */
-  resFilter?: <T = {}>(response?: ReqAgentReturn) => T;
+  resFilter?: <T = any>(response?: ReqAgentReturn) => T;
   /** 当前 api 的操作的 ref 值，用于做对应状态的 loading 切换 */
   actingRef?: string;
 }
@@ -120,13 +120,16 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
           console.log(e);
           res.err = e;
         }
+        if (!IsFunc(after)) {
+          throw Error('after should be a function');
+        }
         this.stateSetter(
           Object.assign({},
             {
               [actingRef]: false
             },
             this._after(res),
-            this._checkRes(res) ? await CallFunc(after)(res) : {})
+            this._checkRes(res) ? (after && await after<APIRetrue>(res)) : {})
         );
         this.resStatus(res, id);
         const result = resFilter ? resFilter<APIRetrue>(res) : res;
