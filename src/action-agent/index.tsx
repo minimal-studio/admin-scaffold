@@ -20,13 +20,13 @@ export interface ReqAgentReturn {
   err?: any;
 }
 
-export interface AgentOptions {
+export interface AgentOptions<APIRetrue = ReqAgentReturn> {
   /** 当前请求的 id */
   id?: string;
   /** 在请求发起前设置组件的 state */
   before?: () => {};
   /** 在请求发起后设置组件的 state */
-  after?: <T = {}>(response: ReqAgentReturn) => T | {};
+  after?: <T = {}>(response: APIRetrue) => T | {};
   /** response 的过滤器，用于过滤并返回 ActionAgent 的返回值
    *
    * @example
@@ -38,7 +38,7 @@ export interface AgentOptions {
    * })
    * console.log(res) // res = { ...other, isDone: true }
    */
-  resFilter?: <T = any>(response?: ReqAgentReturn) => T;
+  resFilter?: <T = any>(response?: APIRetrue) => T;
   /** 当前 api 的操作的 ref 值，用于做对应状态的 loading 切换 */
   actingRef?: string;
 }
@@ -95,7 +95,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
    */
   reqAgent<APIRetrue>(
     reqFunc: (...args) => Promise<APIRetrue>,
-    agentOptions: AgentOptions
+    agentOptions: AgentOptions<APIRetrue>
   ) {
     if (!IsFunc(reqFunc)) {
       const errMsg = 'should pass func at arguments[0]';
@@ -111,9 +111,9 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
 
     this.stateSetter(this._before(Call(before), actingRef));
 
-    return (...args): Promise<APIRetrue | ReqAgentReturn> => {
+    return (...args): Promise<APIRetrue> => {
       return new Promise(async (resolve, reject) => {
-        let res: ReqAgentReturn = {};
+        let res;
         try {
           res = await reqFunc(...args);
         } catch (e) {
