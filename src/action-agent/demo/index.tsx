@@ -13,18 +13,17 @@ export default class ActionAgentPage extends ActionAgent {
   }
 
   componentDidMount = async () => {
-    const agentOptions = {
+    const postData = {
+      username: 'bee'
+    };
+    const reqInstance = this.reqAgent(this.api, {
       before: () => ({}),
       after: (res) => {
         console.log('return an object to merge this.state');
         return {};
       },
       actingRef: 'testing',
-    };
-    const postData = {
-      username: 'bee'
-    };
-    const reqInstance = this.reqAgent(this.api, agentOptions);
+    });
     const resData = await reqInstance(postData);
     console.log(resData);
   }

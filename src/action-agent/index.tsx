@@ -16,18 +16,31 @@ import {
   ReportActionBtn, PowerMapper, RecordActionBtn
 } from '../template-engine/for-report/types';
 
+export interface ReqAgentReturn {
+  err?: any;
+}
+
 export interface AgentOptions {
+  /** 当前请求的 id */
   id?: string;
   /** 在请求发起前设置组件的 state */
   before?: () => {};
   /** 在请求发起后设置组件的 state */
-  after?: (response) => {};
-  resFilter?;
+  after?: (response: ReqAgentReturn) => {};
+  /** response 的过滤器，用于过滤并返回 ActionAgent 的返回值
+   *
+   * @example
+   * const res = await actionAgent(api, {
+   *   resFilter: (resData) => {
+   *     resData.isDone = true;
+   *     return resData;
+   *   }
+   * })
+   * console.log(res) // res = { ...other, isDone: true }
+   */
+  resFilter?: <T = {}>(response?: ReqAgentReturn) => T;
+  /** 当前 api 的操作的 ref 值，用于做对应状态的 loading 切换 */
   actingRef?: string;
-}
-
-export interface ReqAgentReturn {
-  err?: any;
 }
 
 export interface ReqAgentAPI extends Function {}
@@ -80,8 +93,9 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
    * @param {agentOptions} object 此方法的配置项
    * @return {async function} 返回传入的第一个参数的包装方法，在此过程插入一些生命周期函数
    */
-  reqAgent<APIRetrue = any>(
-    reqFunc: Function, agentOptions: AgentOptions
+  reqAgent<APIRetrue>(
+    reqFunc: (...args) => Promise<APIRetrue>,
+    agentOptions: AgentOptions
   ) {
     if (!IsFunc(reqFunc)) {
       const errMsg = 'should pass func at arguments[0]';
@@ -97,7 +111,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
 
     this.stateSetter(this._before(Call(before), actingRef));
 
-    return (...args): Promise<ObjectType<APIRetrue>> => {
+    return (...args): Promise<APIRetrue | ReqAgentReturn> => {
       return new Promise(async (resolve, reject) => {
         let res: ReqAgentReturn = {};
         try {
@@ -115,7 +129,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
             this._checkRes(res) ? await CallFunc(after)(res) : {})
         );
         this.resStatus(res, id);
-        const result = IsFunc(resFilter) ? resFilter(res) : res;
+        const result = resFilter ? resFilter<APIRetrue>(res) : res;
         resolve(result);
       });
     };
