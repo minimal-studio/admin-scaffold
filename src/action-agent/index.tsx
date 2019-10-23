@@ -120,16 +120,16 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
           console.log(e);
           res.err = e;
         }
-        if (!IsFunc(after)) {
-          throw Error('after should be a function');
-        }
+        // if (!IsFunc(after)) {
+        //   throw Error('after should be a function');
+        // }
         this.stateSetter(
           Object.assign({},
             {
               [actingRef]: false
             },
             this._after(res),
-            this._checkRes(res) ? (after && await after<APIRetrue>(res)) : {})
+            this._checkRes(res) ? (IsFunc(after) && await after<APIRetrue>(res)) : {})
         );
         this.resStatus(res, id);
         const result = resFilter ? resFilter<APIRetrue>(res) : res;
