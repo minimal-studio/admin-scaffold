@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Loading, Table, Notify, ShowModal, Button,
-  ConditionGenerator, CloseGlobalModal, TipPanel
+  ConditionGenerator, CloseGlobalModal, Alert
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 

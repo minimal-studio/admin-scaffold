@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TipPanel } from '../ui-refs';
+import { Alert } from '../ui-refs';
 
 const desc = `const DashBoard = () => {
   return (
@@ -26,7 +26,7 @@ export default class DashBoard extends React.PureComponent {
     const { loadPlugin, CustomerComponent, ...other } = this.props;
     return CustomerComponent ? loadPlugin(CustomerComponent, other) : (
       <div className="card-content">
-        <TipPanel title="DashBoard 使用说明"
+        <Alert title="DashBoard 使用说明"
           texts={[
             '当所有页面关闭后，会出现这个页面',
             '主要作用为展示页面数据，并且不会有空白的页面出现',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Loading, FormLayout, Tabs, Tab, TipPanel, Steps, GlobalPopover, Radio
+  Loading, FormLayout, Tabs, Tab, Alert, Steps, GlobalPopover, Radio
 } from 'ukelli-ui';
 
 import { Call } from 'basic-helper';
@@ -90,7 +90,7 @@ export default class CreateProject extends ActionAgent {
     } = this.state;
     return (
       <div>
-        <TipPanel
+        <Alert
           title="使用说明"
           texts={[
             '新建项目，只需要填写项目名称',

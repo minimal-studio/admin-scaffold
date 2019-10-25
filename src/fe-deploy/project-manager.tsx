@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, TipPanel } from 'ukelli-ui';
+import { Tabs, Tab, Alert } from 'ukelli-ui';
 import { Call } from 'basic-helper';
 
 import CreateAsset from './create-asset';
@@ -76,7 +76,7 @@ class ProjectManager extends Component {
         {
           !this.canOperate && (
             <div>
-              <TipPanel title="你暂时还不是该项目的协作者，可以通过申请进行项目协作"/>
+              <Alert title="你暂时还不是该项目的协作者，可以通过申请进行项目协作"/>
               <div className="text-center">
                 <span className="btn flat theme" onClick={e => this.applyToJoin(projId)}>申请加入协作</span>
               </div>

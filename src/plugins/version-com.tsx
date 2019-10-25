@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tip, ShowModal, TipPanel, Notify
+  Tip, ShowModal, Alert, Notify
 } from '../ui-refs';
 
 export interface VersionInfo {
@@ -108,7 +108,7 @@ class VersionChecker extends Component<VersionCheckerProps> {
             <p>{updateLog || '日常更新'}</p>
           </div>
           <hr />
-          <TipPanel
+          <Alert
             type="success"
             text="请确保已保存工作内容，页面即将刷新" />
         </div>

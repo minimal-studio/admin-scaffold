@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FormLayout, Button, TipPanel } from 'ukelli-ui';
+import { FormLayout, Button, Alert } from 'ukelli-ui';
 import { Call } from 'basic-helper/call';
 import { Color } from 'ukelli-ui/core/utils';
 import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Loading, Table, Notify, ShowModal, Button, Tabs, Tab,
-  ConditionGenerator, CloseGlobalModal, TipPanel, FormLayout
+  ConditionGenerator, CloseGlobalModal, Alert, FormLayout
 } from 'ukelli-ui';
 import { GenerteID } from 'basic-helper';
 import ActionAgent from "../action-agent";
@@ -162,7 +162,7 @@ export default class DeployConfigManager extends ActionAgent {
     const { querying, records } = this.state;
     return (
       <div className="card-content">
-        <TipPanel title="使用说明"
+        <Alert title="使用说明"
           needToolTip
           n="angle-up"
           defaultShow={false}
