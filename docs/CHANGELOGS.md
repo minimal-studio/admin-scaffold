@@ -3,6 +3,7 @@
 ## v1.2.0
 
 - 使用 version-helper 渲染版本信息
+- 升级 UI 库，把 Alert 换成 Alert
 
 ## v1.1.0
 

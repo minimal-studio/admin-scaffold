@@ -1,6 +1,6 @@
 {
   "name": "uke-admin-web-scaffold",
-  "version": "1.2.0-rc10",
+  "version": "1.2.0",
   "main": "./index.js",
   "files": [
     "*"
@@ -30,8 +30,8 @@
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
     "uke-request": "^1.0.x",
-    "ukelli-ui": "^3.1.x",
-    "version-helper": "^1.0.3"
+    "ukelli-ui": "^3.3.x",
+    "version-helper": "^1.1.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.17",
@@ -61,10 +61,10 @@
     "react-transition-group": "^4.0.1",
     "ts-jest": "^24.0.2",
     "typescript": "3.6.4",
-    "uke-request": "^1.1.0-rc5",
-    "ukelli-ui": "^3.1.1",
+    "uke-request": "^1.1.0",
+    "ukelli-ui": "^3.3.0-rc1",
     "unistore": "^3.1.0",
-    "version-helper": "^1.0.3"
+    "version-helper": "^1.1.0"
   },
   "author": "Alex",
   "license": "MIT",
