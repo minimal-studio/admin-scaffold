@@ -7,17 +7,16 @@
 
 import React from 'react';
 
-import { ShowModal, CloseModal, DescHelper } from 'ukelli-ui';
+import { ShowModal, CloseModal, DescHelper } from '@dear-ui/core';
 import { HOCReportRender } from '..';
 import { getTestData, keyFieldsForReport, conditionData } from '../../report-data';
 import ActionAgent from '../../../action-agent';
 import * as paginHelper from '../../../utils/pagination-helper';
-import { ReportTemplateProps } from '../types';
 import { HOCReportRenderClass } from '../report-generator';
 
 class TestReportClass extends ActionAgent {
   state = {
-    records: [],
+    dataRows: [],
     propsForTable: {
       rowKey: record => record.ID
     },
@@ -76,7 +75,7 @@ class TestReportClass extends ActionAgent {
       actingRef: 'querying',
       after: (res) => {
         return {
-          records: res.data,
+          dataRows: res.data,
           pagingInfo: {
             ...this.state.pagingInfo,
             ...res.paging

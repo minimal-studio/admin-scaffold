@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Storage from 'basic-helper/storage';
+import Storage from '@mini-code/base-func/storage';
 
-import { NatureColors } from 'ukelli-ui/core/utils';
+import { NatureColors } from '@dear-ui/core/utils';
 import { Switch } from '../ui-refs';
 
 const _themes = NatureColors;

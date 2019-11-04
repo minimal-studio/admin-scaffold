@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Tip, ShowModal, Alert, Notify
 } from '../ui-refs';

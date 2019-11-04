@@ -1,0 +1,16 @@
+{
+  "name": "@dear-ui/admin-scaffold",
+  "version": "2.0.0-alpha1.0",
+  "scripts": {
+    "postinstall": "npm run gen:version",
+    "publish:ts": "npm publish ./dist",
+    "release": "npm run build:ts; npm run publish:ts",
+    "build:ts": "rm -rf ./dist; tsc; npm run copy-files-ts; npm run copy-style",
+    "copy-files-ts": "node ./scripts/copy-files-ts",
+    "gen:version": "vh gen",
+    "copy-style": "cp -R ./style ./dist/",
+    "test": "jest",
+    "dev:doc": "cd website; yarn; npm run dev",
+    "build": "cd website; yarn; yarn build"
+  }
+}

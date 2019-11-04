@@ -1,9 +1,9 @@
 import React, { SFC } from 'react';
-import { Call, IsFunc } from 'basic-helper';
+import { Call, IsFunc } from '@mini-code/base-func';
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import { Children } from 'ukelli-ui/core/utils';
+import { Children } from '@dear-ui/core/utils';
 import LoginPanel, { LoginPanelProps } from './login-panel';
 
 export interface LoginSelectorProps extends LoginPanelProps {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { Alert } from '../ui-refs';
 
@@ -10,18 +9,20 @@ const desc = `const DashBoard = () => {
 }
 <ManagerAPP DashBoard={DashBoard}/>
 `;
+// static propTypes = {
+//   CustomerComponent: PropTypes.any,
+//   loadPlugin: PropTypes.func,
+// }
 
 export default class DashBoard extends React.PureComponent {
-  static propTypes = {
-    CustomerComponent: PropTypes.any,
-    loadPlugin: PropTypes.func,
-  }
+
   constructor(props) {
     super(props);
     this.state = {
 
     };
   }
+
   render() {
     const { loadPlugin, CustomerComponent, ...other } = this.props;
     return CustomerComponent ? loadPlugin(CustomerComponent, other) : (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DebounceClass } from 'basic-helper';
+import { DebounceClass } from '@mini-code/base-func';
 
 const delayExec = new DebounceClass();
 

@@ -1,14 +1,12 @@
 import React from 'react';
 import {
   ShowModal,
-  CloseModal,
-  DescHelper
-} from 'ukelli-ui';
+} from '@dear-ui/core';
 import {
   SetFloatLen,
   SetBasicUnit
-} from 'basic-helper';
-import { TableKeyMapper } from 'ukelli-ui/core/record-render/table-body';
+} from '@mini-code/base-func';
+import { TableKeyMapper } from '@dear-ui/core/table';
 
 /** 设置金钱的浮动小数位数 */
 SetFloatLen(2);

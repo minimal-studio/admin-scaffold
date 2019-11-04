@@ -3,11 +3,10 @@
  * 表格渲染模版
  */
 
-import { Subtract } from 'utility-types';
 import React, { Component, PureComponent } from 'react';
-import { UUID, IsFunc } from 'basic-helper';
+import { UUID, IsFunc } from '@mini-code/base-func';
 
-import { NotifyConfig } from 'ukelli-ui/core/notification/notification';
+import { NotifyConfig } from '@dear-ui/core/notification/notification';
 import { Notify } from '../../ui-refs';
 import ReportTemplate from './records-template';
 import { ReportTemplateProps, RecordActionBtn, ReportActionBtn } from './types';

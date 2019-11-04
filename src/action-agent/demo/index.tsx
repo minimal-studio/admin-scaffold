@@ -1,5 +1,5 @@
 import React from 'react';
-import { RequestClass } from 'uke-request';
+import { RequestClass } from '@mini-code/request';
 import ActionAgent from '..';
 
 const $R = new RequestClass<{

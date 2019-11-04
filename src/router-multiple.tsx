@@ -1,9 +1,8 @@
 import React, { Component, SFC } from 'react';
-import PropTypes from 'prop-types';
 
 import { createBrowserHistory } from "history";
-import { getUrlParams, urlParamsToQuery } from 'uke-request/url-resolve';
-import { RemoveArrayItem, CallFunc, IsUrl } from 'basic-helper';
+import { getUrlParams, urlParamsToQuery } from '@mini-code/request/url-resolve';
+import { RemoveArrayItem, CallFunc, IsUrl } from '@mini-code/base-func';
 
 export interface RouterHelperState {
   routers: string[];

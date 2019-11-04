@@ -1,10 +1,9 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-prototype-builtins */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-import Storage from 'basic-helper/storage';
-import { DebounceClass, Call } from 'basic-helper';
+import Storage from '@mini-code/base-func/storage';
+import { DebounceClass, Call } from '@mini-code/base-func';
 import { ToolTip, Icon, PureIcon } from '../ui-refs';
 
 import { storageHelper } from '../config';

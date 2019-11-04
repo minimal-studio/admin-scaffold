@@ -1,9 +1,9 @@
-import { TableProps } from 'ukelli-ui/core/record-render/table-body';
-import { ConditionGeneratorProps } from 'ukelli-ui/core/form-generator/condition-generator';
-import { PaginationProps } from 'ukelli-ui/core/pagin/pagin';
-import { ButtonProps } from 'ukelli-ui/core/button/button-basic';
-import { Color } from 'ukelli-ui/core/utils';
-import { RecordItem, Column } from 'ukelli-ui/core/record-render/mapper-filter';
+import { TableProps } from '@dear-ui/core/table';
+import { ConditionGeneratorProps } from '@dear-ui/core/form-generator/condition-generator';
+import { PaginationProps } from '@dear-ui/core/pagination/pagination';
+import { ButtonProps } from '@dear-ui/core/utils/props';
+import { Color } from '@dear-ui/core/utils';
+import { RecordItem, Column } from '@dear-ui/core/table/column-filter';
 import { $TFunc } from '../../../props';
 
 export interface TemplateOptions {
@@ -55,15 +55,17 @@ export interface ReportTemplateProps {
   // Props for Table
   // ---------------------
   /** 将要废弃，需要改名为 columns */
-  keyMapper: TableProps['keyMapper'];
+  keyMapper: TableProps['columns'];
   /** Ukelli UI 的表格渲染组件需要的配置 */
   columns: TableProps['columns'];
   /** 表格的高度 */
   height?: TableProps['height'];
   /** 是否需要表格统计 */
   needCount?: TableProps['needCount'];
-  /** 表格渲染记录数据 */
+  /** 请使用 dataRows */
   records: TableProps['records'];
+  /** 表格渲染记录数据 */
+  dataRows: TableProps['dataRows'];
   /** 忽略的排序字段 */
   sortIgnores: TableProps['sortIgnores'];
   /** 是否需要表格排序 */

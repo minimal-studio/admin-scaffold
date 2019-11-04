@@ -2,8 +2,7 @@
 
 import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
-import PropTypes from 'prop-types';
-import { Call } from 'basic-helper';
+import { Call } from '@mini-code/base-func';
 import { ClickAway, ToolTip } from '../ui-refs';
 
 import { Link } from '../router-multiple';

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { AdminWebScaffold, Link } from 'uke-admin-web-scaffold';
-import { AuthSelector } from 'uke-admin-web-scaffold/auth-selector';
+import { AdminWebScaffold, Link } from '@dear-ui/admin-scaffold';
+import { AuthSelector } from '@dear-ui/admin-scaffold/auth-selector';
 
 const VersionInfo = {
   version: 'v1.0.0'
@@ -27,7 +27,7 @@ const pageComponents = {
 class LoginFilter extends React.Component {
   static defaultProps = {
     userInfo: {
-      username: 'uke-user'
+      username: 'Alex'
     }
   }
 

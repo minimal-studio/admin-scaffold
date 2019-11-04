@@ -9,12 +9,12 @@ import React, { Component, PureComponent } from 'react';
 
 import {
   GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call
-} from 'basic-helper';
+} from '@mini-code/base-func';
 
 // import { getDefPagin } from '../../utils/pagination-helper';
 import { getScreenInfo } from '../../utils/dom';
 import {
-  Pagination, CardTable,
+  Pagination, TableCard,
   Loading, Button, Toast,
   Table, ConditionGenerator,
   getElementOffset, DropdownMenu, Switch
@@ -122,8 +122,8 @@ export default class ReportTemplate<
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { needAutoRefresh = false, records } = this.props;
-    if (needAutoRefresh && this.audioMask && nextProps.records != records) {
+    const { needAutoRefresh = false, dataRows } = this.props;
+    if (needAutoRefresh && this.audioMask && nextProps.dataRows != dataRows) {
       this.soundRef.play();
     }
     return true;
@@ -340,7 +340,7 @@ export default class ReportTemplate<
 
   render() {
     const {
-      records = [], pagingInfo, querying, children, template,
+      dataRows = [], pagingInfo, querying, children, template,
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, $T, keyMapper, columns, hideFloatable, calculateHeight,
@@ -355,11 +355,11 @@ export default class ReportTemplate<
     const _tableH = height || tableHeight;
 
     switch (template) {
-      case 'CardTable':
+      case 'TableCard':
         this.templateDOM = (
           <>
             <Loading loading={!!querying} inrow />
-            <CardTable columns={_columns} records={records}/>
+            <TableCard columns={_columns} dataRows={dataRows}/>
           </>
         );
         break;
@@ -373,12 +373,12 @@ export default class ReportTemplate<
           sortIgnores,
           needInnerSort,
           needCount,
-          records,
+          dataRows,
           height: _tableH,
         };
         this.templateDOM = (
           <div className="table-container" ref={(e) => {
-            if (!calculateHeight || height || !e || records.length === 0) return;
+            if (!calculateHeight || height || !e || dataRows.length === 0) return;
             this.tableContainerRef = e;
             this.setTableContainerHeight();
           }}>

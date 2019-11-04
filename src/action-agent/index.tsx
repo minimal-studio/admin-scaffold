@@ -7,10 +7,10 @@ import React, { Component, PureComponent } from 'react';
 
 import {
   Call, CallFunc, IsFunc, DebounceClass
-} from 'basic-helper';
-import { getUrlParams } from 'uke-request/url-resolve';
-import { Children } from 'ukelli-ui/core/utils';
-import { FormLayoutProps } from 'ukelli-ui/core/form-generator/form-layout';
+} from '@mini-code/base-func';
+import { getUrlParams } from '@mini-code/request/url-resolve';
+import { Children } from '@dear-ui/core/utils';
+import { FormLayoutProps } from '@dear-ui/core/form-layout/form-layout';
 import {
   ReportTemplateProps, TemplateOptions,
   ReportActionBtn, PowerMapper, RecordActionBtn
@@ -56,7 +56,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
 
   templateOptions!: TemplateOptions
 
-  keyMapper!: ReportTemplateProps['keyMapper']
+  keyMapper!: ReportTemplateProps['columns']
 
   columns!: ReportTemplateProps['columns']
 

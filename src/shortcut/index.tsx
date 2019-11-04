@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { TableColumns } from 'ukelli-ui/core/record-render/table-body';
+import { TableColumns } from '@dear-ui/core/table';
 import { Table, Menus, ShowModal } from '../ui-refs';
-import records from './data';
+import dataRows from './data';
 
 const columns: TableColumns = [
   {
@@ -15,7 +15,7 @@ const columns: TableColumns = [
 ];
 
 const ShortcutHelp = () => {
-  return <Table columns={columns} records={records} />;
+  return <Table columns={columns} dataRows={dataRows} />;
 };
 
 const showShortcut = () => {

@@ -3,16 +3,15 @@
  */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import Mousetrap from 'mousetrap';
-import { ToggleBasicFloatLen, EventEmitter, IsFunc } from 'basic-helper';
+import { ToggleBasicFloatLen, EventEmitter, IsFunc } from '@mini-code/base-func';
 import { VersionDisplayer, VersionChecker, VersionCheckerProps } from 'version-helper';
 
-import { Color } from 'ukelli-ui/core/utils/props';
+import { Color } from '@dear-ui/core/utils/props';
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
-  Loading, setUkeLang, Icon, setLangTranslate
+  Loading, setUILang, Icon, setLangTranslate
 } from './ui-refs';
 
 import { showShortcut, ShortcutDesc } from './shortcut';
@@ -83,7 +82,6 @@ export interface ScaffoldLayoutProps {
   title?: NavMenuProps['title'];
   versionInfo?: VersionCheckerProps['versionInfo'];
   /** DashBoard 插件 */
-  // DashBoard: PropTypes.any,
 }
 
 let LANG_MAPPER = {};
@@ -154,7 +152,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     return `${i18nMapperUrl + lang}.json`;
   }
 
-  async initApp() {
+  initApp = async () => {
     const { i18nMapper } = this.props;
     const { lang } = this.state;
     if (i18nMapper) {
@@ -183,7 +181,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     // });
     CURR_LANG_MAPPER = LANG_MAPPER[lang] || {};
     setLangTranslate(LANG_MAPPER);
-    setUkeLang(lang);
+    setUILang(lang);
   }
 
   changeTheme = (nextTheme) => {
@@ -448,7 +446,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                   className={
                     `pages-container ${showNavMenu ? 'show-menu' : 'hide-menu'}`
                   }>
-                  <div className="uke-status-bar" id="statusBar">
+                  <div className="admin-status-bar" id="statusBar">
                     {tabInStatusbar && (
                       <TabForNavBar
                         changeRoute={this.changeRoute}
