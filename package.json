@@ -10,12 +10,12 @@
   ],
   "scripts": {
     "postinstall": "npm run gen:version",
-    "publish:ts": "npm publish ./dist",
-    "release": "npm run build:ts; npm run publish:ts",
-    "build:ts": "rm -rf ./dist; tsc; npm run copy-files-ts; npm run copy-style",
-    "copy-files-ts": "node ./scripts/copy-files-ts",
+    "publish:build": "npm publish ./dist",
+    "release": "npm run build:src; npm run publish:build",
+    "build:src": "rm -rf ./dist; tsc; npm run copy:files; npm run copy:style",
+    "copy:files": "node ./scripts/copy-files-ts",
+    "copy:style": "cp -R ./style ./dist/",
     "gen:version": "vh gen",
-    "copy-style": "cp -R ./style ./dist/",
     "test": "jest",
     "dev:doc": "cd website; yarn; npm run dev",
     "build": "cd website; yarn; yarn build"
