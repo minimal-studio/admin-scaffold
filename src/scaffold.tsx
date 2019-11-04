@@ -251,8 +251,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
   }
 
   handleCloseFormShortcut = () => {
-    const { activeRouteIdx, routerInfo } = this.state;
-    this.closeTab(activeRouteIdx, routerInfo);
+    const { activeRouteIdx } = this.state;
+    this.closeTab(activeRouteIdx);
   }
 
   toggleFloat = () => {
@@ -296,7 +296,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     };
   }
 
-  loadPlugin = (Plugin, props) => {
+  loadPlugin = (Plugin, props?) => {
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
     P = React.cloneElement(P, props, {
@@ -384,7 +384,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
     const {
       username,
       logout,
-      pageComponents,
+      pageComponents = [],
       pluginComponent = {},
       menuMappers,
       versionInfo,
@@ -495,6 +495,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                             key={key}
                             onChange={(e) => this.changeRoute(route, params)}>
                             {
+                              // eslint-disable-next-line no-nested-ternary
                               C ? (
                                 <C {...this.getRouteProps(isActive, route)}/>
                               ) : NotfoundPage ? this.loadPlugin(NotfoundPage) : (
@@ -509,7 +510,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
                           label={this.$T('仪表盘')}
                           key="dash-board">
                           <DashBoardWrapper
-                            CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true)} />
+                            CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true, 'dashboard')} />
                         </Tab>
                       )
                     }
