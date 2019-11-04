@@ -1,11 +1,15 @@
 {
-  "name": "uke-admin-web-scaffold",
-  "version": "1.2.1",
-  "main": "./index.js",
+  "name": "admin-scaffold",
+  "version": "2.0.0-alpha1.0",
+  "private": true,
+  "workspaces": [
+    "src"
+  ],
   "files": [
     "*"
   ],
   "scripts": {
+    "postinstall": "npm run gen:version",
     "publish:ts": "npm publish ./dist",
     "release": "npm run build:ts; npm run publish:ts",
     "build:ts": "rm -rf ./dist; tsc; npm run copy-files-ts; npm run copy-style",
@@ -13,37 +17,34 @@
     "gen:version": "vh gen",
     "copy-style": "cp -R ./style ./dist/",
     "test": "jest",
-    "docz:dev": "docz dev",
-    "docz:build": "NODE_ENV=production docz build"
+    "dev:doc": "cd website; yarn; npm run dev",
+    "build": "cd website; yarn; yarn build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SANGET/uke-admin-web-scaffold.git"
+    "url": "https://github.com/minimal-studio/admin-scaffold.git"
   },
   "description": "Base on React's Admin Manager Scaffold.",
   "peerDependencies": {
-    "basic-helper": "^3.0.x",
+    "@dear-ui/core": "^4.0.x",
+    "@mini-code/base-func": "^1.0.x",
+    "@mini-code/request": "^1.0.x",
     "cross-env": "^5.1.6",
     "mousetrap": "^1.6.1",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-transition-group": "^2.5.0",
-    "uke-request": "^1.0.x",
-    "ukelli-ui": "^3.3.x",
-    "version-helper": "^1.1.0"
+    "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
+    "@dear-ui/core": "^4.0.0-alpha1.6",
+    "@mini-code/base-func": "^1.0.2",
+    "@mini-code/request": "^1.0.0-alpha1",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
-    "basic-helper": "^3.0.6",
-    "codemirror": "^5.42.2",
-    "docz": "^1.2.0",
-    "docz-plugin-css": "^0.11.0",
-    "docz-plugin-netlify": "^1.1.4",
-    "docz-theme-default": "^1.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-react-app": "^5.0.2",
@@ -61,16 +62,13 @@
     "react-transition-group": "^4.0.1",
     "ts-jest": "^24.0.2",
     "typescript": "3.6.4",
-    "uke-request": "^1.1.0",
-    "ukelli-ui": "^3.3.0-rc1",
     "unistore": "^3.1.0",
-    "version-helper": "^1.1.0"
+    "version-helper": "^1.2.0-alpha0"
   },
   "author": "Alex",
   "license": "MIT",
   "dependencies": {
     "history": "^4.7.2",
-    "mousetrap": "^1.6.3",
-    "utility-types": "^3.7.0"
+    "mousetrap": "^1.6.3"
   }
 }
