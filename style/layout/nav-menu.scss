@@ -17,7 +17,7 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 .nav-menu-response {
   color: $textColor;
-  .uke-dropdown-menu {
+  .__dropdown-menu {
     .menu-wrapper {
       background-color: rgba(0, 0, 0, 0.3);
       .search-input,.display-title {
@@ -145,7 +145,7 @@ $hoverBgColor: rgb(140, 190, 234);
 .nav-menu-response {
   padding-bottom: 50px;
   width: $navMenuWidth;
-  .uke-dropdown-menu {
+  .__dropdown-menu {
     height: 100%;
     display: flex;
     flex-direction: column;
