@@ -1,4 +1,4 @@
-# uke-admin-web-scaffold
+# @dear-ui/admin-scaffold
 
 Base on React's Admin Manager Scaffold.
 
@@ -29,19 +29,19 @@ npm init && git init
 
 ### 安装依赖
 
-> 为了不与实际项目使用的依赖冲突重复，uke-admin-web-scaffold 只指定了依赖，并没有实际安装对应依赖
+> 需要在应用项目引入依赖
 
 ```shell
 # yarn
-yarn add react react-dom uke-admin-web-scaffold basic-helper react-transition-group uke-request ukelli-ui unistore
+yarn add react react-dom @dear-ui/admin-scaffold @mini-code/base-func @mini-code/request @dear-ui/core unistore react-transition-group
 
-# 使用 uke-scripts 开发环境
-yarn add uke-scripts -D
+# 使用 @mini-code/scripts 开发环境
+yarn add @mini-code/scripts -D
 
 # 或者 npm
-npm i react react-dom uke-admin-web-scaffold basic-helper react-transition-group uke-request ukelli-ui unistore --save
+npm i react react-dom @dear-ui/admin-scaffold @mini-code/base-func @mini-code/request @dear-ui/core unistore react-transition-group --save
 
-npm i uke-scripts --save-dev
+npm i @mini-code/scripts --save-dev
 ```
 
 ### 添加 npm scripts
@@ -50,8 +50,8 @@ npm i uke-scripts --save-dev
 
 ```json
 "scripts": {
-  "start": "PORT=8086 ukectl start",
-  "build": "ukectl build"
+  "start": "PORT=8086 minictl start",
+  "build": "minictl build"
 },
 ```
 
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 ```js
 import React from 'react';
-import { AdminWebScaffold, Link } from 'uke-admin-web-scaffold';
+import { AdminWebScaffold, Link } from '@dear-ui/admin-scaffold';
 import './style.scss'
 
 const VersionInfo = {
@@ -152,7 +152,7 @@ const menuStore = [
 ]
 
 const userInfo = {
-  username: 'uke-user'
+  username: 'Alex'
 }
 
 const ScaffoldDemo = () => {
@@ -173,14 +173,14 @@ export default ScaffoldDemo;
 
 ```scss
 // 引入 scss var
-@import 'ukelli-ui/style/var.scss';
-@import 'uke-admin-web-scaffold/style/var.scss';
+@import '@dear-ui/core/style/var.scss';
+@import '@dear-ui/admin-scaffold/style/var.scss';
 
 // 引入其他样式
-@import 'ukelli-ui/style/index.scss';
-@import 'ukelli-ui/style/color/set-color.scss';
-@import 'uke-admin-web-scaffold/style/index.scss';
-@import 'uke-admin-web-scaffold/style/layout/login.scss';
+@import '@dear-ui/core/style/index.scss';
+@import '@dear-ui/core/style/color/set-color.scss';
+@import '@dear-ui/admin-scaffold/style/index.scss';
+@import '@dear-ui/admin-scaffold/style/layout/login.scss';
 ```
 
 #### 5. 添加 /tsconfig.json
@@ -228,8 +228,7 @@ yarn start
 
 ### 相关项目
 
-- [uke-dashboard](https://github.com/SANGET/uke-admin-seed.git) 整合了上述内容的管理系统模版框架，开箱即用。
-- [uke-dashboard online](https://admin.ukelli.com/) 在线演示
+- [admin-dashboard](https://github.com/minimal-studio/admin-dashboard.git) 整合了上述内容的管理系统模版框架，开箱即用。
   - Account: admin
   - PW: 123
 
@@ -242,10 +241,10 @@ yarn start
 
 ```js
 // 通用模版
-import { ReportTemplate } from 'uke-admin-web-scaffold/template-engine';
+import { ReportTemplate } from '@dear-ui/admin-scaffold/template-engine';
 
 // 高阶模版 HOC
-import { FormRender, HOCReportRender } from 'uke-admin-web-scaffold/template-engine';
+import { FormRender, HOCReportRender } from '@dear-ui/admin-scaffold/template-engine';
 
 // 通用模版
 const GenernalTMPL = () => {
@@ -268,7 +267,7 @@ const HOC_TMPL_REPORT = () => {
 > 封装了基于 React state 的异步请求管理，制定了异步请求在该页面的生命周期，适用于通用页面
 
 ```js
-import ActionAgent from 'uke-admin-web-scaffold/action-agent';
+import ActionAgent from '@dear-ui/admin-scaffold/action-agent';
 
 // 继承获取 ActionAgent 的 api
 class Page extends ActionAgent {
