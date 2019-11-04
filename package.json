@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "postinstall": "npm run gen:version",
-    "publish:build": "npm publish ./dist",
+    "publish:build": "npm publish ./dist --access public",
     "release": "npm run build:src; npm run publish:build",
     "build:src": "rm -rf ./dist; tsc; npm run copy:files; npm run copy:style",
     "copy:files": "node ./scripts/copy-files-ts",
