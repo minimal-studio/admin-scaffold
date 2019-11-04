@@ -1,0 +1,40 @@
+{
+  "name": "@dear-ui/admin-scaffold-doc",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "docz dev",
+    "build": "NODE_ENV=production docz build"
+  },
+  "devDependencies": {
+    "@mini-code/base-func": "^1.0.2",
+    "@dear-ui/core": "^4.0.0-alpha1.6",
+    "@dear-ui/enhance-ui": "^4.0.0-alpha1.1",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "codemirror": "^5.42.2",
+    "docz": "^2.0.0-rc.67",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-loader": "3.0.2",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "fs-extra": "^7.0.0",
+    "gatsby-plugin-sass": "^2.1.20",
+    "jest": "^24.5.0",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.0",
+    "react-transition-group": "^2.5.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "3.6.4",
+    "unistore": "^3.1.0"
+  }
+}
