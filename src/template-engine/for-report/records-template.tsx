@@ -1,8 +1,6 @@
 /* eslint-disable consistent-return */
 /**
- * 组件名    通用报表布局
- * 作者      Alex
- * 日期      2018-07-30
+ * @author Alex
  */
 
 import React, { Component, PureComponent } from 'react';
@@ -105,6 +103,10 @@ export default class ReportTemplate<
     if (soundUrl) this.setSoundUrl(soundUrl);
   }
 
+  getDataRows = () => {
+    return this.props.dataRows || this.props.records || [];
+  }
+
   componentDidMount() {
     this.defaultPagin = this.props.pagingInfo;
     this.setAutoRefreshTimer();
@@ -122,8 +124,8 @@ export default class ReportTemplate<
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { needAutoRefresh = false, dataRows } = this.props;
-    if (needAutoRefresh && this.audioMask && nextProps.dataRows != dataRows) {
+    const { needAutoRefresh = false, dataRows, records } = this.props;
+    if (needAutoRefresh && this.audioMask && (nextProps.dataRows != dataRows || nextProps.records != records)) {
       this.soundRef.play();
     }
     return true;
@@ -340,12 +342,13 @@ export default class ReportTemplate<
 
   render() {
     const {
-      dataRows = [], pagingInfo, querying, children, template,
+      pagingInfo, querying, children, template,
       needCount, showCondition, needCheck, whenCheckAction,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, $T, keyMapper, columns, hideFloatable, calculateHeight,
       sortIgnores, needInnerSort, needClearBtn, needAutoRefresh, propsForTable
     } = this.props;
+    const dataRows = this.getDataRows();
 
     const _columns = columns || keyMapper;
 
