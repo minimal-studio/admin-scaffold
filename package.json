@@ -1,6 +1,6 @@
 {
   "name": "admin-scaffold",
-  "version": "2.0.0-alpha1.1",
+  "version": "2.0.0-alpha2.0",
   "private": true,
   "workspaces": [
     "src"
@@ -26,7 +26,7 @@
   },
   "description": "Base on React's Admin Manager Scaffold.",
   "peerDependencies": {
-    "@dear-ui/core": "^4.0.x",
+    "@deer-ui/core": "^4.0.x",
     "@mini-code/base-func": "^1.0.x",
     "@mini-code/request": "^1.0.x",
     "cross-env": "^5.1.6",
@@ -38,7 +38,7 @@
     "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
-    "@dear-ui/core": "^4.0.0-alpha1.6",
+    "@deer-ui/core": "^4.0.0-alpha3.1",
     "@mini-code/base-func": "^1.0.2",
     "@mini-code/request": "^1.0.0-alpha1",
     "@types/react": "^16.8.17",
@@ -63,7 +63,7 @@
     "ts-jest": "^24.0.2",
     "typescript": "3.6.4",
     "unistore": "^3.1.0",
-    "version-helper": "^1.2.0-alpha0"
+    "version-helper": "^1.2.0-alpha1.0"
   },
   "author": "Alex",
   "license": "MIT",
