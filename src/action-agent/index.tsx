@@ -9,8 +9,8 @@ import {
   Call, CallFunc, IsFunc, DebounceClass
 } from '@mini-code/base-func';
 import { getUrlParams } from '@mini-code/request/url-resolve';
-import { Children } from '@dear-ui/core/utils';
-import { FormLayoutProps } from '@dear-ui/core/form-layout/form-layout';
+import { Children } from '@deer-ui/core/utils';
+import { FormLayoutProps } from '@deer-ui/core/form-layout/form-layout';
 import {
   ReportTemplateProps, TemplateOptions,
   ReportActionBtn, PowerMapper, RecordActionBtn

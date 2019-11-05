@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import { FormLayout } from '@dear-ui/core';
+import { FormLayout } from '@deer-ui/core';
 import { Call } from '@mini-code/base-func/call';
-import { Color } from '@dear-ui/core/utils';
-import { FormLayoutProps } from '@dear-ui/core/form-layout/form-layout';
+import { Color } from '@deer-ui/core/utils';
+import { FormLayoutProps } from '@deer-ui/core/form-layout/form-layout';
 
 const gradientColorMapper = {
   red: 'linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%)',
@@ -32,7 +32,7 @@ export interface LoginPanelProps {
   btnGColor?: 'red' | 'green' | 'blue' | 'wine' | 'purple';
   /** 是否沾满屏幕 */
   fixed?: boolean;
-  /** FormOptions, 参考 @dear-ui/core 的 formOptions 配置 */
+  /** FormOptions, 参考 @deer-ui/core 的 formOptions 配置 */
   formOptions: FormLayoutProps['formOptions'];
 }
 const gradientColorFilter = color => gradientColorMapper[color] || color;

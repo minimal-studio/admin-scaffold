@@ -1,5 +1,5 @@
 {
-  "name": "@dear-ui/admin-scaffold-doc",
+  "name": "@deer-ui/admin-scaffold-doc",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@mini-code/base-func": "^1.0.2",
-    "@dear-ui/core": "^4.0.0-alpha1.6",
-    "@dear-ui/enhance-ui": "^4.0.0-alpha1.1",
+    "@deer-ui/core": "^4.0.0-alpha3.1",
+    "@deer-ui/enhance-ui": "^4.0.0-alpha2.1",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@typescript-eslint/eslint-plugin": "^2.3.3",

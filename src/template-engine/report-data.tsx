@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   ShowModal,
-} from '@dear-ui/core';
+} from '@deer-ui/core';
 import {
   SetFloatLen,
   SetBasicUnit
 } from '@mini-code/base-func';
-import { TableKeyMapper } from '@dear-ui/core/table';
+import { TableKeyMapper } from '@deer-ui/core/table';
 
 /** 设置金钱的浮动小数位数 */
 SetFloatLen(2);

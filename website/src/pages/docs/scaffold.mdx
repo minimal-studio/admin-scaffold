@@ -13,15 +13,15 @@ route: /Scroffold
 
 import { Playground, Props } from 'docz'
 import { DateFormat } from '@mini-code/base-func'
-import { PureIcon } from '@dear-ui/core/icon'
-import { Menus } from '@dear-ui/core/menu'
-import { AdminWebScaffold, Link } from '@dear-ui/admin-scaffold';
-import ActionAgentPage from '@dear-ui/admin-scaffold/action-agent/demo'
-import ReportDemo from '@dear-ui/admin-scaffold/template-engine/for-report/demo'
-import { TestFormBasic } from '@dear-ui/admin-scaffold/template-engine/for-form/demo'
-import zhCH from '@dear-ui/admin-scaffold/i18n/zh-CN'
-import enUS from '@dear-ui/admin-scaffold/i18n/en-US'
-import VersionInfo from '@dear-ui/admin-scaffold/version.json'
+import { PureIcon } from '@deer-ui/core/icon'
+import { Menus } from '@deer-ui/core/menu'
+import { AdminWebScaffold, Link } from '@deer-ui/admin-scaffold';
+import ActionAgentPage from '@deer-ui/admin-scaffold/action-agent/demo'
+import ReportDemo from '@deer-ui/admin-scaffold/template-engine/for-report/demo'
+import { TestFormBasic } from '@deer-ui/admin-scaffold/template-engine/for-form/demo'
+import zhCH from '@deer-ui/admin-scaffold/i18n/zh-CN'
+import enUS from '@deer-ui/admin-scaffold/i18n/en-US'
+import VersionInfo from '@deer-ui/admin-scaffold/version.json'
 
 ## Usage
 
@@ -34,7 +34,7 @@ import VersionInfo from '@dear-ui/admin-scaffold/version.json'
 <Playground>
   {
     () => {
-      const githubLink = 'https://github.com/SANGET/@dear-ui/admin-scaffold';
+      const githubLink = 'https://github.com/SANGET/@deer-ui/admin-scaffold';
       {/* AdminWebScaffold.setI18nUrl('/public/i18n/'); */}
       const i18nMapper = {
         'zh-CN': zhCH,
@@ -238,7 +238,7 @@ import VersionInfo from '@dear-ui/admin-scaffold/version.json'
 
 ### 原理
 
-@dear-ui/admin-scaffold 的国际化策略为：通过用户浏览器默认语言，以及右上角提供的选择器确定目标语言，获取指定目录 json 文件，包装成符合 @dear-ui 国际化策略的方式实现。
+@deer-ui/admin-scaffold 的国际化策略为：通过用户浏览器默认语言，以及右上角提供的选择器确定目标语言，获取指定目录 json 文件，包装成符合 @deer-ui 国际化策略的方式实现。
 
 例如
 
@@ -246,13 +246,13 @@ import VersionInfo from '@dear-ui/admin-scaffold/version.json'
 
 1. 国际化文件以 json 文件为主，默认在项目的 `/public/i18n/` 目录下，以 `${lang}.json` 命名存放。
 2. 如果自定义了国际化目录，则需要通过 `AdminWebScaffold.setI18nUrl` 接口设置国际化文件目录路径。
-3. 脚手架尝试获取国际化目录下的国际化配置文件，并且导入项目当中，配合 @dear-ui 的国际化策略。
+3. 脚手架尝试获取国际化目录下的国际化配置文件，并且导入项目当中，配合 @deer-ui 的国际化策略。
 
 ### 国际化选项配置
 
 ```js
-import zhCN from '@dear-ui/admin-scaffold/i18n/zh-CN';
-import enUS from '@dear-ui/admin-scaffold/i18n/en-US';
+import zhCN from '@deer-ui/admin-scaffold/i18n/zh-CN';
+import enUS from '@deer-ui/admin-scaffold/i18n/en-US';
 
 <AdminWebScaffold {...props}
   // 内置的国际化文件
@@ -270,7 +270,7 @@ import enUS from '@dear-ui/admin-scaffold/i18n/en-US';
 ### 设置国际化配置路径
 
 ```js
-import { AdminWebScaffold } from '@dear-ui/admin-scaffold'
+import { AdminWebScaffold } from '@deer-ui/admin-scaffold'
 
 AdminWebScaffold.setI18nUrl('/public/i18n/');
 ```

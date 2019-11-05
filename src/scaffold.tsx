@@ -8,7 +8,7 @@ import Mousetrap from 'mousetrap';
 import { ToggleBasicFloatLen, EventEmitter, IsFunc } from '@mini-code/base-func';
 import { VersionDisplayer, VersionChecker, VersionCheckerProps } from 'version-helper';
 
-import { Color } from '@dear-ui/core/utils/props';
+import { Color } from '@deer-ui/core/utils/props';
 import {
   ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
   Loading, setUILang, Icon, setLangTranslate

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { FormLayout, Loading } from '@dear-ui/core';
+import { FormLayout, Loading } from '@deer-ui/core';
 import ActionAgent from '../../../action-agent';
 
 /**

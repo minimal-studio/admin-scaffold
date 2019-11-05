@@ -1,6 +1,6 @@
 /* eslint-disable default-case */
 import React, { Component } from 'react';
-import { DropdownWrapperProps } from '@dear-ui/core/dropdown-wrapper';
+import { DropdownWrapperProps } from '@deer-ui/core/dropdown-wrapper';
 
 import { Icon, PureIcon, DropdownWrapper } from '../ui-refs';
 

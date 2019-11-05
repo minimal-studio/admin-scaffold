@@ -1,9 +1,9 @@
-import { TableProps } from '@dear-ui/core/table';
-import { ConditionGeneratorProps } from '@dear-ui/core/form-generator/condition-generator';
-import { PaginationProps } from '@dear-ui/core/pagination/pagination';
-import { ButtonProps } from '@dear-ui/core/utils/props';
-import { Color } from '@dear-ui/core/utils';
-import { RecordItem, Column } from '@dear-ui/core/table/column-filter';
+import { TableProps } from '@deer-ui/core/table';
+import { ConditionGeneratorProps } from '@deer-ui/core/form-generator/condition-generator';
+import { PaginationProps } from '@deer-ui/core/pagination/pagination';
+import { ButtonProps } from '@deer-ui/core/utils/props';
+import { Color } from '@deer-ui/core/utils';
+import { RecordItem, Column } from '@deer-ui/core/table/column-filter';
 import { $TFunc } from '../../../props';
 
 export interface TemplateOptions {

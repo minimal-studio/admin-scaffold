@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TableColumns } from '@dear-ui/core/table';
+import { TableColumns } from '@deer-ui/core/table';
 import { Table, Menus, ShowModal } from '../ui-refs';
 import dataRows from './data';
 

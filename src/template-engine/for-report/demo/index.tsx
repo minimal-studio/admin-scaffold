@@ -7,7 +7,7 @@
 
 import React from 'react';
 
-import { ShowModal, CloseModal, DescHelper } from '@dear-ui/core';
+import { ShowModal, CloseModal, DescHelper } from '@deer-ui/core';
 import { HOCReportRender } from '..';
 import { getTestData, keyFieldsForReport, conditionData } from '../../report-data';
 import ActionAgent from '../../../action-agent';

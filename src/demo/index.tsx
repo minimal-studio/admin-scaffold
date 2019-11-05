@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { AdminWebScaffold, Link } from '@dear-ui/admin-scaffold';
-import { AuthSelector } from '@dear-ui/admin-scaffold/auth-selector';
+import { AdminWebScaffold, Link } from '@deer-ui/admin-scaffold';
+import { AuthSelector } from '@deer-ui/admin-scaffold/auth-selector';
 
 const VersionInfo = {
   version: 'v1.0.0'
