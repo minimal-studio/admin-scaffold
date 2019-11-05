@@ -38,7 +38,6 @@ bower_components
 .DS_Store
 
 # galleries
-matrix-web-tour
 tmp
 .tmp
 .tags
@@ -50,11 +49,11 @@ todo
 complexGameplayTitle.txt
 complexLotsTitle.txt
 complexCode.txt
-package-lock.json
-# yarn.lock
 
 dist
 .docz
 docz-dist
 for-testing
 version.json
+
+/public

@@ -36,6 +36,7 @@ module.exports = ({
           keywords: rootPackageData.keywords,
           repository: rootPackageData.repository,
           dependencies: rootPackageData.dependencies,
+          version: rootPackageData.version,
           ...packageExtraOptions,
         };
         const buildPath = path.resolve(outdir, `package.json`);
