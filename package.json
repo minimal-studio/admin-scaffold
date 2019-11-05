@@ -1,6 +1,6 @@
 {
   "name": "admin-scaffold",
-  "version": "2.0.0-alpha2.0",
+  "version": "2.0.0-alpha2.1",
   "private": true,
   "workspaces": [
     "src"
