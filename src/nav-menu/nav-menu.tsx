@@ -456,7 +456,7 @@ export default class NavMenu extends Component<NavMenuProps, {
                 codeMapper={menuCodeMapper}
                 showMenu={show}/>
               <ToolTip
-                position="bottom"
+                position="top"
                 title={$T('切换到') + $T(!flowMode ? '悬浮' : '传统') + $T('模式')}
                 classNames={['_action-btn']}
                 className="p10"
