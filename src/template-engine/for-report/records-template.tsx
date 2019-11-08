@@ -448,7 +448,8 @@ export default class ReportTemplate<
           !hideFloatable && (
             <Button
               text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
-              className="default mr10"
+              color="default"
+              className="mr10"
               onClick={(e) => this.toggleFloat()}/>
           )
         }

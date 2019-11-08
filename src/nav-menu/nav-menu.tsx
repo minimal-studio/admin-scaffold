@@ -465,6 +465,7 @@ export default class NavMenu extends Component<NavMenuProps, {
               <span className="flex" />
               <ToolTip
                 onClick={() => onToggleNav(!show)}
+                position="top"
                 title={`${$T(show ? "收起" : "展开")}${$T('菜单')}（${$T('快捷键')}：alt + alt）'`}
                 n={!show ? "greater-than" : "less-than"}/>
             </div>
