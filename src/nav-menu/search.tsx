@@ -107,7 +107,7 @@ export default class SearchBox extends Component<SearchBoxProps> {
       }}>
         <React.Fragment>
           <ToolTip
-            position="top"
+            position="right"
             title={(
               <ShortcutTipDesc $T={this.props.$T} />
             )}
