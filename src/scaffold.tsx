@@ -10,14 +10,14 @@ import { VersionDisplayer, VersionChecker, VersionCheckerProps } from 'version-h
 
 import { Color } from '@deer-ui/core/utils/props';
 import {
-  ShowModal, Tabs, Tab, DropdownMenu, ToolTip,
+  ShowModal, Tabs, Tab, DropdownMenu, ToolTip, Menus,
   Loading, setUILang, Icon, setLangTranslate
 } from './ui-refs';
 
 import { showShortcut, ShortcutDesc } from './shortcut';
 import NavMenu from './nav-menu';
 // import Posts from './posts';
-import { RouterHelper } from './router-multiple';
+import { RouterHelper, RouterHelperState } from './router-multiple';
 // import VersionComponent, { VersionChecker, VersionCheckerProps } from './plugins/version-com';
 import {
   Notfound, DashBoardWrapper, DefaultStatusbar, FooterContainer, TabForNavBar, Theme
@@ -58,6 +58,8 @@ export interface ScaffoldLayoutProps {
   defaultLayout?: 'vertical' | 'horizontal';
   /** 是否黑夜模式 */
   defaultDarkMode?: boolean;
+  /** 默认的语言 */
+  defaultLang?: Navigator['language'];
   // iframeMode?: boolean,
   /** 所有的页面的 mapper 引用 */
   pageComponents?: {};
@@ -84,10 +86,21 @@ export interface ScaffoldLayoutProps {
   /** DashBoard 插件 */
 }
 
+interface ScaffoldLayoutState extends RouterHelperState {
+  menuCodeMapper: {};
+  activeMenu: string;
+  menuData: [];
+  lang: Navigator['language'];
+  showNavMenu: boolean;
+  darkMode: boolean;
+  displayFloat: boolean;
+  ready: boolean;
+}
+
 let LANG_MAPPER = {};
 let CURR_LANG_MAPPER = {};
 
-export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
+export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, ScaffoldLayoutState> {
   static setI18nUrl = (nextUrl) => {
     // i18nMapperUrl = nextUrl;
     console.warn('该接口已废弃，请通过传入 i18nMapperUrl 的 prop 指定');
@@ -130,7 +143,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps> {
       activeMenu: '',
       displayFloat: true,
       menuData: props.menuStore || [],
-      lang: navigator.language,
+      lang: props.defaultLang || navigator.language,
       ready: false,
     };
     this.initApp();

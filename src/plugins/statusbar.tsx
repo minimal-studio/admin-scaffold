@@ -5,15 +5,21 @@ import { DropdownWrapperProps } from '@deer-ui/core/dropdown-wrapper';
 import { Icon, PureIcon, DropdownWrapper } from '../ui-refs';
 
 const DisplayDOM = ({
-  onClick, pureIcon, icon, title
+  onClick = undefined,
+  pureIcon,
+  icon,
+  title,
+  className = 'item',
+  children
 }) => {
   const I = pureIcon ? <PureIcon n={pureIcon} /> : <Icon n={icon} />;
   return (
-    <span onClick={onClick}>
+    <span onClick={onClick} className={className}>
       {I}
       {
         title && <span className="ml5">{title}</span>
       }
+      {children}
     </span>
   );
 };
@@ -43,28 +49,29 @@ const Statusbar: React.SFC<StatsbarProps> = (props) => {
           let con;
           switch (true) {
             case !!component:
-              con = component;
+              con = <DisplayDOM>{component}</DisplayDOM>;
               break;
-            case !!overlay:
+            case typeof overlay === 'function':
               con = (
                 <DropdownWrapper position="right"
-                  overlay={options => overlay({
+                  overlay={(options) => overlay({
                     ...otherProps,
                     ...options,
                   })}>
-                  <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />
+                  <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />
                 </DropdownWrapper>
               );
               break;
             case !!action:
-              con = <DisplayDOM title={title} icon={icon} pureIcon={pureIcon} />;
+              con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />;
               break;
           }
-          return (
-            <span className="item" onClick={action} key={`${icon}_${title}`}>
-              {con}
-            </span>
-          );
+          return con;
+          // return (
+          //   <span className="item" onClick={action} key={`${icon}_${title}`}>
+          //     {con}
+          //   </span>
+          // );
         })
       }
     </div>
