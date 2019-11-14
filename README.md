@@ -2,21 +2,21 @@
 
 Base on React's Admin Manager Scaffold.
 
-- [在线文档](https://scaffold.ukelli.com/)
+## Why
+
+为了兼顾 __快速业务开发__ 和 __统一页面交互、视觉效果__ 两种需求，提供一种采用 __页面声明式描述__ 的开发管理系统前端应用的方案。
+
+- [live demo](https://admin.thinkmore.xyz/)
 
 ## 特性
 
-- 多标签页共存
-- 前端路由导航
-- 可无限嵌套的导航菜单
-- 各种可自定义的插件接口
-  - 状态栏 Statusabar
-  - 脚注 Footer
+- 专注于业务
+- 多页面导航控制（multiple router）
+- 导航菜单无限嵌套
+- 异步请求状态与对应的页面 UI 状态的关联
 - 模版引擎
-  - 表格引擎 ReportTemplateEngin
-  - 表单引擎 FormTemplateEngin
-- 异步请求状态与 React state 的数据绑定封装 (ActionAgent)
-- 前端资源发布模块
+  - 表格显示
+  - 表单控制
 
 ## 开始
 
@@ -28,8 +28,6 @@ npm init && git init
 ```
 
 ### 安装依赖
-
-> 需要在应用项目引入依赖
 
 ```shell
 # yarn
@@ -44,7 +42,7 @@ npm i react react-dom @deer-ui/admin-scaffold @mini-code/base-func @mini-code/re
 npm i @mini-code/scripts --save-dev
 ```
 
-### 添加 npm scripts
+### 添加 scripts
 
 打开 `./pacakges.json`，添加项目运行 `scripts`
 
@@ -55,17 +53,7 @@ npm i @mini-code/scripts --save-dev
 },
 ```
 
-### 项目结构
-
-项目参考 https://github.com/SANGET/admin-scaffold-starter
-
-- public
-  - index.html
-- src
-  - app.tsx
-  - main.tsx
-  - style.scss
-- tsconfig.json
+### 添加必须文件
 
 #### 1. 添加 /public/index.html
 
@@ -83,8 +71,8 @@ npm i @mini-code/scripts --save-dev
   <div id="Main"></div>
 </body>
 </html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.2/themes/light.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.3.1/css/all.min.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.1/css/all.min.css">
 ```
 
 #### 2. 添加 /src/app.tsx
@@ -217,6 +205,18 @@ export default ScaffoldDemo;
 }
 
 ```
+
+### 项目结构预览
+
+项目参考 https://github.com/SANGET/admin-scaffold-starter
+
+- public
+  - index.html
+- src
+  - app.tsx
+  - main.tsx
+  - style.scss
+- tsconfig.json
 
 ### 运行
 
