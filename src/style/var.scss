@@ -1,19 +1,25 @@
 @import "@deer-ui/core/style/var.scss";
 
+// scaffold
+
+$admin-main-container-max-width: 1980px;
+
 /*
  * color config
  */
 
 $themeColor: $blue;
 
-$mainBgColor: #f7f7f7;
+$base-bg-color: #edf1f7;
 
-$navMenuBgColor: #1d2939;
-$containerBgColor: $navMenuBgColor;
-$navMenuWidth: 220px;
-$navMenuCollapseWidth: 36px;
-$navMenuItemBorderColor: #777;
-$navMenuItemActiveTextColor: #000;
+$main-bg-color: #FFF;
+$main-bg-dark-color: #333;
+
+$nav-menu-bg-color: #1d2939;
+$nav-menu-width: 220px;
+$nav-menu-collapse-width: 36px;
+$nav-menu-item-border-color: #777;
+$nav-menu-item-active-text-color: #000;
 
 /*
  * Scroll bar style
@@ -27,5 +33,3 @@ $darkThemeScrollBg: $gray;
 $darkThemeScrollThumb: rgba(80, 80, 80, 0.8);
 $darkThemeScrollThumbHover: darken($darkThemeScrollThumb, 3%);
 $darkThemeScrollThumbActive: darken($darkThemeScrollThumb, 5%);
-
-$borderRadius: 4px;

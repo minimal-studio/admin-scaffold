@@ -2,15 +2,6 @@
 
 $userInfoItemOverBgColor: #f7f7f7;
 
-.table-render-container {
-  position: relative;
-  top: 0;
-  padding-top: 0.1px;
-  .table-container {
-    overflow: auto;
-  }
-}
-
 .card,.card-content {
   background-color: #FFF;
   padding-top: 0.1px;
@@ -18,27 +9,17 @@ $userInfoItemOverBgColor: #f7f7f7;
 }
 
 .main-bg-color {
-  background-color: $mainBgColor;
-  // background-repeat: no-repeat;
+  // background-color: $main-bg-color;
 }
-.main-container {
-  background-color: rgba($mainBgColor, 0.5);
+.__admin_scaffold_main-container {
+  background-color: rgba($main-bg-color, 0.5);
+  height: 100vh;
+  max-width: $admin-main-container-max-width;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 12px 24px 24px rgba($main-bg-dark-color, 0.05);
   // border-top: 2px solid $themeColor;
   @include themeGen();
-}
-
-.manager-container {
-  background-color: #fff;
-}
-
-.manager-container {
-  @include layout();
-  align-items: stretch;
-}
-
-.fix-group {
-  background-color: #FFF;
-  padding: 10px;
 }
 
 .pages-container {
@@ -48,17 +29,31 @@ $userInfoItemOverBgColor: #f7f7f7;
   }
 }
 
+.__main-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.__content {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  flex: 1;
+}
+
 .pages-container {
   overflow-y: auto;
   @include fill();
-  left: $navMenuWidth;
+  left: $nav-menu-width;
   transition: all 0.2s ease;
-  // background-color: $mainBgColor;
+  // background-color: $main-bg-color;
   // background-color: #e4e7ea;
   border-radius: 0 0 0 4px;
 
   &.hide-menu {
-    left: $navMenuCollapseWidth;
+    left: $nav-menu-collapse-width;
   }
   .top-tab-wrapper {
     >.tab-content {
@@ -213,3 +208,10 @@ $userInfoItemOverBgColor: #f7f7f7;
     max-width: 38%;
   }
 }
+
+// @media screen and (min-width: $admin-main-container-max-width) {
+//   .__admin_scaffold_main-container {
+//     transform: translateY(30px);
+//     height: cula(100vh - 30);
+//   }
+// }

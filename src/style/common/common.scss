@@ -1,0 +1,22 @@
+$borderColor: #ddd;
+$lotHelperOffsetTop: 112px;
+
+.fixbg {
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-clip: content-box;
+  background-position: 50%;
+  background-size: cover;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

@@ -1,9 +1,9 @@
 @include scrollBar(5px, 5px, '.tabs-in-statusbar');
 @include scrollBar(5px, 5px, '.nav-menu-wrapper');
 .tabs-in-statusbar {
-  max-width: 70%;
   position: relative;
   z-index: 1;
+  margin-top: 10px;
   .divide {
     color: #c7c7c7;
   }
@@ -12,7 +12,7 @@
     padding: 6px 15px;
     border-radius: 3px 3px 0 0;
     position: relative;
-    border-right: 1px solid #DDD;
+    // border-right: 1px solid #DDD;
     // .indicator {
     //   font-size: 12px;
     // }
@@ -61,16 +61,13 @@
 }
 
 .admin-status-bar {
-  // display: flex;
-  // margin-bottom: 10px;
-  // background-color: #FFF;
-  // box-shadow: 0 2px 2px rgba(#000, 0.1);
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  padding-top: 5px;
-  // min-height: 40px;
-  // justify-content: space-between;
+  padding: 10px;
+  box-shadow: 0 4px 4px rgba($main-bg-dark-color, 0.05);
+  background-color: $main-bg-color;
+  position: relative;
+  z-index: 111;
   .status-container {
     margin-right: 10px;
   }

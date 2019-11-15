@@ -3,7 +3,7 @@ $mainColor: #ccc;
 $activeColor: #444;
 $activeBorderColor: $themeColor;
 $activePadding: 10px;
-$navMenuBgColor: $mainBgColor;
+$nav-menu-bg-color: $main-bg-color;
 
 $textColor: #777;
 $textExtendColor: #444;
@@ -14,6 +14,7 @@ $hoverBgColor: rgb(140, 190, 234);
 .nav-menu-wrapper {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   background-color: rgba(#FFF, 0.9);
+  height: 100%;
 }
 .nav-menu-response {
   color: $textColor;
@@ -91,7 +92,7 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .flow-menu-container {
-  background-color: $navMenuBgColor;
+  background-color: $nav-menu-bg-color;
   // background-color: #29394a;
   box-shadow: 0 12px 24px rgba(#000, 0.3);
 }
@@ -100,12 +101,12 @@ $hoverBgColor: rgb(140, 190, 234);
   .nav-menu-tree {
     .fold {
       .children {
-        background-color: $navMenuBgColor;
+        background-color: $nav-menu-bg-color;
         .fold {
           background-color: rgba($hoverBgColor, 0.1);
         }
         .children {
-          background-color: lighten($navMenuBgColor, 10%);
+          background-color: lighten($nav-menu-bg-color, 10%);
         }
       }
       &.hover,
@@ -119,23 +120,23 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .nav-menu-wrapper {
-  @include fill();
+  // @include fill();
   z-index: 101;
   transition: width ease 0.2s;
   overflow-y: auto;
   overflow-x: hidden;
   &.show {
-    width: $navMenuWidth;
+    width: $nav-menu-width;
   }
   &.collapse {
-    width: $navMenuCollapseWidth;
+    width: $nav-menu-collapse-width;
     overflow: hidden;
     // padding: 0 10px;
     &:hover {
       // overflow: auto;
       overflow-y: scroll;
-      width: $navMenuWidth;
-      // background: $navMenuBgColor;
+      width: $nav-menu-width;
+      // background: $nav-menu-bg-color;
       box-shadow: 4px 0 20px rgba(#000, 0.1);
     }
   }
@@ -144,7 +145,7 @@ $hoverBgColor: rgb(140, 190, 234);
 /** 设置布局 */
 .nav-menu-response {
   padding-bottom: 50px;
-  width: $navMenuWidth;
+  width: $nav-menu-width;
   .__dropdown-menu {
     height: 100%;
     display: flex;

@@ -1,5 +1,9 @@
 // 重定义 UI 库的样式
 
+body {
+  background-color: $base-bg-color;
+}
+
 .fill {
   position: absolute;
   top: 0;
@@ -13,6 +17,10 @@
     text-align: left;
     color: #555;
   }
+}
+
+.__popover {
+  pointer-events: none;
 }
 
 .tabs-container {
