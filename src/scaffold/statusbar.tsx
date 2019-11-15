@@ -1,10 +1,12 @@
 import React from 'react';
+import { $T } from '@deer-ui/core/utils';
 import {
   DefaultStatusbar, TabForNavBar,
 } from '../plugins';
 import { StatusbarConfigItem } from '../plugins/statusbar';
 import { showShortcut, ShortcutDesc } from '../shortcut';
 import SearchBox, { SearchBoxProps } from '../search';
+import { ToolTip } from '../ui-refs';
 
 export interface StatusbarProps {
   /** 导航栏的配置 */
@@ -22,7 +24,6 @@ const StatusbarLayout: React.SFC<StatusbarProps> = (props) => {
       <div className="action-group">
         <SearchBox
           ref={(e) => { this._seatchBox = e; }}
-          $T={$T}
           onClickMenu={onClickMenu}
           onToggleNav={onToggleNav}
           codeMapper={menuCodeMapper}
