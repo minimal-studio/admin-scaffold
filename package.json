@@ -14,11 +14,11 @@
     "release": "npm run build:src; npm run publish:build",
     "build:src": "rm -rf ./dist; tsc; npm run copy:files; npm run copy:style",
     "copy:files": "node ./scripts/copy-files-ts",
-    "copy:style": "cp -R ./style ./dist/",
+    "copy:style": "cp -R ./src/style ./dist/",
     "gen:version": "vh gen",
     "test": "jest",
-    "dev:doc": "cd website; yarn; npm run dev",
-    "build": "cd website; yarn; yarn build"
+    "dev:doc": "cd website-dev; yarn; npm run dev",
+    "build": "cd website-dev; yarn; yarn build"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
-    "@deer-ui/core": "^4.0.0-alpha5.0",
+    "@deer-ui/core": "^4.0.0-alpha5.3",
     "@mini-code/base-func": "^1.0.2",
     "@mini-code/request": "^1.0.0-alpha1",
     "@types/react": "^16.8.17",
