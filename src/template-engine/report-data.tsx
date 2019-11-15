@@ -80,20 +80,9 @@ const conditionData = [{
   ref: "customer1",
   type: "customForm",
   title: "自定义组件1",
-  values: {
-    value1: "value1",
-    value2: "value2",
-    value3: "value3"
-  }
-}, {
-  ref: "customer2",
-  type: "customForm",
-  title: "自定义组件2",
-  values: {
-    value1: "value1",
-    value2: "value2",
-    value3: "value3"
-  }
+  getCustomFormControl: () => (
+    <div>自定义Form</div>
+  )
 }, {
   refs: ["s", "e"],
   type: "input-range",

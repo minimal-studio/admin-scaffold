@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 
 import Storage from '@mini-code/base-func/storage';
 import { DebounceClass, Call } from '@mini-code/base-func';
+import { $T } from '@deer-ui/core/utils';
 import { ToolTip, Icon, PureIcon } from '../ui-refs';
 
 import { storageHelper } from '../config';
 
 import { Link } from '../router-multiple';
-import SearchBox, { SearchBoxProps } from './search';
 
 const delayExec = new DebounceClass();
 
@@ -67,7 +67,6 @@ const MenuItem = (props) => {
 
 export interface NavMenuProps {
   menuData: any;
-  $T: (srcStr: string) => string;
   onDidMount?: (menuCodeMapper) => void;
   /** 菜单的字段映射 */
   menuMappers?: {
@@ -80,9 +79,6 @@ export interface NavMenuProps {
   /* 是否悬浮模式的菜单模式 */
   flowMode?: boolean;
   show?: boolean;
-  /** 标题 */
-  title?: string;
-  onToggleNav?: SearchBoxProps['onToggleNav'];
   onClickMenu?: () => void;
 }
 
@@ -157,7 +153,7 @@ export default class NavMenu extends Component<NavMenuProps, {
   getNormalMenuChildren = (initDataList) => {
     if (!initDataList || !Array.isArray(initDataList)) return;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
-    const { onClickMenu, $T } = this.props;
+    const { onClickMenu } = this.props;
     const { showMenuMapper, flowMode } = this.state;
     let allSet = [];
     let foldIdx = 0;
@@ -230,7 +226,6 @@ export default class NavMenu extends Component<NavMenuProps, {
     const {
       code, key, to, onClick, menuText, icon, pureIcon
     } = options;
-    const { $T } = this.props;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
     return (
@@ -251,7 +246,7 @@ export default class NavMenu extends Component<NavMenuProps, {
 
   getFlowModeDOM = (initDataList) => {
     const { flowMenuConfig } = this.state;
-    const { $T, onClickMenu } = this.props;
+    const { onClickMenu } = this.props;
     const {
       offset, activeItem = {}, activeIdx, isShow
     } = flowMenuConfig;
@@ -415,10 +410,6 @@ export default class NavMenu extends Component<NavMenuProps, {
       menuData,
       onClickMenu,
       onToggleNav,
-      title = 'UKE-Dashboard',
-      // username,
-      // logout,
-      $T,
       show
     } = this.props;
 
@@ -442,34 +433,6 @@ export default class NavMenu extends Component<NavMenuProps, {
             `nav-menu-response ${
               flowMode ? 'flow-mode ' : 'tree-mode '}`
           }>
-          <div className="menu-header">
-            <h4 className="title">
-              {title}
-            </h4>
-            <hr />
-            <div className="action-group">
-              <SearchBox
-                ref={(e) => { this._seatchBox = e; }}
-                $T={$T}
-                onClickMenu={onClickMenu}
-                onToggleNav={onToggleNav}
-                codeMapper={menuCodeMapper}
-                showMenu={show}/>
-              <ToolTip
-                position="right"
-                title={$T('切换到') + $T(!flowMode ? '悬浮' : '传统') + $T('模式')}
-                classNames={['_action-btn']}
-                className="p10"
-                onClick={() => this.changeMenuUIMode(!flowMode)}
-                n={flowMode ? "bars" : "bolt"}/>
-              <span className="flex" />
-              <ToolTip
-                onClick={() => onToggleNav(!show)}
-                position="right"
-                title={`${$T(show ? "收起" : "展开")}${$T('菜单')}（${$T('快捷键')}：alt + alt）'`}
-                n={!show ? "greater-than" : "less-than"}/>
-            </div>
-          </div>
           {menuTree}
         </div>
       </div>

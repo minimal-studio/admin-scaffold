@@ -3,14 +3,14 @@
 import React, { Component } from 'react';
 import Mousetrap from 'mousetrap';
 import { Call } from '@mini-code/base-func';
-import { ClickAway, ToolTip } from '../ui-refs';
+import { $T } from '@deer-ui/core/utils';
 
-import { Link } from '../router-multiple';
+import { ClickAway, ToolTip } from './ui-refs';
+import { Link } from './router-multiple';
 
 export interface SearchBoxProps {
   onChangeMenu: (route: string) => void;
   onToggleNav: (nextShow: boolean) => void;
-  $T?: (srcStr: string) => string;
   showMenu: boolean;
   codeMapper: {};
 }
@@ -109,7 +109,7 @@ export default class SearchBox extends Component<SearchBoxProps> {
           <ToolTip
             position="right"
             title={(
-              <ShortcutTipDesc $T={this.props.$T} />
+              <ShortcutTipDesc $T={$T} />
             )}
             classNames={['_action-btn']}
             className="p10"
@@ -123,7 +123,7 @@ export default class SearchBox extends Component<SearchBoxProps> {
               placeholder="菜单搜索"
               className="form-control input-sm"
               value={searchMap}
-              onChange={e => this.searchMenu(e.target.value)}
+              onChange={(e) => this.searchMenu(e.target.value)}
               // onFocus={e => this.setSearchCon(true)}
               // onBlur={e => {
               //   setTimeout(() => {

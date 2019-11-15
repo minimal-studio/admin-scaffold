@@ -1,4 +1,5 @@
 import React, { SFC } from 'react';
+import { $T } from '@deer-ui/core/utils';
 import { Icon, ToolTip } from '../ui-refs';
 
 export interface TabForNavProps {
@@ -9,7 +10,6 @@ export interface TabForNavProps {
   hasRouter;
   routerInfo;
   menuCodeMapper;
-  $T;
   closeTab;
   changeRoute;
   defaultTitle;
@@ -18,7 +18,7 @@ export interface TabForNavProps {
 const TabForNav: SFC<TabForNavProps> = (props) => {
   const {
     routers, routersLen, activeRouteIdx, closeAll, hasRouter,
-    routerInfo, menuCodeMapper, $T, closeTab, changeRoute, defaultTitle
+    routerInfo, menuCodeMapper, closeTab, changeRoute, defaultTitle
   } = props;
   return (
     <div className="tabs-in-statusbar">
@@ -28,7 +28,7 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
             <React.Fragment>
               <span className="tab-item close-all-btn">
                 <span
-                  onClick={e => closeAll()}>
+                  onClick={(e) => closeAll()}>
                   <ToolTip n="window-close" title="关闭所有标签" />
                 </span>
               </span>
@@ -41,14 +41,14 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
                   return (
                     <span key={route} className={`tab-item${isActive ? ' active' : ''}`}>
                       <span
-                        onClick={e => changeRoute(route, params)}
+                        onClick={(e) => changeRoute(route, params)}
                         className="_btn text">
                         {/* {
                         isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
                       } */}
                         {text}
                       </span>
-                      <span className="_btn close" onClick={e => closeTab(idx, routerInfo)}>x</span>
+                      <span className="_btn close" onClick={(e) => closeTab(idx, routerInfo)}>x</span>
                     </span>
                   );
                 })

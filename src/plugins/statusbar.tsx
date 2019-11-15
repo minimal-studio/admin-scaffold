@@ -66,7 +66,11 @@ const Statusbar: React.SFC<StatsbarProps> = (props) => {
               con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />;
               break;
           }
-          return con;
+          return (
+            <React.Fragment key={`${icon}_${title}`}>
+              {con}
+            </React.Fragment>
+          );
           // return (
           //   <span className="item" onClick={action} key={`${icon}_${title}`}>
           //     {con}
