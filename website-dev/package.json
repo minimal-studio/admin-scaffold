@@ -1,0 +1,50 @@
+{
+  "name": "admin-dashboard",
+  "version": "1.0.0-rc.1",
+  "private": true,
+  "workspaces": ["./packages/*"],
+  "scripts": {
+    "postinstall": "npm run setAppVersion",
+    "start": "PORT=6088 PLATFORM=workspace_admin minictl start",
+    "build": "npm run setAppVersion; minictl build; npm run copy:version",
+    "copy:version": "cp src/version.json build/",
+    "deploy": "npm run build",
+    "init": "git init; yarn",
+    "setAppVersion": "vh gen",
+    "prettier:base": "prettier --parser typescript",
+    "format": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "update": "yarn add @mini-code/request @deer-ui/admin-scaffold @deer-ui/core -W; yarn start"
+  },
+  "dependencies": {
+    "@deer-ui/core": "^4.0.0-alpha5.3",
+    "@deer-ui/enhance-ui": "^4.0.0-alpha2.2",
+    "@mini-code/base-func": "^1.0.2",
+    "@mini-code/request": "^1.0.0-alpha1",
+    "mousetrap": "^1.6.2",
+    "prop-types": "^15.5.10",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.3.6",
+    "react-transition-group": "^4.2.1",
+    "unistore": "^3.1.0",
+    "version-helper": "^1.2.0-alpha1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@mini-code/scripts": "^1.0.0-alpha1.2",
+    "prettier": "^1.18.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

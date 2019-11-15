@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <link rel="shortcut icon" type="image/png" href="./favicon.ico" />
+  <link rel="stylesheet" href="./css/loading.cycle.css">
+  <title>@deer-ui/admin-dashboard</title>
+</head>
+
+<body>
+  <div id="Main"></div>
+  <div class="__preloader" id="loadingBg">
+    <div class="__loader"></div>
+  </div>
+  <script>
+    window.ManagerURL = "http://127.0.0.1:5566";
+    window.F_E_DeploymentUrl = "http://127.0.0.1:6650";
+  </script>
+  <!-- 平台配置文件 -->
+  <script id="processScript">
+    (function (window) {
+      window.onloadBundle = function onloadBundle() {
+        setTimeout(function () {
+          document.body.removeChild(document.querySelector('#processScript'));
+        }, 800);
+      }
+
+      function loadScript(srcouce, callback) {
+        var times = 0;
+        function load() {
+          if (times > 2) return 0;
+          times++;
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          document.body.appendChild(script);
+          script.src = (!!window.SCRIPT_CND_URL ? window.SCRIPT_CND_URL : '') + srcouce;
+          script.onload = function () {
+            if (typeof callback === 'function') callback();
+          };
+          script.onerror = load;
+        }
+        load();
+      }
+      function loadLink(srcouce) {
+        var times = 0;
+        function load() {
+          if (times > 2) return 0;
+          times++;
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          document.body.appendChild(link);
+          link.href = srcouce;
+          link.onerror = load;
+        }
+        load();
+      }
+      onloadBundle();
+      window.OnLuanched = function() {
+        var loaderDOM = document.querySelector('#loadingBg');
+        if(!loaderDOM) return;
+        loaderDOM.classList.add('loaded');
+        setTimeout(function() {
+          loaderDOM.parentNode.removeChild(loaderDOM);
+        }, 100);
+      }
+    })(window);
+  </script>
+</body>
+</html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/themes/airbnb.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.3.1/css/all.min.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
