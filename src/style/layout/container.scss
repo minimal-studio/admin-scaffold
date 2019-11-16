@@ -52,7 +52,9 @@ $userInfoItemOverBgColor: #f7f7f7;
   transition: all 0.2s ease;
   background-color: $base-bg-color;
   padding: 0 10px;
-
+  .form-layout {
+    background-color: #FFF;
+  }
   &.hide-menu {
     left: $nav-menu-collapse-width;
   }
