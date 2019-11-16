@@ -9,7 +9,6 @@
     "*"
   ],
   "scripts": {
-    "postinstall": "npm run gen:version",
     "publish:build": "npm publish ./dist --access public",
     "release": "npm run build:src; npm run publish:build",
     "build:src": "rm -rf ./dist; tsc; npm run copy:files; npm run copy:style",
@@ -17,7 +16,7 @@
     "copy:style": "cp -R ./src/style ./dist/",
     "gen:version": "vh gen",
     "test": "jest",
-    "dev:doc": "cd website-dev; yarn; npm run dev",
+    "dev:doc": "cd website-dev; yarn; yarn start",
     "build": "cd website-dev; yarn; yarn build"
   },
   "repository": {
