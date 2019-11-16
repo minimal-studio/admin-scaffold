@@ -5,13 +5,15 @@ import Mousetrap from 'mousetrap';
 import { Call } from '@mini-code/base-func';
 import { $T } from '@deer-ui/core/utils';
 
-import { ClickAway, ToolTip } from './ui-refs';
+import {
+  ClickAway, ToolTip, DropdownWrapper, Icon
+} from './ui-refs';
 import { Link } from './router-multiple';
 
 export interface SearchBoxProps {
-  onChangeMenu: (route: string) => void;
-  onToggleNav: (nextShow: boolean) => void;
-  showMenu: boolean;
+  onChangeMenu?: (route: string) => void;
+  onToggleNav?: (nextShow?: boolean) => void;
+  // showMenu: boolean;
   codeMapper: {};
 }
 
@@ -51,10 +53,10 @@ export default class SearchBox extends Component<SearchBoxProps> {
   componentDidMount() {
     Mousetrap.bind(['alt+s'], (e) => {
       this.show();
-      if (!this.props.showMenu) {
-        // this.shouldBeHidden = true;
-        this.props.onToggleNav(true);
-      }
+      // if (!this.props.showMenu) {
+      //   // this.shouldBeHidden = true;
+      //   this.props.onToggleNav(true);
+      // }
       return false;
     });
   }
@@ -78,7 +80,6 @@ export default class SearchBox extends Component<SearchBoxProps> {
 
   show() {
     this.setSearchCon(true);
-    this._input.focus();
   }
 
   hide() {
@@ -97,68 +98,77 @@ export default class SearchBox extends Component<SearchBoxProps> {
   }
 
   render() {
-    const { searchMap, isShow } = this.state;
+    const { searchMap } = this.state;
     const { codeMapper, onChangeMenu } = this.props;
     const allCode = Object.keys(codeMapper) || [];
     return (
-      <ClickAway onClickAway={(e) => {
-        this.hide();
-        // this.shouldBeHidden = false;
-      }}>
-        <React.Fragment>
-          <ToolTip
-            position="right"
-            title={(
-              <ShortcutTipDesc $T={$T} />
-            )}
-            classNames={['_action-btn']}
-            className="p10"
-            onClick={() => this.show()}
-            n="search"/>
-          <div
-            className={`search-container${isShow ? ' show-content' : ''}`}>
-            <input
-              ref={(c) => { this._input = c; }}
-              type="text"
-              placeholder="菜单搜索"
-              className="form-control input-sm"
-              value={searchMap}
-              onChange={(e) => this.searchMenu(e.target.value)}
-              // onFocus={e => this.setSearchCon(true)}
-              // onBlur={e => {
-              //   setTimeout(() => {
-              //     this.setSearchCon(false);
-              //   }, 100);
-              // }}
-              onKeyUp={this.handleEsc} />
-            <div className="hide-content">
-              {
-                allCode
-                  .filter(
-                    (code) => {
-                      const item = codeMapper[code] || '';
-                      return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
-                    }
-                  )
-                  .map((code, idx) => {
-                    return (
-                      <Link
-                        className="result-item"
-                        key={code}
-                        to={code}
-                        onClick={(e) => {
-                          Call(onChangeMenu, code);
-                          this.hide();
-                        }}>
-                        {codeMapper[code]}
-                      </Link>
-                    );
-                  })
-              }
+      <DropdownWrapper
+        overlay={({ hide }) => {
+          return (
+            <div
+              className={`search-container`}
+            >
+              <input
+                ref={(c) => {
+                  if (c) c.focus();
+                }}
+                type="text"
+                placeholder="菜单搜索"
+                className="form-control input-sm"
+                value={searchMap}
+                onChange={(e) => this.searchMenu(e.target.value)}
+                // onFocus={e => this.setSearchCon(true)}
+                // onBlur={e => {
+                //   setTimeout(() => {
+                //     this.setSearchCon(false);
+                //   }, 100);
+                // }}
+                onKeyUp={this.handleEsc}
+              />
+              <div className="all-content">
+                {
+                  allCode
+                    .filter(
+                      (code) => {
+                        const item = codeMapper[code] || '';
+                        return item.indexOf(searchMap) != -1 || code.indexOf(searchMap.toUpperCase()) != -1;
+                      }
+                    )
+                    .map((code, idx) => {
+                      return (
+                        <Link
+                          className="result-item"
+                          key={code}
+                          to={code}
+                          onClick={(e) => {
+                            Call(onChangeMenu, code);
+                            hide();
+                          }}
+                        >
+                          {codeMapper[code]}
+                        </Link>
+                      );
+                    })
+                }
+              </div>
             </div>
-          </div>
-        </React.Fragment>
-      </ClickAway>
+          );
+        }}
+      >
+        <Icon
+          n="search"
+          classNames={['_action-btn']}
+        />
+        {/* <ToolTip
+          position="right"
+          title={(
+            <ShortcutTipDesc $T={$T} />
+          )}
+          classNames={['_action-btn']}
+          className="p10"
+          n="search"
+        /> */}
+      </DropdownWrapper>
     );
   }
 }

@@ -1,52 +1,64 @@
 @include scrollBar(5px, 5px, '.tabs-in-statusbar');
 @include scrollBar(5px, 5px, '.nav-menu-wrapper');
+
 .tabs-in-statusbar {
   position: relative;
   z-index: 1;
   margin-top: 10px;
+
   .divide {
     color: #c7c7c7;
   }
+
   .tab-item {
     display: inline-block;
     padding: 6px 15px;
     border-radius: 3px 3px 0 0;
     position: relative;
+
     // border-right: 1px solid #DDD;
     // .indicator {
     //   font-size: 12px;
     // }
     &.close-all-btn {
       color: #999;
+
       .close {
         opacity: 1;
       }
     }
+
     .text {
       display: inline-block;
       transition: transform ease 0.2s;
       white-space: nowrap;
     }
+
     &:hover {
+
       // background-color: #FFF;
       // box-shadow: 0 0 3px rgba(#000, 0.05);
       .close {
         opacity: 1;
       }
+
       .text {
         color: $themeColor;
         transform: translateX(-5px);
       }
     }
+
     &.active {
       // background-color: $themeColor;
       color: $themeColor;
       background-color: #FFF;
+
       .text {
         color: $themeColor;
       }
     }
   }
+
   .close {
     opacity: 0;
     position: absolute;
@@ -54,6 +66,7 @@
     right: 5px;
     transform: translateY(-50%);
     transition: opacity ease 0.2s;
+
     &:hover {
       // color: $red;
     }
@@ -68,30 +81,47 @@
   background-color: $main-bg-color;
   position: relative;
   z-index: 111;
+
+  .action-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  ._action-btn {
+    padding: 5px 10px;
+  }
+
   .status-container {
     margin-right: 10px;
     padding: 5px 0;
   }
+
   .menu-actions {
     padding: 0 10px;
   }
+
   .user-info-group {
     // display: flex;
     color: #666;
+
     .update-config-btn {
       color: inherit;
       margin-right: 10px;
     }
+
     .item {
       margin: 0 5px;
     }
   }
+
   .item {
     // padding: 0 10px;
     min-width: 30px;
     display: inline-block;
     text-align: center;
+
     &:hover {
+
       // color: $themeColor;
       .icon {
         color: $themeColor;
@@ -102,38 +132,46 @@
   .sub-menu {
     display: flex;
     flex-direction: column;
+
     // padding: 20px;
     .item-btn {
       padding: 8px 10px;
       border-bottom: 1px dashed #ddd;
       margin: 5px 10px;
+
       &:hover {
         background-color: $userInfoItemOverBgColor;
         // border-color: darken($themeColor, 10%);
       }
     }
   }
+
   .user-sub-detail {
     background-color: $themeColor;
     color: #FFF;
+
     .avatar {
       background-color: #FFF;
       color: $themeColor;
     }
   }
+
   .user-info-item {
     padding: 6px 20px;
     cursor: pointer;
   }
+
   .hide-container {
     &:hover {
       .user-info-item {
         background-color: #FFF;
       }
+
       // .hide-content {
       //   // background-color: $userInfoItemOverBgColor;
       // }
     }
+
     .hide-content {
       position: absolute;
       right: 0;
@@ -146,6 +184,7 @@
 
   .avatar {
     background-color: $themeColor;
+
     &.sm {
       $scale: 26px;
       height: $scale;

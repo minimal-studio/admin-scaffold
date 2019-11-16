@@ -27,8 +27,7 @@ import {
   getThemeConfig, setTheme, setLayout, setDarkMode
 } from '../plugins/theme';
 import { NavMenuProps } from '../nav-menu/nav-menu';
-import StatusbarWrapper from './statusbar';
-import { setLangMapper } from '../translate';
+import StatusbarWrapper, { StatusbarProps } from './statusbar';
 
 export interface ScaffoldLayoutProps {
   /** 用户名，用于在左菜单显示 */
@@ -81,7 +80,7 @@ export interface ScaffoldLayoutProps {
   menuStore?: {}[];
   /** 菜单的字段映射 */
   menuMappers?: NavMenuProps['menuMappers'];
-  title?: NavMenuProps['title'];
+  title?: StatusbarProps['title'];
   versionInfo?: VersionCheckerProps['versionInfo'];
   /** DashBoard 插件 */
 }
@@ -89,6 +88,8 @@ export interface ScaffoldLayoutProps {
 interface ScaffoldLayoutState extends RouterHelperState {
   menuCodeMapper: {};
   activeMenu: string;
+  layout: string;
+  theme: string;
   menuData: [];
   lang: Navigator['language'];
   showNavMenu: boolean;
@@ -98,7 +99,6 @@ interface ScaffoldLayoutState extends RouterHelperState {
 }
 
 const LANG_MAPPER = {};
-const CURR_LANG_MAPPER = {};
 
 export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, ScaffoldLayoutState> {
   static setI18nUrl = (nextUrl) => {
@@ -113,13 +113,6 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     defaultLayout: 'horizontal',
     versionUrl: './js/version.json',
     i18nMapperUrl: './i18n/',
-    menuMappers: {
-      child: 'child',
-      code: 'code',
-      title: 'title',
-      icon: 'icon',
-      pureIcon: 'pureIcon',
-    },
     defaultDarkMode: false,
     statusbarConfig: [],
     tabInStatusbar: true,
@@ -128,12 +121,6 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
 
   constructor(props) {
     super(props);
-
-    // const { pageComponents, iframeMode } = props;
-    // this.pageRoutes = iframeMode ? ['Posts'] : Object.keys(pageComponents);
-    // EventEmitter.on('QUERY_MENU', (resMenuData) => {
-    //   this.changeMenuData(resMenuData);
-    // });
 
     this.state = {
       ...this.state,
@@ -168,10 +155,6 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
   initApp = async () => {
     const { i18nMapper } = this.props;
     const { lang } = this.state;
-    if (i18nMapper) {
-      setLangMapper(i18nMapper);
-      // LANG_MAPPER = { ...i18nMapper };
-    }
     await this.fetchLangMapper(lang);
     this._setUILang(lang);
     this.setState({
@@ -267,12 +250,6 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     }));
   }
 
-  changeMenuData(menuData = []) {
-    this.setState({
-      menuData
-    });
-  }
-
   onGetMenuCodeMapper = (menuCodeMapper) => {
     this.setState({
       menuCodeMapper
@@ -280,9 +257,14 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     window.MenuCodeMapper = menuCodeMapper;
   }
 
-  toggleNavMenu = (showNavMenu) => {
-    this.setState({
+  toggleNavMenu = (nextShow) => {
+    this.setState(({
       showNavMenu
+    }) => {
+      const _nextShow = typeof nextShow == 'undefined' ? !showNavMenu : nextShow;
+      return {
+        showNavMenu: _nextShow
+      };
     });
     this.triggerResize();
   }
@@ -331,7 +313,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
           onChange={(val) => this.changeLang(val)}
           position="right"
           value={lang}
-          values={i18nConfig}>
+          values={i18nConfig}
+        >
           {
             () => (
               <div>
@@ -367,7 +350,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
             onChangeLayout={this.changeLayout}
             layout={layout}
             darkMode={darkMode}
-            activeTheme={theme} />
+            activeTheme={theme}
+          />
           <FooterContainer>
             {
               Footer && this.loadPlugin(Footer, {
@@ -394,9 +378,6 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
       menuMappers,
       versionInfo,
       versionUrl,
-      // iframeMode,
-      // i18nConfig,
-      // DashBoard,
       bgStyle,
       tabInStatusbar,
       title
@@ -406,10 +387,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
       showNavMenu,
       menuData,
       activeMenu,
-      displayFloat,
       activeRouteIdx,
       routerInfo,
-      // lang,
       ready,
       layout,
       theme,
@@ -417,7 +396,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
       darkMode,
     } = this.state;
     const {
-      Statusbar, NotfoundPage, DashBoard = this.props.DashBoard,
+      NotfoundPage, DashBoard = this.props.DashBoard,
     } = pluginComponent;
     const routersLen = routers.length;
     const hasRouter = routersLen > 0;
@@ -431,8 +410,11 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
               <StatusbarWrapper
                 title={title}
                 logout={logout}
+                menuCodeMapper={menuCodeMapper}
                 toggleFloat={this.toggleFloat}
-                statusbarConfig={statusbarConfig} />
+                onToggleNav={this.toggleNavMenu}
+                statusbarConfig={statusbarConfig}
+              />
               <div className="__content">
                 <NavMenu
                   onDidMount={this.onGetMenuCodeMapper}
@@ -441,12 +423,13 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                   username={username}
                   defaultFlowMode={false}
                   show={showNavMenu}
-                  onToggleNav={this.toggleNavMenu}
-                  activeMenu={activeMenu}/>
+                  activeMenu={activeMenu}
+                />
                 <div
                   className={
                     `pages-container ${showNavMenu ? 'show-menu' : 'hide-menu'}`
-                  }>
+                  }
+                >
                   <TabForNavBar
                     changeRoute={this.changeRoute}
                     closeTab={this.closeTab}
@@ -457,7 +440,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                     routers={routers}
                     activeRouteIdx={activeRouteIdx}
                     routersLen={routersLen}
-                    defaultTitle={(e) => $T('仪表盘')} />
+                    defaultTitle={(e) => $T('仪表盘')}
+                  />
                   <Tabs
                     withContent
                     onlyContent={tabInStatusbar}
@@ -465,7 +449,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                     closeTip={`${$T('快捷键')}: alt + w`}
                     className="top-tab-wrapper tabs-container"
                     activeTabIdx={hasRouter ? activeRouteIdx : 0}
-                    onClose={(idx) => this.closeTab(idx, routerInfo)}>
+                    onClose={(idx) => this.closeTab(idx, routerInfo)}
+                  >
                     {
                       hasRouter ? routers.map((route, idx) => {
                         const C = pageComponents[route];
@@ -478,7 +463,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                             contentClass={route}
                             label={$T(menuCodeMapper[route] || route)}
                             key={key}
-                            onChange={(e) => this.changeRoute(route, params)}>
+                            onChange={(e) => this.changeRoute(route, params)}
+                          >
                             {
                               // eslint-disable-next-line no-nested-ternary
                               C ? (
@@ -493,9 +479,11 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                         <Tab
                           contentClass="dash-board"
                           label={$T('仪表盘')}
-                          key="dash-board">
+                          key="dash-board"
+                        >
                           <DashBoardWrapper
-                            CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true, 'dashboard')} />
+                            CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true, 'dashboard')}
+                          />
                         </Tab>
                       )
                     }
@@ -508,7 +496,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
         <div className="fill fixbg main-bg-color" style={{
           ...bgStyle,
           zIndex: -1
-        }} />
+        }}
+        />
         <VersionChecker versionUrl={versionUrl} versionInfo={versionInfo} />
       </div>
     );

@@ -1,4 +1,3 @@
-
 $mainColor: #ccc;
 $activeColor: #444;
 $activeBorderColor: $themeColor;
@@ -10,79 +9,90 @@ $textExtendColor: #444;
 
 $hoverBgColor: rgb(140, 190, 234);
 
+$menu-item-padding-vertical: 10px;
+
 /** 设置颜色 */
 .nav-menu-wrapper {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   background-color: rgba(#FFF, 0.9);
   height: 100%;
+  padding-top: 20px;
 }
+
 .nav-menu-response {
   color: $textColor;
+
   .__dropdown-menu {
     .menu-wrapper {
       background-color: rgba(0, 0, 0, 0.3);
-      .search-input,.display-title {
+
+      .search-input,
+      .display-title {
         border-color: rgba(0, 0, 0, 0.4);
       }
     }
   }
-  .menu-header {
-    // background: linear-gradient(45deg, $themeColor, darken($themeColor, 10%));
-    // background-color: #EEE;
-    .title {
-      // color: $themeColor;
-      // text-align: center;
-      // color: #FFF;
-    }
-    .icon {
-      // color: #FFF;
-    }
-  }
+
   .menulist-title {
     color: #fff;
+
     &.flow {
       background: linear-gradient(45deg, $cyan, darken($themeColor, 5%));
     }
+
     &.tree {
       background: linear-gradient(45deg, $orange, $red);
     }
   }
+
   // ._action-btn {
   //   color: #FFF;
   // }
 }
+
 .nav-menu-tree {
+
   // padding: 0 5px;
   .fold {
+
     // .children {
     //   // background-color: rgba($themeColor, 0.05);
     // }
     &.active {
       color: $activeColor;
-      > .children {
+
+      >.children {
         border-left-color: rgba(#BBB, 0.5);
       }
     }
+
     &:hover {
       background-color: rgba(#000, 0.03);
     }
   }
-  >.menu,.fold {
+
+  >.menu,
+  .fold {
     border-bottom: 1px solid rgba(#000, 0.05);
   }
+
   .menu {
     // border-bottom: 1px solid rgba(#000, 0.1);
-    border-radius: 6px;
+    border-radius: $menu-item-padding-vertical;
+
     .menu-tip {
       // margin-right: 10px;
       color: #999;
     }
+
     &:hover {
       background-color: rgba(#000, 0.05);
     }
+
     &.active {
-      background-color: $activeBorderColor;
-      color: #FFF;
+      // background-color: $activeBorderColor;
+      color: $activeBorderColor;
+
       .menu-tip {
         // margin-right: 10px;
         color: #FFF;
@@ -102,13 +112,16 @@ $hoverBgColor: rgb(140, 190, 234);
     .fold {
       .children {
         background-color: $nav-menu-bg-color;
+
         .fold {
           background-color: rgba($hoverBgColor, 0.1);
         }
+
         .children {
           background-color: lighten($nav-menu-bg-color, 10%);
         }
       }
+
       &.hover,
       &:hover {
         color: $activeColor;
@@ -125,12 +138,15 @@ $hoverBgColor: rgb(140, 190, 234);
   transition: width ease 0.2s;
   overflow-y: auto;
   overflow-x: hidden;
+
   &.show {
     width: $nav-menu-width;
   }
+
   &.collapse {
     width: $nav-menu-collapse-width;
     overflow: hidden;
+
     // padding: 0 10px;
     &:hover {
       // overflow: auto;
@@ -146,69 +162,44 @@ $hoverBgColor: rgb(140, 190, 234);
 .nav-menu-response {
   padding-bottom: 50px;
   width: $nav-menu-width;
+
   .__dropdown-menu {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .dropdown-items {
       left: 0;
       width: 70px;
     }
+
     .menu-wrapper {
       min-width: 60px;
       border-radius: 4px;
       position: relative;
+
       // background-color: rgba(0, 0, 0, 0.3);
-      .search-input,.display-title {
+      .search-input,
+      .display-title {
         // border-color: rgba(0, 0, 0, 0.4);
       }
     }
   }
-  .action-btn-group {
-    margin: 10px;
-    display: flex;
-  }
-  .menu-header {
-    position: relative;
-    padding: 1px 10px 10px;
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
-    // margin-bottom: 20px;
-    border-bottom: 1px solid #EEE;
-    border-top: 1px solid #EEE;
-    hr {
-      margin: 10px 0;
-    }
-    .title {
-      margin: 10px 0 0 0;
-      // background-color: #f9f9f9;
-      // border-radius: 3px;
-      padding: 5px 15px;
-      // display: inline-block;
-    }
-    .icon {
-      padding: 0 5px;
-    }
-    .action-group {
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-  }
+
   .menulist-title {
     padding: 10px 10px;
     text-align: center;
     cursor: pointer;
-    &.flow {
-    }
-    &.tree {
-    }
+
+    &.flow {}
+
+    &.tree {}
   }
-  ._action-btn {
-  }
+
+  ._action-btn {}
+
   &.hide-menu {
     width: 0;
   }
@@ -221,6 +212,7 @@ $hoverBgColor: rgb(140, 190, 234);
   padding: 10px;
   border-top: 1px solid #EEE;
   border-bottom: 1px solid #EEE;
+
   .avatar {
     background-color: $themeColor;
     $scale: 50px;
@@ -235,68 +227,87 @@ $hoverBgColor: rgb(140, 190, 234);
   .icon {
     font-size: 16px;
   }
-  >.menu,>.fold {
+
+  >.menu,
+  >.fold {
     margin-left: 5px;
     margin-right: 5px;
   }
+
   >.menu {
     padding: 8px 10px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
   }
+
   .direct {
     transition: transform ease 0.3s;
   }
+
   .fold {
     padding: 8px 10px;
     cursor: pointer;
+
     .item-icon {
       width: 18px;
     }
+
     .fold-title {
       transition: transform 0.2s ease, margin 0.2s ease;
     }
+
     .caret {
       margin-right: 10px;
     }
+
     .children {
       display: none;
     }
+
     &.active {
-      > .children {
+      >.children {
         display: block;
         border-left-color: rgba(#BBB, 0.5);
       }
+
       .direct {
         transform: rotate(90deg);
       }
     }
+
     &.hide-fold {
       .caret {
         transform: rotate(-90deg);
       }
-      > .fold,
+
+      >.fold,
       .menu {
         display: none;
       }
     }
+
     .menu {
-      padding: 6px 16px;
+      padding: $menu-item-padding-vertical 16px;
       transition: padding ease 0.2s;
       margin: 3px 0;
-      &:hover, &.active {
+
+      &:hover,
+      &.active {
         padding-left: 10px;
       }
     }
   }
+
   .menu {
-    padding: 6px 10px;
+    padding: $menu-item-padding-vertical 10px;
     cursor: pointer;
     display: block;
     // transition: all ease 0.2s;
     text-decoration: none;
+
     .menu-tip {
       margin-right: 10px;
     }
+
     // &:hover {
     // }
     // &.active {
@@ -308,11 +319,13 @@ $hoverBgColor: rgb(140, 190, 234);
   position: fixed;
   transition: top ease 0.3s;
   display: none;
+
   &.show {
     width: 200px;
     padding: 5px 10px;
     display: block;
   }
+
   // .menu {
   //   padding: 10px 10px;
   // }
@@ -322,12 +335,15 @@ $hoverBgColor: rgb(140, 190, 234);
   overflow-x: visible !important;
   overflow-y: auto;
   z-index: 111;
+
   .nav-menu-tree {
     width: 100%;
+
     .fold {
       position: relative;
       cursor: default;
       padding: 8px 10px;
+
       .children {
         position: absolute;
         left: 100%;
@@ -340,13 +356,16 @@ $hoverBgColor: rgb(140, 190, 234);
         // .children {
         // }
       }
+
       &.hover,
       &:hover {
-        > .caret,
+
+        >.caret,
         .fold-title .caret {
           transform: rotate(-90deg);
         }
-        > .children {
+
+        >.children {
           display: block;
         }
       }
@@ -355,15 +374,19 @@ $hoverBgColor: rgb(140, 190, 234);
 }
 
 .tree-mode {
+
   // overflow-y: auto;
   .nav-menu-tree {
     overflow: hidden;
+
     .fold {
       transition: all 0.2s ease;
+
       &.active {
-        > .fold-title {
+        >.fold-title {
           margin-bottom: $activePadding;
         }
+
         .menu {
           display: block !important;
         }

@@ -53,7 +53,7 @@ const menuCodeMapper = storageHelper.get(MENU_CODE_MAPPER, true) || {};
 
 const MenuItem = (props) => {
   const {
-    icon = 'bars', pureIcon, title, $T
+    icon = 'bars', pureIcon, title,
   } = props;
   return (
     <div className="layout a-i-c">
@@ -82,26 +82,7 @@ export interface NavMenuProps {
   onClickMenu?: () => void;
 }
 
-/**
- * 左菜单控件
- * 支持无限嵌套结构，支持“树”模式，支持“悬浮”模式
- * menuData 结构
- * {
- *   title: '',
- *   code: '',
- *   icon: '',
- *   child: [
- *     // 递归此结构, 避免和 react 的 children 冲突，故为 child
- *     {
- *       title: '',
- *       code: '',
- *       icon: '',
- *       child: []
- *     }
- *   ]
- * }
- */
-export default class NavMenu extends Component<NavMenuProps, {
+export interface NavMenuState {
   showMenuMapper: {};
   flowMenuConfig: {
     activeItem: {};
@@ -110,13 +91,31 @@ export default class NavMenu extends Component<NavMenuProps, {
     offset: {
       top: number;
       left: number;
+      height: number;
     };
   };
   flowMode: boolean;
-}> {
+}
+
+/**
+ * 左菜单控件, 支持无限嵌套结构，支持“树”模式，支持“悬浮”模式
+ */
+export default class NavMenu extends Component<NavMenuProps, NavMenuState> {
+  static defaultProps = {
+    menuMappers: {
+      child: 'child',
+      code: 'code',
+      title: 'title',
+      icon: 'icon',
+      pureIcon: 'pureIcon',
+    },
+  }
+
   flowModeKey = 'IS_FLOW_MODA';
 
   flowMenuContainer
+
+  navMenuDOM
 
   constructor(props) {
     super(props);
@@ -139,7 +138,8 @@ export default class NavMenu extends Component<NavMenuProps, {
         isShow: false,
         offset: {
           top: 0,
-          left: 0
+          left: 0,
+          height: 0,
         }
       },
       flowMode: storageMode ? (!!+storageMode) : defaultFlowMode
@@ -151,14 +151,14 @@ export default class NavMenu extends Component<NavMenuProps, {
   }
 
   getNormalMenuChildren = (initDataList) => {
-    if (!initDataList || !Array.isArray(initDataList)) return;
+    if (!initDataList || !Array.isArray(initDataList)) return null;
     // if(!initDataList || !Array.isArray(initDataList)) return console.error(initDataList, 'initDataList 参数错误');
     const { onClickMenu } = this.props;
     const { showMenuMapper, flowMode } = this.state;
-    let allSet = [];
+    let allSet: any[] = [];
     let foldIdx = 0;
     const recursive = (dataList) => {
-      const currDOMSets = [];
+      const currDOMSets: any[] = [];
       dataList.forEach((item, currItemIdx) => {
         if (!item) return;
         const _item = this.menuItemFilter(item);
@@ -186,13 +186,15 @@ export default class NavMenu extends Component<NavMenuProps, {
                 `fold fold-${
                   currFoldIdx
                 }${flowMode ? '' : (isActive ? ' active' : ' hide-fold')}`
-              }>
+              }
+            >
               <div
                 className="fold-title"
                 onClick={(e) => {
                   !flowMode && this.toggleFold(e, currFoldIdx);
-                }}>
-                <MenuItem {..._item} $T={$T}/>
+                }}
+              >
+                <MenuItem {..._item} />
               </div>
               <div className="children">{childDOM}</div>
             </div>
@@ -233,7 +235,8 @@ export default class NavMenu extends Component<NavMenuProps, {
         key={key}
         className="menu"
         to={to}
-        onClick={() => Call(onClick, key, code)}>
+        onClick={() => Call(onClick, key, code)}
+      >
         {
           iconComFilter(options, { classNames: ['mr10'] }, (
             <span className="menu-tip">-</span>
@@ -281,7 +284,8 @@ export default class NavMenu extends Component<NavMenuProps, {
             }
             flowMenuContainer.style.top = `${finalOffsetTop - flowMenuOffsetTopPx}px`;
           }
-        }}>
+        }}
+      >
         {this.getNormalMenuChildren(activeItem.child)}
       </div>
     );
@@ -293,7 +297,7 @@ export default class NavMenu extends Component<NavMenuProps, {
       const to = this.wrapLink(_item);
       const isFold = !code || (child && child.length > 0);
       const key = code + title;
-      const isHovering = activeIdx == idx;
+      const isHovering = activeIdx === idx;
       return isFold ? (
         <div
           key={idx}
@@ -310,8 +314,9 @@ export default class NavMenu extends Component<NavMenuProps, {
           onMouseLeave={() => {
             this.hideFlowMenu();
           }}
-          className={`fold${isHovering ? ' hover' : ''}`}>
-          <MenuItem {..._item} $T={$T}/>
+          className={`fold${isHovering ? ' hover' : ''}`}
+        >
+          <MenuItem {..._item} />
         </div>
       ) : (
         this.getMenuLinkerDOM({
@@ -408,8 +413,6 @@ export default class NavMenu extends Component<NavMenuProps, {
   render() {
     const {
       menuData,
-      onClickMenu,
-      onToggleNav,
       show
     } = this.props;
 
@@ -432,7 +435,8 @@ export default class NavMenu extends Component<NavMenuProps, {
           className={
             `nav-menu-response ${
               flowMode ? 'flow-mode ' : 'tree-mode '}`
-          }>
+          }
+        >
           {menuTree}
         </div>
       </div>
