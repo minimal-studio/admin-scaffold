@@ -78,6 +78,29 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
 
   _delayExec
 
+  _after = (res, ...other) => {
+    return { };
+  }
+
+  _before = (params, actingRef) => {
+    return Object.assign({}, {
+      [actingRef]: true,
+    }, params);
+  }
+
+  /**
+   * 在调用 after 之前执行的 checker 函数
+   * @param {response} res 系统传入的 res 对象
+   * @return {boolean}
+   */
+  _checkRes = (res) => {
+    return true;
+  }
+
+  resStatus = (res, id) => {
+
+  }
+
   getRecordBtns!: (...args) => Children
 
   componentWillUnmount() {
@@ -128,7 +151,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
             {
               [actingRef]: false
             },
-            this._after(res),
+            this._after(res, ...args),
             this._checkRes(res) ? (IsFunc(after) && await after<APIRetrue>(res)) : {})
         );
         this.resStatus(res, id);
@@ -136,29 +159,6 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
         resolve(result);
       });
     };
-  }
-
-  _before(params, actingRef) {
-    return Object.assign({}, {
-      [actingRef]: true,
-    }, params);
-  }
-
-  _after(res) {
-    return { };
-  }
-
-  /**
-   * 在调用 after 之前执行的 checker 函数
-   * @param {response} res 系统传入的 res 对象
-   * @return {boolean}
-   */
-  _checkRes(res) {
-    return true;
-  }
-
-  resStatus(res, id) {
-
   }
 
   delayExec(...args) {
