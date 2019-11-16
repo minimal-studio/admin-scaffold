@@ -138,37 +138,37 @@ export class TestFormBasic extends ActionAgent {
   }
 
   formBtns = [{
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
+    action: async (formRef, actingRef) => {
+      if (!this.checkForm(formRef)) return;
 
-        const postData = {
-          ...formRef.value,
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: '按钮1',
-      actingRef: 'acting1',
-      className: 'theme'
+      const postData = {
+        ...formRef.value,
+      };
+      const agentOptions = {
+        actingRef
+      };
+      await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
     },
-    {
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
+    text: '按钮1',
+    actingRef: 'acting1',
+    className: 'theme'
+  },
+  {
+    action: async (formRef, actingRef) => {
+      if (!this.checkForm(formRef)) return;
 
-        const postData = {
-          ...formRef.value,
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: '按钮2',
-      actingRef: 'acting2',
-      className: 'red'
+      const postData = {
+        ...formRef.value,
+      };
+      const agentOptions = {
+        actingRef
+      };
+      await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
     },
+    text: '按钮2',
+    actingRef: 'acting2',
+    className: 'red'
+  },
   ];
 
   render() {
@@ -176,16 +176,15 @@ export class TestFormBasic extends ActionAgent {
       querying = false
     } = this.state;
 
-    return ( <
-      div className = "card" > {
-        /* 如果是已经定义好的数据，则不需要 Loading */ } <
+    return (<div className = "card" > {
+      /* 如果是已经定义好的数据，则不需要 Loading */ } <
       FormLayout tipInfo = {
         {
           title: '如果是已经定义好的数据，则不需要 Loading',
           type: 'success'
         }
       } {
-        ...this.state
+      ...this.state
       }
       formOptions = {
         this.formOptions
@@ -193,8 +192,7 @@ export class TestFormBasic extends ActionAgent {
       formBtns = {
         this.formBtns
       }
-      /> <
-      /div>
+      /> </div>
     );
   }
 }
