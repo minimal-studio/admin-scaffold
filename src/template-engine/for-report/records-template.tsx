@@ -9,7 +9,6 @@ import {
   GetFloatLen, ToggleBasicFloatLen, HasValue, DebounceClass, Call
 } from '@mini-code/base-func';
 
-// import { getDefPagin } from '../../utils/pagination-helper';
 import { getScreenInfo } from '../../utils/dom';
 import {
   Pagination, TableCard,
@@ -23,7 +22,7 @@ import {
 
 const delayExec = new DebounceClass();
 
-const offsetBottom = 70;
+const offsetBottom = 40;
 
 const autoRefreshOptions = {
   0: '关闭',
@@ -237,7 +236,6 @@ export default class ReportTemplate<
   }
 
   handleQueryData = (val?, callback?) => {
-    /** TODO: 观察，点击查询的时候，默认返回第一页 */
     const data = Object.assign({}, this.getQueryData(val, this.defaultPagin), {
       onGetResInfo: this.handleRes, callback
     });
@@ -294,7 +292,8 @@ export default class ReportTemplate<
           position="right"
           defaultValue={this.refreshTime}
           values={autoRefreshOptions}
-          onChange={this.changeRefreshTime} />
+          onChange={this.changeRefreshTime}
+        />
         <span className="ms10">声音</span>
         <Switch
           onChange={(val) => {
@@ -302,7 +301,8 @@ export default class ReportTemplate<
             if (!this.soundUrl) return console.warn('请先通过 ReportTemplateRef.setSoundUrl 设置声音的 url');
             if (!val) this.soundRef.pause();
           }}
-          defaultChecked={this.audioMask}/>
+          defaultChecked={this.audioMask}
+        />
         <audio id="soundRef" ref={this.saveWarnRef}>
           {
             this.soundUrl && <source src={this.soundUrl} type={`audio/${this.soundType}`} />
@@ -321,7 +321,8 @@ export default class ReportTemplate<
           text={this.props.$T(text)}
           color={color}
           className="mr10"
-          onClick={action}/>
+          onClick={action}
+        />
       );
     });
   }
@@ -331,11 +332,12 @@ export default class ReportTemplate<
     const { expandCon } = this.state;
     return (
       <Button
-        icon={expandCon ? "angle-double-up" : "angle-double-down"}
+        icon={expandCon ? "chevron-up" : "chevron-down"}
         color="default"
         className="mr10"
-        onClick={(e) => this.toggleCondition(!expandCon)}>
-        {$T('高级搜索')}
+        onClick={(e) => this.toggleCondition(!expandCon)}
+      >
+        {$T('扩展搜索')}
       </Button>
     );
   }
@@ -384,7 +386,8 @@ export default class ReportTemplate<
             if (!calculateHeight || height || !e || dataRows.length === 0) return;
             this.tableContainerRef = e;
             this.setTableContainerHeight();
-          }}>
+          }}
+          >
             <div className="table-scroll">
               <Loading loading={!!querying} inrow />
               <Table
@@ -400,7 +403,8 @@ export default class ReportTemplate<
                 ref={(e) => { this._tableRef = e; }}
                 onCheck={(nextItems) => {
                   this.checkedItems = nextItems;
-                }} />
+                }}
+              />
             </div>
           </div>
         );
@@ -411,17 +415,19 @@ export default class ReportTemplate<
         <span>{$T('没有对应的模板')}</span>
       );
     }
-    const pagingDOM = needPaging && pagingInfo ? (
+    const pagingDOM = needPaging && pagingInfo && (
       <Pagination
         pagingInfo={pagingInfo}
         infoMapper={infoMapper}
-        onPagin={this.handlePagin}/>
-    ) : null;
+        onPagin={this.handlePagin}
+      />
+    );
     const conditionHelper = !loadingCondition && (
       <ConditionGenerator
         ref={this.saveConditionRef}
         onChange={this.handleChangeCondition}
-        conditionConfig={conditionOptions} />
+        conditionConfig={conditionOptions}
+      />
     );
     const actionArea = (
       <div className="action-area layout">
@@ -432,7 +438,8 @@ export default class ReportTemplate<
           loading={querying}
           onClick={(e) => {
             this.handleQueryData();
-          }}/>
+          }}
+        />
         {
           needClearBtn && hasConditionOptions && (
             <Button
@@ -441,7 +448,8 @@ export default class ReportTemplate<
               className="mr10"
               onClick={(e) => {
                 this.conditionHelper.clearValue();
-              }}/>
+              }}
+            />
           )
         }
         {
@@ -450,12 +458,14 @@ export default class ReportTemplate<
               text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
               color="default"
               className="mr10"
-              onClick={(e) => this.toggleFloat()}/>
+              onClick={(e) => this.toggleFloat()}
+            />
           )
         }
         {
           actionBtns && this.renderActionBtns(actionBtns)
         }
+        <span className="flex"></span>
         {
           this.renderToggleBtn()
         }
@@ -474,10 +484,12 @@ export default class ReportTemplate<
           //     console.log(e.offsetHeight);
           //   }
           // }}
-          className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}>
+          className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}
+        >
           <form onSubmit={(e) => {
             e.preventDefault();
-          }}>
+          }}
+          >
             {conditionHelper}
             {actionArea}
           </form>

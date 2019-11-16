@@ -10,6 +10,7 @@ $textExtendColor: #444;
 $hoverBgColor: rgb(140, 190, 234);
 
 $menu-item-padding-vertical: 10px;
+$menu-item-padding-horizontal: 15px;
 
 /** 设置颜色 */
 .nav-menu-wrapper {
@@ -78,7 +79,7 @@ $menu-item-padding-vertical: 10px;
 
   .menu {
     // border-bottom: 1px solid rgba(#000, 0.1);
-    border-radius: $menu-item-padding-vertical;
+    // border-radius: $menu-item-padding-vertical;
 
     .menu-tip {
       // margin-right: 10px;
@@ -227,15 +228,18 @@ $menu-item-padding-vertical: 10px;
   .icon {
     font-size: 16px;
   }
-
-  >.menu,
-  >.fold {
-    margin-left: 5px;
-    margin-right: 5px;
+  .menu-icon {
+    width: 26px;
   }
 
+  // >.menu,
+  // >.fold {
+  //   margin-left: 5px;
+  //   margin-right: 5px;
+  // }
+
   >.menu {
-    padding: 8px 10px;
+    padding: $menu-item-padding-vertical $menu-item-padding-horizontal;
     // margin-bottom: 5px;
   }
 
@@ -244,7 +248,7 @@ $menu-item-padding-vertical: 10px;
   }
 
   .fold {
-    padding: 8px 10px;
+    padding: $menu-item-padding-vertical $menu-item-padding-horizontal;
     cursor: pointer;
 
     .item-icon {
@@ -298,7 +302,7 @@ $menu-item-padding-vertical: 10px;
   }
 
   .menu {
-    padding: $menu-item-padding-vertical 10px;
+    padding: $menu-item-padding-vertical $menu-item-padding-horizontal;
     cursor: pointer;
     display: block;
     // transition: all ease 0.2s;
@@ -342,7 +346,7 @@ $menu-item-padding-vertical: 10px;
     .fold {
       position: relative;
       cursor: default;
-      padding: 8px 10px;
+      padding: $menu-item-padding-vertical 10px;
 
       .children {
         position: absolute;

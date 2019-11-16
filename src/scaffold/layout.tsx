@@ -410,6 +410,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
               <StatusbarWrapper
                 title={title}
                 logout={logout}
+                showNavMenu={showNavMenu}
                 menuCodeMapper={menuCodeMapper}
                 toggleFloat={this.toggleFloat}
                 onToggleNav={this.toggleNavMenu}

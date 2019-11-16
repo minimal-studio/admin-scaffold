@@ -13,6 +13,7 @@ export interface StatusbarProps {
   onToggleNav: SearchBoxProps['onToggleNav'];
   statusbarConfig?: StatusbarConfigItem[];
   menuCodeMapper: {};
+  showNavMenu: boolean;
   logout: () => void;
   toggleFloat: () => void;
   title?: string;
@@ -21,40 +22,23 @@ export interface StatusbarProps {
 const StatusbarLayout: React.SFC<StatusbarProps> = (props) => {
   const {
     Statusbar, logout, statusbarConfig, toggleFloat, title,
-    menuCodeMapper, onToggleNav
+    menuCodeMapper, onToggleNav, showNavMenu
   } = props;
   return (
     <div className="admin-status-bar" id="statusBar">
       <div className="action-group">
-        {/* <ToolTip
-          position="right"
-          title={$T('切换到') + $T(!flowMode ? '悬浮' : '传统') + $T('模式')}
-          classNames={['_action-btn']}
-          className="p10"
-          onClick={() => this.changeMenuUIMode(!flowMode)}
-          n={flowMode ? "bars" : "bolt"}
-        /> */}
         <Icon
-          n="align-justify"
+          n={showNavMenu ? "bars" : "align-left"}
           onClick={() => onToggleNav()}
           classNames={['_action-btn']}
         />
-        {/* <ToolTip
-          onClick={() => onToggleNav()}
-          position="right"
-          title={`${$T(show ? "收起" : "展开")}${$T('菜单')}（${$T('快捷键')}：alt + alt）`}
-          n={!show ? "greater-than" : "less-than"}
-        /> */}
       </div>
+      <SearchBox
+        codeMapper={menuCodeMapper}
+      />
       <div className="title">
         {title}
       </div>
-      <SearchBox
-        // onClickMenu={onClickMenu}
-        // onToggleNav={onToggleNav}
-        codeMapper={menuCodeMapper}
-        // showMenu={show}
-      />
       <span className="flex" />
       {
         Statusbar && this.loadPlugin(Statusbar, {

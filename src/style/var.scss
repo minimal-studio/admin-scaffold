@@ -4,6 +4,9 @@
 
 $admin-main-container-max-width: 1980px;
 
+// 重置 UI 库的 table padding
+$table-td-padding-verical: 10px;
+
 /*
  * color config
  */
@@ -17,7 +20,7 @@ $main-bg-dark-color: #333;
 
 $nav-menu-bg-color: #1d2939;
 $nav-menu-width: 220px;
-$nav-menu-collapse-width: 36px;
+$nav-menu-collapse-width: 40px;
 $nav-menu-item-border-color: #777;
 $nav-menu-item-active-text-color: #000;
 

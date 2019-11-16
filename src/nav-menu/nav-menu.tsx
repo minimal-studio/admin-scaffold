@@ -57,7 +57,7 @@ const MenuItem = (props) => {
   } = props;
   return (
     <div className="layout a-i-c">
-      {iconComFilter({ icon, pureIcon }, { classNames: ['item-icon mr10'] })}
+      {iconComFilter({ icon, pureIcon }, { classNames: ['menu-icon'] })}
       <span>{$T(title)}</span>
       <span className="flex" />
       <Icon n="angle-right" classNames={['direct']}/>
@@ -238,7 +238,7 @@ export default class NavMenu extends Component<NavMenuProps, NavMenuState> {
         onClick={() => Call(onClick, key, code)}
       >
         {
-          iconComFilter(options, { classNames: ['mr10'] }, (
+          iconComFilter(options, { classNames: ['menu-icon'] }, (
             <span className="menu-tip">-</span>
           ))
         }

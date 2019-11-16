@@ -12,6 +12,6 @@ export default {
   "悬浮": "Flow",
   "传统": "Normal",
   "模式": "Mode",
-  "高级搜索": "More",
+  "扩展搜索": "More",
   "清空": "Clear"
 };

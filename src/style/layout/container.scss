@@ -24,8 +24,9 @@ $userInfoItemOverBgColor: #f7f7f7;
 
 .pages-container {
   >.common-mode {
-    padding: 0 10px 10px;
+    // padding: 0 10px;
     position: relative;
+    z-index: 0;
   }
 }
 
@@ -41,6 +42,7 @@ $userInfoItemOverBgColor: #f7f7f7;
   flex-wrap: nowrap;
   position: relative;
   flex: 1;
+  height: 100%;
 }
 
 .pages-container {
@@ -48,9 +50,8 @@ $userInfoItemOverBgColor: #f7f7f7;
   @include fill();
   left: $nav-menu-width;
   transition: all 0.2s ease;
-  // background-color: $main-bg-color;
-  // background-color: #e4e7ea;
-  border-radius: 0 0 0 4px;
+  background-color: $base-bg-color;
+  padding: 0 10px;
 
   &.hide-menu {
     left: $nav-menu-collapse-width;

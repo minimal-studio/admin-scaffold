@@ -2,9 +2,12 @@
 @include scrollBar(5px, 5px, '.nav-menu-wrapper');
 
 .tabs-in-statusbar {
-  position: relative;
-  z-index: 1;
+  // position: relative;
+  z-index: 111;
   margin-top: 10px;
+  position: sticky;
+  top: 0;
+  background-color: $base-bg-color;
 
   .divide {
     color: #c7c7c7;
@@ -76,11 +79,17 @@
 .admin-status-bar {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 5px 10px;
   box-shadow: 0 4px 4px rgba($main-bg-dark-color, 0.05);
   background-color: $main-bg-color;
   position: relative;
   z-index: 111;
+
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 10px;
+  }
 
   .action-group {
     display: flex;
@@ -88,7 +97,7 @@
     position: relative;
   }
   ._action-btn {
-    padding: 5px 10px;
+    padding: 5px 15px 5px 5px;
   }
 
   .status-container {
@@ -116,7 +125,8 @@
 
   .item {
     // padding: 0 10px;
-    min-width: 30px;
+    padding: 5px 0;
+    min-width: 40px;
     display: inline-block;
     text-align: center;
 
