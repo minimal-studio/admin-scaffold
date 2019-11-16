@@ -125,7 +125,7 @@ class LoginFilter extends React.Component {
         {...this.props}
         backgroundImage="url(./images/bg/bg_3.jpg)"
         btnGColor="red"
-        logo={() => <h3>@deer-ui/admin-dashboard</h3>}
+        logo={() => <h3>admin-dashboard</h3>}
         isLogin={isLogin}
         formOptions={loginFormOptions}>
         {isLogin ? (
@@ -149,7 +149,7 @@ class LoginFilter extends React.Component {
               title: "title",
               icon: "icon"
             }}
-            title="@deer-ui/admin-dashboard"
+            title="admin-dashboard"
             i18nConfig={i18nConfig}
             pluginComponent={{
               Statusbar: Status,
@@ -173,4 +173,5 @@ const C = () => (
   </Provider>
 );
 
-export default hot(module)(C);
+// export default hot(module)(C);
+export default C;

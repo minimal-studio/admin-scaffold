@@ -30,6 +30,7 @@ window.addEventListener("error", e => {
   Notify({
     config: {
       title: "未处理异常错误",
+      type: 'error',
       text: e.message,
       timer: 0
     }
