@@ -69,7 +69,7 @@ export default class TestFormAsync extends Services {
     this.reqAgent(demoGetFormFromRemote, agentOptions)();
   }
 
-  btnConfig = [
+  formBtns = [
     {
       action: async (formRef, actingRef) => {
         if (!this.checkForm(formRef)) return;
@@ -118,7 +118,7 @@ export default class TestFormAsync extends Services {
                 type: "success"
               }}
               {...this.state}
-              btnConfig={this.btnConfig}/>
+              formBtns={this.formBtns}/>
           )}
         </Loading>
       </div>

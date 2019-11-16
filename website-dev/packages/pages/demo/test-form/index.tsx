@@ -40,7 +40,7 @@ export class TestFormBasic extends Services {
     ]);
   }
 
-  btnConfig = [
+  formBtns = [
     {
       action: async (formRef, actingRef) => {
         if (!this.checkForm(formRef)) return;
@@ -90,7 +90,7 @@ export class TestForm extends TestFormBasic {
           }}
           {...this.state}
           formOptions={this.formOptions}
-          btnConfig={this.btnConfig}/>
+          formBtns={this.formBtns}/>
       </div>
     );
   }
