@@ -345,7 +345,7 @@ export default class ReportTemplate<
   render() {
     const {
       pagingInfo, querying, children, template,
-      needCount, showCondition, needCheck, whenCheckAction,
+      needCount, showCondition, needCheck, whenCheckAction, checkedOverlay,
       needPaging, loadingCondition, height, actionBtns, infoMapper,
       conditionOptions, $T, keyMapper, columns, hideFloatable, calculateHeight,
       sortIgnores, needInnerSort, needClearBtn, needAutoRefresh, propsForTable
@@ -375,6 +375,7 @@ export default class ReportTemplate<
           needCheck,
           columns: _columns,
           whenCheckAction,
+          checkedOverlay,
           sortIgnores,
           needInnerSort,
           needCount,
