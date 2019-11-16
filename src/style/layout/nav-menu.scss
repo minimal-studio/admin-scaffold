@@ -1,17 +1,3 @@
-$mainColor: #ccc;
-$activeColor: #444;
-$activeBorderColor: $themeColor;
-$activePadding: 10px;
-$nav-menu-bg-color: $main-bg-color;
-
-$textColor: #777;
-$textExtendColor: #444;
-
-$hoverBgColor: rgb(140, 190, 234);
-
-$menu-item-padding-vertical: 10px;
-$menu-item-padding-horizontal: 15px;
-
 /** 设置颜色 */
 .nav-menu-wrapper {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
@@ -21,46 +7,13 @@ $menu-item-padding-horizontal: 15px;
 }
 
 .nav-menu-response {
-  color: $textColor;
-
-  .__dropdown-menu {
-    .menu-wrapper {
-      background-color: rgba(0, 0, 0, 0.3);
-
-      .search-input,
-      .display-title {
-        border-color: rgba(0, 0, 0, 0.4);
-      }
-    }
-  }
-
-  .menulist-title {
-    color: #fff;
-
-    &.flow {
-      background: linear-gradient(45deg, $cyan, darken($themeColor, 5%));
-    }
-
-    &.tree {
-      background: linear-gradient(45deg, $orange, $red);
-    }
-  }
-
-  // ._action-btn {
-  //   color: #FFF;
-  // }
+  color: $menu-text-color;
 }
 
 .nav-menu-tree {
-
-  // padding: 0 5px;
   .fold {
-
-    // .children {
-    //   // background-color: rgba($themeColor, 0.05);
-    // }
     &.active {
-      color: $activeColor;
+      color: $menu-active-text-color;
 
       >.children {
         border-left-color: rgba(#BBB, 0.5);
@@ -78,11 +31,7 @@ $menu-item-padding-horizontal: 15px;
   }
 
   .menu {
-    // border-bottom: 1px solid rgba(#000, 0.1);
-    // border-radius: $menu-item-padding-vertical;
-
     .menu-tip {
-      // margin-right: 10px;
       color: #999;
     }
 
@@ -91,11 +40,9 @@ $menu-item-padding-horizontal: 15px;
     }
 
     &.active {
-      // background-color: $activeBorderColor;
-      color: $activeBorderColor;
+      color: $menu-active-border-color;
 
       .menu-tip {
-        // margin-right: 10px;
         color: #FFF;
       }
     }
@@ -104,7 +51,6 @@ $menu-item-padding-horizontal: 15px;
 
 .flow-menu-container {
   background-color: $nav-menu-bg-color;
-  // background-color: #29394a;
   box-shadow: 0 12px 24px rgba(#000, 0.3);
 }
 
@@ -115,7 +61,7 @@ $menu-item-padding-horizontal: 15px;
         background-color: $nav-menu-bg-color;
 
         .fold {
-          background-color: rgba($hoverBgColor, 0.1);
+          background-color: rgba($menu-hover-bg-color, 0.1);
         }
 
         .children {
@@ -125,9 +71,9 @@ $menu-item-padding-horizontal: 15px;
 
       &.hover,
       &:hover {
-        color: $activeColor;
-        border-left-color: $activeBorderColor;
-        background-color: rgba($hoverBgColor, 0.1);
+        color: $menu-active-text-color;
+        border-left-color: $menu-active-border-color;
+        background-color: rgba($menu-hover-bg-color, 0.1);
       }
     }
   }
@@ -164,63 +110,8 @@ $menu-item-padding-horizontal: 15px;
   padding-bottom: 50px;
   width: $nav-menu-width;
 
-  .__dropdown-menu {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .dropdown-items {
-      left: 0;
-      width: 70px;
-    }
-
-    .menu-wrapper {
-      min-width: 60px;
-      border-radius: 4px;
-      position: relative;
-
-      // background-color: rgba(0, 0, 0, 0.3);
-      .search-input,
-      .display-title {
-        // border-color: rgba(0, 0, 0, 0.4);
-      }
-    }
-  }
-
-  .menulist-title {
-    padding: 10px 10px;
-    text-align: center;
-    cursor: pointer;
-
-    &.flow {}
-
-    &.tree {}
-  }
-
-  ._action-btn {}
-
   &.hide-menu {
     width: 0;
-  }
-}
-
-.userinfo {
-  display: flex;
-  align-items: center;
-  // margin: 5px 0;
-  padding: 10px;
-  border-top: 1px solid #EEE;
-  border-bottom: 1px solid #EEE;
-
-  .avatar {
-    background-color: $themeColor;
-    $scale: 50px;
-    line-height: $scale;
-    height: $scale;
-    width: $scale;
-    margin-right: 15px;
   }
 }
 
@@ -232,15 +123,8 @@ $menu-item-padding-horizontal: 15px;
     width: 26px;
   }
 
-  // >.menu,
-  // >.fold {
-  //   margin-left: 5px;
-  //   margin-right: 5px;
-  // }
-
   >.menu {
     padding: $menu-item-padding-vertical $menu-item-padding-horizontal;
-    // margin-bottom: 5px;
   }
 
   .direct {
@@ -311,11 +195,6 @@ $menu-item-padding-horizontal: 15px;
     .menu-tip {
       margin-right: 10px;
     }
-
-    // &:hover {
-    // }
-    // &.active {
-    // }
   }
 }
 
@@ -329,10 +208,6 @@ $menu-item-padding-horizontal: 15px;
     padding: 5px 10px;
     display: block;
   }
-
-  // .menu {
-  //   padding: 10px 10px;
-  // }
 }
 
 .flow-mode {
@@ -355,10 +230,6 @@ $menu-item-padding-horizontal: 15px;
         width: 200px;
         height: auto;
         display: none;
-        // .fold {
-        // }
-        // .children {
-        // }
       }
 
       &.hover,
@@ -378,8 +249,6 @@ $menu-item-padding-horizontal: 15px;
 }
 
 .tree-mode {
-
-  // overflow-y: auto;
   .nav-menu-tree {
     overflow: hidden;
 
@@ -388,7 +257,7 @@ $menu-item-padding-horizontal: 15px;
 
       &.active {
         >.fold-title {
-          margin-bottom: $activePadding;
+          margin-bottom: $fold-active-margin;
         }
 
         .menu {

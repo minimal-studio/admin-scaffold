@@ -1,16 +1,12 @@
 @import "@deer-ui/core/style/var.scss";
 
 // scaffold
-
 $admin-main-container-max-width: 1980px;
 
 // 重置 UI 库的 table padding
 $table-td-padding-verical: 10px;
 
-/*
- * color config
- */
-
+// colors
 $themeColor: $blue;
 
 $base-bg-color: #edf1f7;
@@ -18,11 +14,21 @@ $base-bg-color: #edf1f7;
 $main-bg-color: #FFF;
 $main-bg-dark-color: #333;
 
-$nav-menu-bg-color: #1d2939;
+// nav
+$nav-menu-bg-color: $main-bg-color;
 $nav-menu-width: 220px;
 $nav-menu-collapse-width: 40px;
 $nav-menu-item-border-color: #777;
 $nav-menu-item-active-text-color: #000;
+
+$menu-item-padding-vertical: 10px;
+$menu-item-padding-horizontal: 15px;
+$menu-hover-bg-color: rgb(140, 190, 234);
+$menu-text-color: #777;
+$menu-active-text-color: #444;
+$menu-active-border-color: $themeColor;
+
+$fold-active-margin: 10px;
 
 /*
  * Scroll bar style
@@ -31,8 +37,3 @@ $lightThemeScrollBg: rgba(0, 0, 0, 0.2);
 $lightThemeScrollThumb: rgba(0, 0, 0, 0.3);
 $lightThemeScrollThumbHover: $themeColor;
 $lightThemeScrollThumbActive: darken($themeColor, 5%);
-
-$darkThemeScrollBg: $gray;
-$darkThemeScrollThumb: rgba(80, 80, 80, 0.8);
-$darkThemeScrollThumbHover: darken($darkThemeScrollThumb, 3%);
-$darkThemeScrollThumbActive: darken($darkThemeScrollThumb, 5%);
