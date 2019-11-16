@@ -26,7 +26,7 @@ import { Conditions, Forms } from "./forms";
 import { getFromMapper, getFromMapperSync } from "./forms/utils";
 import { getFields, setFields, getFieldsConfig } from "./fields";
 
-window.addEventListener("error", e => {
+window.addEventListener("error", (e) => {
   Notify({
     config: {
       title: "未处理异常错误",
@@ -82,12 +82,41 @@ export default class Services extends ActionAgent {
         /** 统一设置 action 为固定右边的列 */
         fixedRightKeys: ["action"],
         /** 返回 record.ID 作为 Table 的 row 的 key，提高 Table 的渲染性能 */
-        rowKey: record => record.ID
+        rowKey: (record) => record.ID
       }
+    };
+
+    /**
+     * 重写 ActionAgent 的接口
+     * 调用顺序为接口返回数据后， setState 前
+     * @param {object} res 远端返回的数据
+     */
+    this._after = (res, postData) => {
+      const { pagin } = postData;
+      pagin.total = res.length;
+      const resData = res.slice(pagin.pIdx * pagin.pSize, (pagin.pIdx + 1) * pagin.pSize);
+      return ({
+        records: resData,
+        pagingInfo: pagin
+      });
+    };
+
+    /**
+     * 重写 ActionAgent 的 resStatus 接口
+     * 调用顺序为接口 return 前
+     * @param {object} res 远端返回的数据
+     */
+    this.resStatus = (res) => {
+      this.showDesc
+        && this.showDesc({
+          title: "消息提示",
+          msg: res.err,
+          type: res.err ? "error" : "success"
+        });
     };
   }
 
-  saveRef = ref => e => (this[ref] = e);
+  saveRef = (ref) => (e) => (this[ref] = e);
 
   showResDesc(desc, message) {
     if (desc == "success") {
@@ -109,7 +138,7 @@ export default class Services extends ActionAgent {
    *
    * @param {*} options
    */
-  paramsFilter = val => {
+  paramsFilter = (val) => {
     let res = decodeURIComponent(val);
     switch (true) {
       case HasValue(+val):
@@ -199,28 +228,7 @@ export default class Services extends ActionAgent {
     });
   };
 
-  /**
-   * 重写 ActionAgent 的 resStatus 接口
-   * 调用顺序为接口 return 前
-   * @param {object} res 远端返回的数据
-   */
-  resStatus = res => {
-    this.showDesc &&
-      this.showDesc({
-        title: "消息提示",
-        msg: res.err,
-        type: res.err ? "error" : "success"
-      });
-  };
-
-  /**
-   * 重写 ActionAgent 的接口
-   * 调用顺序为接口返回数据后， setState 前
-   * @param {object} res 远端返回的数据
-   */
-  _after = res => ({});
-
-  checkForm = formRef => {
+  checkForm = (formRef) => {
     const checkRes = formRef.checkForm();
     if (!checkRes.isPass) {
       return this.stateSetter({

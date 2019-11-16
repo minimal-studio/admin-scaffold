@@ -1,6 +1,6 @@
 const defaultPagin = {
   active: true,
-  total: 1000,
+  total: 10,
   pIdx: 0,
   pSize: 10
 };

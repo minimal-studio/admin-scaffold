@@ -13,7 +13,7 @@ import { setFields } from "@dashboard/services/fields";
 
 setFields({
   username_for_user: {
-    key: "Username",
+    key: "name",
     fixed: "left",
     filter: (str, item, mapper, idx) => (
       <Link

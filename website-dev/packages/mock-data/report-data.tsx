@@ -1,5 +1,5 @@
 import React from "react";
-import { ShowModal } from "@deer-ui/core";
+import { ShowModal, Columns } from "@deer-ui/core";
 import { SetFloatLen, SetBasicUnit } from "@mini-code/base-func";
 
 /** 设置金钱的浮动小数位数 */
@@ -16,6 +16,17 @@ SetFloatLen(2);
 SetBasicUnit(100);
 
 const getTestData = () => {
+  return new Promise((resolve) => {
+    fetch('./mockdata/table.json')
+      .then(async (res) => {
+        const resData = await res.json();
+        setTimeout(() => {
+          resolve(resData);
+        }, 300);
+      });
+  });
+};
+const getTestData2 = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
@@ -60,19 +71,14 @@ const getTestData = () => {
   });
 };
 
-const keyFieldsForReport = [
+const keyFieldsForReport: Columns = [
   "username_for_user",
   {
-    key: "Address",
-    labels: {
-      gd: "red",
-      hk: "green",
-      moc: "orange"
-    },
-    namesMapper: {
-      gd: "广东",
-      hk: "香港",
-      moc: "澳门"
+    key: "avatar",
+    filter: (str) => {
+      return (
+        <img src={str} alt="" />
+      )
     }
   },
   {
@@ -80,9 +86,9 @@ const keyFieldsForReport = [
     title: {
       type: "selector",
       values: {
-        0: "在家",
-        1: "在外",
-        2: "在内"
+        0: "Status 1",
+        1: "Status 2",
+        2: "Status 3"
       },
       onChange: (val) => {
         ShowModal({
@@ -91,6 +97,10 @@ const keyFieldsForReport = [
         });
       }
     }
+  },
+  {
+    key: "createdAt",
+    datetime: true,
   },
   {
     key: "Income",
