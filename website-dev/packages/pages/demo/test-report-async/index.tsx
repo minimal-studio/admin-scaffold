@@ -112,9 +112,7 @@ class TestReportClass extends Services {
     const agentOptions = {
       actingRef: "querying",
       id: "queryData",
-      // after: (res) => ({
-      //   records: res
-      // })
+      after: this.reportAfter
     };
     const res = await this.reqAgent(getTestData, agentOptions)(postData);
   };

@@ -77,8 +77,8 @@ const keyFieldsForReport: Columns = [
     key: "avatar",
     filter: (str) => {
       return (
-        <img src={str} alt="" />
-      )
+        <img style={{ width: 24 }} src={str} alt="" />
+      );
     }
   },
   {

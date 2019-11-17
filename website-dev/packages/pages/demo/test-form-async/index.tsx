@@ -65,44 +65,44 @@ export default class TestFormAsync extends Services {
       }
     };
 
+    this.formBtns = [
+      {
+        action: async (formRef, actingRef) => {
+          if (!this.checkForm(formRef)) return;
+
+          const postData = {
+            ...formRef.value
+          };
+          const agentOptions = {
+            actingRef
+          };
+          await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
+        },
+        text: "按钮1",
+        actingRef: "acting1",
+        color: "theme"
+      },
+      {
+        action: async (formRef, actingRef) => {
+          if (!this.checkForm(formRef)) return;
+
+          const postData = {
+            ...formRef.value
+          };
+          const agentOptions = {
+            actingRef
+          };
+          await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
+        },
+        text: "按钮2",
+        actingRef: "acting2",
+        color: "red"
+      }
+    ];
+
     // 使用 reqAgent 管理页面请求状态
     this.reqAgent(demoGetFormFromRemote, agentOptions)();
   }
-
-  formBtns = [
-    {
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
-
-        const postData = {
-          ...formRef.value
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: "按钮1",
-      actingRef: "acting1",
-      className: "theme"
-    },
-    {
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
-
-        const postData = {
-          ...formRef.value
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: "按钮2",
-      actingRef: "acting2",
-      className: "red"
-    }
-  ];
 
   render() {
     const { querying } = this.state;
@@ -118,7 +118,8 @@ export default class TestFormAsync extends Services {
                 type: "success"
               }}
               {...this.state}
-              formBtns={this.formBtns}/>
+              formBtns={this.formBtns}
+            />
           )}
         </Loading>
       </div>

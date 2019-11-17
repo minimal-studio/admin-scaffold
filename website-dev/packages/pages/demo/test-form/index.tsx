@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import React, { Component } from "react";
 
-import { FormLayout, Loading } from "@deer-ui/core";
+import { FormLayout, Loading, Button } from "@deer-ui/core";
 import { Services } from "@dashboard/services";
 
 /**
@@ -38,59 +38,76 @@ export class TestFormBasic extends Services {
       "customerFormDemo",
       "customerFormDemo2"
     ]);
+
+    this.formBtns = [
+      {
+        action: async (formRef, actingRef) => {
+          if (!this.checkForm(formRef)) return;
+
+          const postData = {
+            ...formRef.value
+          };
+          const agentOptions = {
+            actingRef
+          };
+          await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
+        },
+        text: "按钮1",
+        actingRef: "acting1",
+        color: "theme"
+      },
+      {
+        action: async (formRef, actingRef) => {
+          if (!this.checkForm(formRef)) return;
+
+          const postData = {
+            ...formRef.value
+          };
+          const agentOptions = {
+            actingRef
+          };
+          await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
+        },
+        text: "按钮2",
+        actingRef: "acting2",
+        color: "red"
+      }
+    ];
   }
-
-  formBtns = [
-    {
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
-
-        const postData = {
-          ...formRef.value
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: "按钮1",
-      actingRef: "acting1",
-      className: "theme"
-    },
-    {
-      action: async (formRef, actingRef) => {
-        if (!this.checkForm(formRef)) return;
-
-        const postData = {
-          ...formRef.value
-        };
-        const agentOptions = {
-          actingRef
-        };
-        await this.reqAgent(this.apis.testSubmit, agentOptions)(postData);
-      },
-      text: "按钮2",
-      actingRef: "acting2",
-      className: "red"
-    }
-  ];
 }
 
 export class TestForm extends TestFormBasic {
+  state = {
+    ...this.state,
+    layout: 'horizontal'
+  }
+
   render() {
-    const { querying = false } = this.state;
+    const { querying = false, layout } = this.state;
 
     return (
       <div className="card">
-        {/* 如果是已经定义好的数据，则不需要 Loading */}
-        <FormLayout
-          tipInfo={{
-            title: "如果是已经定义好的数据，则不需要 Loading",
-            type: "success"
+        <div className="p20">
+          {/* 如果是已经定义好的数据，则不需要 Loading */}
+          <Button onClick={(e) => {
+            this.setState({
+              layout: layout === 'horizontal' ? 'vertical' : 'horizontal'
+            });
           }}
-          {...this.state}
-          formOptions={this.formOptions}
-          formBtns={this.formBtns}/>
+          >
+          切换至{layout === 'horizontal' ? '垂直' : '水平'}布局
+          </Button>
+          <FormLayout
+            tipInfo={{
+              title: "如果是已经定义好的数据，则不需要 Loading",
+              type: "success"
+            }}
+            layout={layout}
+            {...this.state}
+            formOptions={this.formOptions}
+            formBtns={this.formBtns}
+          />
+        </div>
       </div>
     );
   }

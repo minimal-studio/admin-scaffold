@@ -87,21 +87,6 @@ export default class Services extends ActionAgent {
     };
 
     /**
-     * 重写 ActionAgent 的接口
-     * 调用顺序为接口返回数据后， setState 前
-     * @param {object} res 远端返回的数据
-     */
-    this._after = (res, postData) => {
-      const { pagin } = postData;
-      pagin.total = res.length;
-      const resData = res.slice(pagin.pIdx * pagin.pSize, (pagin.pIdx + 1) * pagin.pSize);
-      return ({
-        records: resData,
-        pagingInfo: pagin
-      });
-    };
-
-    /**
      * 重写 ActionAgent 的 resStatus 接口
      * 调用顺序为接口 return 前
      * @param {object} res 远端返回的数据
@@ -115,6 +100,21 @@ export default class Services extends ActionAgent {
         });
     };
   }
+
+  /**
+   * 重写 ActionAgent 的接口
+   * 调用顺序为接口返回数据后， setState 前
+   * @param {object} res 远端返回的数据
+   */
+  reportAfter = (res, postData) => {
+    const { pagin } = postData;
+    pagin.total = res.length;
+    const resData = res.slice(pagin.pIdx * pagin.pSize, (pagin.pIdx + 1) * pagin.pSize);
+    return ({
+      records: resData,
+      pagingInfo: pagin
+    });
+  };
 
   saveRef = (ref) => (e) => (this[ref] = e);
 
