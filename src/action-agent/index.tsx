@@ -26,7 +26,7 @@ export interface AgentOptions<APIRetrue = ReqAgentReturn> {
   /** 在请求发起前设置组件的 state */
   before?: () => {};
   /** 在请求发起后设置组件的 state */
-  after?: <T = {}>(response: APIRetrue) => T | {};
+  after?: <T = {}>(response: APIRetrue, ...args) => T | {};
   /** response 的过滤器，用于过滤并返回 ActionAgent 的返回值
    *
    * @example
@@ -152,7 +152,7 @@ class ActionAgent<P = {}, S = {}> extends Component<P, S> {
               [actingRef]: false
             },
             this._after(res, ...args),
-            this._checkRes(res) ? (IsFunc(after) && await after<APIRetrue>(res)) : {})
+            this._checkRes(res) ? (typeof after === 'function' && await after<APIRetrue>(res, ...args)) : {})
         );
         this.resStatus(res, id);
         const result = resFilter ? resFilter<APIRetrue>(res) : res;
