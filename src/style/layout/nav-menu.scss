@@ -40,10 +40,10 @@
     }
 
     &.active {
-      color: $menu-active-border-color;
+      color: $themeColor;
 
       .menu-tip {
-        color: #FFF;
+        color: $themeColor;
       }
     }
   }
