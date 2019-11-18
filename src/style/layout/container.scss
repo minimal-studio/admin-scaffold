@@ -51,7 +51,8 @@ $userInfoItemOverBgColor: #f7f7f7;
   left: $nav-menu-width;
   transition: all 0.2s ease;
   background-color: $base-bg-color;
-  padding: 0 10px;
+  padding: 0 10px 0;
+  // display: flex;
   .form-layout {
     background-color: #FFF;
   }
@@ -59,6 +60,9 @@ $userInfoItemOverBgColor: #f7f7f7;
     left: $nav-menu-collapse-width;
   }
   .top-tab-wrapper {
+    // flex: 1;
+    // width: 95%;
+    // max-width: 100%;
     >.tab-content {
       // box-shadow: 0 4px 10px rgba(#000, 0.05);
       .tabs-container {

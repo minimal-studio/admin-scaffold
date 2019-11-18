@@ -21,12 +21,12 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
     routerInfo, menuCodeMapper, closeTab, changeRoute, defaultTitle
   } = props;
   return (
-    <div className="tabs-in-statusbar">
+    <div className="tabs-for-multiple-router">
       <div className="tabs-items">
         {
           hasRouter ? (
             <React.Fragment>
-              <span className="tab-item close-all-btn">
+              <span className="tab-item close-all-btn ps10">
                 <span
                   onClick={(e) => closeAll()}>
                   <ToolTip n="window-close" title="关闭所有标签" />

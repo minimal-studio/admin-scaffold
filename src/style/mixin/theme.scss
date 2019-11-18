@@ -48,7 +48,7 @@ $darkTextColor: #EEE;
         color: $darkTextColor;
       }
     }
-    .tabs-in-statusbar .tab-item {
+    .tabs-for-multiple-router .tab-item {
       border-color: darken($darkBgColor, 10%);
     }
   }
@@ -82,7 +82,7 @@ $darkTextColor: #EEE;
       }
     }
   }
-  .tabs-in-statusbar .tab-item {
+  .tabs-for-multiple-router .tab-item {
     &.active, &:hover {
       ._btn {
         color: $basicBgColor;
