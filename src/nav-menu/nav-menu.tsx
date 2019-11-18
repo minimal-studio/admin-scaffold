@@ -230,9 +230,12 @@ export default class NavMenu extends Component<NavMenuProps, NavMenuState> {
     } = options;
     menuCodeMapper[code] = menuText;
     storageHelper.set(MENU_CODE_MAPPER, menuCodeMapper, true);
+    const _menuText = $T(menuText);
+
     return (
       <Link
         key={key}
+        title={_menuText}
         className="menu"
         to={to}
         onClick={() => Call(onClick, key, code)}
@@ -242,7 +245,7 @@ export default class NavMenu extends Component<NavMenuProps, NavMenuState> {
             <span className="menu-tip">-</span>
           ))
         }
-        {$T(menuText)}
+        {_menuText}
       </Link>
     );
   };

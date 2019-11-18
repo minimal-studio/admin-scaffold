@@ -228,6 +228,7 @@ export interface LinkProps {
   /** 将要导航到的路由 */
   to: string;
   className?: string;
+  title?: string;
   onClick?: (event) => void;
   /** 作为 query string 的导航参数，例如 { ID: 123, name: alex } -> ID=123&name=alex */
   params?: {};
@@ -240,7 +241,7 @@ export interface LinkProps {
  */
 const Link: SFC<LinkProps> = (props) => {
   const {
-    to, className = 'link-btn', children, onClick, params, isActive
+    to, className = 'link-btn', children, onClick, params, isActive, title
   } = props;
   const activeRoute = getUrlParams()[ROUTE_KEY];
   const _isActive = typeof isActive == 'undefined' ? activeRoute === to : isActive;
@@ -248,6 +249,7 @@ const Link: SFC<LinkProps> = (props) => {
   return (
     <span
       className={className + (_isActive ? ' active' : '')}
+      title={title}
       onClick={(e) => {
         CallFunc(onClick)(e);
         if (IsUrl(to)) {
