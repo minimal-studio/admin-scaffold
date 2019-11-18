@@ -13,7 +13,9 @@ export interface StatusbarProps {
   onToggleNav: SearchBoxProps['onToggleNav'];
   statusbarConfig?: StatusbarConfigItem[];
   menuCodeMapper: {};
+  Statusbar: JSX.Element;
   showNavMenu: boolean;
+  loadPlugin: (Com: JSX.Element) => JSX.Element;
   logout: () => void;
   toggleFloat: () => void;
   title?: string;
@@ -21,7 +23,7 @@ export interface StatusbarProps {
 
 const StatusbarLayout: React.SFC<StatusbarProps> = (props) => {
   const {
-    Statusbar, logout, statusbarConfig, toggleFloat, title,
+    Statusbar, logout, statusbarConfig, toggleFloat, title, loadPlugin,
     menuCodeMapper, onToggleNav, showNavMenu
   } = props;
   return (
@@ -41,13 +43,7 @@ const StatusbarLayout: React.SFC<StatusbarProps> = (props) => {
       </div>
       <span className="flex" />
       {
-        Statusbar && this.loadPlugin(Statusbar, {
-          onLogout: logout,
-          showShortcut,
-          displayFloat,
-          $T,
-          toggleFloat,
-        })
+        Statusbar && loadPlugin(Statusbar)
       }
       <DefaultStatusbar {...props} statusbarConfig={statusbarConfig} />
     </div>

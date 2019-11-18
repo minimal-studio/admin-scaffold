@@ -287,7 +287,12 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
     P = React.cloneElement(P, props, {
-      onNavigate: this.onNavigate
+      onNavigate: this.onNavigate,
+      onLogout: this.props.logout,
+      showShortcut,
+      $T,
+      displayFloat: this.state.displayFloat,
+      toggleFloat: this.toggleFloat,
     });
 
     return P;
@@ -410,8 +415,10 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
               <StatusbarWrapper
                 title={title}
                 logout={logout}
+                loadPlugin={this.loadPlugin}
                 showNavMenu={showNavMenu}
                 menuCodeMapper={menuCodeMapper}
+                pluginComponent={pluginComponent}
                 toggleFloat={this.toggleFloat}
                 onToggleNav={this.toggleNavMenu}
                 statusbarConfig={statusbarConfig}
