@@ -2,7 +2,6 @@
   "name": "@deer-ui/admin-scaffold",
   "version": "2.0.0-alpha2.0",
   "scripts": {
-    "postinstall": "npm run gen:version",
     "publish:ts": "npm publish ./dist",
     "release": "npm run build:ts; npm run publish:ts",
     "build:ts": "rm -rf ./dist; tsc; npm run copy-files-ts; npm run copy-style",

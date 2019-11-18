@@ -16,7 +16,7 @@
     "update": "yarn add @mini-code/request @deer-ui/admin-scaffold @deer-ui/core -W; yarn start"
   },
   "dependencies": {
-    "@deer-ui/core": "^4.0.0-alpha5.4",
+    "@deer-ui/core": "^4.0.0-alpha5.5",
     "@deer-ui/enhance-ui": "^4.0.0-alpha2.2",
     "@mini-code/base-func": "^1.0.2",
     "@mini-code/request": "^1.0.0-alpha1",
