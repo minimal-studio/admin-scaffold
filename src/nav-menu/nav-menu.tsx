@@ -78,6 +78,7 @@ export interface NavMenuProps {
   };
   /* 是否悬浮模式的菜单模式 */
   flowMode?: boolean;
+  defaultFlowMode?: boolean;
   show?: boolean;
   onClickMenu?: () => void;
 }

@@ -418,7 +418,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                 loadPlugin={this.loadPlugin}
                 showNavMenu={showNavMenu}
                 menuCodeMapper={menuCodeMapper}
-                pluginComponent={pluginComponent}
+                StatusbarPlugin={pluginComponent.Statusbar}
                 toggleFloat={this.toggleFloat}
                 onToggleNav={this.toggleNavMenu}
                 statusbarConfig={statusbarConfig}
@@ -428,10 +428,8 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                   onDidMount={this.onGetMenuCodeMapper}
                   menuData={menuData}
                   menuMappers={menuMappers}
-                  username={username}
                   defaultFlowMode={false}
                   show={showNavMenu}
-                  activeMenu={activeMenu}
                 />
                 <div
                   className={

@@ -42,14 +42,17 @@ function selector(state) {
   return state;
 }
 
-const Status = ({ onLogout }) => (
-  <React.Fragment>
-    <span className="flex" />
-    {/* <div className="actions mr10">
-        <span className="_btn" onClick={e => onLogout()}>退出登录</span>
+const Status = (props) => {
+  const { onLogout } = props;
+  return (
+    <React.Fragment>
+      <span className="flex" />
+      {/* <div className="actions mr10">
+        <span className="_btn" onClick={(e) => onLogout()}>退出登录</span>
       </div> */}
-  </React.Fragment>
-);
+    </React.Fragment>
+  );
+};
 
 const loginFormOptions = [
   {
@@ -88,7 +91,8 @@ const Footer = () => {
       <a
         href="https://github.com/SANGET/@deer-ui/admin-scaffold"
         target="_blank"
-        className="item mr10">
+        className="item mr10"
+      >
         Github
       </a>
       <a href="https://thinkmore.xyz" target="_blank" className="item mr10">
@@ -127,7 +131,8 @@ class LoginFilter extends React.Component {
         btnGColor="red"
         logo={() => <h3>admin-dashboard</h3>}
         isLogin={isLogin}
-        formOptions={loginFormOptions}>
+        formOptions={loginFormOptions}
+      >
         {isLogin ? (
           <AdminWebScaffold
             versionUrl="./version.json"
@@ -156,7 +161,8 @@ class LoginFilter extends React.Component {
               DashBoard,
               Footer
             }}
-            pageComponents={pageComponents}/>
+            pageComponents={pageComponents}
+          />
         ) : null}
       </AuthSelector>
     );
