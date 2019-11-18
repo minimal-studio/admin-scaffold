@@ -28,7 +28,8 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
             <React.Fragment>
               <span className="tab-item close-all-btn ps10">
                 <span
-                  onClick={(e) => closeAll()}>
+                  onClick={(e) => closeAll()}
+                >
                   <ToolTip n="window-close" title="关闭所有标签" />
                 </span>
               </span>
@@ -42,7 +43,8 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
                     <span key={route} className={`tab-item${isActive ? ' active' : ''}`}>
                       <span
                         onClick={(e) => changeRoute(route, params)}
-                        className="_btn text">
+                        className="_btn text"
+                      >
                         {/* {
                         isActive && <Icon n="chevron-right" classNames={['mr5', 'indicator']} />
                       } */}
@@ -56,7 +58,9 @@ const TabForNav: SFC<TabForNavProps> = (props) => {
             </React.Fragment>
           ) : (
             <span className="tab-item active">
-              {defaultTitle()}
+              <span className="text">
+                {defaultTitle()}
+              </span>
             </span>
           )
         }
