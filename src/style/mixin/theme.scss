@@ -78,7 +78,7 @@ $darkTextColor: #EEE;
   .nav-menu-tree {
     .menu {
       &.active {
-        background-color: $basicBgColor;
+        color: $basicBgColor;
       }
     }
   }
