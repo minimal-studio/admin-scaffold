@@ -273,11 +273,11 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     const { userInfo, username, pageProps } = this.props;
     return {
       ...pageProps,
+      $T,
       userInfo,
       username,
       isActive,
       pageName,
-      $T,
       onNavigate: this.onNavigate,
       history: this.history,
     };
@@ -286,14 +286,16 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
   loadPlugin = (Plugin, props?) => {
     let P = IsFunc(Plugin) ? <Plugin /> : Plugin;
 
-    P = React.cloneElement(P, props, {
+    const defaultProps = {
       onNavigate: this.onNavigate,
       onLogout: this.props.logout,
       showShortcut,
       $T,
       displayFloat: this.state.displayFloat,
       toggleFloat: this.toggleFloat,
-    });
+    };
+
+    P = React.cloneElement(P, defaultProps, props);
 
     return P;
   }
@@ -359,9 +361,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
           />
           <FooterContainer>
             {
-              Footer && this.loadPlugin(Footer, {
-                $T,
-              })
+              Footer && this.loadPlugin(Footer)
             }
             {
               versionInfo ? (
@@ -490,7 +490,9 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                           key="dash-board"
                         >
                           <DashBoardWrapper
-                            CustomerComponent={DashBoard} loadPlugin={this.loadPlugin} {...this.getRouteProps(true, 'dashboard')}
+                            CustomerComponent={DashBoard}
+                            loadPlugin={this.loadPlugin}
+                            {...this.getRouteProps(true, 'dashboard')}
                           />
                         </Tab>
                       )
