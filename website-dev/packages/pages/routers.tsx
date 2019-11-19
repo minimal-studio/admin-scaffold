@@ -6,55 +6,19 @@ const needDemoMenu = true;
 
 const demoMenu = [
   {
-    title: "组件",
+    title: "UI 元素",
     pureIcon: "fab fa-uikit",
     child: [
       {
-        title: "UI 组件",
+        title: "@deer-ui",
         code: "https://ui.thinkmore.xyz/"
-      }
+      },
+      {
+        title: "Alerts",
+        code: "Alerts"
+      },
     ]
   },
-  // {
-  //   title: "表格",
-  //   code: "TestReport",
-  //   icon: "chart-bar"
-  // },
-  // {
-  //   title: "表格异步查询条件",
-  //   code: "ReportAsync",
-  //   icon: "asterisk"
-  // },
-  // {
-  //   title: "表单",
-  //   code: "TestForm",
-  //   icon: "bookmark"
-  // },
-  // {
-  //   title: "异步表单数据",
-  //   code: "FormAsync",
-  //   icon: "book"
-  // },
-  // {
-  //   title: "表单模版引擎",
-  //   code: "FormWithTMPL",
-  //   icon: "book-open"
-  // },
-  // {
-  //   title: "表单模版引擎2",
-  //   code: "FormWithTMPL2",
-  //   icon: "book-reader"
-  // },
-  // {
-  //   title: "404",
-  //   code: "Notfound",
-  //   icon: "exclamation-triangle"
-  // },
-  // {
-  //   title: "link",
-  //   icon: "link",
-  //   code: "TestLink"
-  // }
   {
     title: "页面模版",
     icon: "anchor",
