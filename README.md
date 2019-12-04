@@ -31,13 +31,13 @@ npm init && git init
 
 ```shell
 # yarn
-yarn add react react-dom @deer-ui/admin-scaffold @mini-code/base-func @mini-code/request @deer-ui/core unistore react-transition-group
+yarn add react react-dom @deer-ui/admin-scaffold @mini-code/base-func @mini-code/request @deer-ui/core react-transition-group
 
 # 使用 @mini-code/scripts 开发环境
 yarn add @mini-code/scripts -D
 
 # 或者 npm
-npm i react react-dom @deer-ui/admin-scaffold @mini-code/base-func @mini-code/request @deer-ui/core unistore react-transition-group --save
+npm i react react-dom @deer-ui/admin-scaffold @mini-code/base-func @mini-code/request @deer-ui/core react-transition-group --save
 
 npm i @mini-code/scripts --save-dev
 ```
