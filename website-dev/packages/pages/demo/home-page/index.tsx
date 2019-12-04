@@ -6,8 +6,8 @@ import {
 const HomePage = () => (
   <div className="home-page">
     <CardContainer>
-      <Grid container space={20} style={{ margin: -50 }}>
-        <Grid item lg={6}>
+      <Grid container space={20} style={{ marginTop: -50 }}>
+        <Grid item lg={6} sm={12} xs={12}>
           <Card p={20}>
             <h3>@deer-ui/admin-dashboard</h3>
             <p>@deer-ui/admin-dashboard 是一个基于 React 的管理系统前端应用。</p>
@@ -23,7 +23,7 @@ const HomePage = () => (
             </p>
           </Card>
         </Grid>
-        <Grid item lg={6}>
+        <Grid item lg={6} sm={12} xs={12}>
           <Card p={20}>
             <h3>@deer-ui/core</h3>
             <p>

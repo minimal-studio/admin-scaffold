@@ -1,7 +1,7 @@
 import createStore from "unistore";
 import { Call, EventEmitter } from "@mini-code/base-func";
 
-import NAV_MENU_CONFIG from "../../config/nav-config";
+import NAV_MENU_CONFIG from "@dashboard/pages/routers";
 import * as AUTH_APIS from "./apis";
 
 export interface AuthActions {
