@@ -145,10 +145,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@deer-ui/core@^4.0.0-alpha5.7":
-  version "4.0.0-alpha5.7"
-  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-alpha5.7.tgz#fe7bd1d6ffa6102d732b533a241bbe0ebf8ee99c"
-  integrity sha512-9ghPuXW2G5gBoxzT3xRmH2F0CQuNSb8OiUpyojoo43Wv02v9rKUKg6LaOaPQJqGMPSADJ9OYoDkoEvZ8sWQUcw==
+"@deer-ui/core@^4.0.0-rc3.2":
+  version "4.0.0-rc3.2"
+  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc3.2.tgz#1ff01dbbc75e344b90c04da52cb7fc2d1e11b5d1"
+  integrity sha512-Bl9PY4cpflS17iYELObF4g2SQG77r/mab4nCctlHfa3mFQIDREJ5RdkWnSy0wXxw8+shFAaUPFVvl5DiFmyYPg==
   dependencies:
     classnames "^2.2.6"
 
@@ -300,15 +300,15 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@mini-code/base-func@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@mini-code/base-func/-/base-func-1.0.2.tgz#55e94ee0207d1a893c3460bf9d1b08d925df2b8b"
-  integrity sha512-KKxEUXksbPDePZmT0jjgIsDXDWyswO8+Xdfrs9yy9j9dFM+DHkcaBM9RZAdpEW9xgT9OoBJn/NvxrQGonMJ81w==
+"@mini-code/base-func@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@mini-code/base-func/-/base-func-1.1.0.tgz#8c9e2d12074fa824b88312a7a73a4bd3f86f77ef"
+  integrity sha512-nw+hzOcxDf1u2NFqWlUwhL3ZoaXlPZ2ulbqpdZJR6JpVmk5f00o/R5a6HF1oyGc/oBa5a93p334QBfL4nc+3lw==
 
-"@mini-code/request@^1.0.0-alpha1":
-  version "1.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/@mini-code/request/-/request-1.0.0-alpha1.tgz#9acf04ee41e8ca0941b6af0745566d74ee4b00e9"
-  integrity sha512-4XQ0YoRRk5JHZ7uEYyAJt82YIwc4B5ACGnCq3tdMlRyXWcFQoUcdaoqdH0WBCC3wsoIUfdliio3INac5O0hKOg==
+"@mini-code/request@^1.0.0-alpha2.3":
+  version "1.0.0-alpha2.3"
+  resolved "https://registry.yarnpkg.com/@mini-code/request/-/request-1.0.0-alpha2.3.tgz#2514b4912492813b005ecd2767f54cff28cca377"
+  integrity sha512-T1KHPj/gauz3BZnKFFBxbOQmN60KpNF2IkwZdTt/2nKy2RTkD7ePZE+Yi1ZnbkL9gesQCwfmxM4GZrxYeLVEvA==
   dependencies:
     lzma "^2.3.2"
     rc4-ts "^2.0.0"
@@ -4472,11 +4472,6 @@ union-value@^1.0.0:
     get-value "^2.0.6"
     is-extendable "^0.1.1"
     set-value "^2.0.1"
-
-unistore@^3.1.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/unistore/-/unistore-3.5.0.tgz#f4b962e290fc85969627bf0e8209d8bc1cf5313d"
-  integrity sha512-jz1iBRHoA3lT5bq8eEFCZExCt0RbIBp8qsKOb0sMTv8ooCx8H4QE1nfynOJtbgJ651y768KO/5Z180Bn196erQ==
 
 universalify@^0.1.0:
   version "0.1.2"

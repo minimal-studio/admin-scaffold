@@ -16,7 +16,7 @@
     "copy:style": "cp -R ./src/style ./dist/",
     "gen:version": "vh gen",
     "test": "jest",
-    "dev:doc": "cd website-dev; yarn; yarn start",
+    "start": "cd website-dev; yarn; yarn start",
     "build": "cd website-dev; yarn; yarn build"
   },
   "repository": {
@@ -26,7 +26,7 @@
   "description": "Base on React's Admin Manager Scaffold.",
   "peerDependencies": {
     "@deer-ui/core": "^4.0.x",
-    "@mini-code/base-func": "^1.0.x",
+    "@mini-code/base-func": "^1.1.x",
     "@mini-code/request": "^1.0.x",
     "cross-env": "^5.1.6",
     "mousetrap": "^1.6.1",
@@ -37,9 +37,9 @@
     "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
-    "@deer-ui/core": "^4.0.0-alpha5.7",
-    "@mini-code/base-func": "^1.0.2",
-    "@mini-code/request": "^1.0.0-alpha1",
+    "@deer-ui/core": "^4.0.0-rc3.2",
+    "@mini-code/base-func": "^1.1.0",
+    "@mini-code/request": "^1.0.0-alpha2.3",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
@@ -61,7 +61,6 @@
     "react-transition-group": "^4.0.1",
     "ts-jest": "^24.0.2",
     "typescript": "3.6.4",
-    "unistore": "^3.1.0",
     "version-helper": "^1.2.0-alpha1.0"
   },
   "author": "Alex",
