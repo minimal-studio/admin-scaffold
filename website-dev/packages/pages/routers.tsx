@@ -10,12 +10,24 @@ const demoMenu = [
     pureIcon: "fab fa-uikit",
     child: [
       {
-        title: "@deer-ui",
+        title: "Deer-ui",
         code: "https://ui.thinkmore.xyz/"
       },
       {
         title: "Alerts",
         code: "Alerts"
+      },
+      {
+        title: "Buttons",
+        code: "Buttons"
+      },
+      {
+        title: "Forms",
+        code: "Forms"
+      },
+      {
+        title: "FormLayout",
+        code: "FormLayoutDemo"
       },
     ]
   },
