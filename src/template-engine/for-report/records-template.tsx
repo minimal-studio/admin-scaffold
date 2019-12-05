@@ -288,7 +288,7 @@ export default class ReportTemplate<
       <span className="mr10 layout a-i-c">
         <span className="mr10" />
         <DropdownMenu
-          needAction={false}
+          needCancel={false}
           position="right"
           defaultValue={this.refreshTime}
           values={autoRefreshOptions}

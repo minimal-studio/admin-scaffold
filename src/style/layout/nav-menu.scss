@@ -181,10 +181,9 @@
       transition: padding ease 0.2s;
       margin: 3px 0;
 
-      &:hover,
-      &.active {
-        padding-left: 10px;
-      }
+      // &:hover {
+      //   padding-left: 10px;
+      // }
     }
   }
 
