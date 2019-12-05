@@ -316,7 +316,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
       component: (
         <DropdownMenu
           key="i18nConfig"
-          needAction={false}
+          needCancel={false}
           onChange={(val) => this.changeLang(val)}
           position="right"
           value={lang}

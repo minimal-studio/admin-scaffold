@@ -5,7 +5,7 @@ import { DropdownWrapperProps } from '@deer-ui/core/dropdown-wrapper';
 import { Icon, PureIcon, DropdownWrapper } from '../ui-refs';
 
 const DisplayDOM = ({
-  onClick = undefined,
+  onClick,
   pureIcon,
   icon,
   title,
@@ -57,7 +57,8 @@ const Statusbar: React.SFC<StatsbarProps> = (props) => {
                   overlay={(options) => overlay({
                     ...otherProps,
                     ...options,
-                  })}>
+                  })}
+                >
                   <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />
                 </DropdownWrapper>
               );
