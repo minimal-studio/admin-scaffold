@@ -1,15 +1,17 @@
 import React, { Component } from "react";
+import { Link } from '@deer-ui/admin-scaffold';
 
 import {
-  Grid, Card, CardContainer, Label
+  Grid, Card, Label, Icon, Button
 } from "@deer-ui/core";
 import {
   ChartCom
 } from "@deer-ui/enhance-ui";
+import { onNavigate } from "@deer-ui/admin-scaffold/router-multiple";
 
-ChartCom.setChartJSPath(
-  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"
-);
+// ChartCom.setChartJSPath(
+//   "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"
+// );
 
 const mockData = {
   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -49,6 +51,50 @@ const options = {
   }
 };
 
+const CardDesc = ({
+  icon, desc, descTitle,
+  action, actionText
+}) => {
+  return (
+    <Card p={10} className="_btn">
+      <Grid container alignItems="center">
+        <Grid lg={5}>
+          <Icon
+            n={icon}
+            style={{
+              padding: `15px`,
+              fontSize: 50,
+              color: '#CCC'
+            }}
+          />
+        </Grid>
+        <Grid lg={7}>
+          <div className="text-right">
+            <h4 style={{ marginTop: 0 }}>{descTitle}</h4>
+            <Label color="red" style={{
+              // fontSize: 18
+            }}
+            >{desc}</Label>
+          </div>
+        </Grid>
+      </Grid>
+      {/* <hr /> */}
+      {/* <Button
+        block
+        hola
+        onClick={(e) => {
+          action();
+          onNavigate({
+            route: 'LayoutDemo'
+          });
+        }}
+      >
+        {actionText}
+      </Button> */}
+    </Card>
+  );
+};
+
 export default class DashBoard extends React.PureComponent {
   state = {};
 
@@ -57,7 +103,6 @@ export default class DashBoard extends React.PureComponent {
   componentDidMount() {
     /** 用于让出 UI 线程 */
     setTimeout(() => this.chartDOM1.renderChart(), 15);
-    setTimeout(() => this.chartDOM2.renderChart(), 30);
     setTimeout(() => this.chartDOM3.renderChart(), 45);
     setTimeout(() => this.chartDOM4.renderChart(), 60);
   }
@@ -65,64 +110,122 @@ export default class DashBoard extends React.PureComponent {
   render() {
     return (
       <div className="dash-board">
-        <CardContainer>
-          <Card p={20}>
-            统计数据： 在线{" "}
-            <Label color="red">{(1000000).toLocaleString("en-US")}</Label> 人
-          </Card>
+        <Card container>
           <Grid
             container
             space={10}
-            style={{
-              margin: -20
-            }}>
-            <Grid xl={12} lg={12} />
-            <Grid xl={4} lg={6} md={12}>
+          >
+            <Grid
+              xl={3}
+              lg={3}
+              md={3}
+              sm={6}
+              xs={6}
+            >
+              <CardDesc
+                icon="yen-sign"
+                descTitle="营收"
+                desc="10,000,000"
+                actionText="查看"
+                action={(e) => {
+
+                }}
+              />
+            </Grid>
+            <Grid
+              xl={3}
+              lg={3}
+              md={3}
+              sm={6}
+              xs={6}
+            >
+              <CardDesc
+                icon="users"
+                descTitle="在线人数"
+                desc="10,000"
+                actionText="查看"
+                action={(e) => {
+
+                }}
+              />
+            </Grid>
+            <Grid
+              xl={3}
+              lg={3}
+              md={3}
+              sm={6}
+              xs={6}
+            >
+              <CardDesc
+                icon="comments"
+                descTitle="反馈"
+                desc="1,000"
+                actionText="查看"
+                action={(e) => {
+
+                }}
+              />
+            </Grid>
+            <Grid
+              xl={3}
+              lg={3}
+              md={3}
+              sm={6}
+              xs={6}
+            >
+              <CardDesc
+                icon="chart-line"
+                descTitle="转化率"
+                desc="80%"
+                actionText="查看"
+                action={(e) => {
+
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            space={10}
+          >
+            <Grid xl={4} lg={6} md={6} sm={12}>
               <Card className="relative" p={10}>
-                <h3 className="text-center">数据1</h3>
+                <h3 className="text-center">负债</h3>
                 <ChartCom
                   id="chartDOM1"
                   ref={this.saveRef("chartDOM1")}
                   data={mockData}
                   type="bar"
-                  options={options}/>
+                  options={options}
+                />
               </Card>
             </Grid>
-            <Grid xl={4} lg={6} md={12}>
+            <Grid xl={4} lg={6} md={6} sm={12}>
               <Card className="relative" p={10}>
-                <h3 className="text-center">数据2</h3>
-                <ChartCom
-                  id="chartDOM2"
-                  ref={this.saveRef("chartDOM2")}
-                  data={mockData}
-                  type="line"
-                  options={options}/>
-              </Card>
-            </Grid>
-            <Grid xl={4} lg={6} md={12}>
-              <Card className="relative" p={10}>
-                <h3 className="text-center">数据3</h3>
+                <h3 className="text-center">营收</h3>
                 <ChartCom
                   id="chartDOM3"
                   ref={this.saveRef("chartDOM3")}
                   data={mockData}
                   type="radar"
-                  options={options}/>
+                  options={options}
+                />
               </Card>
             </Grid>
-            <Grid xl={4} lg={6} md={12}>
+            <Grid xl={4} lg={6} md={6} sm={12}>
               <Card className="relative" p={10}>
-                <h3 className="text-center">数据4</h3>
+                <h3 className="text-center">支出</h3>
                 <ChartCom
                   id="chartDOM4"
                   ref={this.saveRef("chartDOM4")}
                   data={mockData}
                   type="pie"
-                  options={options}/>
+                  options={options}
+                />
               </Card>
             </Grid>
           </Grid>
-        </CardContainer>
+        </Card>
       </div>
     );
   }

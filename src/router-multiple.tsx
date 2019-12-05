@@ -1,7 +1,7 @@
 import React, { Component, SFC } from 'react';
 
 import { createBrowserHistory } from "history";
-import { getUrlParams, urlParamsToQuery } from '@mini-code/request/url-resolve';
+import { getUrlParams, urlParamsToQuery, ParamEntity } from '@mini-code/request/url-resolve';
 import { RemoveArrayItem, CallFunc, IsUrl } from '@mini-code/base-func';
 
 export interface RouterHelperState {
@@ -55,19 +55,21 @@ const wrapPushUrl = (pushConfig) => {
   return result;
 };
 
+export interface NavigatorOptions {
+  type?: 'LINK' | 'GO_BACK' | 'PUSH';
+  route: string;
+  params?: ParamEntity;
+  from?: any;
+}
+
 /**
- *
- * @param {object} config { type: 'PUSH | GO_BACK | LINK', component: route, params: {} }
+ * 导航器
  */
-const onNavigate = (config) => {
-  if (!config) return console.log('Not config');
+const onNavigate = (options: NavigatorOptions) => {
+  if (!options) return console.log('Not options');
   const { location } = history;
-  config.from = location;
-  switch (config.type) {
-    case "PUSH":
-      var pushUrl = wrapPushUrl(config);
-      pushToHistory(`#/${pushUrl}`, config);
-      break;
+  options.from = location;
+  switch (options.type) {
     case "LINK":
       break;
     // case "MODAL":
@@ -79,12 +81,17 @@ const onNavigate = (config) => {
     case "GO_BACK":
       history.goBack();
       break;
+    case "PUSH":
+    default:
+      var pushUrl = wrapPushUrl(options);
+      pushToHistory(`#/${pushUrl}`, options);
+      break;
   }
 };
 
 const resolvePath = (path) => {
   const result = path.split('?')[0].replace(/#/g, '');
-  const pathArr = result.split('/').filter(item => !!item);
+  const pathArr = result.split('/').filter((item) => !!item);
   return pathArr;
 };
 
@@ -261,7 +268,8 @@ const Link: SFC<LinkProps> = (props) => {
             params
           });
         }
-      }}>
+      }}
+    >
       {children}
     </span>
   );

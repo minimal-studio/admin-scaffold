@@ -1,6 +1,7 @@
 .tabs-for-multiple-router {
   z-index: 1;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   position: sticky;
   top: 0;
   background-color: $base-bg-color;
@@ -41,7 +42,7 @@
     &.active {
       // background-color: $themeColor;
       color: $themeColor;
-      background-color: $main-bg-color;
+      // background-color: $main-bg-color;
 
       .text {
         color: $themeColor;

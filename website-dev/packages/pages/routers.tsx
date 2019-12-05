@@ -17,6 +17,10 @@ const demoMenu = [
         title: "Alerts",
         code: "Alerts"
       },
+      {
+        title: "Layout",
+        code: "LayoutDemo"
+      },
     ]
   },
   {

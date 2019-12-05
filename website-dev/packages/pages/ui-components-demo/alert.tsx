@@ -1,9 +1,9 @@
 import React from 'react';
-import { Alert, CardContainer, Card } from '@deer-ui/core';
+import { Alert, Card } from '@deer-ui/core';
 
 export const Alerts = () => {
   return (
-    <CardContainer>
+    <Card container>
       <Card>
         <div className="alerts">
           <h3 className="ps10">Basic Usage</h3>
@@ -45,6 +45,6 @@ export const Alerts = () => {
           />
         </div>
       </Card>
-    </CardContainer>
+    </Card>
   );
 };
