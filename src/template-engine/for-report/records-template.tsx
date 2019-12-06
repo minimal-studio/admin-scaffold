@@ -93,7 +93,7 @@ export default class ReportTemplate<
     super(props);
 
     this.state = {
-      displayFloat: GetFloatLen() != 0,
+      displayFloat: GetFloatLen() !== 0,
       tableHeight: props.height || 200,
       expandCon: props.defaultExpandCon
     };
@@ -342,6 +342,62 @@ export default class ReportTemplate<
     );
   }
 
+  renderFuncBtns = () => {
+    const {
+      querying, actionBtns,
+      conditionOptions, $T, hideFloatable,
+      needClearBtn, needAutoRefresh
+    } = this.props;
+    const hasConditionOptions = conditionOptions.length > 0;
+    const { displayFloat } = this.state;
+
+    return (
+      <div className="action-area layout">
+        <Button
+          text={$T('查询')}
+          type="submit"
+          className="mr10"
+          loading={querying}
+          onClick={(e) => {
+            this.handleQueryData();
+          }}
+        />
+        {
+          needClearBtn && hasConditionOptions && (
+            <Button
+              text={$T('清空')}
+              color="red"
+              className="mr10"
+              onClick={(e) => {
+                this.conditionHelper.clearValue();
+              }}
+            />
+          )
+        }
+        {
+          !hideFloatable && (
+            <Button
+              text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
+              color="default"
+              className="mr10"
+              onClick={(e) => this.toggleFloat()}
+            />
+          )
+        }
+        {
+          actionBtns && this.renderActionBtns(actionBtns)
+        }
+        <span className="flex"></span>
+        {
+          this.renderToggleBtn()
+        }
+        {
+          needAutoRefresh && this.renderAutoRefresh()
+        }
+      </div>
+    );
+  }
+
   render() {
     const {
       pagingInfo, querying, children, template,
@@ -425,75 +481,28 @@ export default class ReportTemplate<
     );
     const conditionHelper = !loadingCondition && (
       <ConditionGenerator
+        style={{
+          height: expandCon ? 'auto' : 48
+        }}
         ref={this.saveConditionRef}
         onChange={this.handleChangeCondition}
         conditionConfig={conditionOptions}
+        onSubmit={(e) => {
+          console.log(e);
+          this.handleQueryData();
+        }}
       />
     );
-    const actionArea = (
-      <div className="action-area layout">
-        <Button
-          text={$T('查询')}
-          type="submit"
-          className="mr10"
-          loading={querying}
-          onClick={(e) => {
-            this.handleQueryData();
-          }}
-        />
-        {
-          needClearBtn && hasConditionOptions && (
-            <Button
-              text={$T('清空')}
-              color="red"
-              className="mr10"
-              onClick={(e) => {
-                this.conditionHelper.clearValue();
-              }}
-            />
-          )
-        }
-        {
-          !hideFloatable && (
-            <Button
-              text={$T(displayFloat ? '隐藏小数点' : '显示小数点')}
-              color="default"
-              className="mr10"
-              onClick={(e) => this.toggleFloat()}
-            />
-          )
-        }
-        {
-          actionBtns && this.renderActionBtns(actionBtns)
-        }
-        <span className="flex"></span>
-        {
-          this.renderToggleBtn()
-        }
-        {
-          needAutoRefresh && this.renderAutoRefresh()
-        }
-      </div>
-    );
+    // const actionArea = ;
 
     return (
       <div className="report-table-layout">
         <Toast ref={this.saveToast}/>
         <div
-          // ref={(e) => {
-          //   if (e) {
-          //     console.log(e.offsetHeight);
-          //   }
-          // }}
           className={`report-fix-con ${(showCondition ? '' : ' hide')} ${expandCon ? 'expand' : 'collapse'}`}
         >
-          <form onSubmit={(e) => {
-            e.preventDefault();
-          }}
-          >
-            {conditionHelper}
-            {actionArea}
-          </form>
+          {conditionHelper}
+          {this.renderFuncBtns()}
           {children}
         </div>
         <div>

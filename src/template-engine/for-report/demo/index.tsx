@@ -18,7 +18,7 @@ class TestReportClass extends ActionAgent {
   state = {
     dataRows: [],
     propsForTable: {
-      rowKey: record => record.ID
+      rowKey: (record, idx) => record.id || idx
     },
     infoMapper: paginHelper.getPaginMapper(),
     pagingInfo: paginHelper.getDefPagin(),
@@ -65,7 +65,7 @@ class TestReportClass extends ActionAgent {
           console.log('for test');
         }
       }
-    ]
+    ];
   }
 
   // 与 HOCReportRender 模版对接的查询接口

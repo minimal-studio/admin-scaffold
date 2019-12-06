@@ -71,7 +71,8 @@ function HOCReportRender<P = HOCReportRenderClass>(
           res.push(
             <span className={`link-btn mr5 t_${color}`} key={text} onClick={(e) => {
               action(contentResult, record, mapper, rowIdx, ...other);
-            }}>
+            }}
+            >
               {this.props.$T(text)}
             </span>
           );
@@ -131,7 +132,8 @@ function HOCReportRender<P = HOCReportRenderClass>(
         needCount: this.needCount,
         onChangeCondition: this.onChangeCondition,
         actionBtns: this.reportBtnFilter(),
-        onQueryData: this.queryData.bind(this)
+        onQueryData: this.queryData.bind(this),
+        propsForTable: this.propsForTable,
       });
       const props = Object.assign({},
         passProps,
@@ -143,7 +145,8 @@ function HOCReportRender<P = HOCReportRenderClass>(
           {...scopeProps}
           {...props}
 
-          ref={this.saveReport} />
+          ref={this.saveReport}
+        />
       );
     }
   };
