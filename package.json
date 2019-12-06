@@ -1,6 +1,6 @@
 {
   "name": "admin-scaffold",
-  "version": "2.0.0-beta2.1",
+  "version": "2.0.0-beta2.2",
   "private": true,
   "workspaces": [
     "src"
@@ -37,7 +37,7 @@
     "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
-    "@deer-ui/core": "^4.0.0-rc3.8",
+    "@deer-ui/core": "^4.0.0-rc4.5",
     "@mini-code/base-func": "^1.1.0",
     "@mini-code/request": "^1.0.0-alpha2.3",
     "@types/react": "^16.8.17",
