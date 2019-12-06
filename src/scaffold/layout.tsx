@@ -483,9 +483,9 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
                         );
                       }) : (
                         <Tab
-                          contentClass="dash-board"
+                          contentClass="dashboard"
                           label={$T('仪表盘')}
-                          key="dash-board"
+                          key="dashboard"
                         >
                           <DashBoardWrapper
                             CustomerComponent={DashBoard}
