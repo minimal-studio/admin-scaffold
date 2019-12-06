@@ -1,8 +1,28 @@
 import React from 'react';
 import {
-  Alert, Card, Grid, FormLayout
+  Alert, Card, Grid, FormLayout, ShowModal
 } from '@deer-ui/core';
 import { FormOptions } from '@deer-ui/core/form-generator/form-filter';
+import { FormLayoutBtnsConfig } from '@deer-ui/core/form-layout/form-layout';
+
+const formBtns: FormLayoutBtnsConfig = [
+  {
+    actingRef: 'submitting',
+    action: ({ value }, actingRef) => {
+      console.log(value, actingRef);
+      ShowModal({
+        title: 'Form output value',
+        children: (
+          <div className="p20">
+            <h4>Form output value</h4>
+            <p>{JSON.stringify(value)}</p>
+          </div>
+        )
+      });
+    },
+    text: 'Submit'
+  }
+];
 
 const formOptions: FormOptions = [
   {
@@ -55,6 +75,7 @@ export const FormLayoutDemo = () => {
           <Card p={20} className="mb20">
             <h3>Horizontal layout</h3>
             <FormLayout
+              formBtns={formBtns}
               formOptions={formOptions}
             />
           </Card>
@@ -62,6 +83,7 @@ export const FormLayoutDemo = () => {
             <h3>Flow layout</h3>
             <FormLayout
               layout="flow"
+              formBtns={formBtns}
               formOptions={formOptions}
             />
           </Card>
@@ -75,6 +97,7 @@ export const FormLayoutDemo = () => {
             <h3>Vertical layout</h3>
             <FormLayout
               layout="vertical"
+              formBtns={formBtns}
               formOptions={formOptions}
             />
           </Card>

@@ -21,7 +21,7 @@ import * as AllManagerPages from "@dashboard/pages";
 import "@dashboard/config/app-config";
 
 import VersionInfo from "./version.json";
-import DashBoard from "./dash-board";
+import DashBoard from "./dashboard";
 import statusbarConfig from "./statusbar-config";
 
 /**

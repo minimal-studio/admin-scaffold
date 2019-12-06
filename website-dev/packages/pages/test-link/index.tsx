@@ -38,7 +38,7 @@ class TestLink extends Services {
               返回上一层
             </span>
           </div>
-          <Link to="HomePage">首页</Link>
+          <Link to="AboutPage">首页</Link>
         </div>
       </div>
     );

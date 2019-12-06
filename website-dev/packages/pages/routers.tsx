@@ -90,8 +90,8 @@ const NAV_MENU_CONFIG = [
     icon: "tachometer-alt"
   },
   {
-    title: "首页",
-    code: "HomePage",
+    title: "关于",
+    code: "AboutPage",
     icon: "home"
   },
   // !isNetlify

@@ -3,10 +3,10 @@ import {
   Grid, CardContainer, Card
 } from "@deer-ui/core";
 
-const HomePage = () => (
+const AboutPage = () => (
   <div className="home-page">
     <CardContainer>
-      <Grid container space={10}>
+      <Grid container space={20}>
         <Grid item lg={6} sm={12} xs={12}>
           <Card p={20}>
             <h3>关于 @deer-ui/admin-dashboard</h3>
@@ -30,4 +30,4 @@ const HomePage = () => (
   </div>
 );
 
-export default HomePage;
+export default AboutPage;

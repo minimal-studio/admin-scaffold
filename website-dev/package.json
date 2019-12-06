@@ -2,7 +2,9 @@
   "name": "admin-dashboard",
   "version": "1.0.0-rc.1",
   "private": true,
-  "workspaces": ["./packages/*"],
+  "workspaces": [
+    "./packages/*"
+  ],
   "scripts": {
     "postinstall": "npm run setAppVersion",
     "start": "PORT=6088 PLATFORM=workspace_admin minictl start",
@@ -17,7 +19,7 @@
   },
   "dependencies": {
     "@deer-ui/core": "^4.0.0-rc3.8",
-    "@deer-ui/enhance-ui": "^4.0.0-rc1.0",
+    "@deer-ui/enhance-ui": "^4.0.0-rc1.1",
     "@mini-code/base-func": "^1.1.0",
     "@mini-code/request": "^1.0.0-alpha2.3",
     "mousetrap": "^1.6.2",
@@ -26,12 +28,13 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.3.6",
     "react-transition-group": "^4.2.1",
+    "unistore": "^3.5.1",
     "version-helper": "^1.2.0-alpha1.2"
   },
   "devDependencies": {
+    "@mini-code/scripts": "^1.0.0-alpha1.2",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
-    "@mini-code/scripts": "^1.0.0-alpha1.2",
     "prettier": "^1.18.2"
   },
   "browserslist": {
