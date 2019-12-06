@@ -1,4 +1,4 @@
-import { FormRender } from "./template-engine";
+import { FormRender } from "@dashboard/template-engine";
 
 import AboutPage from "./home-page";
 import { TestForm, TestFormBasic } from "./test-form";

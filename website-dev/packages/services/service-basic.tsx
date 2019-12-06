@@ -67,6 +67,15 @@ export default class Services extends ActionAgent {
     nextPagin: paginHelper.getDefPagin()
   };
 
+  propsForTable = {
+    /** 统一设置 action 为固定右边的列 */
+    fixedRightKeys: ["action"],
+    /** 返回 record.ID 作为 Table 的 row 的 key，提高 Table 的渲染性能 */
+    rowKey: (record, idx) => {
+      return record.id || idx;
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -78,12 +87,6 @@ export default class Services extends ActionAgent {
       records: [],
       infoMapper: paginHelper.getPaginMapper(),
       pagingInfo: paginHelper.getDefPagin(),
-      propsForTable: {
-        /** 统一设置 action 为固定右边的列 */
-        fixedRightKeys: ["action"],
-        /** 返回 record.ID 作为 Table 的 row 的 key，提高 Table 的渲染性能 */
-        rowKey: (record) => record.ID
-      }
     };
 
     /**

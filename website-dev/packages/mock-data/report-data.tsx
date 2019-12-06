@@ -111,6 +111,13 @@ const keyFieldsForReport: Columns = [
       return !isDesc;
     }
   },
+  {
+    key: "Weight",
+    filter: (str, item, mapper, idx) => {
+      // 这里是过滤每一条 Weight 字段的 filter 函数
+      return `${str}kg`;
+    }
+  },
   "Phone",
   "Nickname",
   "Gender",
@@ -124,14 +131,7 @@ const keyFieldsForReport: Columns = [
   "Placeholder4",
   "Placeholder5",
   "Placeholder6",
-  "Placeholder7",
-  {
-    key: "Weight",
-    filter: (str, item, mapper, idx) => {
-      // 这里是过滤每一条 Weight 字段的 filter 函数
-      return `${str}kg`;
-    }
-  }
+  "Placeholder7"
 ];
 
 export { getTestData, keyFieldsForReport };

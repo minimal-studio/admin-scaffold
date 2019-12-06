@@ -13,6 +13,10 @@ import { HOCReportRender } from "@dashboard/template-engine";
 import { getTestData, keyFieldsForReport } from "@dashboard/mock-data/report-data";
 
 class TestReportClass extends Services {
+  propsForTable = {
+    rowKey: (record) => record.avatar
+  }
+
   state = {
     ...this.state
   };
@@ -31,7 +35,7 @@ class TestReportClass extends Services {
       "customerFormDemo",
       "customerFormDemo2",
       "inputRangeDemo",
-      "refuDemo",
+      // "refuDemo",
       "inputSelectorDemo",
       "switchDemo",
       "datetimeRange",

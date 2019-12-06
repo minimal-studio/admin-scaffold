@@ -963,17 +963,17 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@deer-ui/core@^4.0.0-rc3.8":
-  version "4.0.0-rc3.8"
-  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc3.8.tgz#31e74739b20b70658ffcf67a51031a6d97be0e8e"
-  integrity sha512-26EVxZtDgRfNVaI1aH60K/3xeqTw0AfyoJkkEDX9E32m99vftKlGq5hR9BIhjwMv0uOLk98AjeMRKO0lfC2pYQ==
+"@deer-ui/core@^4.0.0-rc4.5":
+  version "4.0.0-rc4.5"
+  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc4.5.tgz#9d18bd49ea3331fbd1e11bc6ef0b5862b1c9e052"
+  integrity sha512-qRhZT3dHARhsTGHPv8cnCHB0OUNgDd2R7MMqr/X8heabvAWDaZ0SdO1kqAsB1f5eMb4HR/zvmiXtM05VAl1CFg==
   dependencies:
     classnames "^2.2.6"
 
-"@deer-ui/enhance-ui@^4.0.0-rc1.1":
-  version "4.0.0-rc1.1"
-  resolved "https://registry.yarnpkg.com/@deer-ui/enhance-ui/-/enhance-ui-4.0.0-rc1.1.tgz#14b3b798d459c9a0f045b7bf96ffd378ff87210b"
-  integrity sha512-7Jode9epqAeWS3P/KZHiysqk+R015C5Iaj+VuBzPxPP80Dk+m9gHhOVCreThrEHBwELjhzkKkZEoZUSaAhb46Q==
+"@deer-ui/enhance-ui@^4.0.0-rc2.0":
+  version "4.0.0-rc2.0"
+  resolved "https://registry.yarnpkg.com/@deer-ui/enhance-ui/-/enhance-ui-4.0.0-rc2.0.tgz#fdd0f0f1e429e6314c8c11eda055c1ff09d0cfde"
+  integrity sha512-JzBHSV9sVTz7zgBbowRfVOplndSQj5PHQHkG17CxEZo3qjSjh06e/rM2dT/80BT88/E7Mw35zFaJL5nvWKfz8A==
   dependencies:
     classnames "^2.2.6"
 

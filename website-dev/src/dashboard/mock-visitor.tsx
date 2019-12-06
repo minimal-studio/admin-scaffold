@@ -111,10 +111,10 @@ const columns = [
     //   '超过 40 块钱的富可敌国',
     // ],
   },
-  {
-    key: 'obj',
-    filter: (_, item) => _.account
-  },
+  // {
+  //   key: 'obj',
+  //   filter: (_, item) => _.account
+  // },
   {
     key: 'add',
     labels: {
@@ -144,9 +144,10 @@ const columns = [
 export default () => {
   return (
     <Table
+      height={205}
+      rowKey={(record) => record.id}
       dataRows={visitorDataRows}
       columns={columns}
     />
-
   );
 };

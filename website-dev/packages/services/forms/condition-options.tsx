@@ -114,16 +114,16 @@ const Conditions = {
     title: "范围",
     range: [0, 10]
   },
-  refuDemo: {
-    refu: {
-      refuValue1: "选择1",
-      refuValue2: "选择2",
-      refuValue3: "选择3"
-    },
-    type: "input-selector",
-    tips: "输入选择器, 等于多个输入框",
-    title: "输入选择器1"
-  },
+  // refuDemo: {
+  //   refu: {
+  //     refuValue1: "选择1",
+  //     refuValue2: "选择2",
+  //     refuValue3: "选择3"
+  //   },
+  //   type: "input-selector",
+  //   tips: "输入选择器, 等于多个输入框",
+  //   title: "输入选择器1"
+  // },
   inputSelectorDemo: {
     ref: "MainRef",
     refForS: "RefForSelector",

@@ -46,7 +46,6 @@ export default class TestFormAsync extends Services {
           "输入控制",
           "inputDemo",
           "inputRangeDemo",
-          "refuDemo",
           "inputSelectorDemo",
           "textDemo",
           "自定义组件",

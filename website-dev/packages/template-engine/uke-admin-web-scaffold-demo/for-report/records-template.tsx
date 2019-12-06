@@ -75,7 +75,7 @@ export default class ReportTemplate extends TemplateClass {
     switch (template) {
       case "Table":
         templateDOM = (
-          <div className="table-container" ref={e => (this.renderContent = e)}>
+          <div className="table-container" ref={(e) => (this.renderContent = e)}>
             <div className="table-scroll">
               <Loading loading={querying} inrow>
                 <TableBody
@@ -84,7 +84,7 @@ export default class ReportTemplate extends TemplateClass {
                   needCheck={needCheck}
                   whenCheckAction={whenCheckAction}
                   checkedOverlay={checkedOverlay}
-                  onCheck={nextItems => {
+                  onCheck={(nextItems) => {
                     this.checkedItems = nextItems;
                   }}
                   records={records}
@@ -108,7 +108,7 @@ export default class ReportTemplate extends TemplateClass {
     const pagingDOM = needPaging ? (
       <PagingBtn
         pagingInfo={pagingInfo}
-        onPagin={nextPagin => {
+        onPagin={(nextPagin) => {
           onQueryData({
             nextPagin,
             conditionData: this.conditionHelper.value
@@ -118,10 +118,10 @@ export default class ReportTemplate extends TemplateClass {
     ) : null;
     const conditionHelper = loadingCondition ? null : (
       <ConditionGenerator
-        ref={conditionHelper => {
-          if (conditionHelper) {
-            this.conditionHelper = conditionHelper;
-            this.whenMountedQuery(conditionHelper.value);
+        ref={(e) => {
+          if (e) {
+            this.conditionHelper = e;
+            this.whenMountedQuery(e.value);
           }
         }}
         onChange={(val, ref) => {
@@ -140,22 +140,22 @@ export default class ReportTemplate extends TemplateClass {
         <Button
           text={gm("查询")}
           loading={querying}
-          onClick={e => this.handleQueryData()}
+          onClick={(e) => this.handleQueryData()}
         />
         <Button
           text={gm(displayFloat ? "隐藏小数点" : "显示小数点")}
           className="default ml10"
-          onClick={e => this.toggleFloat()}
+          onClick={(e) => this.toggleFloat()}
         />
       </div>
     );
 
     return (
       <div className="report-table-layout">
-        <Toast ref={toast => (this.toast = toast)} />
+        <Toast ref={(toast) => (this.toast = toast)} />
         <div
           className="report-fix-con"
-          ref={e => {
+          ref={(e) => {
             this.fixGroup = e;
             if (this.__setHeight) return;
             setTimeout(() => {
