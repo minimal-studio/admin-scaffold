@@ -37,7 +37,7 @@
     "version-helper": "^1.2.0-alpha0"
   },
   "devDependencies": {
-    "@deer-ui/core": "^4.0.0-rc4.5",
+    "@deer-ui/core": "^4.0.0-rc4.7",
     "@mini-code/base-func": "^1.1.0",
     "@mini-code/request": "^1.0.0-alpha2.3",
     "@types/react": "^16.8.17",
