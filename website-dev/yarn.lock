@@ -963,10 +963,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@deer-ui/core@^4.0.0-rc4.7":
-  version "4.0.0-rc4.7"
-  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc4.7.tgz#f2f9c3e0df2dd4d33cce0d3490a8c5a30d1208fb"
-  integrity sha512-o5qtMTzlf7mNXGZRH4OdTVIUbATWIyveF0EKs0vyXxWoVCc2mL73UEjebPKbWuzeDPi9AnBhk/tGlOiuFWX8Lw==
+"@deer-ui/core@^4.0.0-rc4.8":
+  version "4.0.0-rc4.8"
+  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc4.8.tgz#58b8b6882788c690e0a1f08767e6e91ef5b6daa2"
+  integrity sha512-xZ33pQ0Mlvw8fHXDNaLoppYuIXTN2e/yvJDjnCDX01P5mYnJAfOBwSgDmdKT0S20FT87WIm4Lj4Ib2HpCy0Rgw==
   dependencies:
     classnames "^2.2.6"
 
