@@ -184,6 +184,9 @@
       transition: padding ease 0.2s;
       margin: 3px 0;
       color: #666;
+      &::after {
+        right: 0;
+      }
     }
   }
 
@@ -202,7 +205,7 @@
       width: 7px;
       border-radius: 25px;
       position: absolute;
-      right: 0;
+      right: $menu-item-padding-horizontal;
       top: 14px;
       opacity: 0.5;
     }
