@@ -42,41 +42,41 @@ const demoMenu = [
       {
         title: "表格",
         code: "TestReport",
-        icon: "chart-bar"
+        // icon: "chart-bar"
       },
       {
         title: "表格异步查询条件",
         code: "ReportAsync",
-        icon: "asterisk"
+        // icon: "asterisk"
       },
       {
         title: "表单",
         code: "TestForm",
-        icon: "bookmark"
+        // icon: "bookmark"
       },
       {
         title: "异步表单数据",
         code: "FormAsync",
-        icon: "book"
+        // icon: "book"
       },
       {
         title: "表单模版引擎",
         code: "FormWithTMPL",
-        icon: "book-open"
+        // icon: "book-open"
       },
       {
         title: "表单模版引擎2",
         code: "FormWithTMPL2",
-        icon: "book-reader"
+        // icon: "book-reader"
       },
       {
         title: "404",
         code: "Notfound",
-        icon: "exclamation-triangle"
+        // icon: "exclamation-triangle"
       },
       {
         title: "link",
-        icon: "link",
+        // icon: "link",
         code: "TestLink"
       }
     ]

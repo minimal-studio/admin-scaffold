@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "npm run setAppVersion",
     "start": "PORT=6088 PLATFORM=workspace_admin minictl start",
-    "build": "npm run setAppVersion; minictl build; npm run copy:version",
+    "build": "minictl build; npm run copy:version",
     "copy:version": "cp src/version.json build/",
     "deploy": "npm run build",
     "init": "git init; yarn",

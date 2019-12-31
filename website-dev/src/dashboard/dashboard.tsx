@@ -107,7 +107,7 @@ const CardDesc = ({
           <span className="t_green mr10">
             20.0%
           </span>
-          <span className="mb10">
+          <span>
            Since last month
           </span>
         </Grid>
@@ -183,7 +183,7 @@ export default class DashBoard extends React.PureComponent {
               xs={12}
             >
               <Card className="relative" p={10}>
-                <div className="mb10">Returned</span>
+                <div className="mb10">Returned</div>
                 <ChartCom
                   id="chartDOM4"
                   ref={this.saveRef("chartDOM4")}
@@ -201,7 +201,7 @@ export default class DashBoard extends React.PureComponent {
               xs={12}
             >
               <Card className="relative" p={10}>
-                <div className="mb10">Revenue</span>
+                <div className="mb10">Revenue</div>
                 <ChartCom
                   id="chartDOM3"
                   height={200}
@@ -219,7 +219,7 @@ export default class DashBoard extends React.PureComponent {
               xs={12}
             >
               <Card className="relative" p={10}>
-                <div className="mb10">Fund</span>
+                <div className="mb10">Fund</div>
                 <ChartCom
                   id="chartDOM1"
                   height={240}
@@ -237,7 +237,7 @@ export default class DashBoard extends React.PureComponent {
               xs={12}
             >
               <Card className="relative" p={10}>
-                <div className="mb10">Visitors</span>
+                <div className="mb10">Visitors</div>
                 <MockVisitorTable />
               </Card>
             </Grid>
