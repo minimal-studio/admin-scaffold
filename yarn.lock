@@ -145,10 +145,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@deer-ui/core@^4.0.0-rc4.8":
-  version "4.0.0-rc4.8"
-  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc4.8.tgz#58b8b6882788c690e0a1f08767e6e91ef5b6daa2"
-  integrity sha512-xZ33pQ0Mlvw8fHXDNaLoppYuIXTN2e/yvJDjnCDX01P5mYnJAfOBwSgDmdKT0S20FT87WIm4Lj4Ib2HpCy0Rgw==
+"@deer-ui/core@^4.0.0-rc5.1":
+  version "4.0.0-rc5.1"
+  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc5.1.tgz#2d96e1b65859dfcd8b55435b126bf5243e473f0b"
+  integrity sha512-staZOF+M34xmSFW0rYTGK457mcPk3ro11ECDuJWDb1a9c/QTyTk2aODQBRGJVYHH2h1XbLQ/f2l9EYHbbSX23A==
   dependencies:
     classnames "^2.2.6"
 
@@ -4548,10 +4548,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-version-helper@^1.2.0-alpha1.0:
-  version "1.2.0-alpha1.0"
-  resolved "https://registry.yarnpkg.com/version-helper/-/version-helper-1.2.0-alpha1.0.tgz#9aadc8786efd30a3d7911d0ed4f2f5bf886d3160"
-  integrity sha512-DoHO20UnLnPnqhHU/jvnwpfglRomJtVCJHb/D0H/13sMWbYKPGrqBTusIXdIaAVpY+6/5JiFr1eIRstzohRCXA==
+version-helper@^1.2.0-beta1.5:
+  version "1.2.0-beta1.5"
+  resolved "https://registry.yarnpkg.com/version-helper/-/version-helper-1.2.0-beta1.5.tgz#5a405c0ceab8c982abc9cf3751f2e867de385b69"
+  integrity sha512-tE0VIV8pTUIh/54Yo/f1orDx7Xneku1kFuyIslLq9yI7ZaQzWJWZNSBODVYMSZgsHi7PcWCVP1Vk+IBk5TwfEg==
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
