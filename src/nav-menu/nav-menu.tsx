@@ -242,12 +242,13 @@ export default class NavMenu extends Component<NavMenuProps, NavMenuState> {
         onClick={() => Call(onClick, key, code)}
       >
         {
-          iconComFilter(options, { classNames: ['menu-icon'] }, null
-          // (
-          //   <span className="menu-tip">-</span>
-          // )
+          iconComFilter(options, { classNames: ['menu-icon'] }, null,
+            // (
+            //   <span className="menu-tip">-</span>
+            // )
           )
         }
+        {/* <span className="menu-tip">-</span> */}
         {_menuText}
       </Link>
     );

@@ -38,12 +38,13 @@
       color: #999;
     }
 
-    &:hover {
-      background-color: $menu-hover-bg-color;
-    }
-
     &.active {
       color: $themeColor;
+
+      &::after {
+        background: $themeColor;
+        opacity: 0.6;
+      }
 
       .menu-tip {
         color: $themeColor;
@@ -120,10 +121,12 @@
 
 .nav-menu-tree {
   .icon {
-    font-size: 16px;
+    font-size: 14px;
   }
+
   .menu-icon {
     width: 26px;
+    // color: #888;
   }
 
   >.menu {
@@ -177,13 +180,11 @@
     }
 
     .menu {
-      padding: $menu-item-padding-vertical 16px;
+      padding: $menu-item-padding-vertical 0 $menu-item-padding-vertical 26px;
       transition: padding ease 0.2s;
       margin: 3px 0;
-
-      // &:hover {
-      //   padding-left: 10px;
-      // }
+      position: relative;
+      color: #666;
     }
   }
 
@@ -194,8 +195,26 @@
     // transition: all ease 0.2s;
     text-decoration: none;
 
-    .menu-tip {
-      margin-right: 10px;
+    &::after {
+      background: $gray;
+      content: "";
+      height: 7px;
+      width: 7px;
+      border-radius: 25px;
+      position: absolute;
+      right: 0;
+      top: 14px;
+      opacity: 0.5;
+    }
+
+    &:hover {
+      // background-color: $menu-hover-bg-color;
+      color: #000;
+
+      &::after {
+        background: $themeColor;
+        opacity: 0.4;
+      }
     }
   }
 }
