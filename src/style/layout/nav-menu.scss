@@ -183,7 +183,6 @@
       padding: $menu-item-padding-vertical 0 $menu-item-padding-vertical 26px;
       transition: padding ease 0.2s;
       margin: 3px 0;
-      position: relative;
       color: #666;
     }
   }
@@ -194,6 +193,7 @@
     display: block;
     // transition: all ease 0.2s;
     text-decoration: none;
+    position: relative;
 
     &::after {
       background: $gray;
