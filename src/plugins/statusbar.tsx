@@ -4,6 +4,15 @@ import { DropdownWrapperProps } from '@deer-ui/core/dropdown-wrapper';
 
 import { Icon, PureIcon, DropdownWrapper } from '../ui-refs';
 
+interface DisplayDOMProps {
+  onClick?;
+  pureIcon?;
+  icon?;
+  title?;
+  className?;
+  children?;
+}
+
 const DisplayDOM = ({
   onClick,
   pureIcon,
@@ -11,7 +20,7 @@ const DisplayDOM = ({
   title,
   className = 'item',
   children
-}) => {
+}: DisplayDOMProps) => {
   const I = pureIcon ? <PureIcon n={pureIcon} /> : <Icon n={icon} />;
   return (
     <span onClick={onClick} className={className}>
@@ -59,12 +68,24 @@ const Statusbar: React.SFC<StatsbarProps> = (props) => {
                     ...options,
                   })}
                 >
-                  <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />
+                  <DisplayDOM
+                    onClick={action}
+                    title={title}
+                    icon={icon}
+                    pureIcon={pureIcon}
+                  />
                 </DropdownWrapper>
               );
               break;
             case !!action:
-              con = <DisplayDOM onClick={action} title={title} icon={icon} pureIcon={pureIcon} />;
+              con = (
+                <DisplayDOM
+                  onClick={action}
+                  title={title}
+                  icon={icon}
+                  pureIcon={pureIcon}
+                />
+              );
               break;
           }
           return (
@@ -72,11 +93,6 @@ const Statusbar: React.SFC<StatsbarProps> = (props) => {
               {con}
             </React.Fragment>
           );
-          // return (
-          //   <span className="item" onClick={action} key={`${icon}_${title}`}>
-          //     {con}
-          //   </span>
-          // );
         })
       }
     </div>

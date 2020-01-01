@@ -45,7 +45,10 @@ const StatusbarLayout: React.SFC<StatusbarProps> = (props) => {
       {
         StatusbarPlugin && loadPlugin(StatusbarPlugin)
       }
-      <DefaultStatusbar {...props} statusbarConfig={statusbarConfig} />
+      <DefaultStatusbar
+        {...props}
+        statusbarConfig={statusbarConfig}
+      />
     </div>
   );
 };

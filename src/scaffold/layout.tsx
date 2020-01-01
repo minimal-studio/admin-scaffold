@@ -313,31 +313,65 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     const { i18nConfig } = this.props;
     const { lang } = this.state;
     return {
-      component: (
-        <DropdownMenu
-          key="i18nConfig"
-          needCancel={false}
-          onChange={(val) => this.changeLang(val)}
-          position="right"
-          value={lang}
-          values={i18nConfig}
-        >
-          {
-            () => (
-              <div>
-                <Icon n="globe" classNames={["mr5"]} />
-              </div>
-            )
-          }
-        </DropdownMenu>
-      )
+      title: "",
+      icon: "globe",
+      overlay: ({ hide }) => {
+        return i18nConfig ? (
+          <Menus
+            data={
+              Object.keys(i18nConfig).map((langVal) => {
+                return {
+                  text: langVal,
+                  isActive: lang === langVal,
+                  action: () => {
+                    hide();
+                    this.changeLang(langVal);
+                  }
+                };
+              })
+            }
+          />
+        ) : <span></span>;
+      }
     };
+  }
+
+  renderSystemSetting = () => {
+    const { Footer, versionInfo } = this.props;
+    const { theme, darkMode, layout } = this.state;
+    return (
+      <div className="system-setting">
+        <Theme
+          onChangeDarkMode={this.changeDarkMode}
+          onChangeTheme={this.changeTheme}
+          onChangeLayout={this.changeLayout}
+          layout={layout}
+          darkMode={darkMode}
+          activeTheme={theme}
+        />
+        <hr />
+        <ShortcutDesc />
+        <hr />
+        <FooterContainer>
+          {
+            Footer && this.loadPlugin(Footer)
+          }
+          {
+            versionInfo ? (
+              <VersionDisplayer $T={$T} versionInfo={versionInfo} />
+            ) : null
+          }
+        </FooterContainer>
+      </div>
+    );
   }
 
   getSystemInfoConfig = () => {
     return {
       icon: "ellipsis-v",
-      action: this.renderSystemInfo
+      overlay: () => {
+        return this.renderSystemSetting();
+      }
     };
   }
 
@@ -349,7 +383,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
       position: 'right',
       title: '系统设置',
       children: (
-        <React.Fragment>
+        <>
           <ShortcutDesc />
           <Theme
             onChangeDarkMode={this.changeDarkMode}
@@ -369,7 +403,7 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
               ) : null
             }
           </FooterContainer>
-        </React.Fragment>
+        </>
       )
     });
   }
@@ -408,7 +442,10 @@ export default class ScaffoldLayout extends RouterHelper<ScaffoldLayoutProps, Sc
     const statusbarConfig = this.statusbarConfigFilter();
 
     return (
-      <div id="managerApp" className={`__admin_scaffold_main-container ${theme} ${layout} ${darkMode ? 'dark' : 'light'}`}>
+      <div
+        id="managerApp"
+        className={`__admin_scaffold_main-container ${theme} ${layout} ${darkMode ? 'dark' : 'light'}`}
+      >
         {
           ready ? (
             <div className="__main-wrapper">

@@ -16,6 +16,8 @@ const gradientColorMapper = {
 export interface LoginPanelProps {
   /** login API */
   login: (loginForm) => void;
+  /** FormOptions, 参考 @deer-ui/core 的 formOptions 配置 */
+  formOptions: FormLayoutProps['formOptions'];
   /** 是否登陆中 */
   logging?: boolean;
   /** 是否自动登陆中 */
@@ -32,10 +34,8 @@ export interface LoginPanelProps {
   btnGColor?: 'red' | 'green' | 'blue' | 'wine' | 'purple';
   /** 是否沾满屏幕 */
   fixed?: boolean;
-  /** FormOptions, 参考 @deer-ui/core 的 formOptions 配置 */
-  formOptions: FormLayoutProps['formOptions'];
 }
-const gradientColorFilter = color => gradientColorMapper[color] || color;
+const gradientColorFilter = (color) => gradientColorMapper[color] || color;
 
 export default class LoginPanel extends Component<LoginPanelProps> {
   static defaultProps = {
@@ -78,7 +78,8 @@ export default class LoginPanel extends Component<LoginPanelProps> {
       <div className={`login-panel fixbg ${fixed ? 'fixed' : ''}`}
         style={{
           backgroundImage
-        }}>
+        }}
+      >
         <div className="login-layout">
           {logo && logo()}
           <FormLayout
@@ -102,7 +103,8 @@ export default class LoginPanel extends Component<LoginPanelProps> {
             // }}
             isMobile
             formOptions={formOptions}
-            ref={this.saveForm} />
+            ref={this.saveForm}
+          />
         </div>
       </div>
     );

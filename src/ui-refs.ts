@@ -18,11 +18,14 @@ import { Tabs, Tab } from '@deer-ui/core/tabs';
 import { Table } from '@deer-ui/core/table';
 import { TableCard } from '@deer-ui/core/table-card';
 import { Notify } from '@deer-ui/core/notification';
+import { Grid } from '@deer-ui/core/grid';
+import { Container } from '@deer-ui/core/container';
 import { setUkelliConfig, setUILang, setLangTranslate } from '@deer-ui/core/utils/config';
 import { ClickAway } from '@deer-ui/core/click-away';
 import { getElementOffset } from '@deer-ui/core/utils';
 
 export {
+  Container, Grid,
   Tip, ShowModal, CloseAllModal, CloseModal, Avatar, Switch,
   FormLayout, Pagination, ConditionGenerator, Alert, Menus,
   DropdownMenu, ToolTip, Loading, Tabs, Tab, ClickAway,

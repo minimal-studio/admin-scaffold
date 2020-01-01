@@ -22,13 +22,13 @@
     transform: translate(-50%, -50%);
     width: 440px;
     padding: 10px 30px 30px;
-    background-color: #f9f9f9;
+    // background-color: #f9f9f9;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     transition: all ease 2s;
     .input-control {
       width: 100%;
-      background-color: transparent;
+      // background-color: transparent;
     }
     &:hover {
       box-shadow: 0 40px 48px rgba(0, 0, 0, 0.4);

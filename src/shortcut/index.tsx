@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { TableColumns } from '@deer-ui/core/table';
-import { Table, Menus, ShowModal } from '../ui-refs';
+import {
+  Table, Menus, ShowModal, Button
+} from '../ui-refs';
 import dataRows from './data';
 
 const columns: TableColumns = [
@@ -28,14 +30,24 @@ const showShortcut = () => {
 
 const ShortcutDesc = () => {
   return (
-    <Menus
-      data={[
-        {
-          text: '快捷键说明',
-          action: () => showShortcut()
-        },
-      ]} />
+    <Button
+      color="default"
+      onClick={(e) => {
+        showShortcut();
+      }}
+    >
+      快捷键说明
+    </Button>
   );
+  // return (
+  //   <Menus
+  //     data={[
+  //       {
+  //         text: '快捷键说明',
+  //         action: () => showShortcut()
+  //       },
+  //     ]} />
+  // );
 };
 
 export {
