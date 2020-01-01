@@ -5,7 +5,7 @@ import React from "react";
 
 const CustomerCom = ({ onChange }) => {
   // onChange 由 FormGenerator 提供
-  return <div onClick={e => onChange("vvvvv")}>自定义组件</div>;
+  return <div onClick={(e) => onChange("vvvvv")}>自定义组件</div>;
 };
 
 /**
@@ -92,17 +92,6 @@ const Conditions = {
       <div>customForm</div>
     ),
     title: "自定义组件1",
-  ,
-  customerFormDemo2: {
-    ref: "customer2",
-    type: "customForm",
-    getCustomFormControl: () => CustomerCom,
-    title: "自定义组件2",
-    values: {
-      value1: "value1",
-      value2: "value2",
-      value3: "value3"
-    }
   },
   inputRangeDemo: {
     refs: ["s", "e"],

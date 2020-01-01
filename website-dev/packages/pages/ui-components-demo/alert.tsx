@@ -4,7 +4,7 @@ import { Alert, Card, Grid } from '@deer-ui/core';
 export const Alerts = () => {
   return (
     <Card container>
-      <Grid container space={20}>
+      <Grid container space={20} outSpacing={false}>
         <Grid
           xl={6}
           lg={6}

@@ -73,26 +73,28 @@ const formOptions = [
       value3: "value3"
     }
   },
+  // {
+  //   ref: "customer1",
+  //   type: "customForm",
+  //   getCustomFormControl: () => {
+  //     return {
+  //       component: CustomerCom,
+  //       props: {}
+  //     };
+  //   },
+  //   title: "自定义的表单组件1",
+  //   values: {
+  //     value1: "value1",
+  //     value2: "value2",
+  //     value3: "value3"
+  //   }
+  // },
   {
-    ref: "customer1",
+    ref: "customer",
     type: "customForm",
-    getCustomFormControl: () => {
-      return {
-        component: CustomerCom,
-        props: {}
-      };
-    },
-    title: "自定义的表单组件1",
-    values: {
-      value1: "value1",
-      value2: "value2",
-      value3: "value3"
-    }
-  },
-  {
-    ref: "customer2",
-    type: "customForm",
-    getCustomFormControl: () => CustomerCom,
+    getCustomFormControl: ({ onChange }) => (
+      <CustomerCom onChange={onChange} />
+    ),
     title: "自定义的表单组件2",
     values: {
       value1: "value1",

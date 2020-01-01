@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { FormGenerator, TipPanel } from "@deer-ui/core";
+import { FormGenerator, Alert } from "@deer-ui/core";
 
 const isDev = process.env.NODE_ENV == "development";
 const StoreLoginInfo = "STORE_LOGIN_INFO";
@@ -77,7 +77,7 @@ export default class LoginPanel extends Component {
       >
         <div className="form-layout">
           <h3 className="title">管理系统</h3>
-          {loginResDesc ? <TipPanel text={loginResDesc} /> : null}
+          {loginResDesc ? <Alert text={loginResDesc} /> : null}
           <FormGenerator
             className="login-form-container"
             // inlineTitle={true}
@@ -87,7 +87,7 @@ export default class LoginPanel extends Component {
                 window.Storage.setItem(StoreLoginInfo, userInfo);
               });
             }}
-            showInputTitle
+            layout="vertical"
             formOptions={this.formOptions}
             ref={e => (this.formHelper = e)}
           >

@@ -50,7 +50,6 @@ export default class TestFormAsync extends Services {
           "textDemo",
           "自定义组件",
           "customerFormDemo",
-          "customerFormDemo2"
         ];
         const merge = {
           selectDemo: {

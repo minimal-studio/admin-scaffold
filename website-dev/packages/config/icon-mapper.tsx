@@ -3,7 +3,7 @@
 const iconPrefix = "fa fa-";
 
 const iconMapper = {
-  noData: "battery-empty"
+  noData: "hiking"
 };
 
 export { iconMapper, iconPrefix };

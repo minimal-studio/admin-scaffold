@@ -134,7 +134,8 @@ export default class DashBoard extends React.PureComponent {
         <Card container>
           <Grid
             container
-            space={20}
+            space={10}
+            outSpacing={false}
           >
             <CardDesc
               icon="yen-sign"

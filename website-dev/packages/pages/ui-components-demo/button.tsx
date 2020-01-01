@@ -13,7 +13,7 @@ const icons = [
 export const Buttons = () => {
   return (
     <Card container>
-      <Grid container space={20}>
+      <Grid container space={20} outSpacing={false}>
         <Grid
           xl={12}
           lg={12}

@@ -34,7 +34,10 @@
   "下拉选择": "Dropdown",
   "自定义组件1": "Custom Component 1",
   "自定义组件2": "Custom Component 2",
-  "页面模版": "Pages",
+  "模版": "Template",
+  "页面": "Page",
   "范围": "Range",
+  "黑夜模式": "Dark mode",
+  "宽屏模式": "Widescreen",
   "查询": "Query"
 }

@@ -18,7 +18,7 @@
     "update": "yarn add @mini-code/request @deer-ui/admin-scaffold @deer-ui/core -W; yarn start"
   },
   "dependencies": {
-    "@deer-ui/core": "^4.0.0-rc4.8",
+    "@deer-ui/core": "^4.0.0-rc5.2",
     "@deer-ui/enhance-ui": "^4.0.0-rc2.0",
     "@mini-code/base-func": "^1.1.0",
     "@mini-code/request": "^1.0.0-alpha2.3",
@@ -29,7 +29,7 @@
     "react-hot-loader": "^4.3.6",
     "react-transition-group": "^4.2.1",
     "unistore": "^3.5.1",
-    "version-helper": "^1.2.0-alpha1.2"
+    "version-helper": "^1.2.0-beta1.5"
   },
   "devDependencies": {
     "@mini-code/scripts": "^1.0.0-alpha1.2",

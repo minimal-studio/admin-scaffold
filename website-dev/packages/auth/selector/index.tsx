@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import LoginPanel from "./login-panel";
 
-const LoginSelector = props => {
+const LoginSelector = (props) => {
   const { children, isLogin } = props;
 
   let container;

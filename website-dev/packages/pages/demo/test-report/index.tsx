@@ -33,7 +33,6 @@ class TestReportClass extends Services {
       "selectorDemo",
       "inputDemo",
       "customerFormDemo",
-      "customerFormDemo2",
       "inputRangeDemo",
       // "refuDemo",
       "inputSelectorDemo",

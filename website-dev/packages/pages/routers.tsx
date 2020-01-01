@@ -36,7 +36,23 @@ const demoMenu = [
     ]
   },
   {
-    title: "页面模版",
+    title: "页面",
+    icon: "hat-wizard",
+    child: [
+      {
+        title: "Auth page",
+        code: "AuthPage",
+        // icon: "chart-bar"
+      },
+      {
+        title: "404",
+        code: "Notfound",
+        // icon: "exclamation-triangle"
+      },
+    ]
+  },
+  {
+    title: "模版",
     icon: "anchor",
     child: [
       {
@@ -70,17 +86,12 @@ const demoMenu = [
         // icon: "book-reader"
       },
       {
-        title: "404",
-        code: "Notfound",
-        // icon: "exclamation-triangle"
-      },
-      {
         title: "link",
         // icon: "link",
         code: "TestLink"
       }
     ]
-  }
+  },
 ];
 
 const NAV_MENU_CONFIG = [

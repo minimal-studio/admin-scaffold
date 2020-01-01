@@ -8,7 +8,7 @@ import {
 export const Forms = () => {
   return (
     <Card container>
-      <Grid container space={20}>
+      <Grid container space={20} outSpacing={false}>
         <Grid
           xl={6}
           lg={6}

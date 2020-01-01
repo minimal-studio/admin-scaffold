@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from "react";
-import { TipPanel } from "@deer-ui/core";
+import { Alert } from "@deer-ui/core";
 import { Link } from "@deer-ui/admin-scaffold";
 
 import { Services } from "@dashboard/services";
@@ -19,7 +19,7 @@ class TestLink extends Services {
     // console.log(location.state)
     return (
       <div className="card-content">
-        <TipPanel
+        <Alert
           title="说明"
           texts={[
             `为了解决 React Router 不支持多标签页同时存在的问题`,

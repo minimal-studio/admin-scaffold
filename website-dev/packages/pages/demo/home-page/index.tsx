@@ -6,7 +6,7 @@ import {
 const AboutPage = () => (
   <div className="home-page">
     <CardContainer>
-      <Grid container space={20}>
+      <Grid container space={20} outSpacing={false}>
         <Grid item lg={6} sm={12} xs={12}>
           <Card p={20}>
             <h3>关于 @deer-ui/admin-dashboard</h3>

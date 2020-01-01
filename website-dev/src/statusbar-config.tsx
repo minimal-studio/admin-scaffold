@@ -1,7 +1,7 @@
 import React from "react";
 import { Menus } from "@deer-ui/core";
 
-const menusForUser = options => {
+const menusForUser = (options) => {
   const { hide, logout } = options;
   return (
     <Menus
