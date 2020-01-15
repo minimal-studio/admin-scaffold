@@ -145,10 +145,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@deer-ui/core@^4.0.0-rc5.1":
-  version "4.0.0-rc5.1"
-  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc5.1.tgz#2d96e1b65859dfcd8b55435b126bf5243e473f0b"
-  integrity sha512-staZOF+M34xmSFW0rYTGK457mcPk3ro11ECDuJWDb1a9c/QTyTk2aODQBRGJVYHH2h1XbLQ/f2l9EYHbbSX23A==
+"@deer-ui/core@^4.0.0-rc5.6":
+  version "4.0.0-rc5.6"
+  resolved "https://registry.yarnpkg.com/@deer-ui/core/-/core-4.0.0-rc5.6.tgz#8b7aa874d83726fee2f3186f5602e71d35098790"
+  integrity sha512-fB4QfsGevoMnXl8V62OvX4O2jfPk30ZDWA2yJTS4JRG9WfyleUMOABx1nzddU5qhHoLPn8YyZJjVMt73ltO1nA==
   dependencies:
     classnames "^2.2.6"
 

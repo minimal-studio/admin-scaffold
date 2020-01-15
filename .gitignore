@@ -55,5 +55,7 @@ dist
 docz-dist
 for-testing
 version.json
+*-e
 
 /public
+
