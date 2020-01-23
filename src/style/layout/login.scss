@@ -71,7 +71,7 @@
       background-color: $btnColor;
       border-color: $btnColor;
       border: none;
-      padding: 10px 0;
+      // padding: 10px 0;
       box-shadow: 0 6px 12px rgba(#000, 0.2);
       &:hover {
         background-color: darken($btnColor, 5%);

@@ -91,7 +91,7 @@ export default class LoginPanel extends Component<LoginPanelProps> {
                 } : null,
                 type: 'submit',
                 text: btnTxt,
-                className: 'res login-btn',
+                className: 'res login-btn lg',
                 color: btnColor,
                 action: submitable ? () => {
                   login(this.formHelper.value);

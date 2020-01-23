@@ -94,7 +94,7 @@ export default class LoginPanel extends Component {
             <div className="form-group">
               <button
                 type="submit"
-                className="btn theme flat login-btn"
+                className="btn theme flat login-btn lg"
                 id="freeLogin"
               >
                 {logging ? "登录中..." : "登录"}
