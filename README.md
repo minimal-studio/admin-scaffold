@@ -8,9 +8,21 @@ Base on React's Admin Manager Scaffold.
 
 - [live demo](https://admin.thinkmore.xyz/)
 
+## 动机
+
+如果想开始一个 React 应用的开发，最快的方式是使用 create-react-app 快速生成一个 react 工程，其中包含了 webpack 的开发与构建配置，开发者只需要关注「如何使用 React 开发业务」即可，可以在不知道 webpack 运行细节的情况下工作。
+
+create-react-app 就是一种 scaffold，帮助开发者快速搭建 react 工程的一个工具。
+
+那么如果我想快速开始一个管理系统的开发呢？
+
+按照普通的做法应该是使用 create-react-app 创建一个工程，然后找管理系统所需要的各种功能，例如需要处理路由、菜单、页面映射之间的关系，页面渲染规则，多人如何协作开发等。
+
+@deer-ui/admin-scaffold 就是一个提供了管理系统所需要的工程的开发和构建环境，以及指导协作流程的 scaffold。
+
 ## 特性
 
-- 专注于业务
+- 通过配置来描述业务流程以及对于的 UI
 - 多页面导航控制（multiple router）
 - 导航菜单无限嵌套
 - 异步请求状态与对应的页面 UI 状态的关联
